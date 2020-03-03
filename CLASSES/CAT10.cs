@@ -49,7 +49,7 @@ namespace CLASSES
             List<string> FSPEC =  new List<string>(M.FSPEC(paquete0));
             
             // Posicion del vector paquete0 donde empieza la info despues del FSPEC
-            int inicio_data = Convert.ToInt32(FSPEC[FSPEC.Count -1]);
+            int contador = Convert.ToInt32(FSPEC[FSPEC.Count -1]);
             
             if (FSPEC[0]=="1")
             {
@@ -75,7 +75,97 @@ namespace CLASSES
             {
                 // Item I010/040: Position Polar
             }
+            if (FSPEC[6] == "1")
+            {
+                // Item I010/042: Position Cartesian
+            }
+            if (FSPEC[7] == "1")
+            {
+                // Item I010/200: Track Velocity Polar
+            }
+            if (FSPEC[8] == "1")
+            {
+                // Item I010/202: Track Velocity Cartesian
+            }
+            if (FSPEC[9] == "1")
+            {
+                // Item I010/161: Track Number
+            }
+            if (FSPEC[10] == "1")
+            {
+                // Item I010/170: Track Status
+            }
+            if (FSPEC[11] == "1")
+            {
+                // Item I010/060: Mode-3/A in Octal
+            }
+            if (FSPEC[12] == "1")
+            {
+                // Item I010/220: Target Address
+            }
+            if (FSPEC[13] == "1")
+            {
+                // Item I010/245: Target Identification
+            }
+            if (FSPEC[14] == "1")
+            {
+                // Item I010/250: Mode S MB Data
+            }
+            if (FSPEC[15] == "1")
+            {
+                // Item I010/300: Vehicle Fleet ID
+            }
+            if (FSPEC[16] == "1")
+            {
+                // Item I010/090: Flight Level in Binary
+            }
+            if (FSPEC[17] == "1")
+            {
+                // Item I010/091: Measured High
+            }
+            if (FSPEC[18] == "1")
+            {
+                // Item I010/270: Target Size and Orientation
+            }
+            if (FSPEC[19] == "1")
+            {
+                // Item I010/550: System Status
+            }
+            if (FSPEC[20] == "1")
+            {
+                // Item I010/310: Pre-programmed Message
+            }
+            if (FSPEC[21] == "1")
+            {
+                // Item I010/500: Standard Deviation of Position
+            }
+            if (FSPEC[22] == "1")
+            {
+                // Item I010/280: Presence
+            }
+            if (FSPEC[23] == "1")
+            {
+                // Item I010/131: Amplitude of Primary Plot
+            }
+            if (FSPEC[24] == "1")
+            {
+                // Item I010/210: Calculated Acceleration
+            }
 
+            // FSPEC[25] no tiene Data Items, es de "spare"
+            
+            if (FSPEC[26] == "1")
+            {
+                // Item I010/040: Position Polar
+            }
+            if (FSPEC[27] == "1")
+            {
+                // SP: Special Purpose Field
+            }
+            if (FSPEC[28] == "1")
+            {
+                // RE: Reserved Expansion Field
+            }
         }
     }
 }

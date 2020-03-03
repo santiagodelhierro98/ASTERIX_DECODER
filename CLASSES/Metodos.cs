@@ -108,6 +108,7 @@ namespace CLASSES
                 }
                 else
                 {
+                    // En la ultima posicion de la lista, ponemos la longitud del FSPEC
                     FSPEC.Add(i.ToString());
                     end_of_fspec = true;
                 }
