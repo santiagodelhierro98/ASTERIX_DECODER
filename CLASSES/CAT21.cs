@@ -56,7 +56,16 @@ namespace CLASSES
 
         public void Decode21(string[] paquete)
         {
-
+            Metodos M = new Metodos();
+            int longitud = M.Longitud_Paquete(paquete);
+            string[] paquete0 = new string[longitud];
+            for (int i = 0; i < longitud; i++)
+            {
+                
+                paquete0[i] = M.Poner_Zeros_Delante(paquete[i]);
+            }
+            Console.WriteLine(paquete0);
+            Console.ReadKey();
         }
     }
 }

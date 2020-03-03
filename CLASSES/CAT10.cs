@@ -6,7 +6,7 @@ namespace CLASSES
 {
     public class CAT10
     {
-        // Metodos M = new Metodos();
+        Metodos M = new Metodos();
 
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT10)
@@ -39,6 +39,15 @@ namespace CLASSES
 
         public void Decode10(string[] paquete)
         {
+            Metodos M = new Metodos();
+            int longitud = M.Longitud_Paquete(paquete);
+            string[] paquete0 = new string[longitud];
+            for (int i = 0; i < longitud; i++)
+            {
+                paquete0[i] = M.Poner_Zeros_Delante(paquete[i]);
+            }
+            List<string> FSPEC =  new List<string>(M.FSPEC(paquete0));
+            Console.ReadKey();
 
         }
     }
