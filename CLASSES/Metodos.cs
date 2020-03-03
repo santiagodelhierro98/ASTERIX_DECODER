@@ -88,7 +88,7 @@ namespace CLASSES
             bool end_of_fspec = false;
             List<string> FSPEC = new List<string>();
             for (int i = 3; end_of_fspec != true; i++)
-            {      
+            {
                 string octeto_bin = Octeto_A_Bin(paquete[i]);
                 char[] bits = octeto_bin.ToCharArray(0,8);
 
@@ -108,6 +108,7 @@ namespace CLASSES
                 }
                 else
                 {
+                    FSPEC.Add(i.ToString());
                     end_of_fspec = true;
                 }
             }

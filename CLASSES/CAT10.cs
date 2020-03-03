@@ -47,9 +47,35 @@ namespace CLASSES
                 paquete0[i] = M.Poner_Zeros_Delante(paquete[i]);
             }
             List<string> FSPEC =  new List<string>(M.FSPEC(paquete0));
-            Console.ReadKey();
+            
+            // Posicion del vector paquete0 donde empieza la info despues del FSPEC
+            int inicio_data = Convert.ToInt32(FSPEC[FSPEC.Count -1]);
+            
+            if (FSPEC[0]=="1")
+            {
+                // Item I010/010: Data source ID                
+            }
+            if (FSPEC[1]=="1")
+            {
+                // Item I010/000: Message Type
+            }
+            if (FSPEC[2] == "1")
+            {
+                // Item I010/020: Target Report Descriptor
+            }
+            if (FSPEC[3] == "1")
+            {
+                // Item I010/140: Time of Day
+            }
+            if (FSPEC[4] == "1")
+            {
+                // Item I010/041: Position WGS-84
+            }
+            if (FSPEC[5] == "1")
+            {
+                // Item I010/040: Position Polar
+            }
 
-            // holassssssssss
         }
     }
 }
