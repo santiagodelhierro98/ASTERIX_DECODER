@@ -51,17 +51,96 @@ namespace CLASSES
             // Posicion del vector paquete0 donde empieza la info despues del FSPEC
             int contador = Convert.ToInt32(FSPEC[FSPEC.Count -1]);
             
-            if (FSPEC[0]=="1")
+            if (FSPEC[0] == "1")
             {
-                // Item I010/010: Data source ID                
+                // Item I010/010: Data source ID 
+                string SAC_Bin = M.Octeto_A_Bin(paquete0[contador]);                
+                string SIC_Bin = M.Octeto_A_Bin(paquete0[contador + 1]);
+
+                string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
+                string SIC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
+                Data_Source_ID = SIC + "/" + SAC;
+
+                contador = contador + 2;
             }
-            if (FSPEC[1]=="1")
+            if (FSPEC[1] == "1")
             {
                 // Item I010/000: Message Type
+                string MessType_Bin = M.Octeto_A_Bin(paquete[contador]);
+                Int32 MessType = Convert.ToInt32(MessType_Bin, 2);
+                if (MessType == 1)
+                {
+                    Message_Type = "Target Report";
+                }
+                if (MessType == 2)
+                {
+                    Message_Type = "Start of Update Cycle";
+                }
+                if (MessType == 3)
+                {
+                    Message_Type = "Periodic Status Message";
+                }
+                if (MessType == 4)
+                {
+                    Message_Type = "Event-triggered Status Message";
+                }
+                else { Console.WriteLine("ERROR: Wrong Message Type Format"); }
+                contador = contador + 1;
             }
             if (FSPEC[2] == "1")
             {
                 // Item I010/020: Target Report Descriptor
+                string TargetReport_Bin = M.Octeto_A_Bin(paquete0[contador]);
+                char[] Target_Bits = TargetReport_Bin.ToCharArray();
+                
+                string TYP_Bin = (Target_Bits[0] + Target_Bits[1] + Target_Bits[2]).ToString();
+                Int32 TYP = Convert.ToInt32(TYP_Bin, 2);                
+                if (TYP == 0) { Target_Rep_Descript = "SSR Multilateration"; }
+                if (TYP == 1) { Target_Rep_Descript = "Mode S Multilateration"; }
+                if (TYP == 2) { Target_Rep_Descript = "ADS-B"; }
+                if (TYP == 3) { Target_Rep_Descript = "PSR"; }
+                if (TYP == 4) { Target_Rep_Descript = "Magnetic Loop System"; }
+                if (TYP == 5) { Target_Rep_Descript = "HF Multilateration"; }
+                if (TYP == 6) { Target_Rep_Descript = "Not defined"; }
+                if (TYP == 7) { Target_Rep_Descript = "Other types"; }
+
+                if (Target_Bits[3] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Differential Correction (ADS-B)"; }
+                if (Target_Bits[3] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/No Differential Correction (ADS-B)"; }
+
+                if (Target_Bits[4] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Chain 2"; }
+                if (Target_Bits[4] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/Chain 1"; }
+
+                if (Target_Bits[5] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Transponder Ground bit set"; }
+                if (Target_Bits[5] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/Transponder Ground bit not set"; }
+
+                if (Target_Bits[6] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Corrupted reply in multilateration"; }
+                if (Target_Bits[6] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/No Corrupted replies in multilateration"; }
+
+                if (Target_Bits[7] == 1)
+                {
+                    contador = contador + 1;
+                    // First extent
+                    string TargetReport_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
+                    char[] Target_Bits1 = TargetReport_Bin.ToCharArray();
+
+                    if (Target_Bits1[0] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Simulated Target Report"; }
+                    if (Target_Bits1[0] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/Actual Target Report"; }
+
+                    if (Target_Bits1[1] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/Test Target"; }
+                    if (Target_Bits1[1] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/Default"; }
+
+                    if (Target_Bits1[2] == 1) { Target_Rep_Descript = Target_Rep_Descript + "/ Report from field monitor(fixed transponder)"; }
+                    if (Target_Bits1[2] == 0) { Target_Rep_Descript = Target_Rep_Descript + "/ Report from target transponder"; }
+
+                    string RAB_Bin = (Target_Bits1[3] + Target_Bits1[4]).ToString();
+                    Int32 RAB = Convert.ToInt32(RAB_Bin, 2);
+
+                    // aqui!!!!!!
+                }   
+                if (Target_Bits[7] == 0)
+                {
+                    contador = contador + 1;
+                }
             }
             if (FSPEC[3] == "1")
             {
