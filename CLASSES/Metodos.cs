@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
+
 namespace CLASSES
 {
     public class Metodos
@@ -114,6 +115,27 @@ namespace CLASSES
                 }
             }
             return FSPEC;
+        }
+        public List<double> sumar_num_base_2(double exponente_LSB,string mensaje_bin_entero)
+        {
+            // devuelve un vector (lista) llamado vector en que cada posicion tiene el valor del complemento a dos
+            List<double> vector = new List<double>();
+            int longitud_entera = mensaje_bin_entero.Length;
+            int j= mensaje_bin_entero.Length;
+            for (int i=0;i<=longitud_entera;i++)
+            {
+                int x = 0;
+                if (mensaje_bin_entero[j]==1)
+                {
+                    vector[x] = Math.Pow(2, exponente_LSB + Convert.ToDouble(i));
+                    x = x + 1;
+                    j = j - 1;
+                }
+                else { j = j - 1;  }
+            }
+            return vector;
+            
+
         }
     }
 }
