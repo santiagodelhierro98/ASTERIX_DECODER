@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
+
 namespace CLASSES
 {
     public class Metodos
@@ -40,17 +41,17 @@ namespace CLASSES
         {
             string octeto0;
             int contador = 0;
-            foreach(char c in octeto)
+            foreach (char c in octeto)
             {
                 contador++;
             }
-       
+
             // Si hay un solo caracter, añadimos un 0 delante
             if (contador == 1)
             {
                 octeto0 = octeto.PadLeft(2, '0');
             }
-            else 
+            else
             {
                 octeto0 = octeto;
             }
@@ -60,15 +61,15 @@ namespace CLASSES
         public string Octeto_A_Bin(string Pos_Paquete)
         {
             // convertir un octeto en Hexa a un string con los dos caracteres en binario
-            
-            char[] octeto = Pos_Paquete.ToCharArray(0,2);
+
+            char[] octeto = Pos_Paquete.ToCharArray(0, 2);
             string byte1 = octeto[0].ToString();
             string byte2 = octeto[1].ToString();
             // de hexa a binario
             string first = HexStringToBinary(byte1);
             string second = HexStringToBinary(byte2);
-            string bin_octeto = first+second;
-           
+            string bin_octeto = first + second;
+
             return bin_octeto;
         }
         public int Longitud_Paquete(string[] paquete)
@@ -79,7 +80,7 @@ namespace CLASSES
             string octeto_bin = Octeto_A_Bin(octeto);
 
             // de binario a decimal
-            int length = Convert.ToInt32(octeto_bin, 2);  
+            int length = Convert.ToInt32(octeto_bin, 2);
 
             return length;
         }
@@ -90,7 +91,7 @@ namespace CLASSES
             for (int i = 3; end_of_fspec != true; i++)
             {
                 string octeto_bin = Octeto_A_Bin(paquete[i]);
-                char[] bits = octeto_bin.ToCharArray(0,8);
+                char[] bits = octeto_bin.ToCharArray(0, 8);
 
                 // añadimos al vector FSPEC todos los bits menos el ultimo
 
@@ -115,5 +116,43 @@ namespace CLASSES
             }
             return FSPEC;
         }
+        public double ComplementoA2(string bits)
+        {
+            if (bits == "1")
+                return -1;
+            if (bits == "0")
+                return 0;
+            else
+            {
+                if (Convert.ToString(bits[0]) == "0")
+                {
+                    int num = Convert.ToInt32(bits, 2);
+                    return Convert.ToSingle(num);
+                }
+                else
+                {
+                    //elimino primer bit
+                    string bitss = bits.Substring(1, bits.Length - 1);
+
+                    //creo nuevo string cambiando 0s por 1s y viceversa
+                    string newbits = "";
+                    int i = 0;
+                    while (i < bitss.Length)
+                    {
+                        if (Convert.ToString(bitss[i]) == "1")
+                            newbits = newbits + "0";
+                        if (Convert.ToString(bitss[i]) == "0")
+                            newbits = newbits + "1";
+                        i++;
+                    }
+
+                    //convertimos a int
+                    double num = Convert.ToInt32(newbits, 2);
+
+                    return -(num + 1);
+                }
+            }
+        }
+
     }
 }
