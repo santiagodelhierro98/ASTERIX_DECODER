@@ -46,15 +46,15 @@ namespace CLASSES
             {
                 paquete0[i] = M.Poner_Zeros_Delante(paquete[i]);
             }
-            List<string> FSPEC =  new List<string>(M.FSPEC(paquete0));
-            
+            List<string> FSPEC = new List<string>(M.FSPEC(paquete0));
+
             // Posicion del vector paquete0 donde empieza la info despues del FSPEC
-            int contador = Convert.ToInt32(FSPEC[FSPEC.Count -1]) + 1;
-            
+            int contador = Convert.ToInt32(FSPEC[FSPEC.Count - 1]) + 1;
+
             if (FSPEC[0] == "1")
             {
                 // Item I010/010: Data source ID 
-                string SAC_Bin = M.Octeto_A_Bin(paquete0[contador]);                
+                string SAC_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 string SIC_Bin = M.Octeto_A_Bin(paquete0[contador + 1]);
 
                 string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
@@ -92,9 +92,9 @@ namespace CLASSES
                 // Item I010/020: Target Report Descriptor
                 string TargetReport_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 char[] Target_Bits = TargetReport_Bin.ToCharArray();
-                
+
                 string TYP_Bin = Target_Bits[0].ToString() + Target_Bits[1].ToString() + Target_Bits[2].ToString();
-                Int32 TYP = Convert.ToInt32(TYP_Bin, 2);                
+                Int32 TYP = Convert.ToInt32(TYP_Bin, 2);
                 if (TYP == 0) { Target_Rep_Descript = "TYP: SSR Multilateration"; }
                 if (TYP == 1) { Target_Rep_Descript = "TYP: Mode S Multilateration"; }
                 if (TYP == 2) { Target_Rep_Descript = "TYP: ADS-B"; }
@@ -144,7 +144,7 @@ namespace CLASSES
                     if (TOT == 1) { Target_Rep_Descript = Target_Rep_Descript + "/TOT: Aircraft"; }
                     if (TOT == 2) { Target_Rep_Descript = Target_Rep_Descript + "/TOT: Ground Vehicle"; }
                     if (TOT == 3) { Target_Rep_Descript = Target_Rep_Descript + "/TOT: Helicopter"; }
-                    
+
                     if (Target_Bits1[7] == 1)
                     {
                         contador += 1;
@@ -157,7 +157,7 @@ namespace CLASSES
 
                         // los siguientes 6 bits deberian ser 0s
                         string Spare_Bin = Target_Bits2[1].ToString() + Target_Bits2[2].ToString() + Target_Bits2[3].ToString() + Target_Bits2[4].ToString() + Target_Bits2[5].ToString() + Target_Bits2[6].ToString();
-                        Int32 Spare = Convert.ToInt32(Spare_Bin, 2);                        
+                        Int32 Spare = Convert.ToInt32(Spare_Bin, 2);
                     }
                     if (Target_Bits1[7].ToString() == "0")
                     {
@@ -180,9 +180,9 @@ namespace CLASSES
                 char[] ToD_bin = ToD_Invertido.ToCharArray();
                 Array.Reverse(ToD_bin);
 
-                for (int i=0; i < ToD_bin.Length; i++)
+                for (int i = 0; i < ToD_bin.Length; i++)
                 {
-                    if (ToD_bin[i].ToString() == "1") { Time_Day = Time_Day + Math.Pow(2, -7 + i);  }
+                    if (ToD_bin[i].ToString() == "1") { Time_Day = Time_Day + Math.Pow(2, -7 + i); }
                     else { }
                 }
                 contador += 3;
@@ -222,7 +222,7 @@ namespace CLASSES
                 // Item I010/170: Track Status
                 string Status_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 char[] Status = Status_Bin.ToCharArray();
-                
+
                 if (Status[0].ToString() == "1") { Track_Status = "CNF: Track in initalisation phase"; }
                 if (Status[0].ToString() == "0") { Track_Status = "CNF: Confirmed Track"; }
 
@@ -259,7 +259,7 @@ namespace CLASSES
                     if (TOM == 3) { Track_Status = Track_Status + "/TOM: Other Types of Movements"; }
 
                     string DOU_bin = Status1[2].ToString() + Status1[3].ToString() + Status1[4].ToString();
-                    Int32 DOU= Convert.ToInt32(DOU_bin, 2);
+                    Int32 DOU = Convert.ToInt32(DOU_bin, 2);
                     if (DOU == 0) { Track_Status = Track_Status + "/DOU: No doubt"; }
                     if (DOU == 1) { Track_Status = Track_Status + "/DOU: Doubtful correlation"; }
                     if (DOU == 2) { Track_Status = Track_Status + "/DOU: Doubtful correlation in clutter"; }
