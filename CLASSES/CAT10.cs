@@ -50,6 +50,7 @@ namespace CLASSES
 
             // Posicion del vector paquete0 donde empieza la info despues del FSPEC
             int contador = Convert.ToInt32(FSPEC[FSPEC.Count - 1]) + 1;
+            FSPEC.RemoveAt(FSPEC.Count - 1);
 
             if (FSPEC[0] == "1")
             {
@@ -84,8 +85,6 @@ namespace CLASSES
                 {
                     Message_Type = "Event-triggered Status Message";
                 }
-                else { Console.WriteLine("ERROR: Wrong Message Type Format"); }
-                contador += 1;
             }
             if (FSPEC[2] == "1")
             {
@@ -233,379 +232,397 @@ namespace CLASSES
 
                 contador += 4;
             }
-            if (FSPEC[7] == "1")
+            
+            if (FSPEC.Count > 7)
             {
-                // Item I010/200: Track Velocity Polar
-                string polar_vel1 = M.Octeto_A_Bin(paquete0[contador]);
-                string polar_vel2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string polar_vel3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                string polar_vel4 = M.Octeto_A_Bin(paquete0[contador + 3]);
-
-                string track_gs = polar_vel1 + polar_vel2;
-                string track_ta = polar_vel3 + polar_vel4;
-
-                Track_Vel_Cartesian[0] = Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14);
-                Track_Vel_Cartesian[1] = Convert.ToInt32(track_ta, 2) * (360.0/Math.Pow(2, 16));
-                contador += 4;
-            }
-            if (FSPEC[8] == "1")
-            {
-                // Item I010/202: Track Velocity Cartesian
-                string track_vel1 = M.Octeto_A_Bin(paquete0[contador]);
-                string track_vel2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string track_vel3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                string track_vel4 = M.Octeto_A_Bin(paquete0[contador + 3]);
-
-                string track_vx = track_vel1 + track_vel2;
-                string track_vy = track_vel3 + track_vel4;
-              
-                Track_Vel_Cartesian[0] = M.ComplementoA2(track_vx) * 0.25;
-                Track_Vel_Cartesian[1] = M.ComplementoA2(track_vy) * 0.25;
-                contador += 4;
-            }
-            if (FSPEC[9] == "1")
-            {
-                // Item I010/161: Track Number
-                string TN_1 = M.Octeto_A_Bin(paquete0[contador]);
-                string TN_2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string TN = TN_1 + TN_2;
-                Track_Num = Convert.ToInt32(TN, 2);
-
-                contador += 2;
-            }
-            if (FSPEC[10] == "1")
-            {
-                // Item I010/170: Track Status
-                string Status_Bin = M.Octeto_A_Bin(paquete0[contador]);
-                char[] Status = Status_Bin.ToCharArray();
-
-                if (Status[0].ToString() == "1") { Track_Status = "CNF: Track in initalisation phase"; }
-                if (Status[0].ToString() == "0") { Track_Status = "CNF: Confirmed Track"; }
-
-                if (Status[1].ToString() == "1") { Track_Status = Track_Status + "/TRE: Last Report for a Track"; }
-                if (Status[1].ToString() == "0") { Track_Status = Track_Status + "/TRE: Default"; }
-
-                string CST_bin = Status[2].ToString() + Status[3].ToString();
-                Int32 CST = Convert.ToInt32(CST_bin, 2);
-                if (CST == 0) { Track_Status = Track_Status + "/CST: No Extrapolation"; }
-                if (CST == 1) { Track_Status = Track_Status + "/CST: Predictable extrapolation due to sensor refresh period"; }
-                if (CST == 2) { Track_Status = Track_Status + "/CST: Predictable extrapolation in masked area"; }
-                if (CST == 3) { Track_Status = Track_Status + "/CST: Extrapolation due to unpredictable absence of detection"; }
-
-                if (Status[4].ToString() == "1") { Track_Status = Track_Status + "/MAH: Horizontal manouvre"; }
-                if (Status[4].ToString() == "0") { Track_Status = Track_Status + "/MAH: Default"; }
-
-                if (Status[5].ToString() == "1") { Track_Status = Track_Status + "/TCC: Horizontal manouvre"; }
-                if (Status[5].ToString() == "0") { Track_Status = Track_Status + "/TCC: Default"; }
-
-                if (Status[6].ToString() == "1") { Track_Status = Track_Status + "/STH: Smoothed Position"; }
-                if (Status[6].ToString() == "0") { Track_Status = Track_Status + "/STH: Measured Position"; }
-
-                if (Status[7].ToString() == "1")
+                if (FSPEC[7] == "1")
                 {
-                    contador += 1;
-                    string Status_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
-                    char[] Status1 = Status_Bin1.ToCharArray();
+                    // Item I010/200: Track Velocity Polar
+                    string polar_vel1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string polar_vel2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string polar_vel3 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                    string polar_vel4 = M.Octeto_A_Bin(paquete0[contador + 3]);
 
-                    string TOM_bin = Status1[0].ToString() + Status1[1].ToString();
-                    Int32 TOM = Convert.ToInt32(TOM_bin, 2);
-                    if (TOM == 0) { Track_Status = Track_Status + "/TOM: Unknown Type of Movement"; }
-                    if (TOM == 1) { Track_Status = Track_Status + "/TOM: Taking-off"; }
-                    if (TOM == 2) { Track_Status = Track_Status + "/TOM: Landing"; }
-                    if (TOM == 3) { Track_Status = Track_Status + "/TOM: Other Types of Movements"; }
+                    string track_gs = polar_vel1 + polar_vel2;
+                    string track_ta = polar_vel3 + polar_vel4;
 
-                    string DOU_bin = Status1[2].ToString() + Status1[3].ToString() + Status1[4].ToString();
-                    Int32 DOU = Convert.ToInt32(DOU_bin, 2);
-                    if (DOU == 0) { Track_Status = Track_Status + "/DOU: No doubt"; }
-                    if (DOU == 1) { Track_Status = Track_Status + "/DOU: Doubtful correlation"; }
-                    if (DOU == 2) { Track_Status = Track_Status + "/DOU: Doubtful correlation in clutter"; }
-                    if (DOU == 3) { Track_Status = Track_Status + "/DOU: Loss of accuracy"; }
-                    if (DOU == 4) { Track_Status = Track_Status + "/DOU: Loss of accuracy in clutter"; }
-                    if (DOU == 5) { Track_Status = Track_Status + "/DOU: Unstable track"; }
-                    if (DOU == 6) { Track_Status = Track_Status + "/DOU: Previously Cosated"; }
+                    Track_Vel_Cartesian[0] = Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14);
+                    Track_Vel_Cartesian[1] = Convert.ToInt32(track_ta, 2) * (360.0 / Math.Pow(2, 16));
+                    contador += 4;
+                }
+                if (FSPEC[8] == "1")
+                {
+                    // Item I010/202: Track Velocity Cartesian
+                    string track_vel1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string track_vel2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string track_vel3 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                    string track_vel4 = M.Octeto_A_Bin(paquete0[contador + 3]);
 
-                    contador += 1;
-                    string MRS_bin = Status1[5].ToString() + Status1[6].ToString();
-                    Int32 MRS = Convert.ToInt32(MRS_bin, 2);
-                    if (MRS == 0) { Track_Status = Track_Status + "/MRS: Merge or split indication undetermined"; }
-                    if (MRS == 1) { Track_Status = Track_Status + "/MRS: Track merged by association to plot"; }
-                    if (MRS == 2) { Track_Status = Track_Status + "/MRS: Track merged by non-association to plot"; }
-                    if (MRS == 3) { Track_Status = Track_Status + "/MRS: Split track"; }
+                    string track_vx = track_vel1 + track_vel2;
+                    string track_vy = track_vel3 + track_vel4;
 
-                    if (Status1[7].ToString() == "1")
+                    Track_Vel_Cartesian[0] = M.ComplementoA2(track_vx) * 0.25;
+                    Track_Vel_Cartesian[1] = M.ComplementoA2(track_vy) * 0.25;
+                    contador += 4;
+                }
+                if (FSPEC[9] == "1")
+                {
+                    // Item I010/161: Track Number
+                    string TN_1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string TN_2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string TN = TN_1 + TN_2;
+                    Track_Num = Convert.ToInt32(TN, 2);
+
+                    contador += 2;
+                }
+                if (FSPEC[10] == "1")
+                {
+                    // Item I010/170: Track Status
+                    string Status_Bin = M.Octeto_A_Bin(paquete0[contador]);
+                    char[] Status = Status_Bin.ToCharArray();
+
+                    if (Status[0].ToString() == "1") { Track_Status = "CNF: Track in initalisation phase"; }
+                    if (Status[0].ToString() == "0") { Track_Status = "CNF: Confirmed Track"; }
+
+                    if (Status[1].ToString() == "1") { Track_Status = Track_Status + "/TRE: Last Report for a Track"; }
+                    if (Status[1].ToString() == "0") { Track_Status = Track_Status + "/TRE: Default"; }
+
+                    string CST_bin = Status[2].ToString() + Status[3].ToString();
+                    Int32 CST = Convert.ToInt32(CST_bin, 2);
+                    if (CST == 0) { Track_Status = Track_Status + "/CST: No Extrapolation"; }
+                    if (CST == 1) { Track_Status = Track_Status + "/CST: Predictable extrapolation due to sensor refresh period"; }
+                    if (CST == 2) { Track_Status = Track_Status + "/CST: Predictable extrapolation in masked area"; }
+                    if (CST == 3) { Track_Status = Track_Status + "/CST: Extrapolation due to unpredictable absence of detection"; }
+
+                    if (Status[4].ToString() == "1") { Track_Status = Track_Status + "/MAH: Horizontal manouvre"; }
+                    if (Status[4].ToString() == "0") { Track_Status = Track_Status + "/MAH: Default"; }
+
+                    if (Status[5].ToString() == "1") { Track_Status = Track_Status + "/TCC: Horizontal manouvre"; }
+                    if (Status[5].ToString() == "0") { Track_Status = Track_Status + "/TCC: Default"; }
+
+                    if (Status[6].ToString() == "1") { Track_Status = Track_Status + "/STH: Smoothed Position"; }
+                    if (Status[6].ToString() == "0") { Track_Status = Track_Status + "/STH: Measured Position"; }
+
+                    if (Status[7].ToString() == "1")
                     {
                         contador += 1;
-                        string Status_Bin2 = M.Octeto_A_Bin(paquete0[contador]);
-                        char[] Status2 = Status_Bin2.ToCharArray();
+                        string Status_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
+                        char[] Status1 = Status_Bin1.ToCharArray();
 
-                        if (Status2[0].ToString() == "1") { Track_Status = Track_Status + "/GHO: Ghost Track"; }
-                        if (Status2[0].ToString() == "0") { Track_Status = Track_Status + "/GHO: Default"; }
+                        string TOM_bin = Status1[0].ToString() + Status1[1].ToString();
+                        Int32 TOM = Convert.ToInt32(TOM_bin, 2);
+                        if (TOM == 0) { Track_Status = Track_Status + "/TOM: Unknown Type of Movement"; }
+                        if (TOM == 1) { Track_Status = Track_Status + "/TOM: Taking-off"; }
+                        if (TOM == 2) { Track_Status = Track_Status + "/TOM: Landing"; }
+                        if (TOM == 3) { Track_Status = Track_Status + "/TOM: Other Types of Movements"; }
+
+                        string DOU_bin = Status1[2].ToString() + Status1[3].ToString() + Status1[4].ToString();
+                        Int32 DOU = Convert.ToInt32(DOU_bin, 2);
+                        if (DOU == 0) { Track_Status = Track_Status + "/DOU: No doubt"; }
+                        if (DOU == 1) { Track_Status = Track_Status + "/DOU: Doubtful correlation"; }
+                        if (DOU == 2) { Track_Status = Track_Status + "/DOU: Doubtful correlation in clutter"; }
+                        if (DOU == 3) { Track_Status = Track_Status + "/DOU: Loss of accuracy"; }
+                        if (DOU == 4) { Track_Status = Track_Status + "/DOU: Loss of accuracy in clutter"; }
+                        if (DOU == 5) { Track_Status = Track_Status + "/DOU: Unstable track"; }
+                        if (DOU == 6) { Track_Status = Track_Status + "/DOU: Previously Cosated"; }
+
+                        contador += 1;
+                        string MRS_bin = Status1[5].ToString() + Status1[6].ToString();
+                        Int32 MRS = Convert.ToInt32(MRS_bin, 2);
+                        if (MRS == 0) { Track_Status = Track_Status + "/MRS: Merge or split indication undetermined"; }
+                        if (MRS == 1) { Track_Status = Track_Status + "/MRS: Track merged by association to plot"; }
+                        if (MRS == 2) { Track_Status = Track_Status + "/MRS: Track merged by non-association to plot"; }
+                        if (MRS == 3) { Track_Status = Track_Status + "/MRS: Split track"; }
+
+                        if (Status1[7].ToString() == "1")
+                        {
+                            contador += 1;
+                            string Status_Bin2 = M.Octeto_A_Bin(paquete0[contador]);
+                            char[] Status2 = Status_Bin2.ToCharArray();
+
+                            if (Status2[0].ToString() == "1") { Track_Status = Track_Status + "/GHO: Ghost Track"; }
+                            if (Status2[0].ToString() == "0") { Track_Status = Track_Status + "/GHO: Default"; }
+                        }
+                        if (Status1[7].ToString() == "0")
+                        {
+                            contador += 1;
+                        }
                     }
-                    if (Status1[7].ToString() == "0")
+                    if (Status[7].ToString() == "0")
                     {
                         contador += 1;
                     }
                 }
-                if (Status[7].ToString() == "0")
+                if (FSPEC[11] == "1")
                 {
-                    contador += 1;
+                    // Item I010/060: Mode-3/A in Octal
+                    string Mode3A_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string Mode3A_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string Mode3A_Bin = Mode3A_Bin1 + Mode3A_Bin2;
+                    char[] Mode3A_v = Mode3A_Bin.ToCharArray();
+
+                    if (Mode3A_v[0].ToString() == "0") { Mode3A_Code = "V: Code validated"; }
+                    if (Mode3A_v[0].ToString() == "1") { Mode3A_Code = "V: Code not validated"; }
+
+                    if (Mode3A_v[1].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/G: Default"; }
+                    if (Mode3A_v[1].ToString() == "1") { Mode3A_Code = Mode3A_Code + "/G: Garbled Code"; }
+
+                    if (Mode3A_v[2].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/L: Mode-3/A code derived from the reply of the transponder"; }
+                    if (Mode3A_v[2].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/L: Mode-3/A code not extracted during the last scan"; }
+
+                    Mode3A_Code = Mode3A_Code + "/" + Mode3A_v[4].ToString() + Mode3A_v[5].ToString() + Mode3A_v[6].ToString() + Mode3A_v[7].ToString() +
+                        Mode3A_v[8].ToString() + Mode3A_v[9].ToString() + Mode3A_v[10].ToString() + Mode3A_v[11].ToString() + Mode3A_v[12].ToString() +
+                        Mode3A_v[13].ToString() + Mode3A_v[14].ToString() + Mode3A_v[15].ToString();
+
+                    contador += 2;
                 }
-            }
-            if (FSPEC[11] == "1")
-            {
-                // Item I010/060: Mode-3/A in Octal
-                string Mode3A_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
-                string Mode3A_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string Mode3A_Bin = Mode3A_Bin1 + Mode3A_Bin2;
-                char[] Mode3A_v = Mode3A_Bin.ToCharArray();
-
-                if (Mode3A_v[0].ToString() == "0") { Mode3A_Code = "V: Code validated"; }
-                if (Mode3A_v[0].ToString() == "1") { Mode3A_Code = "V: Code not validated"; }
-
-                if (Mode3A_v[1].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/G: Default"; }
-                if (Mode3A_v[1].ToString() == "1") { Mode3A_Code = Mode3A_Code + "/G: Garbled Code"; }
-
-                if (Mode3A_v[2].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/L: Mode-3/A code derived from the reply of the transponder"; }
-                if (Mode3A_v[2].ToString() == "0") { Mode3A_Code = Mode3A_Code + "/L: Mode-3/A code not extracted during the last scan"; }
-
-                Mode3A_Code = Mode3A_Code + "/" + Mode3A_v[4].ToString() + Mode3A_v[5].ToString() + Mode3A_v[6].ToString() + Mode3A_v[7].ToString() +
-                    Mode3A_v[8].ToString() + Mode3A_v[9].ToString() + Mode3A_v[10].ToString() + Mode3A_v[11].ToString() + Mode3A_v[12].ToString() +
-                    Mode3A_v[13].ToString() + Mode3A_v[14].ToString() + Mode3A_v[15].ToString();
-
-                contador += 2;
-            }
-            if (FSPEC[12] == "1")
-            {
-                // Item I010/220: Target Address
-                string TA_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
-                string TA_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string TA_Bin3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                Target_Add = Convert.ToInt32(TA_Bin1 + TA_Bin2 + TA_Bin3, 2);
-
-                contador += 3;
-            }
-            if (FSPEC[13] == "1")
-            {
-                // Item I010/245: Target Identification
-                string TI_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
-                string TI_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string TI_Bin3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                string TI_Bin4 = M.Octeto_A_Bin(paquete0[contador + 3]);
-                string TI_Bin5 = M.Octeto_A_Bin(paquete0[contador + 4]);
-                string TI_Bin6 = M.Octeto_A_Bin(paquete0[contador + 5]);
-                string TI_Bin7 = M.Octeto_A_Bin(paquete0[contador + 6]);
-
-                string TI_Bin = TI_Bin1 + TI_Bin2 + TI_Bin3 + TI_Bin4 + TI_Bin5 + TI_Bin6 + TI_Bin7;
-                char[] TI_v = TI_Bin.ToCharArray();
-
-                Int32 STI = Convert.ToInt32(TI_v[0].ToString() + TI_v[1].ToString(), 2);
-                if (STI == 0) { Target_ID = "STI: Callsign or registration downlinked from transponder"; }
-                if (STI == 1) { Target_ID = "STI: Callsign not downlinked from transponder"; }
-                if (STI == 2) { Target_ID = "STI: Registration not downlinked from transponder"; }
-
-                Target_ID = new string(TI_v, 8, 55);
-
-                contador += 7;
-            }
-            if (FSPEC[14] == "1")
-            {
-                // Item I010/250: Mode S MB Data
-                string REP = M.Octeto_A_Bin(paquete0[contador]);
-                string SMB2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string SMB3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                string SMB4 = M.Octeto_A_Bin(paquete0[contador + 3]);
-                string SMB5 = M.Octeto_A_Bin(paquete0[contador + 4]);
-                string SMB6 = M.Octeto_A_Bin(paquete0[contador + 5]);
-                string SMB7 = M.Octeto_A_Bin(paquete0[contador + 6]);
-                string SMB8 = M.Octeto_A_Bin(paquete0[contador + 7]);
-                string BDS = M.Octeto_A_Bin(paquete0[contador + 8]);
-                char[] BDS_bin = BDS.ToCharArray();
-
-                Mode_SMB = "REP: " + REP;
-                Mode_SMB = Mode_SMB + "/MB: " + Convert.ToInt32(SMB2 + SMB3 + SMB4 + SMB5 + SMB6 + SMB7 + SMB8, 2);
-                Mode_SMB = Mode_SMB + "/BDS1: " + BDS_bin[0].ToString() + BDS_bin[1].ToString() + BDS_bin[2].ToString() + BDS_bin[3].ToString();
-                Mode_SMB = Mode_SMB + "/BDS2: " + BDS_bin[4].ToString() + BDS_bin[5].ToString() + BDS_bin[6].ToString() + BDS_bin[7].ToString();
-
-                contador += 9;
-            }
-            if (FSPEC[15] == "1")
-            {
-                // Item I010/300: Vehicle Fleet ID
-                string fleetID = M.Octeto_A_Bin(paquete0[contador]);
-                int VFI = Convert.ToInt32(fleetID, 2);
-                if (VFI == 0) { Fleet_ID = "Unknown"; }
-                if (VFI == 1) { Fleet_ID = "ATC Equipment maintainance"; }
-                if (VFI == 2) { Fleet_ID = "Airport maintainance"; }
-                if (VFI == 3) { Fleet_ID = "Fire"; }
-                if (VFI == 4) { Fleet_ID = "Bird scarer"; }
-                if (VFI == 5) { Fleet_ID = "Snow plough"; }
-                if (VFI == 6) { Fleet_ID = "Runway sweeper"; }
-                if (VFI == 7) { Fleet_ID = "Emergency"; }
-                if (VFI == 8) { Fleet_ID = "Police"; }
-                if (VFI == 9) { Fleet_ID = "Bus"; }
-                if (VFI == 10) { Fleet_ID = "Tug (push/tow)"; }
-                if (VFI == 11) { Fleet_ID = "Grass cutter"; }
-                if (VFI == 12) { Fleet_ID = "Fuel"; }
-                if (VFI == 13) { Fleet_ID = "Baggage"; }
-                if (VFI == 14) { Fleet_ID = "Catering"; }
-                if (VFI == 15) { Fleet_ID = "Aircraft maintainance"; }
-                if (VFI == 16) { Fleet_ID = "Flyco (follow me)"; }
-
-                contador += 1;
-            }
-            if (FSPEC[16] == "1")
-            {
-                // Item I010/090: Flight Level in Binary
-                string FL1 = M.Octeto_A_Bin(paquete0[contador]);
-                string FL2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-
-                string FL = FL1 + FL2;
-                char[] FL_bin = FL.ToCharArray();
-
-                if (FL_bin[0].ToString() == "0") { FL_Binary = "V: Code Validated"; }
-                if (FL_bin[0].ToString() == "1") { FL_Binary = "V: Code Not Validated"; }
-
-                if (FL_bin[1].ToString() == "0") { FL_Binary = FL_Binary + "G: Default"; }
-                if (FL_bin[1].ToString() == "1") { FL_Binary = FL_Binary + "G: Garbled Code"; }
-
-                FL = new string(FL_bin, 2, 15);
-                FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL, 2);
-
-                contador += 2;
-            }
-            if (FSPEC[17] == "1")
-            {
-                // Item I010/091: Measured Height
-                string height1 = M.Octeto_A_Bin(paquete0[contador]);
-                string height2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-
-                string height = height1 + height2;
-                Height = Convert.ToInt32(height) * 6.25;
-
-                contador += 2;
-            }
-            if (FSPEC[18] == "1")
-            {
-                // Item I010/270: Target Size and Orientation
-                string length = M.Octeto_A_Bin(paquete0[contador]);
-                char[] length_v = length.ToCharArray();
-                string length_bin = new string(length_v, 0, 6);
-                Target_Size_Heading[0] = Convert.ToInt32(length_bin, 2);
-                
-                if (length_v[7].ToString() == "1")
+                if (FSPEC[12] == "1")
                 {
-                    string length1 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                    char[] length1_v = length1.ToCharArray();
-                    string lenght1_bin = new string(length1_v, 0, 6);
-                    Target_Size_Heading[1] = Convert.ToInt32(lenght1_bin, 2) * (360.0 / 128.0);
+                    // Item I010/220: Target Address
+                    string TA_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string TA_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string TA_Bin3 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                    Target_Add = Convert.ToInt32(TA_Bin1 + TA_Bin2 + TA_Bin3, 2);
 
-                    if (length1_v[7].ToString() == "1")
+                    contador += 3;
+                }
+                if (FSPEC[13] == "1")
+                {
+                    // Item I010/245: Target Identification
+                    string TI_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
+                    string TI_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                    string TI_Bin3 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                    string TI_Bin4 = M.Octeto_A_Bin(paquete0[contador + 3]);
+                    string TI_Bin5 = M.Octeto_A_Bin(paquete0[contador + 4]);
+                    string TI_Bin6 = M.Octeto_A_Bin(paquete0[contador + 5]);
+                    string TI_Bin7 = M.Octeto_A_Bin(paquete0[contador + 6]);
+
+                    string TI_Bin = TI_Bin1 + TI_Bin2 + TI_Bin3 + TI_Bin4 + TI_Bin5 + TI_Bin6 + TI_Bin7;
+                    char[] TI_v = TI_Bin.ToCharArray();
+
+                    Int32 STI = Convert.ToInt32(TI_v[0].ToString() + TI_v[1].ToString(), 2);
+                    if (STI == 0) { Target_ID = "STI: Callsign or registration downlinked from transponder"; }
+                    if (STI == 1) { Target_ID = "STI: Callsign not downlinked from transponder"; }
+                    if (STI == 2) { Target_ID = "STI: Registration not downlinked from transponder"; }
+
+                    Target_ID = new string(TI_v, 8, 55);
+
+                    contador += 7;
+                }
+
+                if (FSPEC.Count > 14)
+                {
+                    if (FSPEC[14] == "1")
                     {
-                        string length2 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                        char[] length2_v = length2.ToCharArray();
-                        string lenght2_bin = new string(length2_v, 0, 6);
-                        Target_Size_Heading[2] = Convert.ToInt32(lenght2_bin, 2);
+                        // Item I010/250: Mode S MB Data
+                        string REP = M.Octeto_A_Bin(paquete0[contador]);
+                        string SMB2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                        string SMB3 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                        string SMB4 = M.Octeto_A_Bin(paquete0[contador + 3]);
+                        string SMB5 = M.Octeto_A_Bin(paquete0[contador + 4]);
+                        string SMB6 = M.Octeto_A_Bin(paquete0[contador + 5]);
+                        string SMB7 = M.Octeto_A_Bin(paquete0[contador + 6]);
+                        string SMB8 = M.Octeto_A_Bin(paquete0[contador + 7]);
+                        string BDS = M.Octeto_A_Bin(paquete0[contador + 8]);
+                        char[] BDS_bin = BDS.ToCharArray();
 
-                        contador += 3;
+                        Mode_SMB = "REP: " + REP;
+                        Mode_SMB = Mode_SMB + "/MB: " + Convert.ToInt32(SMB2 + SMB3 + SMB4 + SMB5 + SMB6 + SMB7 + SMB8, 2);
+                        Mode_SMB = Mode_SMB + "/BDS1: " + BDS_bin[0].ToString() + BDS_bin[1].ToString() + BDS_bin[2].ToString() + BDS_bin[3].ToString();
+                        Mode_SMB = Mode_SMB + "/BDS2: " + BDS_bin[4].ToString() + BDS_bin[5].ToString() + BDS_bin[6].ToString() + BDS_bin[7].ToString();
+
+                        contador += 9;
                     }
-                    if (length1_v[7].ToString() == "0") { contador += 2; }
+                    if (FSPEC[15] == "1")
+                    {
+                        // Item I010/300: Vehicle Fleet ID
+                        string fleetID = M.Octeto_A_Bin(paquete0[contador]);
+                        int VFI = Convert.ToInt32(fleetID, 2);
+                        if (VFI == 0) { Fleet_ID = "Unknown"; }
+                        if (VFI == 1) { Fleet_ID = "ATC Equipment maintainance"; }
+                        if (VFI == 2) { Fleet_ID = "Airport maintainance"; }
+                        if (VFI == 3) { Fleet_ID = "Fire"; }
+                        if (VFI == 4) { Fleet_ID = "Bird scarer"; }
+                        if (VFI == 5) { Fleet_ID = "Snow plough"; }
+                        if (VFI == 6) { Fleet_ID = "Runway sweeper"; }
+                        if (VFI == 7) { Fleet_ID = "Emergency"; }
+                        if (VFI == 8) { Fleet_ID = "Police"; }
+                        if (VFI == 9) { Fleet_ID = "Bus"; }
+                        if (VFI == 10) { Fleet_ID = "Tug (push/tow)"; }
+                        if (VFI == 11) { Fleet_ID = "Grass cutter"; }
+                        if (VFI == 12) { Fleet_ID = "Fuel"; }
+                        if (VFI == 13) { Fleet_ID = "Baggage"; }
+                        if (VFI == 14) { Fleet_ID = "Catering"; }
+                        if (VFI == 15) { Fleet_ID = "Aircraft maintainance"; }
+                        if (VFI == 16) { Fleet_ID = "Flyco (follow me)"; }
+
+                        contador += 1;
+                    }
+                    if (FSPEC[16] == "1")
+                    {
+                        // Item I010/090: Flight Level in Binary
+                        string FL1 = M.Octeto_A_Bin(paquete0[contador]);
+                        string FL2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+
+                        string FL = FL1 + FL2;
+                        char[] FL_bin = FL.ToCharArray();
+
+                        if (FL_bin[0].ToString() == "0") { FL_Binary = "V: Code Validated"; }
+                        if (FL_bin[0].ToString() == "1") { FL_Binary = "V: Code Not Validated"; }
+
+                        if (FL_bin[1].ToString() == "0") { FL_Binary = FL_Binary + "G: Default"; }
+                        if (FL_bin[1].ToString() == "1") { FL_Binary = FL_Binary + "G: Garbled Code"; }
+
+                        FL = new string(FL_bin, 2, 15);
+                        FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL, 2);
+
+                        contador += 2;
+                    }
+                    if (FSPEC[17] == "1")
+                    {
+                        // Item I010/091: Measured Height
+                        string height1 = M.Octeto_A_Bin(paquete0[contador]);
+                        string height2 = M.Octeto_A_Bin(paquete0[contador + 1]);
+
+                        string height = height1 + height2;
+                        Height = Convert.ToInt32(height) * 6.25;
+
+                        contador += 2;
+                    }
+                    if (FSPEC[18] == "1")
+                    {
+                        // Item I010/270: Target Size and Orientation
+                        string length = M.Octeto_A_Bin(paquete0[contador]);
+                        char[] length_v = length.ToCharArray();
+                        string length_bin = new string(length_v, 0, 6);
+                        Target_Size_Heading[0] = Convert.ToInt32(length_bin, 2);
+
+                        if (length_v[7].ToString() == "1")
+                        {
+                            string length1 = M.Octeto_A_Bin(paquete0[contador + 1]);
+                            char[] length1_v = length1.ToCharArray();
+                            string lenght1_bin = new string(length1_v, 0, 6);
+                            Target_Size_Heading[1] = Convert.ToInt32(lenght1_bin, 2) * (360.0 / 128.0);
+
+                            if (length1_v[7].ToString() == "1")
+                            {
+                                string length2 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                                char[] length2_v = length2.ToCharArray();
+                                string lenght2_bin = new string(length2_v, 0, 6);
+                                Target_Size_Heading[2] = Convert.ToInt32(lenght2_bin, 2);
+
+                                contador += 3;
+                            }
+                            if (length1_v[7].ToString() == "0") { contador += 2; }
+                        }
+                        if (length_v[7].ToString() == "0") { contador += 1; }
+                    }
+                    if (FSPEC[19] == "1")
+                    {
+                        // Item I010/550: System Status
+                        string stat = M.Octeto_A_Bin(paquete0[contador]);
+                        char[] stat_v = stat.ToCharArray();
+
+                        int NOGO = Convert.ToInt32(stat_v[0].ToString() + stat_v[1].ToString(), 2);
+                        if (NOGO == 0) { Sys_Status = "NOGO: Operational"; }
+                        if (NOGO == 1) { Sys_Status = "NOGO: Degraded"; }
+                        if (NOGO == 2) { Sys_Status = "NOGO: NOGO"; }
+
+                        if (stat_v[2].ToString() == "0") { Sys_Status = Sys_Status + "/OVL: No overload"; }
+                        if (stat_v[2].ToString() == "1") { Sys_Status = Sys_Status + "/OVL: Overload"; }
+
+                        if (stat_v[3].ToString() == "0") { Sys_Status = Sys_Status + "/TSV: Valid"; }
+                        if (stat_v[3].ToString() == "1") { Sys_Status = Sys_Status + "/TSV: Invalid"; }
+
+                        if (stat_v[4].ToString() == "0") { Sys_Status = Sys_Status + "/DIV: Normal Operation"; }
+                        if (stat_v[4].ToString() == "1") { Sys_Status = Sys_Status + "/DIV: Diversity degraded"; }
+
+                        if (stat_v[5].ToString() == "0") { Sys_Status = Sys_Status + "/TTF: Test Target Operative"; }
+                        if (stat_v[5].ToString() == "1") { Sys_Status = Sys_Status + "/TTF: Test Target Failure"; }
+
+                        contador += 1;
+                    }
+                    if (FSPEC[20] == "1")
+                    {
+                        // Item I010/310: Pre-programmed Message
+                        string messg = M.Octeto_A_Bin(paquete0[contador]);
+                        char[] messg_v = messg.ToCharArray();
+
+                        if (messg_v[0].ToString() == "0") { Pre_Prog_Message = "TRB: Default"; }
+                        if (messg_v[0].ToString() == "1") { Pre_Prog_Message = "TRB: In Trouble"; }
+
+                        string MSGbin = new string(messg_v, 1, 7);
+                        int MSG = Convert.ToInt32(MSGbin, 2);
+
+                        if (MSG == 1) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Towing Aircraft"; }
+                        if (MSG == 2) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: 'Follow Me' operation"; }
+                        if (MSG == 3) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Runway Check"; }
+                        if (MSG == 4) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Emergency Operation"; }
+                        if (MSG == 5) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Work in progress"; }
+
+                        contador += 1;
+                    }
+
+                    if (FSPEC.Count > 21)
+                    {
+                        if (FSPEC[21] == "1")
+                        {
+                            // Item I010/500: Standard Deviation of Position
+                            string SDx = M.Octeto_A_Bin(paquete0[contador]);
+                            string SDy = M.Octeto_A_Bin(paquete0[contador + 1]);
+                            string SDxy1 = M.Octeto_A_Bin(paquete0[contador + 2]);
+                            string SDxy2 = M.Octeto_A_Bin(paquete0[contador + 3]);
+
+                            StndrdDev_Position[0] = Convert.ToInt32(SDx, 2) * 0.25;
+                            StndrdDev_Position[1] = Convert.ToInt32(SDy, 2) * 0.25;
+
+                            string SDxy = SDxy1 + SDxy2;
+                            StndrdDev_Position[2] = Convert.ToInt32(SDxy, 2) * 0.25;
+
+                            contador += 4;
+                        }
+                        if (FSPEC[22] == "1")
+                        {
+                            // Item I010/280: Presence
+                            string REP = M.Octeto_A_Bin(paquete0[contador]);
+                            string DRHO = M.Octeto_A_Bin(paquete0[contador + 1]);
+                            string DTHETA = M.Octeto_A_Bin(paquete0[contador + 2]);
+
+                            Presence[0] = Convert.ToInt32(REP, 2);
+                            Presence[1] = Convert.ToInt32(DRHO, 2);
+                            Presence[2] = Convert.ToInt32(DTHETA, 2) * 0.15;
+
+                            contador += 3;
+                        }
+                        if (FSPEC[23] == "1")
+                        {
+                            // Item I010/131: Amplitude of Primary Plot
+                            string amplitude = M.Octeto_A_Bin(paquete0[contador]);
+                            Amplitude = Convert.ToInt32(amplitude, 2);
+
+                            contador += 1;
+                        }
+                        if (FSPEC[24] == "1")
+                        {
+                            // Item I010/210: Calculated Acceleration
+                            string Ax = M.Octeto_A_Bin(paquete0[contador]);
+                            string Ay = M.Octeto_A_Bin(paquete0[contador + 1]);
+
+                            Acceleration[0] = M.ComplementoA2(Ax) * 0.25;
+                            Acceleration[1] = M.ComplementoA2(Ay) * 0.25;
+
+                            contador += 2;
+                        }
+                    }
+
+                    else { }
                 }
-                if (length_v[7].ToString() == "0") { contador += 1; }
-            }
-            if (FSPEC[19] == "1")
-            {
-                // Item I010/550: System Status
-                string stat = M.Octeto_A_Bin(paquete0[contador]);
-                char[] stat_v = stat.ToCharArray();
 
-                int NOGO = Convert.ToInt32(stat_v[0].ToString() + stat_v[1].ToString(), 2);
-                if (NOGO == 0) { Sys_Status = "NOGO: Operational"; }
-                if (NOGO == 1) { Sys_Status = "NOGO: Degraded"; }
-                if (NOGO == 2) { Sys_Status = "NOGO: NOGO"; }
+                else { }
+            }                        
 
-                if (stat_v[2].ToString() == "0") { Sys_Status = Sys_Status + "/OVL: No overload"; }
-                if (stat_v[2].ToString() == "1") { Sys_Status = Sys_Status + "/OVL: Overload"; }
-
-                if (stat_v[3].ToString() == "0") { Sys_Status = Sys_Status + "/TSV: Valid"; }
-                if (stat_v[3].ToString() == "1") { Sys_Status = Sys_Status + "/TSV: Invalid"; }
-
-                if (stat_v[4].ToString() == "0") { Sys_Status = Sys_Status + "/DIV: Normal Operation"; }
-                if (stat_v[4].ToString() == "1") { Sys_Status = Sys_Status + "/DIV: Diversity degraded"; }
-
-                if (stat_v[5].ToString() == "0") { Sys_Status = Sys_Status + "/TTF: Test Target Operative"; }
-                if (stat_v[5].ToString() == "1") { Sys_Status = Sys_Status + "/TTF: Test Target Failure"; }
-
-                contador += 1;
-            }
-            if (FSPEC[20] == "1")
-            {
-                // Item I010/310: Pre-programmed Message
-                string messg = M.Octeto_A_Bin(paquete0[contador]);
-                char[] messg_v = messg.ToCharArray();
-
-                if (messg_v[0].ToString() == "0") { Pre_Prog_Message = "TRB: Default"; }
-                if (messg_v[0].ToString() == "1") { Pre_Prog_Message = "TRB: In Trouble"; }
-
-                string MSGbin = new string(messg_v, 1, 7);
-                int MSG = Convert.ToInt32(MSGbin, 2);
-
-                if (MSG == 1) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Towing Aircraft"; }
-                if (MSG == 2) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: 'Follow Me' operation"; }
-                if (MSG == 3) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Runway Check"; }
-                if (MSG == 4) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Emergency Operation"; }
-                if (MSG == 5) { Pre_Prog_Message = Pre_Prog_Message + "/MSG: Work in progress"; }
-
-                contador += 1;
-            }
-            if (FSPEC[21] == "1")
-            {
-                // Item I010/500: Standard Deviation of Position
-                string SDx = M.Octeto_A_Bin(paquete0[contador]);
-                string SDy = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string SDxy1 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                string SDxy2 = M.Octeto_A_Bin(paquete0[contador + 3]);
-
-                StndrdDev_Position[0] = Convert.ToInt32(SDx, 2) * 0.25;
-                StndrdDev_Position[1] = Convert.ToInt32(SDy, 2) * 0.25;
-
-                string SDxy = SDxy1 + SDxy2;
-                StndrdDev_Position[2] = Convert.ToInt32(SDxy, 2) * 0.25;
-
-                contador += 4;
-            }
-            if (FSPEC[22] == "1")
-            {
-                // Item I010/280: Presence
-                string REP = M.Octeto_A_Bin(paquete0[contador]);
-                string DRHO = M.Octeto_A_Bin(paquete0[contador + 1]);
-                string DTHETA = M.Octeto_A_Bin(paquete0[contador + 2]);
-
-                Presence[0] = Convert.ToInt32(REP, 2);
-                Presence[1] = Convert.ToInt32(DRHO, 2);
-                Presence[2] = Convert.ToInt32(DTHETA, 2) * 0.15;
-
-                contador += 3;
-            }
-            if (FSPEC[23] == "1")
-            {
-                // Item I010/131: Amplitude of Primary Plot
-                string amplitude = M.Octeto_A_Bin(paquete0[contador]);
-                Amplitude = Convert.ToInt32(amplitude, 2);
-
-                contador += 1;
-            }
-            if (FSPEC[24] == "1")
-            {
-                // Item I010/210: Calculated Acceleration
-                string Ax = M.Octeto_A_Bin(paquete0[contador]);
-                string Ay = M.Octeto_A_Bin(paquete0[contador + 1]);
-
-                Acceleration[0] = M.ComplementoA2(Ax) * 0.25;
-                Acceleration[1] = M.ComplementoA2(Ay) * 0.25;
-
-                contador += 2;
-            }
-
+            else { }
+            
             // FSPEC[25] no tiene Data Items, es de "spare"
 
             //if (FSPEC[26] == "1")

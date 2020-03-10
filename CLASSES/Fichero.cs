@@ -73,6 +73,7 @@ namespace CLASSES
                 listahex.Add(arrayhex);
             }
 
+            //int p = 0;
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
@@ -83,6 +84,9 @@ namespace CLASSES
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
+
+                    //Console.Write(p);
+                    //p += 1;
                 }
                 //else if (CAT == 20)
                 //{
