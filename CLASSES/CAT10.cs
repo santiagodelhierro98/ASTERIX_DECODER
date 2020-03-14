@@ -58,7 +58,7 @@ namespace CLASSES
                 string SIC_Bin = M.Octeto_A_Bin(paquete0[contador + 1]);
 
                 string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
-                string SIC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
+                string SIC = (Convert.ToInt32(SIC_Bin, 2)).ToString();
                 Data_Source_ID = SIC + "/" + SAC;
 
                 contador = contador + 2;
