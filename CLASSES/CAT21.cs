@@ -6,7 +6,7 @@ namespace CLASSES
 {
     public class CAT21
     {
-        Metodos M = new Metodos();
+        Metodos Met = new Metodos();
 
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT21)
@@ -615,44 +615,9 @@ namespace CLASSES
             if (FSPEC[28] == "1")
             {
                 //I021/170 Target Identification (found in table 3.8 annex 10 ICAO) see 3.1.2.9
-                string A= "000001";
-                string B = "000010";
-                string C = "000011";
-                string D = "000100";
-                string E = "000101";
-                string F = "000110";
-                string G = "000111";
-                string H = "001000";
-                string I = "001001";
-                string J = "001010";
-                string K = "001011";
-                string L = "001100";
-                string M = "001101";
-                string N = "001110";
-                string O = "001111";
-                string P = "010000";
-                string Q = "010001";
-                string R = "010010";
-                string S = "010011";
-                string T = "010100";
-                string U = "010101";
-                string V = "010110";
-                string W = "010111";
-                string X = "011000";
-                string Y = "011001";
-                string Z = "011010";
-                string SP = "100000";
-                string zero= "110000";
-                string one = "110001";
-                string two = "110010";
-                string three = "110011";
-                string four = "110100";
-                string five = "110101";
-                string six = "110110";
-                string seven = "110111";
-                string eight = "111000";
-                string nine = "111001";
-                
+                string octetototal = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]) + Met.Octeto_A_Bin(paquete0[contador + 3]) + Met.Octeto_A_Bin(paquete0[contador + 4]) + Met.Octeto_A_Bin(paquete0[contador + 5]);
+                 Target_ID = Met.Compare_bits(octetototal);
+
 
 
             }

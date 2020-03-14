@@ -154,5 +154,59 @@ namespace CLASSES
             }
         }
 
+        public string Compare_bits(string targetbits)
+        {
+
+            int j = 0;
+            string Target_ID = "";
+            while (6 + j <= targetbits.Length)
+            {
+                char[] target_bits = targetbits.ToCharArray();
+                
+                string sext = target_bits[j].ToString() + target_bits[j + 1].ToString() + target_bits[j + 2].ToString() + target_bits[j + 3].ToString() + target_bits[j + 4].ToString() + target_bits[j + 5].ToString() ;
+                if (sext == "000001") { Target_ID = Target_ID + "A"; }
+                if (sext == "000010") { Target_ID = Target_ID + "B"; }
+                if (sext == "000011") { Target_ID = Target_ID + "C"; }
+                if (sext == "000100") { Target_ID = Target_ID + "D"; }
+                if (sext == "000101") { Target_ID = Target_ID + "E"; }
+                if (sext == "000110") { Target_ID = Target_ID + "F"; }
+                if (sext == "000111") { Target_ID = Target_ID + "G"; }
+                if (sext == "001000") { Target_ID = Target_ID + "H"; }
+                if (sext == "001001") { Target_ID = Target_ID + "I"; }
+                if (sext == "001010") { Target_ID = Target_ID + "J"; }
+                if (sext == "001011") { Target_ID = Target_ID + "K"; }
+                if (sext == "001100") { Target_ID = Target_ID + "L"; }
+                if (sext == "001101") { Target_ID = Target_ID + "M"; }
+                if (sext == "001110") { Target_ID = Target_ID + "N"; }
+                if (sext == "001111") { Target_ID = Target_ID + "O"; }
+                if (sext == "010000") { Target_ID = Target_ID + "P"; }
+                if (sext == "010001") { Target_ID = Target_ID + "Q"; }
+                if (sext == "010010") { Target_ID = Target_ID + "R"; }
+                if (sext == "010011") { Target_ID = Target_ID + "S"; }
+                if (sext == "010100") { Target_ID = Target_ID + "T"; }
+                if (sext == "010101") { Target_ID = Target_ID + "U"; }
+                if (sext == "010110") { Target_ID = Target_ID + "V"; }
+                if (sext == "010111") { Target_ID = Target_ID + "W"; }
+                if (sext == "011000") { Target_ID = Target_ID + "X"; }
+                if (sext == "011001") { Target_ID = Target_ID + "Y"; }
+                if (sext == "011010") { Target_ID = Target_ID + "Z"; }
+                if (sext == "100000") { Target_ID = Target_ID + " "; }
+                if (sext == "110000") { Target_ID = Target_ID + "0"; }
+                if (sext == "110001") { Target_ID = Target_ID + "1"; }
+                if (sext == "110010") { Target_ID = Target_ID + "2"; }
+                if (sext == "110011") { Target_ID = Target_ID + "3"; }
+                if (sext == "110100") { Target_ID = Target_ID + "4"; }
+                if (sext == "110101") { Target_ID = Target_ID + "5"; }
+                if (sext == "110110") { Target_ID = Target_ID + "6"; }
+                if (sext == "110111") { Target_ID = Target_ID + "7"; }
+                if (sext == "111000") { Target_ID = Target_ID + "8"; }
+                if (sext == "111001") { Target_ID = Target_ID + "9"; }
+
+                j = j + 6;
+             
+                
+            }
+            return Target_ID;
+        }
     }
 }
