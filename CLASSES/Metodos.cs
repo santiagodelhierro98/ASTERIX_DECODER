@@ -153,10 +153,8 @@ namespace CLASSES
                 }
             }
         }
-
         public string Compare_bits(string targetbits)
         {
-
             int j = 0;
             string Target_ID = "";
             while (6 + j <= targetbits.Length)
@@ -202,9 +200,7 @@ namespace CLASSES
                 if (sext == "111000") { Target_ID = Target_ID + "8"; }
                 if (sext == "111001") { Target_ID = Target_ID + "9"; }
 
-                j = j + 6;
-             
-                
+                j = j + 6;               
             }
             return Target_ID;
         }
