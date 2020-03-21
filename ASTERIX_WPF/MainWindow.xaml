@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Asterix Decoder App" Height="450" Width="800" Background="#222" Icon="./Resources/UPClogo.ico">
         
-    </Grid>
+    <Border Padding="5">
+        <Grid>
+            <StackPanel>
+                <!-- Buttons -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="LoadButton" Click="LoadFile_Click" Grid.Column="0" Content="Load File" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
+                    <Button x:Name="TableButton" Click="TableTrack_Click" Grid.Column="1" Content="Tracking Table" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
+                    <Button x:Name="MapButton" Click="MapTrack_Click" Grid.Column="2" Content="Tracking Map" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
+                    <Button x:Name="ExitButton" Click="Exit_Click" Grid.Column="3" Content="Exit" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
+                </Grid>
+
+            </StackPanel>
+            <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./Resources/asterix.png"/>
+            <Image Opacity="0.65" Height="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="./Resources/UPCwatermark.png"/>
+        </Grid>
+    </Border>
 </Window>

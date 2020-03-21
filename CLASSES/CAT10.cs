@@ -60,11 +60,9 @@ namespace CLASSES
 
                 string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
                 string SIC = (Convert.ToInt32(SIC_Bin, 2)).ToString();
-<<<<<<< HEAD
+
                 Data_Source_ID = SIC + "/" + SAC;
-=======
                 Data_Source_ID = "SIC: " + SIC + "/SAC: " + SAC;
->>>>>>> 6666045529ea3c3ac4ee3fd7bb0fbc058fa6d834
 
                 contador += 2;
             }
