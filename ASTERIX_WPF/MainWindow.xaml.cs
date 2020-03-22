@@ -30,10 +30,21 @@ namespace ASTERIX_WPF
             MessageBox.Show("Do you want to close the app?");
             this.Close();
         }
+
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.ShowDialog();
+        }
+
+        private void TableTrack_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Table Tracking");
+        }
+
+        private void MapTrack_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Map Tracking");
         }
     }
 }
