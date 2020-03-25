@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:ASTERIX_WPF"
         mc:Ignorable="d"
         Title="Asterix Decoder App" Height="450" Width="800" Background="#222">
-        
     <Border Padding="5">
         <Grid>
             <StackPanel>
@@ -29,4 +28,4 @@
             <Image Opacity="0.65" Height="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="./Resources/UPCwatermark.png"/>
         </Grid>
     </Border>
-</Window>
+</Window>                                                                                                                                                                                                                                                                                                                           

@@ -103,12 +103,10 @@ namespace CLASSES
         public string IDENT;
         public string LenWidth; //length and width of the aircraft in meters
         public double MAM; //in dBm;
-
         public double REP_MODESMBDAATA;
         public double MB_data;
         public double BDS1;
         public double BDS2;
-
         public double TYP;
         public double STYP;
         public double ARA;
@@ -117,9 +115,7 @@ namespace CLASSES
         public double MTE;
         public double TTI;
         public double TID_ACAS;
-
         public double RID;
-
         public double AOS_age;
         public double TRD_age;
         public double M3A_age;
@@ -144,15 +140,6 @@ namespace CLASSES
         public double ARA_age;
         public double SCC_age;
        
-
-
-
-
-
-
-
-
-
         public void Decode21(string[] paquete)
         {
             Metodos Met = new Metodos();
@@ -714,7 +701,6 @@ namespace CLASSES
                             contador = contador + 3;
 
                         }
-
                         if (FSPEC.Count > 28)
                         {
                             if (FSPEC[28] == "1")

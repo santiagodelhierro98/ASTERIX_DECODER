@@ -4,10 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASTERIX_DECODER_APP", "ASTERIX_DECODER_APP.csproj", "{12FA15BC-64A6-423E-985B-BF2AEEB03A44}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE78C89E-E51D-44C5-AF82-438BCCC532C8} = {CE78C89E-E51D-44C5-AF82-438BCCC532C8}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLASSES", "..\CLASSES\CLASSES.csproj", "{CE78C89E-E51D-44C5-AF82-438BCCC532C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASTERIX_WPF", "..\ASTERIX_WPF\ASTERIX_WPF.csproj", "{97D70A8F-2660-4DF9-9EF3-4289DB3D870B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{12FA15BC-64A6-423E-985B-BF2AEEB03A44} = {12FA15BC-64A6-423E-985B-BF2AEEB03A44}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

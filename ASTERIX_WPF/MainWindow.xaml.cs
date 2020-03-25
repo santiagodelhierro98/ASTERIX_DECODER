@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ASTERIX_DECODER_APP;
 
 namespace ASTERIX_WPF
 {
@@ -33,8 +34,18 @@ namespace ASTERIX_WPF
 
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            ASTERIX_DECODER_APP Decoder = new ASTERIX_DECODER_APP();
             OpenFileDialog OpenFile = new OpenFileDialog();
-            OpenFile.ShowDialog();
+            try
+            {
+                OpenFile.ShowDialog();
+                MessageBox.Show(OpenFile.FileName);
+                Decoder.APP(OpenFile.FileName);
+            }
+            catch
+            {
+                MessageBox.Show("Error, reboot App");
+            }
         }
 
         private void TableTrack_Click(object sender, RoutedEventArgs e)

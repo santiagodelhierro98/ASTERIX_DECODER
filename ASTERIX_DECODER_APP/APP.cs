@@ -7,9 +7,9 @@ namespace ASTERIX_DECODER_APP
 {
     class APP
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            string path = @"C:\Users\joanh\Desktop\ASTERIX_DECODER\ASTERIX_DECODER_APP\smr_160510-lebl-220001.ast";
+            string path = @"C:\Users\joanh\Desktop\ASTERIX_DECODER\ASTERIX_DECODER_APP\adsb_v21_bcn.ast";
             Fichero ast = new Fichero(path);
             ast.leer();
         }

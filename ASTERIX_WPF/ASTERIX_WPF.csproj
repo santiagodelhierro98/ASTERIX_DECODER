@@ -97,5 +97,11 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASTERIX_DECODER_APP\ASTERIX_DECODER_APP.csproj">
+      <Project>{12fa15bc-64a6-423e-985b-bf2aeeb03a44}</Project>
+      <Name>ASTERIX_DECODER_APP</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
