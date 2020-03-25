@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_WPF"
         mc:Ignorable="d"
-         Title="Asterix Decoder App" Height="450" Width="800" Background="#222">
-    
+        Title="Asterix Decoder App" Height="450" Width="800" Background="#222">
+
     <Border Padding="5">
         <Grid>
             <StackPanel>
@@ -25,9 +25,8 @@
                 </Grid>
 
             </StackPanel>
-            <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./asterix.png"/>
-            <Image Opacity="0.65" Height="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="./UPCwatermark.png"/>
+            <!-- Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./asterix.png"/>
+            <Image Opacity="0.65" Height="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="./UPCwatermark.png"/ -->
         </Grid>
     </Border>
-
 </Window>

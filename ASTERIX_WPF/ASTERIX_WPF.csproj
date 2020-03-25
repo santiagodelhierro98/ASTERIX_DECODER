@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{74C1CC68-0375-4020-8225-635E9ACA48B5}</ProjectGuid>
+    <ProjectGuid>{DDA2834B-1CA5-461B-9F60-6F1ED60F9E66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ASTERIX_WPF</RootNamespace>
     <AssemblyName>ASTERIX_WPF</AssemblyName>
@@ -93,6 +93,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASTERIX_DECODER_APP\ASTERIX_DECODER_APP.csproj">
+      <Project>{12fa15bc-64a6-423e-985b-bf2aeeb03a44}</Project>
+      <Name>ASTERIX_DECODER_APP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CLASSES\CLASSES.csproj">
+      <Project>{ce78c89e-e51d-44c5-af82-438bccc532c8}</Project>
+      <Name>CLASSES</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
