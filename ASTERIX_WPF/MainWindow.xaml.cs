@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ASTERIX_DECODER_APP;
 
 namespace ASTERIX_WPF
 {
@@ -22,10 +21,7 @@ namespace ASTERIX_WPF
         public MainWindow()
         {
             InitializeComponent();
-
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
-
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Do you want to close the app?");
@@ -34,18 +30,9 @@ namespace ASTERIX_WPF
 
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
-            ASTERIX_DECODER_APP Decoder = new ASTERIX_DECODER_APP();
             OpenFileDialog OpenFile = new OpenFileDialog();
-            try
-            {
-                OpenFile.ShowDialog();
-                MessageBox.Show(OpenFile.FileName);
-                Decoder.APP(OpenFile.FileName);
-            }
-            catch
-            {
-                MessageBox.Show("Error, reboot App");
-            }
+            OpenFile.ShowDialog();
+            MessageBox.Show(OpenFile.FileName);
         }
 
         private void TableTrack_Click(object sender, RoutedEventArgs e)
