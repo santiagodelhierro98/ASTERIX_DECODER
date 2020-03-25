@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ASTERIX_WPF
+namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
