@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CLASSES;
 
 namespace ASTERIX_APP
 {
@@ -27,19 +28,18 @@ namespace ASTERIX_APP
             MessageBox.Show("Do you want to close the app?");
             this.Close();
         }
-
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.ShowDialog();
-            MessageBox.Show(OpenFile.FileName);
-        }
 
+            Fichero fichero = new Fichero(OpenFile.FileName);
+            fichero.leer();
+        }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Table Tracking");
         }
-
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Map Tracking");
