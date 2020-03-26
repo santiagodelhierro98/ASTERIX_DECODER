@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
+    <None Remove="Images\upc-logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png" />
+    <Resource Include="Images\upc-logo.png" />
   </ItemGroup>
 
 </Project>

@@ -22,10 +22,11 @@
                     <Button x:Name="TableButton" Click="TableTrack_Click" Grid.Column="1" Content="Tracking Table" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
                     <Button x:Name="MapButton" Click="MapTrack_Click" Grid.Column="2" Content="Tracking Map" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
                     <Button x:Name="ExitButton" Click="Exit_Click" Grid.Column="3" Content="Exit" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
+                    <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="/Images/upc-logo.png" Margin="0,0,0,-380"/>
                 </Grid>
 
             </StackPanel>
-            <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="upc-logo.png"/>
+
         </Grid>
     </Border>
 </Window>
