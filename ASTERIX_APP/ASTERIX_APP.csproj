@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CLASSES\CLASSES.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Eurocontrol_logo_2010.svg.png" />
   </ItemGroup>
 
 </Project>
