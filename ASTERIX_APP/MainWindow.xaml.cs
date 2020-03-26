@@ -22,10 +22,13 @@ namespace ASTERIX_APP
         public MainWindow()
         {
             InitializeComponent();
+            Instructions_Label.FontSize = 18;
+            Instructions_Label.Content = "Welcome to ASTERIX APP!" + '\n' + '\n' + "We need some file to read!" + '\n' +
+                "Please, load a '.ast' format file with the 'Load File' button above.";
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Do you want to close the app?");
+            MessageBox.Show("Are you sure you want to exit?");
             this.Close();
         }
         private void LoadFile_Click(object sender, RoutedEventArgs e)
@@ -33,12 +36,23 @@ namespace ASTERIX_APP
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.ShowDialog();
 
-            Fichero fichero = new Fichero(OpenFile.FileName);
-            fichero.leer();
+            try
+            {
+                Fichero fichero = new Fichero(OpenFile.FileName);
+                fichero.leer();
+
+                Instructions_Label.Content = "Perfectly read!";
+            }
+            catch
+            {
+                MessageBox.Show("There was an error. Incorrect format/Something went wrong in CLASSES");
+                // Hay un archivo q me da errores en el cat21
+            }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Table Tracking");
+            Table Track_Table = new Table();
+
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {

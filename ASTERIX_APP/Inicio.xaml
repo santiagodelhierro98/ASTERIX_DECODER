@@ -5,16 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
-        d:DesignHeight="400" d:DesignWidth="800" Background="#222"
-        Title="Inicio" Height="450" Width="800">
+        d:DesignHeight="300" d:DesignWidth="600" Background="#222"
+        Title="Inicio" Height="300" Width="600" ResizeMode="NoResize">
     <Grid>
         <StackPanel>
-            <Grid Height="400" Width="800">
-                <Label HorizontalAlignment="Center" Margin="0,32,0,0" Content="Welcome to ASTERIX decoder application"  VerticalAlignment="Top" Width="600" Background="#222" FontFamily="Century Gothic" FontSize="25" Foreground="Gray"/>
-                <Button x:Name="Start" Click ="Start_Click" Content="START" Margin="0,0,41,48" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Gray" Foreground="Black" Width="70"/>
+            <Grid Height="300" Width="600">
+                <Label HorizontalAlignment="Center" Margin="0,32,0,0" Content="Welcome to ASTERIX decoder application"  VerticalAlignment="Top" Background="#222" FontFamily="Century Gothic" FontSize="25" Foreground="Gray"/>
+                <Button x:Name="Start" Click ="Start_Click" Content="START" Margin="0,0,41,48" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1"/>
                 <Image  Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/Eurocontrol_logo_2010.svg.png" Margin="24,0,0,30" />
             </Grid>
         </StackPanel>
-
-    </Grid>
+    </Grid>        
 </Window>
