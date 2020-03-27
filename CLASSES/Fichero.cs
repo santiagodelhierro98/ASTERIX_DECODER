@@ -11,6 +11,8 @@ namespace CLASSES
     public class Fichero
     {
         string path;
+        public int CAT;
+
         List<CAT10> listaCAT10 = new List<CAT10>();
         //List<CAT20> listaCAT20 = new List<CAT20>();
         List<CAT21> listaCAT21 = new List<CAT21>();
@@ -77,7 +79,7 @@ namespace CLASSES
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
-                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+                CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
 
                 if (CAT == 10)
                 {
@@ -101,19 +103,6 @@ namespace CLASSES
                     listaCAT21.Add(C21);
                 }
             }
-        }
-
-        public DataTable getTablaCAT10()
-        {
-            return tablaCAT10;
-        }
-        //public DataTable getTablaCAT20()
-        //{
-        //    return tablaCAT20;
-        //}
-        public DataTable getTablaCAT21()
-        {
-            return tablaCAT21;
         }
     }
 }

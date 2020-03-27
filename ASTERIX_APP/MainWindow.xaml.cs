@@ -41,7 +41,14 @@ namespace ASTERIX_APP
                 Fichero fichero = new Fichero(OpenFile.FileName);
                 fichero.leer();
 
-                Instructions_Label.Content = "Perfectly read!";
+                Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
+                    '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
+                MapButton.Visibility = 0;
+                TableButton.Visibility = 0;
+
+                if (fichero.CAT == 10) { Track_Table.ItemsSource = fichero.getListCAT10(); }
+                if (fichero.CAT == 21) { Track_Table.ItemsSource = fichero.getListCAT21(); }
+                else { MessageBox.Show("SLOW MOTION" + '\n' + "We have not solve this Asterix category yet"); }
             }
             catch
             {
@@ -51,7 +58,7 @@ namespace ASTERIX_APP
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
-            Table Track_Table = new Table();
+            Track_Table.Visibility = 0;
 
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
