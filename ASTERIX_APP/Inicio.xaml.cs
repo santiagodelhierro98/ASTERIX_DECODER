@@ -20,6 +20,8 @@ namespace ASTERIX_APP
         public Inicio()
         {
             InitializeComponent();
+            Window win = new Window();
+            win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         private void Start_Click(object sender, RoutedEventArgs e)
         {
