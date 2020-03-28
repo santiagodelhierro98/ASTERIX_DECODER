@@ -20,8 +20,5 @@ namespace CLASSES
         public string target_address;
         public string target_ID;
         public double FL; // flight level
-
-
-
     }
 }

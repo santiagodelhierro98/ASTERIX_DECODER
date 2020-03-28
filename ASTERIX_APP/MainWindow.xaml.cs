@@ -22,11 +22,17 @@ namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
+<<<<<<< HEAD
 
         Fichero fichero;
         public MainWindow()//List<CAT21> ListaCAT21)
+=======
+        Fichero F;
+        public MainWindow()
+>>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
         {
             InitializeComponent();
+
             Instructions_Label.Visibility = Visibility.Visible; ;
             Instructions_Label.FontSize = 18;
             Instructions_Label.Content = "Welcome to ASTERIX APP!" + '\n' + '\n' + "We need some file to read!" + '\n' +
@@ -41,6 +47,7 @@ namespace ASTERIX_APP
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.ShowDialog();
+<<<<<<< HEAD
             Instructions_Label.Content = "Loading...";
             Fichero fichero = new Fichero(OpenFile.FileName);
             fichero.leer();
@@ -55,14 +62,30 @@ namespace ASTERIX_APP
            
         }    
         
+=======
+            F = new Fichero(OpenFile.FileName);
+            Instructions_Label.Content = "Loading...";
+
+            F.leer();
+            
+            Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
+                    '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
+
+            MapButton.Visibility = Visibility.Visible; ;
+            TableButton.Visibility = Visibility.Visible; ;
+        }
+>>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(F.getListCAT10().Count().ToString());
+
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
 
 
             //Fichero pepe = crearfichero();
@@ -72,6 +95,11 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible; ;            
 
+=======
+            Instructions_Label.Visibility = Visibility.Hidden;
+            Track_Table.Visibility = Visibility.Hidden;
+            map.Visibility = Visibility.Visible;
+>>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -89,9 +117,7 @@ namespace ASTERIX_APP
             map.Zoom = 13;
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
-            map.DragButton = MouseButton.Left;
-
-                
+            map.DragButton = MouseButton.Left;                
         }
     }
 }
