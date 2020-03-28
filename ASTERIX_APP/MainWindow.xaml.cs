@@ -14,6 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CLASSES;
+using GMap.NET.WindowsPresentation;
+using GMap.NET;
+using GMap.NET.MapProviders;
+
+
+
+
+
+
 
 namespace ASTERIX_APP
 {
@@ -63,7 +72,27 @@ namespace ASTERIX_APP
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Map Tracking");
+            map.Visibility = 0;
+            
         }
+        private void Map_Load(object sender, RoutedEventArgs e)
+        {
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            map.MapProvider = OpenStreetMapProvider.Instance;
+            map.Zoom = 7;
+            map.MinZoom = 0;
+            map.MaxZoom = 20;
+            double lat = 41.0;
+            double lon = 002.0;
+            map.Position = new PointLatLng(lat, lon);
+            map.Zoom = 5;
+            map.MinZoom = 0;
+            map.MaxZoom = 24;
+            map.Zoom = 13;
+            map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            map.CanDragMap = true;
+            map.DragButton = MouseButton.Left;
+        }
+
     }
 }

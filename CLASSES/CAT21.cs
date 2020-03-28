@@ -145,10 +145,14 @@ namespace CLASSES
             Metodos Met = new Metodos();
             int longitud = Met.Longitud_Paquete(paquete);
             string[] paquete0 = new string[longitud];
+            
             for (int i = 0; i < longitud; i++)
             {
 
                 paquete0[i] = Met.Poner_Zeros_Delante(paquete[i]);
+                string bitscat = Convert.ToString(Convert.ToInt32(paquete0[0], 16), 2);
+                double CAT = Convert.ToInt32(bitscat, 2);
+                if (CAT != 21) { i = i + 1; }
             }
             List<string> FSPEC = new List<string>(Met.FSPEC(paquete0));
             // Posicion del vector paquete0 donde empieza la info despues del FSPEC

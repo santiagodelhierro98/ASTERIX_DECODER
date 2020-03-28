@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_APP"
-        mc:Ignorable="d"
-        d:DesignHeight="300" d:DesignWidth="600" Background="#222"
-        Title="Inicio" Height="300" Width="600" ResizeMode="NoResize">
+        mc:Ignorable="d" d:DesignWidth="600" Background="#222"
+        Title="Inicio" Height="313" Width="600" ResizeMode="NoResize">
     <Grid>
         <StackPanel>
             <Grid Height="300" Width="600">
@@ -15,5 +14,5 @@
                 <Image  Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/Eurocontrol_logo_2010.svg.png" Margin="24,0,0,30" />
             </Grid>
         </StackPanel>
-    </Grid>        
+    </Grid>
 </Window>

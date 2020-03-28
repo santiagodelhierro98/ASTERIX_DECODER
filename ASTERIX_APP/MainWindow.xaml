@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
         Title="Asterix Decoder App" Height="450" Width="800" Background="#222">
 
     <Border Padding="5">
-        <Grid x:Name="pantalla">
+        <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458">
             <StackPanel>
                 <!-- Buttons -->
                 <Grid>
@@ -26,7 +27,7 @@
             </StackPanel>
             <Label x:Name="Instructions_Label" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff"/>
             <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./Images/upc-logo.png"/>
-            
+
             <!-- Data Table -->
             <DataGrid x:Name="Track_Table" Margin="10 40 10 10" Background="#222" RowBackground="#222" RowHeight="10" Visibility="Hidden">
                 <DataGrid.Columns>
@@ -52,6 +53,9 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <!-- Map -->
+            <gmaps:GMapControl x:Name="map"  BorderBrush="Black" Margin="300,50,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
+            
         </Grid>
     </Border>
 </Window>

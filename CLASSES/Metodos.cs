@@ -37,6 +37,7 @@ namespace CLASSES
             }
             return result.ToString();
         }
+        
         public string Poner_Zeros_Delante(string octeto)
         {
             string octeto0;
