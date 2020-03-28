@@ -140,7 +140,7 @@ namespace CLASSES
         public double ARA_age;
         public double SCC_age;
        
-        public void Decode21(string[] paquete)
+        public void Decode21(string[] paquete, int q)
         {
             Metodos Met = new Metodos();
             int longitud = Met.Longitud_Paquete(paquete);
@@ -148,7 +148,6 @@ namespace CLASSES
             
             for (int i = 0; i < longitud; i++)
             {
-
                 paquete0[i] = Met.Poner_Zeros_Delante(paquete[i]);
                 string bitscat = Convert.ToString(Convert.ToInt32(paquete0[0], 16), 2);
                 double CAT = Convert.ToInt32(bitscat, 2);
@@ -182,7 +181,6 @@ namespace CLASSES
                 // I021/040 : Target Report Descriptor
                 string TargetReport_Bin = Met.Octeto_A_Bin(paquete0[contador]);
                 char[] Target_Bits = TargetReport_Bin.ToCharArray();
-
 
                 string ATP_Bin = Target_Bits[0].ToString() + Target_Bits[1].ToString() + Target_Bits[2].ToString();
                 Int32 ATP = Convert.ToInt32(ATP_Bin, 2);
@@ -260,13 +258,7 @@ namespace CLASSES
 
                         contador = contador + 1;
                     }
-
                 }
-
-
-
-
-
             }
             if (FSPEC[2] == "1")
             {
@@ -278,7 +270,6 @@ namespace CLASSES
                 string Track_Num_Bin = Track_Num_oct1 + Track_Num_Bin2;
                 Track_Num = Convert.ToInt32(Track_Num_Bin, 2).ToString();
                 contador = contador + 2;
-
             }
             if (FSPEC[3] == "1")
             {
@@ -286,19 +277,16 @@ namespace CLASSES
 
                 Service_ID = Met.Octeto_A_Bin(paquete0[contador]);
                 contador = contador + 1;
-
             }
             if (FSPEC[4] == "1")
             {
                 // I021/071: Time of Applicability for Position
-                string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
-                string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                string octeto3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
-                string octeto_total = octeto1 + octeto2 + octeto3;
-                ToA_Position = Met.ComplementoA2(octeto_total) * (1 / 128);
+                string toa1 = Met.Octeto_A_Bin(paquete0[contador]);
+                string toa2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
+                string toa3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
+                string toa_total = toa1 + toa2 + toa3;
+                ToA_Position = Convert.ToInt32(toa_total, 2) * (1.0 / 128.0);
                 contador = contador + 3;
-
-
             }
             if (FSPEC[5] == "1")
             {
@@ -314,8 +302,6 @@ namespace CLASSES
                 string octeto_total1 = octeto4 + octeto5 + octeto6;
                 Lon_WGS_84 = Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 23));
                 contador = contador + 6;
-
-
             }
             if (FSPEC[6] == "1")
             {
@@ -333,8 +319,6 @@ namespace CLASSES
                 string octeto_total1 = octeto5 + octeto6 + octeto7 + octeto8;
                 High_Res_Lon_WGS_84 = Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 30));
                 contador = contador + 8;
-
-
             }
 
             if (FSPEC.Count > 7)
@@ -350,7 +334,6 @@ namespace CLASSES
                     double num2 = 128;
                     ToA_Velocity = Met.ComplementoA2(octeto_total) * (num1 / num2);
                     contador = contador + 3;
-
                 }
                 if (FSPEC[8] == "1")
                 {
@@ -370,23 +353,28 @@ namespace CLASSES
                         Air_Speed = "MACH:" + Mach.ToString();
                     }
                     contador = contador + 2;
-
-
                 }
                 if (FSPEC[9] == "1")
                 {
                     //I021/151 True Airspeed
                     string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
-                    string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                    string octeto_total = octeto1 + octeto2;
-                    if (Convert.ToInt32(octeto_total[0].ToString()) == 0)
+                    try
                     {
-                        double tas = Met.ComplementoA2(octeto_total.Remove(0, 1));
-                        True_Airspeed = "TAS:" + tas.ToString();// knots
+                        string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
+                        string octeto_total = octeto1 + octeto2;
+                        if (Convert.ToInt32(octeto_total[0].ToString()) == 0)
+                        {
+                            double tas = Met.ComplementoA2(octeto_total.Remove(0, 1));
+                            True_Airspeed = "TAS:" + tas.ToString();// knots
+                        }
+                        else
+                        {
+                            True_Airspeed = "Value exceeds defined range";
+                        }
                     }
-                    else
+                    catch
                     {
-                        True_Airspeed = "Value exceeds defined range";
+                        True_Airspeed = null;
                     }
                     contador = contador + 2;
                 }
@@ -409,7 +397,6 @@ namespace CLASSES
                     contador = contador + 3;
                 }
                 if (FSPEC[12] == "1")
-
                 {
                     // I021/074: Time of Message Reception of Position-High Precison
                     string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -436,10 +423,8 @@ namespace CLASSES
                     }
                     TMRP_HP = Met.ComplementoA2(octeto_total.Remove(0, 2)) * Math.Pow(2, -30);
                     contador = contador + 4;
-
                 }
                 if (FSPEC[13] == "1")
-
                 {
                     // I021/075: Time of Message Reception of Velocity 
                     string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -491,7 +476,6 @@ namespace CLASSES
                         string octeto_total = octeto1 + octeto2;
                         GH = Met.ComplementoA2(octeto_total) * 6.25;
                         contador = contador + 2;
-
                     }
                     if (FSPEC[16] == "1")
                     {
@@ -559,10 +543,8 @@ namespace CLASSES
                                     if (PIC1 == 13) { PIC = "< 0.013 NM"; }
                                     if (PIC1 == 14) { PIC = "< 0.004 NM"; }
                                     if (PIC1 == 15) { PIC = "No defined"; }
-
                                 }
                             }
-
                         }
                         contador = contador + 1;
                     }
@@ -582,17 +564,22 @@ namespace CLASSES
                         if (Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2) == 3) { LTT = "VDL 4"; }
                         else { LTT = "Not assigned"; }
                         contador = contador + 1;
-
-
                     }
                     if (FSPEC[18] == "1")
                     {
                         //I021/070: Mode 3/A Code in Octal Representation
 
-                        string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
-                        string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                        string octeto_total = octeto1[4].ToString() + octeto1[5].ToString() + octeto1[6].ToString() + octeto1[7].ToString() + octeto2.ToString();
-                        M3AC = "Mode-3/A reply in octal representation: " + Convert.ToString(Convert.ToInt32(Convert.ToInt32(octeto_total, 2)), 8);
+                        try
+                        {
+                            string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
+                            string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
+                            string octeto_total = octeto1[4].ToString() + octeto1[5].ToString() + octeto1[6].ToString() + octeto1[7].ToString() + octeto2.ToString();
+                            M3AC = "Mode-3/A reply in octal representation: " + Convert.ToString(Convert.ToInt32(Convert.ToInt32(octeto_total, 2)), 8);
+                        }
+                        catch
+                        {
+                            M3AC = null;
+                        }
                         contador = contador + 2;
                     }
                     if (FSPEC[19] == "1")
@@ -651,7 +638,6 @@ namespace CLASSES
                             if (Convert.ToInt32(octetoSS, 2) == 2) { SS = "Temporary Alert (change in Mode 3/A Code other than emergency"; }
                             if (Convert.ToInt32(octetoSS, 2) == 3) { SS = "SPI set"; }
                             contador = contador + 1;
-
                         }
                         if (FSPEC[23] == "1")
                         {
@@ -690,8 +676,8 @@ namespace CLASSES
                         }
                         if (FSPEC[26] == "1")
                         {
-
                             // I021/165: Track Angle Rate
+
                             string TARbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
                             string TARBITS = TARbits.Remove(0, 6);
                             TAR = Met.ComplementoA2(TARBITS) * (1.0 / 32.0);
@@ -700,11 +686,13 @@ namespace CLASSES
                         if (FSPEC[27] == "1")
                         {
                             // I021/077 Time of Report Transmission
+
                             string ToARTbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]);
                             ToART = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0), 2);
                             contador = contador + 3;
 
                         }
+
                         if (FSPEC.Count > 28)
                         {
                             if (FSPEC[28] == "1")
@@ -713,7 +701,6 @@ namespace CLASSES
                                 string octetototal = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]) + Met.Octeto_A_Bin(paquete0[contador + 3]) + Met.Octeto_A_Bin(paquete0[contador + 4]) + Met.Octeto_A_Bin(paquete0[contador + 5]);
                                 Target_ID = Met.Compare_bits(octetototal);
                                 contador = contador + 6;
-
                             }
                             if (FSPEC[29] == "1")
                             {
@@ -745,11 +732,11 @@ namespace CLASSES
                                 if (Convert.ToInt32(octeto, 2) == 23) { ECAT = "cluster obstacle"; }
                                 if (Convert.ToInt32(octeto, 2) == 24) { ECAT = "line obstacle"; }
                                 contador = contador + 1;
-
                             }
                             if (FSPEC[30] == "1")
                             {
                                 // I021/220 Met Information
+
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 if (octeto[0].ToString() == "0") { WS = "No Wind Speed reported"; }
                                 else
@@ -768,7 +755,6 @@ namespace CLASSES
                                     string windspeedbits = octeto2 + octeto3;
                                     WD = Convert.ToString(Met.ComplementoA2(windspeedbits));
                                     contador = contador + 2;
-
                                 }
                                 if (octeto[2].ToString() == "0") { TMP = "No Temperature reported"; }
                                 else
@@ -791,6 +777,7 @@ namespace CLASSES
                             if (FSPEC[31] == "1")
                             {
                                 //021/146 Selected Altitude
+
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                                 string total = octeto + octeto2;
@@ -804,11 +791,11 @@ namespace CLASSES
                                 string altitudebits = total.Remove(0, 2);
                                 SA = Met.ComplementoA2(altitudebits) * 25.0;
                                 contador = contador + 2;
-
                             }
                             if (FSPEC[32] == "1")
                             {
                                 //I021/148 Final State Selected Altitude
+
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                                 string total = octeto + octeto2;
@@ -825,6 +812,7 @@ namespace CLASSES
                             if (FSPEC[33] == "1")
                             {
                                 //I021/110 Trajectory Intent
+
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 if (octeto[0].ToString() == "0") { TIS = "Abscence of Subfield #1"; }
                                 else
@@ -881,15 +869,13 @@ namespace CLASSES
                                         TTR = Convert.ToInt32(TTRbits, 2) * 0.01;
                                         contador = contador + 14;
                                     }
-
                                 }
                                 contador = contador + 1;
-
-
                             }
                             if (FSPEC[34] == "1")
                             {
                                 //I021/016 Service Management
+
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 RP = Convert.ToInt32(octeto, 2) * 0.5;
                                 contador = contador + 1;
@@ -900,6 +886,7 @@ namespace CLASSES
                                 if (FSPEC[35] == "1")
                                 {
                                     //I021/008 Aircraft Operational Status
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     if (octeto[0].ToString() == "0") { RA = "TCAS II or ACAS RA not active"; }
                                     else { RA = "TCAS RA active"; }
@@ -919,11 +906,11 @@ namespace CLASSES
                                     if (octeto[7].ToString() == "0") { SingAnt = "Antenna Diversity"; }
                                     else { SingAnt = "Single Antenna only "; }
                                     contador = contador + 1;
-
                                 }
                                 if (FSPEC[36] == "1")
                                 {
                                     //I021/271 Surface Capabilities and Characteristics
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     if (octeto[2].ToString() == "0") { POA = "Position transmitted is not ADS-B position reference point"; }
                                     else { POA = "Position transmitted is the ADS-B position reference point"; }
@@ -957,20 +944,20 @@ namespace CLASSES
                                         if (Convert.ToInt32(lenwidthbits, 2) == 14) { LenWidth = "Length < 85 m ; Width < 80 m"; }
                                         if (Convert.ToInt32(lenwidthbits, 2) == 15) { LenWidth = "Length < 85 m ; Width > 80 m"; }
                                         contador = contador + 1;
-
                                     }
                                 }
                                 if (FSPEC[37] == "1")
                                 {
                                     //I021/132 Message Amplitude
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     MAM = Met.ComplementoA2(octeto);
                                     contador = contador + 1;
-
                                 }
                                 if (FSPEC[38] == "1")
                                 {
                                     //I021/250 Mode S MB Data
+
                                     string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
                                     REP_MODESMBDAATA = Convert.ToInt32(octeto1, 2);
                                     string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
@@ -989,6 +976,7 @@ namespace CLASSES
                                 if (FSPEC[39] == "1")
                                 {
                                     // I021/260 ACAS Resolution Advisory Report
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     string TYP_BITS = octeto.Remove(5, 3);
                                     TYP = Convert.ToInt32(TYP_BITS, 2);
@@ -1012,14 +1000,15 @@ namespace CLASSES
                                 if (FSPEC[40] == "1")
                                 {
                                     //I021/400 Receiver ID
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     RID = Convert.ToInt32(octeto, 2);
                                     contador = contador + 1;
-
                                 }
                                 if (FSPEC[41] == "1")
                                 {
                                     //I021/295 Data Ages
+
                                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                     Int32 contadordeoctetos = contador;
                                     if (octeto[0].ToString() == "1")
@@ -1027,49 +1016,42 @@ namespace CLASSES
                                         contador = contador + 4;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         AOS_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[1].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string TRD_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         TRD_age = Convert.ToInt32(TRD_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[2].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         M3A_age = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 2);
-
                                     }
                                     if (octeto[3].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         QI_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[4].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         TI_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[5].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         MAM_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[6].ToString() == "1")
                                     {
                                         contador = contador + 1;
                                         string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                         GH_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                     }
                                     if (octeto[7].ToString() == "1")
                                     {
@@ -1079,49 +1061,42 @@ namespace CLASSES
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             FL_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[1].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             ISA_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[2].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             FSA_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[3].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             AS_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[4].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             TAS_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[5].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             MH_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[6].ToString() == "1")
                                         {
                                             contador = contador + 1;
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             BVR_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                         }
                                         if (octeto2[7].ToString() == "1")
                                         {
@@ -1131,49 +1106,42 @@ namespace CLASSES
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 GVR_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[1].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 GV_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[2].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 TAR_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[3].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 Target_ID_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[4].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 TS_age = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 2);
-
                                             }
                                             if (octeto3[5].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 MET_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[6].ToString() == "1")
                                             {
                                                 contador = contador + 1;
                                                 string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                 ROA_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                             }
                                             if (octeto3[7].ToString() == "1")
                                             {
@@ -1183,14 +1151,12 @@ namespace CLASSES
                                                     contador = contador + 1;
                                                     string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                     ARA_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                                 }
                                                 if (octeto4[1].ToString() == "1")
                                                 {
                                                     contador = contador + 1;
                                                     string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                                     SCC_age = Convert.ToInt32(AOS_BITS, 2) * 0.1;
-
                                                 }
                                             }
                                         }

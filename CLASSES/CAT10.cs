@@ -45,6 +45,9 @@ namespace CLASSES
             for (int i = 0; i < longitud; i++)
             {
                 paquete0[i] = M.Poner_Zeros_Delante(paquete[i]);
+                string bitscat = Convert.ToString(Convert.ToInt32(paquete0[0], 16), 2);
+                double CAT = Convert.ToInt32(bitscat, 2);
+                if (CAT != 10) { i = i + 1; }
             }
             List<string> FSPEC = new List<string>(M.FSPEC(paquete0));
 
@@ -407,8 +410,9 @@ namespace CLASSES
                     if (STI == 1) { Target_ID = "STI: Callsign not downlinked from transponder"; }
                     if (STI == 2) { Target_ID = "STI: Registration not downlinked from transponder"; }
 
-                    Target_ID = new string(TI_v, 8, 55);
-
+                    Target_ID += "/";
+                    for (int i=8; i<TI_v.Length; i++) { Target_ID += TI_v[i].ToString(); }
+                    
                     contador += 7;
                 }
 
@@ -475,8 +479,9 @@ namespace CLASSES
                         if (FL_bin[1].ToString() == "0") { FL_Binary = FL_Binary + "G: Default"; }
                         if (FL_bin[1].ToString() == "1") { FL_Binary = FL_Binary + "G: Garbled Code"; }
 
-                        FL = new string(FL_bin, 2, 15);
-                        FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL, 2);
+                        string FL3 = FL_bin[2].ToString();
+                        for(int i=2; i<FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
+                        FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL3, 2);
 
                         contador += 2;
                     }
@@ -616,25 +621,11 @@ namespace CLASSES
                             contador += 2;
                         }
                     }
-
                     else { }
                 }
-
                 else { }
-            }                        
-
+            }          
             else { }
-            
-            // FSPEC[25] no tiene Data Items, es de "spare"
-
-            //if (FSPEC[26] == "1")
-            //{
-            //    // SP: Special Purpose FieldS
-            //}
-            //if (FSPEC[27] == "1")
-            //{
-            //    // RE: Reserved Expansion Field
-            //}
         }
     }
 }
