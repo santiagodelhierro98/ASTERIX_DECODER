@@ -85,14 +85,12 @@ namespace CLASSES
                 {
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
-<<<<<<< HEAD
+
                     listaCAT10.Add(C10);
 
 
-                
-=======
-                    listaCAT10.Add(C10);                
->>>>>>> d54eb8397ec35802de314d53319a667c2e6283c1
+                          
+
                 }
                 //else if (CAT == 20)
                 //{
