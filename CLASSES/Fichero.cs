@@ -87,6 +87,7 @@ namespace CLASSES
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
 
+
                 
                 }
                 //else if (CAT == 20)

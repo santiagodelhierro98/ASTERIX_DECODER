@@ -28,7 +28,9 @@ namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        List<CAT21> ListaCAT21;
+        Fichero F;
+        public MainWindow(List<CAT21> ListaCAT21)
         {
             InitializeComponent();
             Instructions_Label.FontSize = 18;
@@ -57,6 +59,7 @@ namespace ASTERIX_APP
 
                 if (fichero.CAT == 10) { Track_Table.ItemsSource = fichero.getListCAT10(); }
                 if (fichero.CAT == 21) { Track_Table.ItemsSource = fichero.getListCAT21(); }
+          
                 else { MessageBox.Show("SLOW MOTION" + '\n' + "We have not solve this Asterix category yet"); }
             }
             catch
@@ -73,11 +76,14 @@ namespace ASTERIX_APP
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
             map.Visibility = 0;
-            
+
+            List<CAT21> pepe = F.getListCAT21();
+
+
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             map.MapProvider = OpenStreetMapProvider.Instance;
             map.Zoom = 7;
             map.MinZoom = 0;
@@ -92,6 +98,8 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;
+
+                
         }
 
     }
