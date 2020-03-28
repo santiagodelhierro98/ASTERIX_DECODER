@@ -85,9 +85,7 @@ namespace CLASSES
                 {
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
-                    listaCAT10.Add(C10);
-
-                
+                    listaCAT10.Add(C10);                
                 }
                 //else if (CAT == 20)
                 //{
@@ -98,7 +96,7 @@ namespace CLASSES
                 else if (CAT == 21)
                 {
                     CAT21 C21 = new CAT21();
-                    C21.Decode21(arraystring);
+                    C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
                 }
             }
