@@ -73,10 +73,25 @@ namespace ASTERIX_APP
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
-
             gridlista.Visibility = Visibility.Visible;
-            gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
-
+            
+          
+            if (F.CAT == 10)
+            {
+                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat10reducida()) == true)
+                {
+                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
+                }
+                else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+            }
+            if (F.CAT == 21)
+            {
+                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat21reducida()) == true)
+                {
+                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
+                }
+                gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
+            }
 
         }
         private void Map_Load(object sender, RoutedEventArgs e)

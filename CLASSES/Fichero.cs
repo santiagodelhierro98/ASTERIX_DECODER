@@ -126,8 +126,8 @@ namespace CLASSES
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
 
-                    multiplecattablereducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
-                    tablacat10reducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
+                    multiplecattablereducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(),Math.Round(C10.getLAT10()), Math.Round(C10.getLON10()), C10.getTargetAddress10(), C10.getTrackNum10());
+                    tablacat10reducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), Math.Round(C10.getLAT10()), Math.Round(C10.getLON10()), C10.getTargetAddress10(), C10.getTrackNum10());
                     tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
                            C10.Message_Type, C10.Time_Day, C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1], C10.Pos_PolarCoord + ", " + C10.Pos_PolarCoord[1],
                            C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1], C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1], C10.Track_Vel_Cartesian[0] +
@@ -142,11 +142,19 @@ namespace CLASSES
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
-                    multiplecattablereducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), C21.getLAT21(), C21.getLON21(), C21.getTargetAddress21(), C21.getTrackNum21());
-                    tablacat21reducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), C21.getLAT21(), C21.getLON21(), C21.getTargetAddress21(), C21.getTrackNum21());
+                    multiplecattablereducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+                    tablacat21reducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21()), Math.Round(C21.getLON21()), C21.getTargetAddress21(), C21.getTrackNum21());
 
                 }
             }
+        }
+        public bool Checkifmulticatfile(DataTable datatable1, DataTable datatable2)
+        {
+            //we compare if tablacat10 or tablacat21 is equal to multiplecattable. if they are not equal, file would be multicategory
+           // false means file is multycategory 
+            if (datatable1.Rows[30][0] == datatable2.Rows[30][0]) { return false; }
+            else { return true; }
+         
         }
         public void createtable()
         {

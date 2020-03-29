@@ -90,6 +90,7 @@ namespace CLASSES
                 {
                     Message_Type = "Event-triggered Status Message";
                 }
+                contador += 1;
             }
             if (FSPEC[2] == "1")
             {
@@ -149,7 +150,7 @@ namespace CLASSES
                     if (TOT == 2) { Target_Rep_Descript = Target_Rep_Descript + "/TOT: Ground Vehicle"; }
                     if (TOT == 3) { Target_Rep_Descript = Target_Rep_Descript + "/TOT: Helicopter"; }
 
-                    if (Target_Bits1[7] == 1)
+                    if (Target_Bits1[7].ToString() == "1")
                     {
                         contador += 1;
                         // Second Extent

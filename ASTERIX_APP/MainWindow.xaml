@@ -56,7 +56,7 @@
             </DataGrid>
             <!-- Map -->
             <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
-            <DataGrid x:Name ="gridlista" Margin="10,360,1110,80" RenderTransformOrigin="0.5,0.5" Background="#222" Foreground="white" Visibility="Hidden" BorderBrush="#FFF5F6F7" RowBackground="Black" CanUserSortColumns="False" CanUserResizeRows="False" ColumnWidth="*" >
+            <DataGrid x:Name ="gridlista" Margin="10,360,1110,80" RenderTransformOrigin="0.5,0.5" Background="#222" Foreground="white" Visibility="Hidden"  IsReadOnly="True" BorderBrush="#FFF5F6F7" RowBackground="Black" CanUserSortColumns="False" CanUserResizeRows="False" ColumnWidth="*" >
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#004778"/>
