@@ -9,7 +9,6 @@ namespace CLASSES
     {
         // This class groups all flights independtly of its CAT
         // Variables of this class are Data Items shared between CATs
-        
         public double CAT;
         public double SIC;
         public double SAC;
@@ -21,8 +20,15 @@ namespace CLASSES
         public string target_ID;
         public double FL; // flight level
 
+        //the main objective is to chronologically order two list of different cat 
+        //public void getcat10(CAT10 cat10)
+        //{
+        //}
+
+
+
     }
 
-    //the main objective is to chronologically order two list of different cat 
+
 
 }

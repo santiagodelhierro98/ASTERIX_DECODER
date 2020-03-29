@@ -53,9 +53,7 @@ namespace ASTERIX_APP
             
 
             F.leer();
-            //quitar esto de abajo
-            List<CAT21> listacat21 = F.getListCAT21();
-            ////////////////////////////////////////////
+            
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
 
@@ -75,7 +73,8 @@ namespace ASTERIX_APP
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
-
+            gridlista.Visibility = Visibility.Visible;
+            gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -90,5 +89,6 @@ namespace ASTERIX_APP
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
         }
+        
     }
 }
