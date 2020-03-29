@@ -17,6 +17,8 @@ using CLASSES;
 using GMap.NET.WindowsPresentation;
 using GMap.NET;
 using GMap.NET.MapProviders;
+using System.IO;
+using System.Data;
 
 
 
@@ -27,12 +29,11 @@ namespace ASTERIX_APP
         Fichero F;
         double MLAT_lat = 41.29694444;
         double MLAT_lon = 2.07833333;
+
         public MainWindow()
         {
-            InitializeComponent();
-            
-
-
+            InitializeComponent();        
+                       
             Instructions_Label.Visibility = Visibility.Visible; ;
             Instructions_Label.FontSize = 18;
             Instructions_Label.Content = "Welcome to ASTERIX APP!" + '\n' + '\n' + "We need some file to read!" + '\n' +
@@ -47,13 +48,11 @@ namespace ASTERIX_APP
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
             Instructions_Label.Content = "Loading...";
-            OpenFile.ShowDialog();
-            
+            OpenFile.ShowDialog();            
             F = new Fichero(OpenFile.FileName);
             
-
             F.leer();
-            
+
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
 
@@ -62,19 +61,23 @@ namespace ASTERIX_APP
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(F.getListCAT10().Count().ToString());
-
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
+
+            List<CAT10> ListCAT10 = F.getListCAT10();           
+            Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         { 
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
+
             gridlista.Visibility = Visibility.Visible;
             gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
+
+
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {

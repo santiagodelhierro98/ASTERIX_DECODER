@@ -36,8 +36,7 @@ namespace CLASSES
                 result.Append(hexCharacterToBinary[char.ToLower(c)]);
             }
             return result.ToString();
-        }
-        
+        }        
         public string Poner_Zeros_Delante(string octeto)
         {
             string octeto0;

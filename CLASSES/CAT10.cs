@@ -6,38 +6,36 @@ namespace CLASSES
 {
     public class CAT10
     {
-        Metodos M = new Metodos();
-
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT10)
 
-        string Message_Type;
-        double Data_Source_ID_SIC;
-        double Data_Source_ID_SAC;
-        string Target_Rep_Descript;
-        double[] Pos_PolarCoord = new double[2]; //rho,theta
-        double[] Pos_WGS84 = new double[2];
-        int [] Pos_Cartesian = new int[2];
-        string Mode3A_Code;
-        string FL_Binary;
-        double FlightLevel;
-        double Height;   //ft
-        double Amplitude;    //dBm
-        double Time_Day; //seconds
-        int Track_Num;
-        string Track_Status;
-        double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
-        double[] Track_Vel_Cartesian = new double[2];    // m/s
-        double[] Acceleration = new double[2]; // m/s^2
-        int Target_Add;
-        string Target_ID;
-        string Mode_SMB;
-        double[] Target_Size_Heading = new double[2];    // m,degrees
-        double[] Presence = new double[2];   // rho,theta
-        string Fleet_ID;
-        string Pre_Prog_Message;
-        double[] StndrdDev_Position = new double[3]; // m^2
-        string Sys_Status;
+        public string Message_Type;
+        public int[] Data_Source_ID = new int[2];
+        public string Target_Rep_Descript;
+        public double[] Pos_PolarCoord = new double[2];   //rho,theta
+        public double[] Pos_WGS84 = new double[2];
+        public int[] Pos_Cartesian = new int[2];
+        public string Mode3A_Code;
+        public string[] FL = new string[3];
+        public double Height;   //ft
+        public double Amplitude;    //dBm
+        public double Time_Day; //seconds
+        public int Track_Num;
+        public string Track_Status;
+        public double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
+        public double[] Track_Vel_Cartesian = new double[2];    // m/s
+        public double[] Acceleration = new double[2]; // m/s^2
+        public int Target_Add;
+        public string Target_ID;
+        public string Mode_SMB;
+        public double[] Target_Size_Heading = new double[3];    // m,degrees
+        public double[] Presence = new double[2];   // rho,theta
+        public string Fleet_ID;
+        public string Pre_Prog_Message;
+        public double[] StndrdDev_Position = new double[3]; // m^2
+        public string Sys_Status;
+
+        Metodos M = new Metodos();
 
         public void Decode10(string[] paquete)
         {
@@ -66,8 +64,8 @@ namespace CLASSES
                 double SAC = (Convert.ToInt32(SAC_Bin, 2));
                 double SIC = (Convert.ToInt32(SIC_Bin, 2));
 
-                Data_Source_ID_SIC = SIC;
-                Data_Source_ID_SAC = SAC;
+                Data_Source_ID[0] = Convert.ToInt32(SIC);
+                Data_Source_ID[1] = Convert.ToInt32(SAC);
 
                 contador += 2;
             }
@@ -472,19 +470,18 @@ namespace CLASSES
                         string FL1 = M.Octeto_A_Bin(paquete0[contador]);
                         string FL2 = M.Octeto_A_Bin(paquete0[contador + 1]);
 
-                        string FL = FL1 + FL2;
-                        char[] FL_bin = FL.ToCharArray();
-
-                        if (FL_bin[0].ToString() == "0") { FL_Binary = "V: Code Validated"; }
-                        if (FL_bin[0].ToString() == "1") { FL_Binary = "V: Code Not Validated"; }
-
-                        if (FL_bin[1].ToString() == "0") { FL_Binary = FL_Binary + "G: Default"; }
-                        if (FL_bin[1].ToString() == "1") { FL_Binary = FL_Binary + "G: Garbled Code"; }
+                        string FL_ = FL1 + FL2;
+                        char[] FL_bin = FL_.ToCharArray();
+                        //V
+                        if (FL_bin[0].ToString() == "0") { FL[0] = "Code Validated"; } 
+                        if (FL_bin[0].ToString() == "1") { FL[0] = "Code Not Validated"; }
+                        //G
+                        if (FL_bin[1].ToString() == "0") { FL[1] = "Default"; }
+                        if (FL_bin[1].ToString() == "1") { FL[1] = "Garbled Code"; }
 
                         string FL3 = FL_bin[2].ToString();
-                        for(int i=2; i<FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
-                        FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL3, 2);
-                        FlightLevel = Convert.ToInt32(FL3,2) ;
+                        for(int i=3; i<FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
+                        FL[2] = (Convert.ToInt32(FL3, 2)).ToString();
                         contador += 2;
                     }
                     if (FSPEC[17] == "1")
@@ -632,11 +629,11 @@ namespace CLASSES
         // getters for flight class
         public double getSIC10()
         {
-            return Data_Source_ID_SIC;
+            return Data_Source_ID[1];
         }
         public double getSAC10()
         {
-            return Data_Source_ID_SAC;
+            return Data_Source_ID[0];
         }
         public double getTOD10()
         {
@@ -664,7 +661,7 @@ namespace CLASSES
         }
         public double getFL10()
         {
-            return FlightLevel;
+            return Convert.ToDouble(FL[2]);
         }
     }
 }
