@@ -11,7 +11,6 @@ namespace CLASSES
     public class Fichero
     {
         string path;
-        public int CAT;
 
         List<CAT10> listaCAT10 = new List<CAT10>();
         //List<CAT20> listaCAT20 = new List<CAT20>();
@@ -59,7 +58,6 @@ namespace CLASSES
             return tablacat21reducida;
         }
 
-
         public DataTable getTablaCAT10()
         {
             return tablaCAT10;
@@ -72,8 +70,7 @@ namespace CLASSES
         {
             return tablaCAT21;
         }
-
-
+ 
         public void leer()
         {
             //StreamReader fichero = new StreamReader(path);
@@ -118,33 +115,42 @@ namespace CLASSES
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
-                CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
 
                 if (CAT == 10)
                 {
+                    contadorCAT10++;
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
 
                     multiplecattablereducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
+                    
                     tablacat10reducida.Rows.Add(C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
-                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
-                           C10.Message_Type, C10.Time_Day, C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1], C10.Pos_PolarCoord + ", " + C10.Pos_PolarCoord[1],
-                           C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1], C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1], C10.Track_Vel_Cartesian[0] +
-                           ", " + C10.Track_Vel_Cartesian[1], C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
-                           C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2], C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
-                           C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1], C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, C10.Acceleration[0] +
-                           ", " + C10.Acceleration[1]);
+                    
+                    // tabla completa para Track Table
+                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0]+"/"+C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
+                           C10.Message_Type, C10.Time_Day, "("+C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1]+")", "("+C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1]+")",
+                           "("+C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1]+")", "("+C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1]+")", "("+C10.Track_Vel_Cartesian[0] +
+                           ", " + C10.Track_Vel_Cartesian[1]+")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
+                           "("+C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2]+")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
+                           "("+C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1]+")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "("+C10.Acceleration[0] +
+                           ", " + C10.Acceleration[1]+")");
                 }
 
                 else if (CAT == 21)
                 {
+                    contadorCAT21++;
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
+                   
                     multiplecattablereducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), C21.getLAT21(), C21.getLON21(), C21.getTargetAddress21(), C21.getTrackNum21());
+                    
                     tablacat21reducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), C21.getLAT21(), C21.getLON21(), C21.getTargetAddress21(), C21.getTrackNum21());
 
+                    // tabla completa para Track Table
+                    tablaCAT21.Rows.Add(contadorCAT21);
                 }
             }
         }
@@ -186,8 +192,7 @@ namespace CLASSES
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
-            tablaCAT10.Columns.Add(new DataColumn("SIC"));
-            tablaCAT10.Columns.Add(new DataColumn("SAC"));
+            tablaCAT10.Columns.Add(new DataColumn("SIC/SAC"));
             tablaCAT10.Columns.Add(new DataColumn("Target ID"));
             tablaCAT10.Columns.Add(new DataColumn("Track Number"));
             tablaCAT10.Columns.Add(new DataColumn("Data Type"));
@@ -267,7 +272,6 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Figure of merit"));
             tablaCAT21.Columns.Add(new DataColumn("Data ages"));
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
-
         }
     }
 }

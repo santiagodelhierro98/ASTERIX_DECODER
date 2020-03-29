@@ -27,6 +27,7 @@ namespace ASTERIX_APP
     public partial class MainWindow : Window
     {
         Fichero F;
+        int CAT;
         double MLAT_lat = 41.29694444;
         double MLAT_lon = 2.07833333;
 
@@ -64,9 +65,16 @@ namespace ASTERIX_APP
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
-
-            List<CAT10> ListCAT10 = F.getListCAT10();           
-            Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+            
+            // de momento no coje ficheros mixtos
+            if(F.getTablaCAT10().Rows.Count > 1)
+            {
+                Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+            }
+            if(F.getTablaCAT21().Rows.Count > 1)
+            {
+                Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
+            }            
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         { 
@@ -76,8 +84,6 @@ namespace ASTERIX_APP
 
             gridlista.Visibility = Visibility.Visible;
             gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
-
-
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -91,7 +97,6 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
-        }
-        
+        }        
     }
 }
