@@ -17,12 +17,16 @@ using CLASSES;
 using GMap.NET.WindowsPresentation;
 using GMap.NET;
 using GMap.NET.MapProviders;
+using System.IO;
+using System.Data;
 
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
         Fichero F;
+        DataTable TableCAT10;
+        DataTable TableCAT21;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,10 +44,9 @@ namespace ASTERIX_APP
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
-            OpenFile.ShowDialog();
+            OpenFile.ShowDialog();            
             F = new Fichero(OpenFile.FileName);
             Instructions_Label.Content = "Loading...";
-
             F.leer();
             
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
@@ -54,16 +57,19 @@ namespace ASTERIX_APP
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(F.getListCAT10().Count().ToString());
-
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
+            Data_Item.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
+
+            List<CAT10> ListCAT10 = F.getListCAT10();
+            Track_Table.ItemsSource = ListCAT10;
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
+            Data_Item.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
         }
         private void Map_Load(object sender, RoutedEventArgs e)

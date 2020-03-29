@@ -6,36 +6,36 @@ namespace CLASSES
 {
     public class CAT10
     {
-        Metodos M = new Metodos();
-
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT10)
 
-        string Message_Type;
-        string Data_Source_ID;
-        string Target_Rep_Descript;
-        double[] Pos_PolarCoord = new double[2]; //rho,theta
-        double[] Pos_WGS84 = new double[2];
-        int [] Pos_Cartesian = new int[2];
-        string Mode3A_Code;
-        string FL_Binary;
-        double Height;   //ft
-        double Amplitude;    //dBm
-        double Time_Day; //seconds
-        int Track_Num;
-        string Track_Status;
-        double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
-        double[] Track_Vel_Cartesian = new double[2];    // m/s
-        double[] Acceleration = new double[2]; // m/s^2
-        int Target_Add;
-        string Target_ID;
-        string Mode_SMB;
-        double[] Target_Size_Heading = new double[2];    // m,degrees
-        double[] Presence = new double[2];   // rho,theta
-        string Fleet_ID;
-        string Pre_Prog_Message;
-        double[] StndrdDev_Position = new double[3]; // m^2
-        string Sys_Status;
+        public string Message_Type;
+        public int[] Data_Source_ID = new int[2];
+        public string Target_Rep_Descript;
+        public double[] Pos_PolarCoord = new double[2];   //rho,theta
+        public double[] Pos_WGS84 = new double[2];
+        public int[] Pos_Cartesian = new int[2];
+        public string Mode3A_Code;
+        public string FL_Binary;
+        public double Height;   //ft
+        public double Amplitude;    //dBm
+        public double Time_Day; //seconds
+        public int Track_Num;
+        public string Track_Status;
+        public double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
+        public double[] Track_Vel_Cartesian = new double[2];    // m/s
+        public double[] Acceleration = new double[2]; // m/s^2
+        public int Target_Add;
+        public string Target_ID;
+        public string Mode_SMB;
+        public double[] Target_Size_Heading = new double[2];    // m,degrees
+        public double[] Presence = new double[2];   // rho,theta
+        public string Fleet_ID;
+        public string Pre_Prog_Message;
+        public double[] StndrdDev_Position = new double[3]; // m^2
+        public string Sys_Status;
+
+        Metodos M = new Metodos();
 
         public void Decode10(string[] paquete)
         {
@@ -64,8 +64,8 @@ namespace CLASSES
                 string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
                 string SIC = (Convert.ToInt32(SIC_Bin, 2)).ToString();
 
-                Data_Source_ID = SIC + "/" + SAC;
-                Data_Source_ID = "SIC: " + SIC + "/SAC: " + SAC;
+                Data_Source_ID[0] = Convert.ToInt32(SIC);
+                Data_Source_ID[1] = Convert.ToInt32(SAC);
 
                 contador += 2;
             }

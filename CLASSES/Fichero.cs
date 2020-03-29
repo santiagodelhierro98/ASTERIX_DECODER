@@ -24,6 +24,7 @@ namespace CLASSES
         public Fichero(string nombre)
         {
             this.path = nombre;
+            this.CreateTrack_Table();
         }
         public List<CAT10> getListCAT10()
         {
@@ -37,6 +38,20 @@ namespace CLASSES
         {
             return listaCAT21;
         }
+
+        public DataTable getTablaCAT10()
+        {
+            return tablaCAT10;
+        }
+        //public DataTable getTablaCAT20()
+        //{
+        //    return tablaCAT20;
+        //}
+        public DataTable getTablaCAT21()
+        {
+            return tablaCAT21;
+        }
+
         public void leer()
         {
             //StreamReader fichero = new StreamReader(path);
@@ -75,7 +90,9 @@ namespace CLASSES
                 listahex.Add(arrayhex);
             }
 
-            //int p = 0;
+            int contadorCAT10 = 0;
+            // int contadorCAT20 = 0;
+            int contadorCAT21 = 0;
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
@@ -86,6 +103,9 @@ namespace CLASSES
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
+                    tablaCAT10.Rows.Add(contadorCAT10,C10.Data_Source_ID[0],C10.Data_Source_ID[1],C10.Target_ID,C10.Track_Num,
+                        C10.Target_Rep_Descript,C10.Message_Type,C10.Time_Day,C10.Pos_WGS84,C10.Pos_PolarCoord,C10.Pos_Cartesian,
+                        C10);
                 }
                 //else if (CAT == 20)
                 //{
@@ -98,8 +118,95 @@ namespace CLASSES
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
+                    tablaCAT21.Rows.Add(contadorCAT21);
                 }
             }
+        }
+        public void Create_TrackTable() //generating each CAT columns for the tables
+        {
+            //CAT10
+            tablaCAT10.Columns.Add(new DataColumn("#"));
+            tablaCAT10.Columns.Add(new DataColumn("SIC"));
+            tablaCAT10.Columns.Add(new DataColumn("SAC"));
+            tablaCAT10.Columns.Add(new DataColumn("Target ID"));
+            tablaCAT10.Columns.Add(new DataColumn("Track Number"));
+            tablaCAT10.Columns.Add(new DataColumn("Data Type"));
+            tablaCAT10.Columns.Add(new DataColumn("Message type"));
+            tablaCAT10.Columns.Add(new DataColumn("Time Of Day (UTC)"));
+            tablaCAT10.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            tablaCAT10.Columns.Add(new DataColumn("Position Polar Coords\n(Distance, Angle)"));
+            tablaCAT10.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
+            tablaCAT10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
+            tablaCAT10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
+            tablaCAT10.Columns.Add(new DataColumn("Track Status"));
+            tablaCAT10.Columns.Add(new DataColumn("Mode 3A Code"));
+            tablaCAT10.Columns.Add(new DataColumn("Target Address"));
+            tablaCAT10.Columns.Add(new DataColumn("Mode S MB Data"));
+            tablaCAT10.Columns.Add(new DataColumn("Vehicle Fleet ID"));
+            tablaCAT10.Columns.Add(new DataColumn("Flight Level"));
+            tablaCAT10.Columns.Add(new DataColumn("Measured Height"));
+            tablaCAT10.Columns.Add(new DataColumn("Target Size\n(Length x Width)"));
+            tablaCAT10.Columns.Add(new DataColumn("Target Heading"));
+            tablaCAT10.Columns.Add(new DataColumn("System Status"));
+            tablaCAT10.Columns.Add(new DataColumn("Pre Programmed MSG"));
+            tablaCAT10.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
+            tablaCAT10.Columns.Add(new DataColumn("Covariance of deviation"));
+            tablaCAT10.Columns.Add(new DataColumn("Presence"));
+            tablaCAT10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
+            tablaCAT10.Columns.Add(new DataColumn("Calculated Acceleration\n(Ax, Ay)"));
+
+            //CAT21
+            tablaCAT21.Columns.Add(new DataColumn("#"));
+            tablaCAT21.Columns.Add(new DataColumn("SAC"));
+            tablaCAT21.Columns.Add(new DataColumn("SIC"));
+            tablaCAT21.Columns.Add(new DataColumn("Target ID"));
+            tablaCAT21.Columns.Add(new DataColumn("Track Number"));
+            tablaCAT21.Columns.Add(new DataColumn("Target Report"));
+            tablaCAT21.Columns.Add(new DataColumn("Time Of Day"));
+            tablaCAT21.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            tablaCAT21.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
+            tablaCAT21.Columns.Add(new DataColumn("Flight Level"));
+            tablaCAT21.Columns.Add(new DataColumn("Geometric Height"));
+            tablaCAT21.Columns.Add(new DataColumn("Operational Status"));
+            tablaCAT21.Columns.Add(new DataColumn("AirSpeed"));
+            tablaCAT21.Columns.Add(new DataColumn("True Airspeed"));
+            tablaCAT21.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
+            tablaCAT21.Columns.Add(new DataColumn("Track Angle Rate"));
+            tablaCAT21.Columns.Add(new DataColumn("Intermediate Stage\nSelected Altitude"));
+            tablaCAT21.Columns.Add(new DataColumn("Final Stage\nSelected Altitude"));
+            tablaCAT21.Columns.Add(new DataColumn("MOPS version"));
+            tablaCAT21.Columns.Add(new DataColumn("Magnetic Heading"));
+            tablaCAT21.Columns.Add(new DataColumn("Barometric Vertical Rate"));
+            tablaCAT21.Columns.Add(new DataColumn("Geometric Vertical Rate"));
+            tablaCAT21.Columns.Add(new DataColumn("Mode 3A Code"));
+            tablaCAT21.Columns.Add(new DataColumn("Met Report"));
+            tablaCAT21.Columns.Add(new DataColumn("Emitter Category"));
+            tablaCAT21.Columns.Add(new DataColumn("Target Address"));
+            tablaCAT21.Columns.Add(new DataColumn("Target Status"));
+            tablaCAT21.Columns.Add(new DataColumn("Rate of Angle"));
+            tablaCAT21.Columns.Add(new DataColumn("Roll Angle"));
+            tablaCAT21.Columns.Add(new DataColumn("Service Identification"));
+            tablaCAT21.Columns.Add(new DataColumn("Quality Indicators"));
+            tablaCAT21.Columns.Add(new DataColumn("Mode S"));
+            tablaCAT21.Columns.Add(new DataColumn("Link Technology"));
+            tablaCAT21.Columns.Add(new DataColumn("Report period"));
+            tablaCAT21.Columns.Add(new DataColumn("Message amplitude"));
+            tablaCAT21.Columns.Add(new DataColumn("Track angle rate"));
+            tablaCAT21.Columns.Add(new DataColumn("Receiver ID"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\for position"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position - High precision"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
+            tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data"));
+            tablaCAT21.Columns.Add(new DataColumn("Position accuracy"));
+            tablaCAT21.Columns.Add(new DataColumn("Velocity accuracy"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Day accuracy"));
+            tablaCAT21.Columns.Add(new DataColumn("Figure of merit"));
+            tablaCAT21.Columns.Add(new DataColumn("Data ages"));
+            tablaCAT21.Columns.Add(new DataColumn("Service Management"));
         }
     }
 }
