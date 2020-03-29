@@ -85,16 +85,8 @@ namespace CLASSES
                 {
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
-<<<<<<< HEAD
-
                     listaCAT10.Add(C10);
 
-
-                          
-
-=======
-                    listaCAT10.Add(C10);
->>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
                 }
                 //else if (CAT == 20)
                 //{
@@ -107,6 +99,10 @@ namespace CLASSES
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
+                    //quitar esto de abajo
+                    double sic = C21.getSIC21();
+                    i = 0;
+                    /////////////////////////////
                 }
             }
         }

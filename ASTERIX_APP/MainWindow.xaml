@@ -6,7 +6,7 @@
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
-        Title="Asterix Decoder App" Height="450" Width="800" Background="#222">
+        Title="Asterix Decoder App" Height="1000" Width="1600" Background="#222" WindowStartupLocation="CenterScreen">
 
     <Border Padding="5">
         <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458">
@@ -54,8 +54,11 @@
                 </DataGrid.Columns>
             </DataGrid>
             <!-- Map -->
-            <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="300,50,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
-                        
+            <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
+            <DataGrid x:Name ="gridlista" Margin="10,360,1110,80" RenderTransformOrigin="0.5,0.5" Background="#fff" Foreground="#fff" Visibility="Hidden">
+               
+            </DataGrid>
+
         </Grid>
     </Border>
 </Window>

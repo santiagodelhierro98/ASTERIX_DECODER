@@ -12,13 +12,15 @@ namespace CLASSES
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT10)
 
         string Message_Type;
-        string Data_Source_ID;
+        double Data_Source_ID_SIC;
+        double Data_Source_ID_SAC;
         string Target_Rep_Descript;
         double[] Pos_PolarCoord = new double[2]; //rho,theta
         double[] Pos_WGS84 = new double[2];
         int [] Pos_Cartesian = new int[2];
         string Mode3A_Code;
         string FL_Binary;
+        double FlightLevel;
         double Height;   //ft
         double Amplitude;    //dBm
         double Time_Day; //seconds
@@ -61,11 +63,11 @@ namespace CLASSES
                 string SAC_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 string SIC_Bin = M.Octeto_A_Bin(paquete0[contador + 1]);
 
-                string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
-                string SIC = (Convert.ToInt32(SIC_Bin, 2)).ToString();
+                double SAC = (Convert.ToInt32(SAC_Bin, 2));
+                double SIC = (Convert.ToInt32(SIC_Bin, 2));
 
-                Data_Source_ID = SIC + "/" + SAC;
-                Data_Source_ID = "SIC: " + SIC + "/SAC: " + SAC;
+                Data_Source_ID_SIC = SIC;
+                Data_Source_ID_SAC = SAC;
 
                 contador += 2;
             }
@@ -482,7 +484,7 @@ namespace CLASSES
                         string FL3 = FL_bin[2].ToString();
                         for(int i=2; i<FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
                         FL_Binary = FL_Binary + "/FL: " + Convert.ToInt32(FL3, 2);
-
+                        FlightLevel = Convert.ToInt32(FL3,2) ;
                         contador += 2;
                     }
                     if (FSPEC[17] == "1")
@@ -626,6 +628,43 @@ namespace CLASSES
                 else { }
             }          
             else { }
+        }
+        // getters for flight class
+        public double getSIC10()
+        {
+            return Data_Source_ID_SIC;
+        }
+        public double getSAC10()
+        {
+            return Data_Source_ID_SAC;
+        }
+        public double getTOD10()
+        {
+            return Time_Day;
+        }
+        public double getLAT10()
+        {
+            return Pos_WGS84[0];
+        }
+        public double getLON10()
+        {
+            return Pos_WGS84[1];
+        }
+        public double getTrackNum10()
+        {
+            return Track_Num;
+        }
+        public double getTargetAddress10()
+        {
+            return Target_Add;
+        }
+        public string getTargetID10()
+        {
+            return Target_ID;
+        }
+        public double getFL10()
+        {
+            return FlightLevel;
         }
     }
 }

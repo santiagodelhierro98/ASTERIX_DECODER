@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d" d:DesignWidth="600" Background="#222"
-        Title="Inicio" Height="313" Width="600" ResizeMode="NoResize">
+        Title="Inicio" Height="313" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <Grid Height="300" Width="600">

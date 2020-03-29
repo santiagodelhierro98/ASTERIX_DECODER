@@ -18,20 +18,20 @@ using GMap.NET.WindowsPresentation;
 using GMap.NET;
 using GMap.NET.MapProviders;
 
+
+
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
-<<<<<<< HEAD
-
-        Fichero fichero;
-        public MainWindow()//List<CAT21> ListaCAT21)
-=======
         Fichero F;
+        double MLAT_lat = 41.29694444;
+        double MLAT_lon = 2.07833333;
         public MainWindow()
->>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
         {
             InitializeComponent();
+            
+
 
             Instructions_Label.Visibility = Visibility.Visible; ;
             Instructions_Label.FontSize = 18;
@@ -46,35 +46,22 @@ namespace ASTERIX_APP
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
+            Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
-<<<<<<< HEAD
-            Instructions_Label.Content = "Loading...";
-            Fichero fichero = new Fichero(OpenFile.FileName);
-            fichero.leer();
-
-            //List<CAT21> lista21 = fichero.getListCAT21();
-            //List<CAT10> lista10 = fichero.getListCAT10();
             
-            Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
-                    '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
-            MapButton.Visibility = Visibility.Visible; ;
-            TableButton.Visibility = Visibility.Visible;
-           
-        }    
-        
-=======
             F = new Fichero(OpenFile.FileName);
-            Instructions_Label.Content = "Loading...";
+            
 
             F.leer();
-            
+            //quitar esto de abajo
+            List<CAT21> listacat21 = F.getListCAT21();
+            ////////////////////////////////////////////
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
 
             MapButton.Visibility = Visibility.Visible; ;
             TableButton.Visibility = Visibility.Visible; ;
         }
->>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(F.getListCAT10().Count().ToString());
@@ -84,37 +71,21 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Hidden;
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
-        {
-<<<<<<< HEAD
-
-
-            //Fichero pepe = crearfichero();
-            //List<CAT21> pepelista21 = pepe.getListCAT21();
-            //int i = 0;
-            Instructions_Label.Visibility = Visibility.Hidden;
-            Track_Table.Visibility = Visibility.Hidden;
-            map.Visibility = Visibility.Visible; ;            
-
-=======
+        { 
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
->>>>>>> ac0a9de661485a01dc984d1e294301e8c8e5beef
+
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             map.MapProvider = OpenStreetMapProvider.Instance;
-            map.Zoom = 7;
-            map.MinZoom = 0;
-            map.MaxZoom = 20;
-            double lat = 41.0;
-            double lon = 002.0;
-            map.Position = new PointLatLng(lat, lon);
-            map.Zoom = 5;
-            map.MinZoom = 0;
-            map.MaxZoom = 24;
-            map.Zoom = 13;
+            map.MinZoom = 7;
+            map.MaxZoom = 16;
+            map.Zoom = 14;
+           
+            map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
