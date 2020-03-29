@@ -24,7 +24,7 @@ namespace CLASSES
         public Fichero(string nombre)
         {
             this.path = nombre;
-            this.CreateTrack_Table();
+            this.Create_TrackTable();
         }
         public List<CAT10> getListCAT10()
         {
@@ -103,16 +103,14 @@ namespace CLASSES
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
-                    tablaCAT10.Rows.Add(contadorCAT10,C10.Data_Source_ID[0],C10.Data_Source_ID[1],C10.Target_ID,C10.Track_Num,
-                        C10.Target_Rep_Descript,C10.Message_Type,C10.Time_Day,C10.Pos_WGS84,C10.Pos_PolarCoord,C10.Pos_Cartesian,
-                        C10);
+                    tablaCAT10.Rows.Add(contadorCAT10,C10.Data_Source_ID[0],C10.Data_Source_ID[1],C10.Target_ID,C10.Track_Num,C10.Target_Rep_Descript,
+                        C10.Message_Type,C10.Time_Day,C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1],C10.Pos_PolarCoord+", "+C10.Pos_PolarCoord[1],
+                        C10.Pos_Cartesian[0]+", "+C10.Pos_Cartesian[1],C10.Track_Vel_Polar[0]+", "+C10.Track_Vel_Polar[1],C10.Track_Vel_Cartesian[0]+
+                        ", "+C10.Track_Vel_Cartesian[1],C10.Track_Status,C10.Mode3A_Code,C10.Target_Add,C10.Mode_SMB,C10.Fleet_ID,C10.FL[2],C10.Height,
+                        C10.Target_Size_Heading[0]+", "+C10.Target_Size_Heading[2],C10.Target_Size_Heading[1],C10.Sys_Status,C10.Pre_Prog_Message,
+                        C10.StndrdDev_Position[0]+", "+C10.StndrdDev_Position[1],C10.StndrdDev_Position[2],C10.Presence,C10.Amplitude,C10.Acceleration[0]+
+                        ", "+C10.Acceleration[1]);
                 }
-                //else if (CAT == 20)
-                //{
-                //    CAT20 C20 = new CAT20();
-                //    C20.Decode20(arraystring);
-                //    listaCAT20.Add(C20);
-                //}
                 else if (CAT == 21)
                 {
                     CAT21 C21 = new CAT21();

@@ -11,9 +11,10 @@ namespace CLASSES
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT21)
 
-        public string Data_Source_ID;
+        public double Data_Source_ID_SIC;
+        public double Data_Source_ID_SAC;
         public string Target_Report_Desc;
-        public string Track_Num;
+        public double Track_Num;
         public string Service_ID;
         public double ToA_Position; // seconds, ToA=Time of Aplicability
         public double Lat_WGS_84; //in degrees
@@ -164,15 +165,12 @@ namespace CLASSES
                 // Item I021/010 : Data Source Identification
                 string SAC_Bin = Met.Octeto_A_Bin(paquete0[contador]);
                 string SIC_Bin = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                string SAC = (Convert.ToInt32(SAC_Bin, 2)).ToString();
-                string SIC = (Convert.ToInt32(SIC_Bin, 2)).ToString();
+                double SAC = (Convert.ToInt32(SAC_Bin, 2));
+                double SIC = (Convert.ToInt32(SIC_Bin, 2));
 
                 //decodificamos , solo utilizaremos estos dos 
-                Data_Source_ID = "SIC: " + SIC + "/ SAC: " + SAC;
-                if (SAC == "0" && SIC == "107")
-                    Data_Source_ID = "Data flow local to the airport: Barcelona - LEBL ; SIC: 107 , SAC: 0";
-                if (SAC == "0" && SIC == "7")
-                    Data_Source_ID = "Data flow local to the airport: Barcelona - LEBL ; SIC: 7 , SAC: 0";
+                Data_Source_ID_SIC = SIC;
+                Data_Source_ID_SAC = SAC;
 
                 contador = contador + 2;
             }
@@ -268,7 +266,7 @@ namespace CLASSES
                 string Track_Num_oct1 = Track_Num_Bin1[4].ToString() + Track_Num_Bin1[5].ToString() + Track_Num_Bin1[6].ToString() + Track_Num_Bin1[7].ToString();
 
                 string Track_Num_Bin = Track_Num_oct1 + Track_Num_Bin2;
-                Track_Num = Convert.ToInt32(Track_Num_Bin, 2).ToString();
+                Track_Num = Convert.ToInt32(Track_Num_Bin, 2);
                 contador = contador + 2;
             }
             if (FSPEC[3] == "1")
@@ -1174,5 +1172,44 @@ namespace CLASSES
             }
             else { }
         }
+
+        // getters for flight class
+        public double getSIC21()
+        {
+            return Data_Source_ID_SIC;
+        }
+        public double getSAC21()
+        {
+            return Data_Source_ID_SAC;
+        }
+        public double getTOD21()
+        {
+            return ToA_Position;
+        }
+        public double getLAT21()
+        {
+            return High_Res_Lat_WGS_84;
+        }
+        public double getLON21()
+        {
+            return High_Res_Lon_WGS_84;
+        }
+        public double getTrackNum21()
+        {
+            return Track_Num;
+        }
+        public string getTargetAddress21()
+        {
+            return Target_Address;
+        }
+        public string getTargetID21()
+        {
+            return Target_ID;
+        }
+        public double getFL21()
+        {
+            return FL;
+        }
     }
 }
+
