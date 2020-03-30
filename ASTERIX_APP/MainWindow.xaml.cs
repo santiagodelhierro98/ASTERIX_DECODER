@@ -64,9 +64,16 @@ namespace ASTERIX_APP
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
-
-            List<CAT10> ListCAT10 = F.getListCAT10();           
-            Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+            gridlista.Visibility = Visibility.Hidden;
+            // de momento no coje ficheros mixtos
+            if(F.getTablaCAT10().Rows.Count > 1)
+            {
+                Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+            }
+            if(F.getTablaCAT21().Rows.Count > 1)
+            {
+                Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
+            }            
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         { 
@@ -74,8 +81,9 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
-            
-          
+
+            //NECESITO HACER UN GUETTER DELA CAT PARA PODER DEFINIR EL SIGUENTE IF : if (F.CAT == 10)
+            //if (F.gettablacat10reducida()!=null)
             if (F.CAT == 10)
             {
                 if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat10reducida()) == true)
@@ -106,7 +114,6 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
-        }
-        
+        }        
     }
 }

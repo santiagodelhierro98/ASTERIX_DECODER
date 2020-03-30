@@ -11,18 +11,16 @@ namespace CLASSES
     public class Fichero
     {
         string path;
-        public int CAT;
 
         List<CAT10> listaCAT10 = new List<CAT10>();
         //List<CAT20> listaCAT20 = new List<CAT20>();
         List<CAT21> listaCAT21 = new List<CAT21>();
-
+        public int CAT;
         //Reduced table with items for display on map
         DataTable tablacat10reducida = new DataTable();
         DataTable tablacat21reducida = new DataTable();
         DataTable multiplecattablereducida = new DataTable();
-
-
+        
         DataTable tablaCAT10 = new DataTable();
         //DataTable tablaCAT20 = new DataTable();
         DataTable tablaCAT21 = new DataTable();
@@ -59,7 +57,6 @@ namespace CLASSES
             return tablacat21reducida;
         }
 
-
         public DataTable getTablaCAT10()
         {
             return tablaCAT10;
@@ -72,8 +69,7 @@ namespace CLASSES
         {
             return tablaCAT21;
         }
-
-
+ 
         public void leer()
         {
             //StreamReader fichero = new StreamReader(path);
@@ -83,7 +79,7 @@ namespace CLASSES
             int i = 0;
             int contador = fileBytes[2];
             // int length = 0;
-
+            
             while (i < fileBytes.Length)
             {
                 byte[] array = new byte[contador];
@@ -113,7 +109,6 @@ namespace CLASSES
             }
 
             int contadorCAT10 = 0;
-            // int contadorCAT20 = 0;
             int contadorCAT21 = 0;
             for (int q = 0; q < listahex.Count; q++)
             {
@@ -122,6 +117,7 @@ namespace CLASSES
 
                 if (CAT == 10)
                 {
+                    contadorCAT10++;
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
@@ -135,23 +131,33 @@ namespace CLASSES
                            C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2], C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
                            C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1], C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, C10.Acceleration[0] +
                            ", " + C10.Acceleration[1]);
+
                 }
 
                 else if (CAT == 21)
                 {
+                    contadorCAT21++;
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
                     multiplecattablereducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     tablacat21reducida.Rows.Add(C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21()), Math.Round(C21.getLON21()), C21.getTargetAddress21(), C21.getTrackNum21());
 
+
+                    // tabla completa para Track Table
+                    tablaCAT21.Rows.Add(contadorCAT21);
                 }
+                
             }
+
         }
+       
+        
+     
         public bool Checkifmulticatfile(DataTable datatable1, DataTable datatable2)
         {
             //we compare if tablacat10 or tablacat21 is equal to multiplecattable. if they are not equal, file would be multicategory
-           // false means file is multycategory 
+           // true means file is multycategory 
             if (datatable1.Rows[30][0] == datatable2.Rows[30][0]) { return false; }
             else { return true; }
          
@@ -194,8 +200,7 @@ namespace CLASSES
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
-            tablaCAT10.Columns.Add(new DataColumn("SIC"));
-            tablaCAT10.Columns.Add(new DataColumn("SAC"));
+            tablaCAT10.Columns.Add(new DataColumn("SIC/SAC"));
             tablaCAT10.Columns.Add(new DataColumn("Target ID"));
             tablaCAT10.Columns.Add(new DataColumn("Track Number"));
             tablaCAT10.Columns.Add(new DataColumn("Data Type"));
@@ -275,7 +280,6 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Figure of merit"));
             tablaCAT21.Columns.Add(new DataColumn("Data ages"));
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
-
         }
     }
 }

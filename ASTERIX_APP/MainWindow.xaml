@@ -6,7 +6,7 @@
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
-        Title="Asterix Decoder App" Height="1000" Width="1600" Background="#222" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Asterix Decoder App" Height="800" Width="1300" Background="#222" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458" Margin="0">
         <StackPanel Margin="0" Height="Auto" VerticalAlignment="Stretch">
@@ -56,13 +56,15 @@
             </DataGrid>
             <!-- Map -->
             <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
-            <DataGrid x:Name ="gridlista" Margin="10,360,1110,80" RenderTransformOrigin="0.5,0.5" Background="#222" Foreground="white" Visibility="Hidden"  IsReadOnly="True" BorderBrush="#FFF5F6F7" RowBackground="Black" CanUserSortColumns="False" CanUserResizeRows="False" ColumnWidth="*" >
+            <DataGrid x:Name ="gridlista" Margin="10,258,810,80" RenderTransformOrigin="0.5,0.5" Background="#222" Foreground="white" Visibility="Hidden"  IsReadOnly="True" BorderBrush="#FFF5F6F7" RowBackground="Black" CanUserSortColumns="False" CanUserResizeRows="False" ColumnWidth="*" >
+
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#004778"/>
                     <Setter Property="Foreground" Value="#fff"/>
                     <Setter Property="Margin" Value="0 0 1 1"/>
-                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
@@ -74,7 +76,8 @@
                     <Setter Property="BorderBrush" Value="#000"/>
                 </Style>
             </DataGrid.RowStyle>
-            </DataGrid>
-
+        </DataGrid>
+        
+       
     </Grid>
 </Window>
