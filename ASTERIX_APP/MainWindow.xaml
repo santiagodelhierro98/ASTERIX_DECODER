@@ -6,7 +6,7 @@
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
-        Title="Asterix Decoder App" Height="800" Width="1300" Background="#222" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Asterix Decoder App" Height="700" Width="1200" Background="#222" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458" Margin="0">
         <StackPanel Margin="0" Height="Auto" VerticalAlignment="Stretch">
@@ -35,7 +35,8 @@
             <DataGrid x:Name="Track_Table" Padding="5"
                               Margin="0 40 0 0" Background="#222" 
                               Visibility="Hidden" IsReadOnly="True" 
-                              BorderBrush="#000" BorderThickness="1" ItemsSource="{Binding}">
+                              BorderBrush="#000" BorderThickness="1" 
+                              ItemsSource="{Binding}">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="#004778"/>
@@ -55,8 +56,16 @@
                 </DataGrid.RowStyle>
             </DataGrid>
             <!-- Map -->
-            <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" Loaded ="Map_Load" Visibility="Hidden"></gmaps:GMapControl>
-            <DataGrid x:Name ="gridlista" Margin="10,258,810,80" RenderTransformOrigin="0.5,0.5" Background="#222" Foreground="white" Visibility="Hidden"  IsReadOnly="True" BorderBrush="#FFF5F6F7" RowBackground="Black" CanUserSortColumns="False" CanUserResizeRows="False" ColumnWidth="*" >
+            <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" 
+                               Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1">
+                
+            </gmaps:GMapControl>
+            <DataGrid x:Name ="gridlista" Margin="10,300,710,10" 
+                      RenderTransformOrigin="0.5,0.5" Background="#222" 
+                      Foreground="white" Visibility="Hidden"  
+                      IsReadOnly="True" BorderBrush="#FFF5F6F7" 
+                      RowBackground="Black" CanUserSortColumns="False" 
+                      CanUserResizeRows="False" ColumnWidth="*" >
 
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -76,8 +85,6 @@
                     <Setter Property="BorderBrush" Value="#000"/>
                 </Style>
             </DataGrid.RowStyle>
-        </DataGrid>
-        
-       
+        </DataGrid>      
     </Grid>
 </Window>

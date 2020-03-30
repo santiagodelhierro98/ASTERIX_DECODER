@@ -65,15 +65,28 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
             gridlista.Visibility = Visibility.Hidden;
-            // de momento no coje ficheros mixtos
-            if(F.getTablaCAT10().Rows.Count > 1)
+
+            if (F.CAT == 10)
             {
                 Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+
+                // LA TABLA MIXTA NO ESTA PREPARADA AUN
+
+                //if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT10()) == true)
+                //{
+                //    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                //}
+                //else { Track_Table.ItemsSource = F.getTablaCAT10().DefaultView; }
             }
-            if(F.getTablaCAT21().Rows.Count > 1)
+            if (F.CAT == 21)
             {
                 Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
-            }            
+                //if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT21()) == true)
+                //{
+                //    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                //}
+                //else { Track_Table.ItemsSource = F.getTablaCAT21().DefaultView; }
+            }
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         { 
@@ -82,7 +95,7 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
 
-            //NECESITO HACER UN GUETTER DELA CAT PARA PODER DEFINIR EL SIGUENTE IF : if (F.CAT == 10)
+            //NECESITO HACER UN GETTER DELA CAT PARA PODER DEFINIR EL SIGUENTE IF : if (F.CAT == 10)
             //if (F.gettablacat10reducida()!=null)
             if (F.CAT == 10)
             {
@@ -100,7 +113,6 @@ namespace ASTERIX_APP
                 }
                 gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
             }
-
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -114,6 +126,6 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
-        }        
+        }
     }
 }
