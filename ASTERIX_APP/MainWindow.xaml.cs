@@ -20,8 +20,6 @@ using GMap.NET.MapProviders;
 using System.IO;
 using System.Data;
 
-
-
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
@@ -49,8 +47,7 @@ namespace ASTERIX_APP
             OpenFileDialog OpenFile = new OpenFileDialog();
             Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();            
-            F = new Fichero(OpenFile.FileName);
-            
+            F = new Fichero(OpenFile.FileName);            
             F.leer();
 
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
@@ -66,49 +63,37 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Hidden;
             gridlista.Visibility = Visibility.Hidden;
 
-            if (F.CAT == 10)
+            if (F.CAT_list[0] == 10)
             {
-                Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
-                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT10()) == true)
-                {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true) { Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView; }
                 else { Track_Table.ItemsSource = F.getTablaCAT10().DefaultView; }
             }
-            if (F.CAT == 21)
+            if (F.CAT_list[0] == 21)
             {
-                Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
-                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT21()) == true)
-                {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true) { Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView; }
                 else { Track_Table.ItemsSource = F.getTablaCAT21().DefaultView; }
-            }
+            }            
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
 
-            //NECESITO HACER UN GETTER DELA CAT PARA PODER DEFINIR EL SIGUENTE IF : if (F.CAT == 10)
-            //if (F.gettablacat10reducida()!=null)
-            if (F.CAT == 10)
+            if (F.CAT_list[0] == 10)
             {
-                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat10reducida()) == true)
-                {
-                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
                 else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
             }
-            if (F.CAT == 21)
+            if (F.CAT_list[0] == 21)
             {
-                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat21reducida()) == true)
-                {
-                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
-                }
-                gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
             }
         }
         private void Map_Load(object sender, RoutedEventArgs e)
@@ -117,8 +102,7 @@ namespace ASTERIX_APP
             map.MapProvider = OpenStreetMapProvider.Instance;
             map.MinZoom = 7;
             map.MaxZoom = 16;
-            map.Zoom = 14;
-           
+            map.Zoom = 14;           
             map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
