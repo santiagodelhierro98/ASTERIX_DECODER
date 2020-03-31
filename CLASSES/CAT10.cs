@@ -642,23 +642,24 @@ namespace CLASSES
         // getters for flight class
         public double getSIC10()
         {
-            return Data_Source_ID[1];
+            return Data_Source_ID[0];
         }
         public double getSAC10()
         {
-            return Data_Source_ID[0];
+            return Data_Source_ID[1];
         }
         public double getTOD10()
         {
             return Time_Day;
         }
-        public double getLAT10()
+        public double getX10()
         {
-            return Pos_WGS84[0];
+
+            return Convert.ToDouble(Pos_Cartesian[0]);
         }
-        public double getLON10()
+        public double getY10()
         {
-            return Pos_WGS84[1];
+            return Convert.ToDouble(Pos_Cartesian[1]);
         }
         public double getTrackNum10()
         {
@@ -674,7 +675,7 @@ namespace CLASSES
         }
         public double getFL10()
         {
-            return Convert.ToDouble(FL[2]);
+            return Convert.ToDouble(FL[2])*0.25;
         }
     }
 }

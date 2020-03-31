@@ -130,9 +130,9 @@ namespace CLASSES
                     listaCAT10.Add(C10);
 
                     // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
+                    multiplecattablereducida.Rows.Add(contadorGeneral, C10.getTargetID10(), C10.getTOD10(),C10.getFL10(), C10.getSIC10(), C10.getSAC10(), Math.Round(cartesiantolatmlat(C10.getX10(),C10.getY10()),2), Math.Round(cartesiantolonmlat(C10.getX10(), C10.getY10()),2), C10.getTargetAddress10(), C10.getTrackNum10());
                     // CAT10 reduced table for maptrack
-                    tablacat10reducida.Rows.Add(contadorCAT10, C10.getTargetID10(), C10.getTOD10(), C10.getSIC10(), C10.getSAC10(), C10.getLAT10(), C10.getLON10(), C10.getTargetAddress10(), C10.getTrackNum10());
+                    tablacat10reducida.Rows.Add(contadorCAT10, C10.getTargetID10(), C10.getTOD10(), C10.getFL10(), C10.getSIC10(), C10.getSAC10(), Math.Round(cartesiantolatmlat(C10.getX10(), C10.getY10()),2), Math.Round(cartesiantolonmlat(C10.getX10(), C10.getY10()),2), C10.getTargetAddress10(), C10.getTrackNum10());
                     // Complete CAT10 table
                     tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[1]+"/"+C10.Data_Source_ID[0], C10.Target_ID[1], C10.Track_Num, C10.Target_Rep_Descript,
                            C10.Message_Type, C10.Time_Day,"("+C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1]+")","("+C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1]+")",
@@ -166,9 +166,9 @@ namespace CLASSES
                     listaCAT21.Add(C21);
 
                     // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), C21.getTOD21(), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // CAT21 reduced table for maptrack
-                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // Complete CAT21 table
                     tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SAC+"/"+C21.Data_Source_ID_SIC,C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
                         C21.getTOD21(),"("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
@@ -200,6 +200,7 @@ namespace CLASSES
             multiplecattablereducida.Columns.Add(new DataColumn("#"));
             multiplecattablereducida.Columns.Add(new DataColumn("Target ID"));
             multiplecattablereducida.Columns.Add(new DataColumn("Time of Day"));
+            multiplecattablereducida.Columns.Add(new DataColumn("Flight Level"));
             multiplecattablereducida.Columns.Add(new DataColumn("SIC"));
             multiplecattablereducida.Columns.Add(new DataColumn("SAC"));
             multiplecattablereducida.Columns.Add(new DataColumn("Latitude (º)"));
@@ -211,6 +212,7 @@ namespace CLASSES
             tablacat10reducida.Columns.Add(new DataColumn("#"));
             tablacat10reducida.Columns.Add(new DataColumn("Target ID"));
             tablacat10reducida.Columns.Add(new DataColumn("Time of Day"));
+            tablacat10reducida.Columns.Add(new DataColumn("Flight Level"));
             tablacat10reducida.Columns.Add(new DataColumn("SIC"));
             tablacat10reducida.Columns.Add(new DataColumn("SAC"));
             tablacat10reducida.Columns.Add(new DataColumn("Latitude (º)"));
@@ -222,6 +224,7 @@ namespace CLASSES
             tablacat21reducida.Columns.Add(new DataColumn("#"));
             tablacat21reducida.Columns.Add(new DataColumn("Target ID"));
             tablacat21reducida.Columns.Add(new DataColumn("Time of Day"));
+            tablacat21reducida.Columns.Add(new DataColumn("Flight Level"));
             tablacat21reducida.Columns.Add(new DataColumn("SIC"));
             tablacat21reducida.Columns.Add(new DataColumn("SAC"));
             tablacat21reducida.Columns.Add(new DataColumn("Latitude (º)"));
@@ -370,5 +373,36 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
         }        
+
+        //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
+        private double cartesiantolatmlat(double X, double Y)
+        {
+            double MLAT_lat = 41.29694444;
+            double MLAT_lon = 2.07833333;
+            CAT10 C10 = new CAT10();
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 = MLAT_lat * (Math.PI / 180);
+            double lamda1 = MLAT_lon * (Math.PI / 180);
+            double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            return phi2 * (180.0/Math.PI);
+
+        }
+        private double cartesiantolonmlat(double X, double Y)
+        {
+            double MLAT_lat = 41.29694444;
+            double MLAT_lon = 2.07833333;
+            CAT10 C10 = new CAT10();
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 = MLAT_lat * (Math.PI / 180);
+            double lamda1 = MLAT_lon * (Math.PI / 180);
+            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+            return lamda2 * (180.0 / Math.PI);
+        }
+
     }
 }

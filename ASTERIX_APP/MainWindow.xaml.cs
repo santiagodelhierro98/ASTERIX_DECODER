@@ -25,6 +25,13 @@ namespace ASTERIX_APP
     public partial class MainWindow : Window
     {
         Fichero F;
+
+        //lat and lon os cat10 files 
+        double latindegrees;
+        double lonindegrees;
+
+
+        //lat lon os MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.29694444;
         double MLAT_lon = 2.07833333;
 
@@ -107,6 +114,30 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;                
+        }
+        private PointLatLng cartesiantolatlonMLAT(double X, double Y)
+        {
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 =MLAT_lat * (Math.PI / 180);
+            double lamda1 = MLAT_lon * (Math.PI / 180);
+            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            var lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+            double latindegrees = phi2 * (180.0 / Math.PI);
+            double lonindegrees = lamda2 * (180 / Math.PI);
+
+            PointLatLng latlonMLAT = new PointLatLng(phi2 * (180 / Math.PI), lamda2 * (180 / Math.PI));
+            return latlonMLAT;
+        }
+
+       public double getlatMLAT()
+        {
+            return latindegrees;
+        }
+        public double getlonMLAT()
+        {
+            return lonindegrees;
         }
     }
 }
