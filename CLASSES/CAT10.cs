@@ -420,6 +420,7 @@ namespace CLASSES
                     if (STI == 2) { Target_ID[0] = "Registration not downlinked from transponder"; }
 
                     for (int i=8; i<TI_v.Length; i++) { Target_ID[1] += TI_v[i].ToString(); }
+                    Target_ID[1] = M.Compare_bits(Target_ID[1]);
                     
                     contador += 7;
                 }
