@@ -69,23 +69,20 @@ namespace ASTERIX_APP
             if (F.CAT == 10)
             {
                 Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
-
-                // LA TABLA MIXTA NO ESTA PREPARADA AUN
-
-                //if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT10()) == true)
-                //{
-                //    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                //}
-                //else { Track_Table.ItemsSource = F.getTablaCAT10().DefaultView; }
+                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT10()) == true)
+                {
+                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                }
+                else { Track_Table.ItemsSource = F.getTablaCAT10().DefaultView; }
             }
             if (F.CAT == 21)
             {
                 Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
-                //if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT21()) == true)
-                //{
-                //    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                //}
-                //else { Track_Table.ItemsSource = F.getTablaCAT21().DefaultView; }
+                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT21()) == true)
+                {
+                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                }
+                else { Track_Table.ItemsSource = F.getTablaCAT21().DefaultView; }
             }
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
