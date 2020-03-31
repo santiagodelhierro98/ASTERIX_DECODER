@@ -11,7 +11,7 @@ namespace CLASSES
     public class Fichero
     {
         string path;
-        public int CAT;
+        int CAT;
         public List<int> CAT_list = new List<int>();
 
         List<CAT10> listaCAT10 = new List<CAT10>();
@@ -168,7 +168,7 @@ namespace CLASSES
                     // Multiple CAT reduced table for maptrack
                     multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // CAT21 reduced table for maptrack
-                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21()), Math.Round(C21.getLON21()), C21.getTargetAddress21(), C21.getTrackNum21());
+                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // Complete CAT21 table
                     tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SAC+"/"+C21.Data_Source_ID_SIC,C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
                         C21.getTOD21(),"("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
@@ -178,6 +178,7 @@ namespace CLASSES
                         C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                     
                     // Complete Multiple CAT table
+
                     tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.getTOD21(),
                         C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
 
@@ -186,9 +187,8 @@ namespace CLASSES
                         ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
                         "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
                         ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", 
-                        C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status,
-                        C21.Roll, C21.Service_ID, C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity,
-                        C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                        C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
+                        C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                 }                
             }
         }            
@@ -303,7 +303,6 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data"));
             tablaCAT21.Columns.Add(new DataColumn("Data ages"));
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
-
         }
         public void Create_TrackTable_Multiple() //generating each CAT columns for the tables
         {

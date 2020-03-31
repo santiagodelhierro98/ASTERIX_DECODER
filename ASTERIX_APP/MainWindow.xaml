@@ -65,7 +65,7 @@
                       Foreground="white" Visibility="Hidden"  
                       IsReadOnly="True" BorderBrush="#FFF5F6F7" 
                       RowBackground="Black" CanUserSortColumns="False" 
-                      CanUserResizeRows="False" ColumnWidth="*" >
+                      CanUserResizeRows="False"  >
 
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">

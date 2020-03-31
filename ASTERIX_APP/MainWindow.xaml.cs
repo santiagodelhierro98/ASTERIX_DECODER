@@ -20,8 +20,6 @@ using GMap.NET.MapProviders;
 using System.IO;
 using System.Data;
 
-
-
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
@@ -49,8 +47,7 @@ namespace ASTERIX_APP
             OpenFileDialog OpenFile = new OpenFileDialog();
             Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();            
-            F = new Fichero(OpenFile.FileName);
-            
+            F = new Fichero(OpenFile.FileName);            
             F.leer();
 
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
@@ -105,8 +102,7 @@ namespace ASTERIX_APP
             map.MapProvider = OpenStreetMapProvider.Instance;
             map.MinZoom = 7;
             map.MaxZoom = 16;
-            map.Zoom = 14;
-           
+            map.Zoom = 14;           
             map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
             map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
