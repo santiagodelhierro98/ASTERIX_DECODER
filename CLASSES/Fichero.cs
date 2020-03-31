@@ -169,12 +169,12 @@ namespace CLASSES
                         C21.Quality_Indicators,C21.Mode_S,"no lo he encontrado","tampoco", C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, 
                         C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
                     // Complete Multiple CAT table
-                    tablaMultipleCAT.Rows.Add(contadorGeneral, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
-                        C21.getTOD21(), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
-                        C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
-                        C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, "no lo he encontrado", C21.Roll, C21.Service_ID,
-                        C21.Quality_Indicators, C21.Mode_S, "no lo he encontrado", "tampoco", C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV,
-                        C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
+                    //tablaMultipleCAT.Rows.Add(contadorGeneral, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
+                    //    C21.getTOD21(), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
+                    //    C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
+                    //    C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, "no lo he encontrado", C21.Roll, C21.Service_ID,
+                    //    C21.Quality_Indicators, C21.Mode_S, "no lo he encontrado", "tampoco", C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV,
+                    //    C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
                 }                
             }
         }            
