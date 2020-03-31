@@ -388,19 +388,19 @@ namespace CLASSES
                         string octeto_total = octeto1 + octeto2 + octeto3 + octeto4;
                         // TMRV FSI
                         // corrections of TMRV in s
-                        if (Convert.ToInt32(octeto1[0].ToString()) == 1 & Convert.ToInt32(octeto1[1].ToString()) == 1)
+                        if (Convert.ToInt32(octeto1[0].ToString(),2) == 1 & Convert.ToInt32(octeto1[1].ToString(),2) == 1)
                         {
                             TMRV_HP[0]= "Reserved";
                         }
-                        if (Convert.ToInt32(octeto1[0].ToString()) == 1 & Convert.ToInt32(octeto1[1].ToString()) == 0)
+                        if (Convert.ToInt32(octeto1[0].ToString(),2) == 1 & Convert.ToInt32(octeto1[1].ToString(),2) == 0)
                         {
                             TMRV_HP[0] = (TMRV - 1.0).ToString();
                         }
-                        if (Convert.ToInt32(octeto1[0].ToString()) == 0 & Convert.ToInt32(octeto1[1].ToString()) == 1)
+                        if (Convert.ToInt32(octeto1[0].ToString(),2) == 0 & Convert.ToInt32(octeto1[1].ToString(),2) == 1)
                         {
                             TMRV_HP[0] = (TMRV + 1.0).ToString();
                         }
-                        if (Convert.ToInt32(octeto1[0].ToString()) == 0 & Convert.ToInt32(octeto1[1].ToString()) == 0)
+                        if (Convert.ToInt32(octeto1[0].ToString(),2) == 0 & Convert.ToInt32(octeto1[1].ToString(),2) == 0)
                         {
                             TMRV_HP[0] = TMRV.ToString();
                         }
@@ -432,11 +432,11 @@ namespace CLASSES
                         // NUCp or NIC
                         Quality_Indicators[0] = "Navigation Uncertainty Category for Position NUCp or Navigation Integrity Category NIC:" + NUC;
                         
-                        if (Convert.ToInt32(NUCR_Bits[7].ToString()) == 0)
+                        if (Convert.ToInt32(NUCR_Bits[7].ToString(),2) == 0)
                         { 
                             contador = contador + 1; 
                         }
-                        if (Convert.ToInt32(NUCR_Bits[7].ToString()) == 1)
+                        if (Convert.ToInt32(NUCR_Bits[7].ToString(),2) == 1)
                         {
                             contador = contador + 1;
                             string octeto2 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -453,11 +453,12 @@ namespace CLASSES
                             Int32 NACP11 = Convert.ToInt32(NACP1, 2);
                             // NACp
                             Quality_Indicators[2] = "Navigation Accuracy Category for Position: " + NACP11;
-                            if (Convert.ToInt32(octeto2Bits[7].ToString()) == 0) 
+                           
+                            if (Convert.ToInt32(octeto2Bits[7].ToString(),2) == 0) 
                             { 
                                 contador = contador + 1; 
                             }
-                            if (Convert.ToInt32(octeto2Bits[7].ToString()) == 1)
+                            if (Convert.ToInt32(octeto2Bits[7].ToString(),2) == 1)
                             {
                                 contador = contador + 1;
                                 string octeto3 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -475,11 +476,11 @@ namespace CLASSES
                                 // GVA
                                 Quality_Indicators[5] = "Geometric Altitude Accuracy: " + GVA11;
 
-                                if (Convert.ToInt32(octeto3Bits[7].ToString()) == 0)
+                                if (Convert.ToInt32(octeto3Bits[7].ToString(),2) == 0)
                                 { 
                                     contador = contador + 1; 
                                 }
-                                if (Convert.ToInt32(octeto3Bits[7].ToString()) == 1)
+                                if (Convert.ToInt32(octeto3Bits[7].ToString(),2) == 1)
                                 {
                                     contador = contador + 1;
                                     string octeto4 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -503,10 +504,11 @@ namespace CLASSES
                                     if (PIC1 == 13) { Quality_Indicators[6] = "< 0.013 NM"; }
                                     if (PIC1 == 14) { Quality_Indicators[6] = "< 0.004 NM"; }
                                     if (PIC1 == 15) { Quality_Indicators[6] = "No defined"; }
+                                    contador = contador + 1;
                                 }
                             }
                         }
-                        contador = contador + 1;
+                        
                     }
                     if (FSPEC[17] == "1")
                     {
@@ -1218,7 +1220,7 @@ namespace CLASSES
         }
         public double getTOD21()
         {
-            return ToA_Position;
+            return ToART;
         }
         public double getLAT21()
         {
