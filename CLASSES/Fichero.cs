@@ -11,11 +11,13 @@ namespace CLASSES
     public class Fichero
     {
         string path;
+        public int CAT;
+        public List<int> CAT_list = new List<int>();
 
         List<CAT10> listaCAT10 = new List<CAT10>();
         //List<CAT20> listaCAT20 = new List<CAT20>();
         List<CAT21> listaCAT21 = new List<CAT21>();
-        public int CAT;
+        
         //Reduced table with items for display on map
         DataTable tablacat10reducida = new DataTable();
         DataTable tablacat21reducida = new DataTable();
@@ -32,14 +34,14 @@ namespace CLASSES
 
             this.CreateReducedTable();
 
-            this.Create_TrackTable();
+            this.Create_TrackTable_Puras();
 
+            this.Create_TrackTable_Multiple();
         }
         public List<CAT10> getListCAT10()
         {
             return listaCAT10;
         }
-
         public List<CAT21> getListCAT21()
         {
             return listaCAT21;
@@ -62,10 +64,6 @@ namespace CLASSES
         {
             return tablaCAT10;
         }
-        //public DataTable getTablaCAT20()
-        //{
-        //    return tablaCAT20;
-        //}
         public DataTable getTablaCAT21()
         {
             return tablaCAT21;
@@ -120,6 +118,7 @@ namespace CLASSES
             {
                 string[] arraystring = listahex[q];
                 CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+                CAT_list.Add(CAT); // Adds the pack category into this list
                 contadorGeneral++;
 
                 if (CAT == 10)
@@ -155,8 +154,8 @@ namespace CLASSES
                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] + 
                            ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status,
-                           "no lo he encontrado", C21.Roll, C21.Service_ID, C21.Quality_Indicators, "no lo he encontrado", "tampoco", C21.RID, C21.ToA_Position, C21.ToA_Velocity,
-                           C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
+                           C21.Roll, C21.Service_ID, C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity,
+                           C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                 }
                 else if (CAT == 21)
                 {
@@ -174,9 +173,9 @@ namespace CLASSES
                     tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SAC+"/"+C21.Data_Source_ID_SIC,C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
                         C21.getTOD21(),"("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
                         C21.Op_Status,"("+C21.Air_Speed[0]+", "+C21.Air_Speed[1]+")",C21.True_Airspeed, "("+C21.GS+", "+C21.TA+")",C21.TAR, C21.SA, C21.MOPS,
-                        C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status,"no lo he encontrado",C21.Roll,C21.Service_ID,
-                        C21.Quality_Indicators,C21.Mode_S,"no lo he encontrado","tampoco", C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, 
-                        C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
+                        C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status, C21.Roll,C21.Service_ID,
+                        C21.Quality_Indicators,C21.Mode_S, C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, 
+                        C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                     
                     // Complete Multiple CAT table
                     tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.getTOD21(),
@@ -188,18 +187,11 @@ namespace CLASSES
                         "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
                         ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", 
                         C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status,
-                        "no lo he encontrado", C21.Roll, C21.Service_ID, C21.Quality_Indicators, "no lo he encontrado", "tampoco", C21.RID, C21.ToA_Position, C21.ToA_Velocity,
-                        C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, "tampoco", C21.Data_Ages, C21.RP);
+                        C21.Roll, C21.Service_ID, C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity,
+                        C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.ToART, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                 }                
             }
         }            
-        public bool Checkifmulticatfile(DataTable datatable1, DataTable datatable2)
-        {
-            //we compare if tablacat10 or tablacat21 is equal to multiplecattable. if they are not equal, file would be multicategory
-           // true means file is multycategory 
-            if (datatable1.Rows[1000][1] == datatable2.Rows[1000][1]) { return false; }
-            else { return true; }         
-        }
         public void CreateReducedTable()
         {
             //we must declare table columns
@@ -236,8 +228,8 @@ namespace CLASSES
             tablacat21reducida.Columns.Add(new DataColumn("Longitude (º)"));
             tablacat21reducida.Columns.Add(new DataColumn("Target Address"));
             tablacat21reducida.Columns.Add(new DataColumn("Track Number"));
-        }     
-        public void Create_TrackTable() //generating each CAT columns for the tables
+        }
+        public void Create_TrackTable_Puras() //generating each CAT columns for the tables
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
@@ -295,13 +287,10 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Emitter Category"));
             tablaCAT21.Columns.Add(new DataColumn("Target Address"));
             tablaCAT21.Columns.Add(new DataColumn("Target Status"));
-            tablaCAT21.Columns.Add(new DataColumn("Rate of Angle"));
             tablaCAT21.Columns.Add(new DataColumn("Roll Angle"));
             tablaCAT21.Columns.Add(new DataColumn("Service Identification"));
             tablaCAT21.Columns.Add(new DataColumn("Quality Indicators"));
             tablaCAT21.Columns.Add(new DataColumn("Mode S"));
-            tablaCAT21.Columns.Add(new DataColumn("Link Technology"));
-            tablaCAT21.Columns.Add(new DataColumn("Report period"));
             tablaCAT21.Columns.Add(new DataColumn("Message amplitude"));
             tablaCAT21.Columns.Add(new DataColumn("Receiver ID"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
@@ -312,24 +301,26 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision"));
             tablaCAT21.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
             tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data"));
-            tablaCAT21.Columns.Add(new DataColumn("Figure of merit"));
             tablaCAT21.Columns.Add(new DataColumn("Data ages"));
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
 
+        }
+        public void Create_TrackTable_Multiple() //generating each CAT columns for the tables
+        {
             // MULTIPLE CAT
             //Common Items
             tablaMultipleCAT.Columns.Add(new DataColumn("#"));
             tablaMultipleCAT.Columns.Add(new DataColumn("CAT"));
             tablaMultipleCAT.Columns.Add(new DataColumn("SIC/SAC"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Target ID"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Track Number"));            
+            tablaMultipleCAT.Columns.Add(new DataColumn("Track Number"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time Of Day (UTC)"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Target Report"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));                       
-            tablaMultipleCAT.Columns.Add(new DataColumn("Mode 3A Code"));            
-            tablaMultipleCAT.Columns.Add(new DataColumn("Mode S MB Data"));            
+            tablaMultipleCAT.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Mode 3A Code"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Mode S MB Data"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Flight Level"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Measured Height"));            
+            tablaMultipleCAT.Columns.Add(new DataColumn("Measured Height"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Target Address"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Amplitude"));
 
@@ -365,12 +356,9 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Met Report"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Emitter Category"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Target Status"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Rate of Angle"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Roll Angle"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Identification"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Quality Indicators"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Link Technology"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Report period"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Receiver ID"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
@@ -380,9 +368,8 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Trajectory Intent Data"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("Figure of merit"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
-        }
+        }        
     }
 }

@@ -66,49 +66,37 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Hidden;
             gridlista.Visibility = Visibility.Hidden;
 
-            if (F.CAT == 10)
+            if (F.CAT_list[0] == 10)
             {
-                Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
-                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT10()) == true)
-                {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true) { Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView; }
                 else { Track_Table.ItemsSource = F.getTablaCAT10().DefaultView; }
             }
-            if (F.CAT == 21)
+            if (F.CAT_list[0] == 21)
             {
-                Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
-                if (F.Checkifmulticatfile(F.getTablaMixtCAT(), F.getTablaCAT21()) == true)
-                {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true) { Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView; }
                 else { Track_Table.ItemsSource = F.getTablaCAT21().DefaultView; }
-            }
+            }            
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
 
-            //NECESITO HACER UN GETTER DELA CAT PARA PODER DEFINIR EL SIGUENTE IF : if (F.CAT == 10)
-            //if (F.gettablacat10reducida()!=null)
-            if (F.CAT == 10)
+            if (F.CAT_list[0] == 10)
             {
-                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat10reducida()) == true)
-                {
-                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
-                }
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
                 else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
             }
-            if (F.CAT == 21)
+            if (F.CAT_list[0] == 21)
             {
-                if (F.Checkifmulticatfile(F.getmultiplecattablereducida(), F.gettablacat21reducida()) == true)
-                {
-                    gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView;
-                }
-                gridlista.ItemsSource = F.gettablacat21reducida().DefaultView;
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
             }
         }
         private void Map_Load(object sender, RoutedEventArgs e)
