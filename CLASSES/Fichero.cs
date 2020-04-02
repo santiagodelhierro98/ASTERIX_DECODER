@@ -169,6 +169,7 @@ namespace CLASSES
                     multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), CheckTOD(C21), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // CAT21 reduced table for maptrack
                     tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), CheckTOD(C21), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+
                     // Complete CAT21 table
                     tablaCAT21.Rows.Add(contadorCAT21, C21.getSIC21() + "/" + C21.getSAC21(), C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
                         CheckTOD(C21), "("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
@@ -239,7 +240,7 @@ namespace CLASSES
             tablaCAT10.Columns.Add(new DataColumn("SIC/SAC"));
             tablaCAT10.Columns.Add(new DataColumn("Target ID"));
             tablaCAT10.Columns.Add(new DataColumn("Track Number"));
-            tablaCAT10.Columns.Add(new DataColumn("Target Report"));
+            tablaCAT10.Columns.Add(new DataColumn("Target Report")); //array
             tablaCAT10.Columns.Add(new DataColumn("Message type"));
             tablaCAT10.Columns.Add(new DataColumn("Time Of Day (UTC)"));
             tablaCAT10.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
@@ -247,20 +248,20 @@ namespace CLASSES
             tablaCAT10.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
             tablaCAT10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
             tablaCAT10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
-            tablaCAT10.Columns.Add(new DataColumn("Track Status"));
-            tablaCAT10.Columns.Add(new DataColumn("Mode 3A Code"));
+            tablaCAT10.Columns.Add(new DataColumn("Track Status")); //array
+            tablaCAT10.Columns.Add(new DataColumn("Mode 3/A Code")); //array
             tablaCAT10.Columns.Add(new DataColumn("Target Address"));
-            tablaCAT10.Columns.Add(new DataColumn("Mode S MB Data"));
+            tablaCAT10.Columns.Add(new DataColumn("Mode S MB Data")); //array
             tablaCAT10.Columns.Add(new DataColumn("Vehicle Fleet ID"));
             tablaCAT10.Columns.Add(new DataColumn("Flight Level"));
             tablaCAT10.Columns.Add(new DataColumn("Measured Height"));
             tablaCAT10.Columns.Add(new DataColumn("Target Size\n(Length x Width)"));
             tablaCAT10.Columns.Add(new DataColumn("Target Heading"));
-            tablaCAT10.Columns.Add(new DataColumn("System Status"));
-            tablaCAT10.Columns.Add(new DataColumn("Pre Programmed MSG"));
+            tablaCAT10.Columns.Add(new DataColumn("System Status")); //array
+            tablaCAT10.Columns.Add(new DataColumn("Pre Programmed MSG")); //array
             tablaCAT10.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
             tablaCAT10.Columns.Add(new DataColumn("Covariance of deviation"));
-            tablaCAT10.Columns.Add(new DataColumn("Presence"));
+            tablaCAT10.Columns.Add(new DataColumn("Presence")); //array
             tablaCAT10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
             tablaCAT10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
 
@@ -372,7 +373,17 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Trajectory Intent Data"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
-        }        
+        }
+       
+        // returns the pack in the 'num' position
+        public CAT10 getCAT10(int num)
+        {
+            return listaCAT10[num];
+        }
+        public CAT21 getCAT21(int num)
+        {
+            return listaCAT21[num];
+        }
 
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
