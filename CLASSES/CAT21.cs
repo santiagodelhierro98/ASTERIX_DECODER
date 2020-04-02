@@ -1246,6 +1246,11 @@ namespace CLASSES
         {
             return FL;
         }
+        //file that does not report Time of Asterix Report Time will report time of message report for position (ADSB-v023)
+        public double getTOD21ADSB23()
+        {
+            return ToA_Position;
+        }
     }
 }
 

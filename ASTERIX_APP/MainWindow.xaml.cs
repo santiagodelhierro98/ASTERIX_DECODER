@@ -30,10 +30,10 @@ namespace ASTERIX_APP
         double latindegrees;
         double lonindegrees;
 
-
         //lat lon os MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.29694444;
         double MLAT_lon = 2.07833333;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer(); 
 
         public MainWindow()
         {
@@ -107,27 +107,26 @@ namespace ASTERIX_APP
         {
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             map.MapProvider = OpenStreetMapProvider.Instance;
-            map.MinZoom = 7;
+            map.MinZoom = 8;
             map.MaxZoom = 16;
             map.Zoom = 14;           
             map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
             map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;
-            //GMapOverlay markers = new GMapOverlay("markers");
+      
         }
+ 
+       
         private PointLatLng cartesiantolatlonMLAT(double X, double Y)
         {
-            double R = 6371 * 1000;
+            double RAD = 6371 * 1000;
             double d = Math.Sqrt((X * X) + (Y * Y));
-            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double b = Math.Atan2(Y, -X) - (Math.PI / 2);
             double phi1 =MLAT_lat * (Math.PI / 180);
             double lamda1 = MLAT_lon * (Math.PI / 180);
-            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
-            var lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
-            //double latindegrees = phi2 * (180.0 / Math.PI);
-            //double lonindegrees = lamda2 * (180 / Math.PI);
-
+            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / RAD) + Math.Cos(phi1) * Math.Sin(d / RAD) * Math.Cos(b));
+            var lamda2 = lamda1 + Math.Atan2(Math.Sin(b) * Math.Sin(d / RAD) * Math.Cos(phi1), Math.Cos(d / RAD) - Math.Sin(phi1) * Math.Sin(phi2));
             PointLatLng latlonMLAT = new PointLatLng(phi2 * (180 / Math.PI), lamda2 * (180 / Math.PI));
             return latlonMLAT;
         }

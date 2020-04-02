@@ -166,12 +166,12 @@ namespace CLASSES
                     listaCAT21.Add(C21);
 
                     // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), C21.getTOD21(), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.getTargetID21(), CheckTOD(C21), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // CAT21 reduced table for maptrack
-                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
+                    tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), CheckTOD(C21), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // Complete CAT21 table
                     tablaCAT21.Rows.Add(contadorCAT21, C21.getSIC21() + "/" + C21.getSAC21(), C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
-                        C21.getTOD21(),"("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
+                        CheckTOD(C21), "("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
                         C21.Op_Status,"("+C21.Air_Speed[0]+", "+C21.Air_Speed[1]+")",C21.True_Airspeed, "("+C21.GS+", "+C21.TA+")",C21.TAR, C21.SA, C21.MOPS,
                         C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status, C21.Roll,C21.Service_ID,
                         C21.Quality_Indicators,C21.Mode_S, C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, 
@@ -403,6 +403,12 @@ namespace CLASSES
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             return lamda2 * (180.0 / Math.PI);
         }
-
+        // if time of asterix message report is not reported we will show Time of message reception for position
+        CAT21 C21 = new CAT21();
+        private double CheckTOD(CAT21 C21)
+        {
+            if (C21.getTOD21() == 0) { return C21.getTOD21ADSB23(); }
+            else { return C21.getTOD21(); }
+        }
     }
 }
