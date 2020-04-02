@@ -105,15 +105,16 @@ namespace ASTERIX_APP
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
             map.MapProvider = OpenStreetMapProvider.Instance;
             map.MinZoom = 7;
             map.MaxZoom = 16;
             map.Zoom = 14;           
             map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
-            map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
-            map.DragButton = MouseButton.Left;                
+            map.DragButton = MouseButton.Left;
+            //GMapOverlay markers = new GMapOverlay("markers");
         }
         private PointLatLng cartesiantolatlonMLAT(double X, double Y)
         {
@@ -124,8 +125,8 @@ namespace ASTERIX_APP
             double lamda1 = MLAT_lon * (Math.PI / 180);
             var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             var lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
-            double latindegrees = phi2 * (180.0 / Math.PI);
-            double lonindegrees = lamda2 * (180 / Math.PI);
+            //double latindegrees = phi2 * (180.0 / Math.PI);
+            //double lonindegrees = lamda2 * (180 / Math.PI);
 
             PointLatLng latlonMLAT = new PointLatLng(phi2 * (180 / Math.PI), lamda2 * (180 / Math.PI));
             return latlonMLAT;

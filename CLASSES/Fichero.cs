@@ -170,7 +170,7 @@ namespace CLASSES
                     // CAT21 reduced table for maptrack
                     tablacat21reducida.Rows.Add(contadorCAT21, C21.getTargetID21(), C21.getTOD21(), C21.getFL21(), C21.getSIC21(), C21.getSAC21(), Math.Round(C21.getLAT21(),2), Math.Round(C21.getLON21(),2), C21.getTargetAddress21(), C21.getTrackNum21());
                     // Complete CAT21 table
-                    tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SAC+"/"+C21.Data_Source_ID_SIC,C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
+                    tablaCAT21.Rows.Add(contadorCAT21, C21.getSIC21() + "/" + C21.getSAC21(), C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
                         C21.getTOD21(),"("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
                         C21.Op_Status,"("+C21.Air_Speed[0]+", "+C21.Air_Speed[1]+")",C21.True_Airspeed, "("+C21.GS+", "+C21.TA+")",C21.TAR, C21.SA, C21.MOPS,
                         C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status, C21.Roll,C21.Service_ID,
@@ -266,7 +266,7 @@ namespace CLASSES
 
             //CAT21
             tablaCAT21.Columns.Add(new DataColumn("#"));
-            tablaCAT21.Columns.Add(new DataColumn("SAC/SIC"));
+            tablaCAT21.Columns.Add(new DataColumn("SIC/SAC"));
             tablaCAT21.Columns.Add(new DataColumn("Target ID"));
             tablaCAT21.Columns.Add(new DataColumn("Track Number"));
             tablaCAT21.Columns.Add(new DataColumn("Target Report"));
