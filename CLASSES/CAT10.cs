@@ -21,7 +21,7 @@ namespace CLASSES
         public double Amplitude;    //dBm
         public double Time_Day; //seconds
         public int Track_Num;
-        public string[] Track_Status = new string[11];
+        public string[] Track_Status = new string[10];
         public double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
         public double[] Track_Vel_Cartesian = new double[2];    // m/s
         public double[] Acceleration = new double[2]; // m/s^2
@@ -299,19 +299,19 @@ namespace CLASSES
                     string CST_bin = Status[2].ToString() + Status[3].ToString();
                     Int32 CST = Convert.ToInt32(CST_bin, 2);
                     //CST
-                    if (CST == 0) { Track_Status[3] = "No Extrapolation"; }
-                    if (CST == 1) { Track_Status[3] = "Predictable extrapolation due to sensor refresh period"; }
-                    if (CST == 2) { Track_Status[3] = "Predictable extrapolation in masked area"; }
-                    if (CST == 3) { Track_Status[3] = "Extrapolation due to unpredictable absence of detection"; }
+                    if (CST == 0) { Track_Status[2] = "No Extrapolation"; }
+                    if (CST == 1) { Track_Status[2] = "Predictable extrapolation due to sensor refresh period"; }
+                    if (CST == 2) { Track_Status[2] = "Predictable extrapolation in masked area"; }
+                    if (CST == 3) { Track_Status[2] = "Extrapolation due to unpredictable absence of detection"; }
                     //MAH
-                    if (Status[4].ToString() == "1") { Track_Status[4] = "Horizontal manouvre"; }
-                    if (Status[4].ToString() == "0") { Track_Status[4] = "Default"; }
+                    if (Status[4].ToString() == "1") { Track_Status[3] = "Horizontal manouvre"; }
+                    if (Status[4].ToString() == "0") { Track_Status[3] = "Default"; }
                     //TCC
-                    if (Status[5].ToString() == "1") { Track_Status[5] = "Horizontal manouvre"; }
-                    if (Status[5].ToString() == "0") { Track_Status[5] = "Default"; }
+                    if (Status[5].ToString() == "1") { Track_Status[4] = "Horizontal manouvre"; }
+                    if (Status[5].ToString() == "0") { Track_Status[4] = "Default"; }
                     //STH
-                    if (Status[6].ToString() == "1") { Track_Status[6] = "Smoothed Position"; }
-                    if (Status[6].ToString() == "0") { Track_Status[6] = "Measured Position"; }
+                    if (Status[6].ToString() == "1") { Track_Status[5] = "Smoothed Position"; }
+                    if (Status[6].ToString() == "0") { Track_Status[5] = "Measured Position"; }
 
                     if (Status[7].ToString() == "1")
                     {
@@ -322,30 +322,30 @@ namespace CLASSES
                         string TOM_bin = Status1[0].ToString() + Status1[1].ToString();
                         Int32 TOM = Convert.ToInt32(TOM_bin, 2);
                         //TOM
-                        if (TOM == 0) { Track_Status[7] = "Unknown Type of Movement"; }
-                        if (TOM == 1) { Track_Status[7] = "Taking-off"; }
-                        if (TOM == 2) { Track_Status[7] = "Landing"; }
-                        if (TOM == 3) { Track_Status[7] = "Other Types of Movements"; }
+                        if (TOM == 0) { Track_Status[6] = "Unknown Type of Movement"; }
+                        if (TOM == 1) { Track_Status[6] = "Taking-off"; }
+                        if (TOM == 2) { Track_Status[6] = "Landing"; }
+                        if (TOM == 3) { Track_Status[6] = "Other Types of Movements"; }
 
                         string DOU_bin = Status1[2].ToString() + Status1[3].ToString() + Status1[4].ToString();
                         Int32 DOU = Convert.ToInt32(DOU_bin, 2);
                         //DOU
-                        if (DOU == 0) { Track_Status[8] = "No doubt"; }
-                        if (DOU == 1) { Track_Status[8] = "Doubtful correlation"; }
-                        if (DOU == 2) { Track_Status[8] = "Doubtful correlation in clutter"; }
-                        if (DOU == 3) { Track_Status[8] = "Loss of accuracy"; }
-                        if (DOU == 4) { Track_Status[8] = "Loss of accuracy in clutter"; }
-                        if (DOU == 5) { Track_Status[8] = "Unstable track"; }
-                        if (DOU == 6) { Track_Status[8] = "Previously Cosated"; }
+                        if (DOU == 0) { Track_Status[7] = "No doubt"; }
+                        if (DOU == 1) { Track_Status[7] = "Doubtful correlation"; }
+                        if (DOU == 2) { Track_Status[7] = "Doubtful correlation in clutter"; }
+                        if (DOU == 3) { Track_Status[7] = "Loss of accuracy"; }
+                        if (DOU == 4) { Track_Status[7] = "Loss of accuracy in clutter"; }
+                        if (DOU == 5) { Track_Status[7] = "Unstable track"; }
+                        if (DOU == 6) { Track_Status[7] = "Previously Cosated"; }
 
                         contador += 1;
                         string MRS_bin = Status1[5].ToString() + Status1[6].ToString();
                         Int32 MRS = Convert.ToInt32(MRS_bin, 2);
                         //MRS
-                        if (MRS == 0) { Track_Status[9] = "Merge or split indication undetermined"; }
-                        if (MRS == 1) { Track_Status[9] = "Track merged by association to plot"; }
-                        if (MRS == 2) { Track_Status[9] = "Track merged by non-association to plot"; }
-                        if (MRS == 3) { Track_Status[9] = "Split track"; }
+                        if (MRS == 0) { Track_Status[8] = "Merge or split indication undetermined"; }
+                        if (MRS == 1) { Track_Status[8] = "Track merged by association to plot"; }
+                        if (MRS == 2) { Track_Status[8] = "Track merged by non-association to plot"; }
+                        if (MRS == 3) { Track_Status[8] = "Split track"; }
 
                         if (Status1[7].ToString() == "1")
                         {
@@ -353,8 +353,8 @@ namespace CLASSES
                             string Status_Bin2 = M.Octeto_A_Bin(paquete0[contador]);
                             char[] Status2 = Status_Bin2.ToCharArray();
                             //GHO
-                            if (Status2[0].ToString() == "1") { Track_Status[10] = "Ghost Track"; }
-                            if (Status2[0].ToString() == "0") { Track_Status[10] = "Default"; }
+                            if (Status2[0].ToString() == "1") { Track_Status[9] = "Ghost Track"; }
+                            if (Status2[0].ToString() == "0") { Track_Status[9] = "Default"; }
                         }
                         if (Status1[7].ToString() == "0")
                         {
