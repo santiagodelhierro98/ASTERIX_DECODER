@@ -270,42 +270,42 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("SIC/SAC"));
             tablaCAT21.Columns.Add(new DataColumn("Target ID"));
             tablaCAT21.Columns.Add(new DataColumn("Track Number"));
-            tablaCAT21.Columns.Add(new DataColumn("Target Report"));
+            tablaCAT21.Columns.Add(new DataColumn("Target Report")); // array
             tablaCAT21.Columns.Add(new DataColumn("Time Of Day"));
             tablaCAT21.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
             tablaCAT21.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
             tablaCAT21.Columns.Add(new DataColumn("Flight Level"));
             tablaCAT21.Columns.Add(new DataColumn("Geometric Height"));
-            tablaCAT21.Columns.Add(new DataColumn("Operational Status"));
+            tablaCAT21.Columns.Add(new DataColumn("Operational Status")); //array
             tablaCAT21.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
             tablaCAT21.Columns.Add(new DataColumn("True Airspeed"));
             tablaCAT21.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
             tablaCAT21.Columns.Add(new DataColumn("Track Angle Rate"));
             tablaCAT21.Columns.Add(new DataColumn("Selected Altitude"));
-            tablaCAT21.Columns.Add(new DataColumn("MOPS version"));
+            tablaCAT21.Columns.Add(new DataColumn("MOPS version")); //array
             tablaCAT21.Columns.Add(new DataColumn("Magnetic Heading"));
             tablaCAT21.Columns.Add(new DataColumn("Barometric Vertical Rate"));
             tablaCAT21.Columns.Add(new DataColumn("Geometric Vertical Rate"));
             tablaCAT21.Columns.Add(new DataColumn("Mode 3A Code"));
-            tablaCAT21.Columns.Add(new DataColumn("Met Report"));
+            tablaCAT21.Columns.Add(new DataColumn("Met Report")); //array
             tablaCAT21.Columns.Add(new DataColumn("Emitter Category"));
             tablaCAT21.Columns.Add(new DataColumn("Target Address"));
-            tablaCAT21.Columns.Add(new DataColumn("Target Status"));
+            tablaCAT21.Columns.Add(new DataColumn("Target Status")); // array
             tablaCAT21.Columns.Add(new DataColumn("Roll Angle"));
             tablaCAT21.Columns.Add(new DataColumn("Service Identification"));
-            tablaCAT21.Columns.Add(new DataColumn("Quality Indicators"));
-            tablaCAT21.Columns.Add(new DataColumn("Mode S"));
+            tablaCAT21.Columns.Add(new DataColumn("Quality Indicators")); //array
+            tablaCAT21.Columns.Add(new DataColumn("Mode S")); //array
             tablaCAT21.Columns.Add(new DataColumn("Message amplitude"));
             tablaCAT21.Columns.Add(new DataColumn("Receiver ID"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
-            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position - High precision"));
-            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position - High precision")); // array
+            tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision")); // array
             tablaCAT21.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
-            tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data"));
-            tablaCAT21.Columns.Add(new DataColumn("Data ages"));
+            tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
+            tablaCAT21.Columns.Add(new DataColumn("Data ages")); // array
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
         }
         public void Create_TrackTable_Multiple() //generating each CAT columns for the tables

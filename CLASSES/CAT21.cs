@@ -683,7 +683,7 @@ namespace CLASSES
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                                 if (Convert.ToInt32(octeto, 2) == 0) { ECAT = "No ADS-B Emitter Category Information"; }
                                 if (Convert.ToInt32(octeto, 2) == 1) { ECAT = "light aircraft <= 15500 lbs"; }
-                                if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "15500 lbs < small aircraft <75000 lbs"; }
+                                if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "15500 lbs < small aircraft < 75000 lbs"; }
                                 if (Convert.ToInt32(octeto, 2) == 3) { ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
                                 if (Convert.ToInt32(octeto, 2) == 4) { ECAT = "High Vortex Large"; }
                                 if (Convert.ToInt32(octeto, 2) == 5) { ECAT = "300000 lbs <= heavy aircraft"; }

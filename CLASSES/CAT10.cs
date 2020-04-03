@@ -29,7 +29,7 @@ namespace CLASSES
         public string[] Target_ID = new string[2];
         public string[] Mode_SMB = new string[4];
         public double[] Target_Size_Heading = new double[3];    // m,degrees
-        public double[] Presence = new double[2];   // rho,theta
+        public double[] Presence = new double[3];   // rho,theta
         public string Fleet_ID;
         public string[] Pre_Prog_Message = new string[2];
         public double[] StndrdDev_Position = new double[3]; // m^2
