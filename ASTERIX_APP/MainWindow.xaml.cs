@@ -213,7 +213,51 @@ namespace ASTERIX_APP
             // CAT 21 case
             if (category == 21)
             {
-
+                CAT21 pack = F.getCAT21(Row_Num);
+                if(Col_Num == 4 && pack.Target_Report_Desc != null)
+                {
+                    string[] TRD = pack.Target_Report_Desc;
+                }
+                if (Col_Num == 10 && pack.Op_Status != null)
+                {
+                    string[] OS = pack.Op_Status;
+                }
+                if (Col_Num == 16 && pack.MOPS != null)
+                {
+                    string[] MOPS = pack.MOPS;
+                }
+                if (Col_Num == 21 && pack.Met_Report != null)
+                {
+                    string[] MR = pack.Met_Report;
+                }
+                if (Col_Num == 24 && pack.Target_Status != null)
+                {
+                    string[] TS = pack.Target_Status;
+                }
+                if (Col_Num == 27 && pack.Quality_Indicators != null)
+                {
+                    string[] QI = pack.Quality_Indicators;
+                }
+                if (Col_Num == 28 && pack.Mode_S != null)
+                {
+                    int[] MS = pack.Mode_S;
+                }
+                if (Col_Num == 35 && pack.TMRP_HP != null)
+                {
+                    string[] TMRP = pack.TMRP_HP;
+                }
+                if (Col_Num == 36 && pack.TMRV_HP != null)
+                {
+                    string[] TMRV = pack.TMRV_HP;
+                }
+                if (Col_Num == 38 && pack.Trajectory_Intent != null)
+                {
+                    string[] TI = pack.Trajectory_Intent;
+                }
+                if (Col_Num == 39 && pack.Data_Ages != null)
+                {
+                    double[] DA = pack.Data_Ages;
+                }
             }
             // Mixt category
             if (category == 1021)
