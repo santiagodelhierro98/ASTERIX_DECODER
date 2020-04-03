@@ -809,6 +809,7 @@ namespace CLASSES
                                     if (octeto1[0].ToString() == "1") { Trajectory_Intent[2] = "Trajectory Intent Data is not available for this aircraft"; }
                                     else
                                     {
+                                        Trajectory_Intent[2] = "Trajectory Intent Data available";
                                         contador = contador + 1;
                                         string octeto2 = Met.Octeto_A_Bin(paquete0[contador]);
                                         //REP

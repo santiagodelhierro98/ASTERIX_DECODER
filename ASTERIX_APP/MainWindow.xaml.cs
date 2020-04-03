@@ -217,46 +217,70 @@ namespace ASTERIX_APP
                 if(Col_Num == 4 && pack.Target_Report_Desc != null)
                 {
                     string[] TRD = pack.Target_Report_Desc;
+                    MessageBox.Show("Target Report:\n\nATP: "+TRD[0]+"\nARC: " + TRD[1]+"\nRC: " + TRD[2]+"\nRAB :" + TRD[3]+
+                        "\nDCR: " + TRD[4]+"\nGBS: " + TRD[5]+"\nSIM: " + TRD[6]+"\nTST: " + TRD[7]+"\nSAA: " + TRD[8]+"\nCL: " +
+                        TRD[9]+"\nIPC: " + TRD[10]+"\nNOGO" + TRD[11]+"\nCPR: " + TRD[12]+"\nLDPJ: " + TRD[13]+"\nRCF: " + TRD[14]);
                 }
                 if (Col_Num == 10 && pack.Op_Status != null)
                 {
                     string[] OS = pack.Op_Status;
+                    MessageBox.Show("Operational Status:\n\nRA: "+OS[0]+"\nTC: " + OS[1]+"\nTS: " + OS[2]+"\nARV: " + OS[3]+
+                        "\nCDITA: " + OS[4]+"\nNot TCAS: " + OS[5]+"\nSing. Ant.: "+OS[6]);
                 }
                 if (Col_Num == 16 && pack.MOPS != null)
                 {
                     string[] MOPS = pack.MOPS;
+                    MessageBox.Show("MOPS Version:\n\nVNS: "+MOPS[0]+"\nVN: " + MOPS[1]+"\nLTT: " + MOPS[2]);
                 }
                 if (Col_Num == 21 && pack.Met_Report != null)
                 {
                     string[] MR = pack.Met_Report;
+                    MessageBox.Show("Met Report:\n\nWind Speed: "+MR[0]+"\nWind Direction: " + MR[1]+"\nTemperature: " + MR[2]+
+                        "Turbulence: " + MR[3]);
                 }
                 if (Col_Num == 24 && pack.Target_Status != null)
                 {
                     string[] TS = pack.Target_Status;
+                    MessageBox.Show("Target Status:\n\nICF: "+TS[0]+"\nLNAV: " + TS[1]+"\nPS: " + TS[2]+"\nSS: " + TS[3]);
                 }
                 if (Col_Num == 27 && pack.Quality_Indicators != null)
                 {
                     string[] QI = pack.Quality_Indicators;
+                    MessageBox.Show("Quality Indicators:\n\n"+QI[0]+"\n" + QI[1]+"\n" + QI[2]+"\n"+"\nSIL Supplement: " +
+                        QI[3]+"\nSDA: " + QI[4]+"\nGVA: " + QI[5]+"\nPIC: " + QI[6]);
                 }
                 if (Col_Num == 28 && pack.Mode_S != null)
                 {
                     int[] MS = pack.Mode_S;
+                    MessageBox.Show("Mode S MB Data:\n\nRep. Mode S MB Data: "+MS[0]+"\nMB Data: " + MS[1]+"\nBDS 1: " + MS[2]+
+                        "\nBDS 2: " + MS[3]);
                 }
                 if (Col_Num == 35 && pack.TMRP_HP != null)
                 {
                     string[] TMRP = pack.TMRP_HP;
+                    MessageBox.Show("Time of Message Reception for Position\nHigh Precision:\n\nFull Second Indication: " + TMRP[0] +
+                        "\nTMR Posiotion: " + TMRP[1]);
                 }
                 if (Col_Num == 36 && pack.TMRV_HP != null)
                 {
                     string[] TMRV = pack.TMRV_HP;
+                    MessageBox.Show("Time of Message Reception for velocity\nHigh Precision:\n\nFull Second Indication: "+TMRV[0]+
+                        "\nTMR Velocity: "+TMRV[1]);
                 }
                 if (Col_Num == 38 && pack.Trajectory_Intent != null)
                 {
                     string[] TI = pack.Trajectory_Intent;
+                    MessageBox.Show("Trajectory Intent:\n\n"+TI[0]+"\nNVB: " + TI[1]+"\nNAV: " + TI[2]+"\nREP: " + TI[3]+"\nTCA: " + TI[0]+
+                        "\nNC: " + TI[5]+"\nTCP Number: " + TI[6]+"\nLatitude TID: " + TI[7]+"\nLongitude TID: " + TI[8]+"\nAltitude (feet): "+
+                        TI[9]+"\nPoint Type: " + TI[10] +"\nTD: " + TI[11]+"\nTRA: " + TI[12]+"\nTOA: " + TI[13]+"\nTTR (NM): " + TI[15]);
                 }
                 if (Col_Num == 39 && pack.Data_Ages != null)
                 {
                     double[] DA = pack.Data_Ages;
+                    MessageBox.Show("Data Ages:\n\nAOS: "+DA[0]+"\nTRD: " + DA[1]+"\n Mode 3A: " + DA[2]+"\nQI: " + DA[3]+"\nTI: " + DA[4]+
+                        "\nMAM: " + DA[5]+"\nGH: " + DA[6]+"\nFL: " + DA[7]+"\nISA: " + DA[8]+"\nFSA: " + DA[9]+"\nAS: " + DA[10]+"\nTAS: " +
+                        DA[11]+"\nMH: " + DA[12]+"\nBVR: " + DA[13]+"\nGVR: " + DA[14]+"\nGV: " + DA[15]+"\nTAR: " + DA[16] + "\nTarget ID: " + 
+                        DA[17]+"\nTS: " + DA[18]+"Met: " + DA[19]+"\nROA: " + DA[20]+"\nARA: " + DA[21]+"\nSCC: " + DA[22]);
                 }
             }
             // Mixt category
