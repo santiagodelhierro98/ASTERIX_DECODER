@@ -40,10 +40,18 @@ namespace ASTERIX_APP
         {
             InitializeComponent();        
                        
-            Instructions_Label.Visibility = Visibility.Visible; ;
+            Instructions_Label.Visibility = Visibility.Visible;
             Instructions_Label.FontSize = 18;
-            Instructions_Label.Content = "Welcome to ASTERIX APP!" + '\n' + '\n' + "We need some file to read!" + '\n' +
+            Instructions_Label.Content = "Hi my name is Asterix, welcome to my APP!" + '\n' + '\n' + "I need some file to read!" + '\n' +
                 "Please, load a '.ast' format file with the 'Load File' button above.";
+            
+            asterixPNG.Visibility = Visibility.Visible;
+            asterixPerf.Visibility = Visibility.Hidden;
+            bubbleWord.Visibility = Visibility.Visible;
+            circle.Visibility = Visibility.Visible;
+            circle2.Visibility = Visibility.Visible;
+            bubbleWord.Height = 140;
+            bubbleWord.Width = 550;            
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -52,6 +60,10 @@ namespace ASTERIX_APP
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            Track_Table.Visibility = Visibility.Hidden;
+            bubbleWord.Visibility = Visibility.Hidden;
+            circle.Visibility = Visibility.Hidden;
+            circle2.Visibility = Visibility.Hidden;
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
 
@@ -61,8 +73,15 @@ namespace ASTERIX_APP
             F = new Fichero(OpenFile.FileName);            
             F.leer();
 
+            asterixPerf.Visibility = Visibility.Visible;
+            asterixPNG.Visibility = Visibility.Hidden;
             Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
+            bubbleWord.Height = 100;
+            bubbleWord.Width = 550;
+            bubbleWord.Visibility = Visibility.Visible;
+            circle.Visibility = Visibility.Visible;
+            circle2.Visibility = Visibility.Visible;
 
             MapButton.Visibility = Visibility.Visible; ;
             TableButton.Visibility = Visibility.Visible; ;
@@ -72,7 +91,12 @@ namespace ASTERIX_APP
             Instructions_Label.Visibility = Visibility.Hidden;
             Track_Table.Visibility = Visibility.Visible;
             map.Visibility = Visibility.Hidden;
-            gridlista.Visibility = Visibility.Hidden;            
+            gridlista.Visibility = Visibility.Hidden;
+            asterixPNG.Visibility = Visibility.Hidden;
+            asterixPerf.Visibility = Visibility.Hidden;
+            bubbleWord.Visibility = Visibility.Hidden;
+            circle.Visibility = Visibility.Hidden;
+            circle2.Visibility = Visibility.Hidden;
 
             if (F.CAT_list[0] == 10)
             {
@@ -109,7 +133,10 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
-            
+            asterixPNG.Visibility = Visibility.Hidden;
+            bubbleWord.Visibility = Visibility.Hidden;
+            circle.Visibility = Visibility.Hidden;
+            circle2.Visibility = Visibility.Hidden;
 
             if (F.CAT_list[0] == 10)
             {
@@ -137,7 +164,6 @@ namespace ASTERIX_APP
             map.DragButton = MouseButton.Left;
       
         }
-       
         private PointLatLng cartesiantolatlonMLAT(double X, double Y)
         {
             double RAD = 6371 * 1000;

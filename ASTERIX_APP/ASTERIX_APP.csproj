@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\asterix.png" />
+    <None Remove="Images\asterixPERF.png" />
+    <None Remove="Images\asterixProblem.png" />
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
     <None Remove="Images\upc-logo.png" />
   </ItemGroup>
@@ -20,6 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\asterix.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\asterixPERF.png" />
+    <Resource Include="Images\asterixProblem.png" />
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png" />
     <Resource Include="Images\upc-logo.png" />
   </ItemGroup>
