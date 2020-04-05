@@ -9,7 +9,7 @@ namespace CLASSES
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT10)
 
-        public string Message_Type = null;
+        public string Message_Type;
         public int[] Data_Source_ID = new int[2];
         public string[] Target_Rep_Descript = new string[11];
         public double[] Pos_PolarCoord = new double[2];   //rho,theta
@@ -17,20 +17,20 @@ namespace CLASSES
         public int[] Pos_Cartesian = new int[2];
         public string[] Mode3A_Code = new string[4];
         public string[] FL = new string[3];
-        public double Height = double.NaN;   //ft
-        public double Amplitude = double.NaN;    //dBm
-        public double Time_Day = double.NaN; //seconds
-        public int? Track_Num = null;
+        public double Height;   //ft
+        public double Amplitude;    //dBm
+        public double Time_Day; //seconds
+        public int Track_Num;
         public string[] Track_Status = new string[10];
         public double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
         public double[] Track_Vel_Cartesian = new double[2];    // m/s
         public double[] Acceleration = new double[2]; // m/s^2
-        public int? Target_Add = null;
+        public int Target_Add;
         public string[] Target_ID = new string[2];
         public string[] Mode_SMB = new string[4];
         public double[] Target_Size_Heading = new double[3];    // m,degrees
         public double[] Presence = new double[3];   // rho,theta
-        public string Fleet_ID = null;
+        public string Fleet_ID;
         public string[] Pre_Prog_Message = new string[2];
         public double[] StndrdDev_Position = new double[3]; // m^2
         public string[] Sys_Status = new string[5];
@@ -663,19 +663,11 @@ namespace CLASSES
         }
         public double getTrackNum10()
         {
-            if(Track_Num != null)
-            {
-                return Convert.ToDouble(Track_Num);
-            }
-            else { return 0; }
+            return Track_Num;
         }
         public double getTargetAddress10()
         {
-            if (Target_Add != null)
-            {
-                return Convert.ToDouble(Target_Add);
-            }
-            else { return 0; }
+            return Target_Add;
         }
         public string getTargetID10()
         {
