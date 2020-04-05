@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 using CLASSES;
 using Microsoft.Win32;
 using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
+using System.Windows.Threading;
 
 namespace ASTERIX_APP
 {
@@ -25,7 +16,7 @@ namespace ASTERIX_APP
     {
         Fichero F;
         int category;
-
+        int i = 0;
         //lat and lon os cat10 files 
         double latindegrees;
         double lonindegrees;
@@ -33,7 +24,6 @@ namespace ASTERIX_APP
         //lat lon os MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.29694444;
         double MLAT_lon = 2.07833333;
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer(); 
 
         public MainWindow()
         {
@@ -108,8 +98,9 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Hidden;
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
-            
-
+            timer.Visibility = Visibility.Visible;
+            StartButton.Visibility = Visibility.Visible;
+            StopButton.Visibility = Visibility.Visible;
             if (F.CAT_list[0] == 10)
             {
                 bool IsMultipleCAT = F.CAT_list.Contains(21);
@@ -122,7 +113,9 @@ namespace ASTERIX_APP
                 if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
                 else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
             }
+           
         }
+
         private void Map_Load(object sender, RoutedEventArgs e)
         {
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
@@ -134,21 +127,81 @@ namespace ASTERIX_APP
             map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;
-      
         }
-       
-        private PointLatLng cartesiantolatlonMLAT(double X, double Y)
+        public void addMarker_Click(object sender, RoutedEventArgs e)
         {
-            double RAD = 6371 * 1000;
-            double d = Math.Sqrt((X * X) + (Y * Y));
-            double b = Math.Atan2(Y, -X) - (Math.PI / 2);
-            double phi1 =MLAT_lat * (Math.PI / 180);
-            double lamda1 = MLAT_lon * (Math.PI / 180);
-            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / RAD) + Math.Cos(phi1) * Math.Sin(d / RAD) * Math.Cos(b));
-            var lamda2 = lamda1 + Math.Atan2(Math.Sin(b) * Math.Sin(d / RAD) * Math.Cos(phi1), Math.Cos(d / RAD) - Math.Sin(phi1) * Math.Sin(phi2));
-            PointLatLng latlonMLAT = new PointLatLng(phi2 * (180 / Math.PI), lamda2 * (180 / Math.PI));
-            return latlonMLAT;
+            if (F.CAT_list[0] == 10)
+            {
+                dt_Timer.Tick += dt_Timer_Tick;
+            }
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+            dt_Timer.Start();
         }
+        public void AddMarker(double latitude, double longitude)
+        {
+            PointLatLng point = fromXYtoLatLongMLAT(latitude , longitude);
+            GMapMarker marker = new GMapMarker(point);
+            marker.Shape = new Image
+            {
+                Width = 15,
+                Height = 15,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+            };
+            map.Markers.Add(marker);
+        }
+        DispatcherTimer dt_Timer = new DispatcherTimer();
+       
+        private void dt_Timer_Tick(object sender,EventArgs e)
+        {
+            Boolean x = true;
+
+            while (x == true)
+            {
+                CAT10 C10 = F.getCAT10(i);
+                double tiempo = Math.Floor(C10.getTOD10());
+                //if (tiempo == seg )
+                //{
+                //    AddMarker(C10.getX10(), C10.getY10());
+                //    i++;
+                //    if (map.Markers.Count >= 200)
+                //    {
+                //        map.Markers[map.Markers.Count - 200].Clear();
+                //    }
+                    
+                //}
+                //else
+                //{
+                //    x = false;
+                //}
+                //clock(tiempo);
+            }
+        }
+        //private void clock(double ToD)
+        //{
+        //    double tiempo = ToD;
+        //    int seg = 
+
+        //    TimeSpan time = TimeSpan.FromSeconds(this.horaact * 3600 + this.minact * 60 + this.secact);
+
+        //    string tod = time.ToString(@"hh\:mm\:ss");
+
+        //    clockbox.Text = tod;
+        //}
+
+        private PointLatLng fromXYtoLatLongMLAT(double X, double Y)
+        {
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double φ1 = MLAT_lat * (Math.PI / 180);
+            double λ1 = MLAT_lon * (Math.PI / 180);
+            var φ2 = Math.Asin(Math.Sin(φ1) * Math.Cos(d / R) + Math.Cos(φ1) * Math.Sin(d / R) * Math.Cos(brng));
+            var λ2 = λ1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(φ1), Math.Cos(d / R) - Math.Sin(φ1) * Math.Sin(φ2));
+
+            PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
+            return coordinates;
+        }
+
         public double getlatMLAT()
         {
             return latindegrees;
@@ -177,7 +230,7 @@ namespace ASTERIX_APP
                         "\nCRT: " + TRD[4] + "\nSIM: " + TRD[5] + "\nTST: " + TRD[6] + "\nRAB" + TRD[7] + "\nLOP: " + TRD[8] + "\nTOT: " +
                         TRD[9] + "\nSPI" + TRD[10]);
                 }
-                if (Col_Num == 12 && pack.Track_Status != null)
+                if (Col_Num == 12 && pack.Track_Status != null) 
                 {
                     string[] TS = pack.Track_Status;
                     MessageBox.Show("Track Status:\n\nCNF: " + TS[0] + "\nTRE: " + TS[1] + "\nCST: " + TS[2] + "\nMAH: " + TS[3] +

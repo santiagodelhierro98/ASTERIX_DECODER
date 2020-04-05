@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\airplane.png" />
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
     <None Remove="Images\upc-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\airplane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Eurocontrol_logo_2010.svg.png" />
+    <Resource Include="Images\Eurocontrol_logo_2010.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\upc-logo.png" />
   </ItemGroup>
 

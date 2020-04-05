@@ -415,7 +415,7 @@ namespace CLASSES
             return lamda2 * (180.0 / Math.PI);
         }
         // if time of asterix message report is not reported we will show Time of message reception for position
-        CAT21 C21 = new CAT21();
+        
         private double CheckTOD(CAT21 C21)
         {
             if (C21.getTOD21() == 0) { return C21.getTOD21ADSB23(); }
