@@ -418,7 +418,8 @@ namespace CLASSES
         
         private double CheckTOD(CAT21 C21)
         {
-            if (C21.getTOD21() == double.NaN) { return C21.getTOD21ADSB23(); }
+            double x = double.NaN;
+            if (C21.getTOD21() == x) { return C21.getTOD21ADSB23(); }
             else { return C21.getTOD21(); }
         }
     }

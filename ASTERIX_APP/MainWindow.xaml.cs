@@ -23,8 +23,8 @@ namespace ASTERIX_APP
         double lonindegrees;
 
         //lat lon os MLAT system of reference (at LEBL airport)
-        double MLAT_lat = 41.29694444;
-        double MLAT_lon = 2.07833333;
+        double MLAT_lat = 41.0 + (17.0/60.0)+(49.0/3600.0)+(426.0/3600000.0);
+        double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
 
         public MainWindow()
         {
@@ -87,6 +87,7 @@ namespace ASTERIX_APP
             circle2.Visibility = Visibility.Hidden;
             StartButton.Visibility = Visibility.Hidden;
             StopButton.Visibility = Visibility.Hidden;
+            timer.Visibility = Visibility.Hidden;
 
             if (F.CAT_list[0] == 10)
             {
@@ -124,11 +125,13 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Visible;
             gridlista.Visibility = Visibility.Visible;
             asterixPNG.Visibility = Visibility.Hidden;
+            asterixPerf.Visibility = Visibility.Hidden;
             bubbleWord.Visibility = Visibility.Hidden;
             circle.Visibility = Visibility.Hidden;
             circle2.Visibility = Visibility.Hidden;
             StartButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Visible;
+            timer.Visibility = Visibility.Visible;
 
             if (F.CAT_list[0] == 10)
             {
@@ -162,7 +165,7 @@ namespace ASTERIX_APP
             {
                 dt_Timer.Tick += dt_Timer_Tick;
             }
-            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
         }
         public void AddMarker(double latitude, double longitude)
@@ -178,44 +181,42 @@ namespace ASTERIX_APP
             map.Markers.Add(marker);
         }
         DispatcherTimer dt_Timer = new DispatcherTimer();
-       
+
+        double s = 0;
         private void dt_Timer_Tick(object sender,EventArgs e)
         {
             Boolean x = true;
-
             while (x == true)
             {
                 CAT10 C10 = F.getCAT10(i);
+                double start = Math.Floor(F.getCAT10(0).getTOD10())+s;
                 double tiempo = Math.Floor(C10.getTOD10());
-                //if (tiempo == seg )
-                //{
-                //    AddMarker(C10.getX10(), C10.getY10());
-                //    i++;
-                //    if (map.Markers.Count >= 200)
-                //    {
-                //        map.Markers[map.Markers.Count - 200].Clear();
-                //    }
-                    
-                //}
-                //else
-                //{
-                //    x = false;
-                //}
-                //clock(tiempo);
+                if (tiempo == start)
+                {
+                    AddMarker(C10.getX10(), C10.getY10());
+                    i++;
+                    if (map.Markers.Count >= 200)
+                    {
+                        map.Markers[map.Markers.Count - 200].Clear();
+                    }
+                }
+                else
+                {
+                    x = false;
+                    s++;
+                }
+                clock(tiempo);
             }
         }
-        //private void clock(double ToD)
-        //{
-        //    double tiempo = ToD;
-        //    int seg = 
-
-        //    TimeSpan time = TimeSpan.FromSeconds(this.horaact * 3600 + this.minact * 60 + this.secact);
-
-        //    string tod = time.ToString(@"hh\:mm\:ss");
-
-        //    clockbox.Text = tod;
-        //}
-
+        private void clock(double tiempo)
+        {
+           
+            TimeSpan time = TimeSpan.FromSeconds(tiempo);
+            string tod = time.ToString(@"hh\:mm\:ss");
+            timer.Text = tod;
+        }
+        private void stop_Click (object sender, RoutedEventArgs e)
+        { dt_Timer.Stop(); }
         private PointLatLng fromXYtoLatLongMLAT(double X, double Y)
         {
             double R = 6371 * 1000;
