@@ -121,11 +121,12 @@ namespace CLASSES
                 CAT_list.Add(CAT); // Adds the pack category into this list
                 contadorGeneral++;
 
+                CAT10 C10 = new CAT10();
+                CAT21 C21 = new CAT21();
+
                 if (CAT == 10)
                 {
                     contadorCAT10++;
-                    CAT21 C21 = new CAT21();
-                    CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
 
@@ -140,7 +141,7 @@ namespace CLASSES
                         C10.Target_Add, C10.Track_Num);
                     
                     // Complete CAT10 table
-                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[1]+"/"+C10.Data_Source_ID[0], C10.Target_ID[1], C10.Track_Num, C10.Target_Rep_Descript,
+                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
                            C10.Message_Type, C10.Time_Day,"("+C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1]+")","("+C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1]+")",
                            "("+C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1]+")","("+C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1]+")","("+C10.Track_Vel_Cartesian[0] +
                            ", " + C10.Track_Vel_Cartesian[1]+")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
@@ -149,10 +150,9 @@ namespace CLASSES
                            ", " + C10.Acceleration[1] + ")");
                     
                     // Complete Multiple CAT table
-                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[1] + "/" + C10.Data_Source_ID[0], C10.Target_ID[1], C10.Track_Num, C10.Time_Day,
+                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0],C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Time_Day,
                            C10.Target_Rep_Descript, "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", C10.Mode3A_Code, C10.Mode_SMB, C10.FL[2], C10.Height, 
                            C10.Target_Add, C10.Amplitude,
-
 
                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
@@ -164,29 +164,27 @@ namespace CLASSES
                 }
                 else if (CAT == 21)
                 {
-                    contadorCAT21++;
-                    CAT10 C10 = new CAT10();
-                    CAT21 C21 = new CAT21();
+                    contadorCAT21++;                    
                     C21.Decode21(arraystring, q);
                     listaCAT21.Add(C21);
 
                     // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, C21.ToA_Position, C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, 
+                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, CheckTOD(C21), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, 
                         C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
                     // CAT21 reduced table for maptrack
-                    tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, C21.ToA_Position, C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
+                    tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, CheckTOD(C21), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
                         C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
 
                     // Complete CAT21 table
-                    tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
-                        C21.ToA_Position, "("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
+                    tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
+                        CheckTOD(C21), "("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
                         C21.Op_Status,"("+C21.Air_Speed[0]+", "+C21.Air_Speed[1]+")",C21.True_Airspeed, "("+C21.GS+", "+C21.TA+")",C21.TAR, C21.SA, C21.MOPS,
                         C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status, C21.Roll,C21.Service_ID,
-                        C21.Quality_Indicators,C21.Mode_S, C21.MAM,C21.RID, C21.ToA_Velocity, C21.TMRP,C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                        C21.Quality_Indicators,C21.Mode_S, C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                     
                     // Complete Multiple CAT table
 
-                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SAC+ "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.ToA_Position,
+                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, CheckTOD(C21),
                         C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
 
                         "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
@@ -195,7 +193,7 @@ namespace CLASSES
                         "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
                         ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", 
                         C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
-                        C21.Quality_Indicators, C21.RID, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                        C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                 }                
             }
         }            
@@ -243,7 +241,8 @@ namespace CLASSES
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
-            tablaCAT10.Columns.Add(new DataColumn("SIC/SAC"));
+            tablaCAT10.Columns.Add(new DataColumn("SIC"));
+            tablaCAT10.Columns.Add(new DataColumn("SAC"));
             tablaCAT10.Columns.Add(new DataColumn("Target ID"));
             tablaCAT10.Columns.Add(new DataColumn("Track Number"));
             tablaCAT10.Columns.Add(new DataColumn("Target Report")); //array
@@ -273,7 +272,8 @@ namespace CLASSES
 
             //CAT21
             tablaCAT21.Columns.Add(new DataColumn("#"));
-            tablaCAT21.Columns.Add(new DataColumn("SIC/SAC"));
+            tablaCAT21.Columns.Add(new DataColumn("SIC"));
+            tablaCAT21.Columns.Add(new DataColumn("SAC"));
             tablaCAT21.Columns.Add(new DataColumn("Target ID"));
             tablaCAT21.Columns.Add(new DataColumn("Track Number"));
             tablaCAT21.Columns.Add(new DataColumn("Target Report")); // array
@@ -303,6 +303,7 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Mode S")); //array
             tablaCAT21.Columns.Add(new DataColumn("Message amplitude"));
             tablaCAT21.Columns.Add(new DataColumn("Receiver ID"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
             tablaCAT21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
@@ -319,7 +320,8 @@ namespace CLASSES
             //Common Items
             tablaMultipleCAT.Columns.Add(new DataColumn("#"));
             tablaMultipleCAT.Columns.Add(new DataColumn("CAT"));
-            tablaMultipleCAT.Columns.Add(new DataColumn("SIC/SAC"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("SIC"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("SAC"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Target ID"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Track Number"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time Of Day (UTC)"));
@@ -368,6 +370,7 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Identification"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Quality Indicators"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Receiver ID"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
@@ -417,6 +420,12 @@ namespace CLASSES
             var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             return lamda2 * (180.0 / Math.PI);
+        }
+        // if time of asterix message report is not reported we will show Time of message reception for position        
+        private double CheckTOD(CAT21 C21)
+        {
+            if (C21.Time_Rep_Transm == 0) { return C21.ToA_Position; }
+            else { return C21.Time_Rep_Transm; }
         }
     }
 }

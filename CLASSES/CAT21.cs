@@ -77,7 +77,7 @@ namespace CLASSES
         public int[] Mode_S = new int[4];
         public string[] Trajectory_Intent = new string[16];
         public double[] Data_Ages = new double[23];
-
+        public double Time_Rep_Transm;
 
         public void Decode21(string[] paquete, int q)
         {
@@ -662,9 +662,8 @@ namespace CLASSES
                             // I021/077 Time of Report Transmission
 
                             string ToARTbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]);
-                            ToART = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0), 3);
+                            Time_Rep_Transm = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0), 3);
                             contador = contador + 3;
-
                         }
 
                         if (FSPEC.Count > 28)

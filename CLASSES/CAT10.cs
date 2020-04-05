@@ -26,7 +26,7 @@ namespace CLASSES
         public double[] Track_Vel_Cartesian = new double[2];    // m/s
         public double[] Acceleration = new double[2]; // m/s^2
         public int? Target_Add = null;
-        public string[] Target_ID = new string[2];
+        public string Target_ID = null;
         public string[] Mode_SMB = new string[4];
         public double[] Target_Size_Heading = new double[3];    // m,degrees
         public double[] Presence = new double[3];   // rho,theta
@@ -34,6 +34,7 @@ namespace CLASSES
         public string[] Pre_Prog_Message = new string[2];
         public double[] StndrdDev_Position = new double[3]; // m^2
         public string[] Sys_Status = new string[5];
+        public string STI = null;
 
         Metodos M = new Metodos();
 
@@ -413,14 +414,14 @@ namespace CLASSES
                     string TI_Bin = TI_Bin1 + TI_Bin2 + TI_Bin3 + TI_Bin4 + TI_Bin5 + TI_Bin6 + TI_Bin7;
                     char[] TI_v = TI_Bin.ToCharArray();
 
-                    Int32 STI = Convert.ToInt32(TI_v[0].ToString() + TI_v[1].ToString(), 2);
+                    Int32 sti = Convert.ToInt32(TI_v[0].ToString() + TI_v[1].ToString(), 2);
                     // STI
-                    if (STI == 0) { Target_ID[0] = "Callsign or registration downlinked from transponder"; }
-                    if (STI == 1) { Target_ID[0] = "Callsign not downlinked from transponder"; }
-                    if (STI == 2) { Target_ID[0] = "Registration not downlinked from transponder"; }
+                    if (sti == 0) { STI = "Callsign or registration downlinked from transponder"; }
+                    if (sti == 1) { STI = "Callsign not downlinked from transponder"; }
+                    if (sti == 2) { STI = "Registration not downlinked from transponder"; }
 
-                    for (int i=8; i<TI_v.Length; i++) { Target_ID[1] += TI_v[i].ToString(); }
-                    Target_ID[1] = M.Compare_bits(Target_ID[1]);
+                    for (int i=8; i<TI_v.Length; i++) { Target_ID += TI_v[i].ToString(); }
+                    Target_ID = M.Compare_bits(Target_ID);
                     
                     contador += 7;
                 }
