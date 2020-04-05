@@ -40,7 +40,6 @@ namespace CLASSES
         public double GS = double.NaN; // ground speed in kt
         public double TA = double.NaN; // Track angle in degrees
         public double TAR = double.NaN; // Track Angle Rate in degees/s
-        public double ToART = double.NaN; // Time of ASTERIX Report Transmission in s
         public string Target_ID = null;
         public string ECAT = null;
         public string SAS = null;
@@ -1210,47 +1209,47 @@ namespace CLASSES
         }
 
         // getters for flight class
-        public double getSIC21()
-        {
-            return Data_Source_ID_SIC;
-        }
-        public double getSAC21()
-        {
-            return Data_Source_ID_SAC;
-        }
-        public double getTOD21()
-        {
-            return ToART;
-        }
-        public double getLAT21()
-        {
-            return High_Res_Lat_WGS_84;
-        }
-        public double getLON21()
-        {
-            return High_Res_Lon_WGS_84;
-        }
-        public double getTrackNum21()
-        {
-            return Track_Num;
-        }
-        public string getTargetAddress21()
-        {
-            return Target_Address;
-        }
-        public string getTargetID21()
-        {
-            return Target_ID;
-        }
-        public double getFL21()
-        {
-            return FL;
-        }
+        //public double getSIC21()
+        //{
+        //    return Data_Source_ID_SIC;
+        //}
+        //public double getSAC21()
+        //{
+        //    return Data_Source_ID_SAC;
+        //}
+        //public double getTOD21()
+        //{
+        //    return ToART;
+        //}
+        //public double getLAT21()
+        //{
+        //    return High_Res_Lat_WGS_84;
+        //}
+        //public double getLON21()
+        //{
+        //    return High_Res_Lon_WGS_84;
+        //}
+        //public double getTrackNum21()
+        //{
+        //    return Track_Num;
+        //}
+        //public string getTargetAddress21()
+        //{
+        //    return Target_Address;
+        //}
+        //public string getTargetID21()
+        //{
+        //    return Target_ID;
+        //}
+        //public double getFL21()
+        //{
+        //    return FL;
+        //}
         //file that does not report Time of Asterix Report Time will report time of message report for position (ADSB-v023)
-        public double getTOD21ADSB23()
-        {
-            return ToA_Position;
-        }
+        //public double getTOD21ADSB23()
+        //{
+        //    return ToA_Position;
+        //}
     }
 }
 

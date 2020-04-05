@@ -14,7 +14,7 @@ namespace CLASSES
         public string[] Target_Rep_Descript = new string[11];
         public double[] Pos_PolarCoord = new double[2];   //rho,theta
         public double[] Pos_WGS84 = new double[2];
-        public int[] Pos_Cartesian = new int[2];
+        public double[] Pos_Cartesian = new double[2];
         public string[] Mode3A_Code = new string[4];
         public string[] FL = new string[3];
         public double Height = double.NaN;   //ft
@@ -640,50 +640,50 @@ namespace CLASSES
             else { }
         }
         // getters for flight class
-        public double getSIC10()
-        {
-            return Data_Source_ID[0];
-        }
-        public double getSAC10()
-        {
-            return Data_Source_ID[1];
-        }
-        public double getTOD10()
-        {
-            return Time_Day;
-        }
-        public double getX10()
-        {
+        //public double getSIC10()
+        //{
+        //    return Data_Source_ID[0];
+        //}
+        //public double getSAC10()
+        //{
+        //    return Data_Source_ID[1];
+        //}
+        //public double getTOD10()
+        //{
+        //    return Time_Day;
+        //}
+        //public double getX10()
+        //{
 
-            return Convert.ToDouble(Pos_Cartesian[0]);
-        }
-        public double getY10()
-        {
-            return Convert.ToDouble(Pos_Cartesian[1]);
-        }
-        public double getTrackNum10()
-        {
-            if (Track_Num != null)
-            {
-                return Convert.ToDouble(Track_Num);
-            }
-            else { return 0; }
-        }
-        public double getTargetAddress10()
-        {
-            if (Target_Add != null)
-            {
-                return Convert.ToDouble(Target_Add);
-            }
-            else { return 0; }
-        }
-        public string getTargetID10()
-        {
-            return Target_ID[1];
-        }
-        public double getFL10()
-        {
-            return Convert.ToDouble(FL[2])*0.25;
-        }
+        //    return Pos_Cartesian[0];
+        //}
+        //public double getY10()
+        //{
+        //    return Pos_Cartesian[1];
+        //}
+        //public double getTrackNum10()
+        //{
+        //    if (Track_Num != null)
+        //    {
+        //        return Convert.ToDouble(Track_Num);
+        //    }
+        //    else { return 0; }
+        //}
+        //public double getTargetAddress10()
+        //{
+        //    if (Target_Add != null)
+        //    {
+        //        return Convert.ToDouble(Target_Add);
+        //    }
+        //    else { return 0; }
+        //}
+        //public string getTargetID10()
+        //{
+        //    return Target_ID[1];
+        //}
+        //public double getFL10()
+        //{
+        //    return Convert.ToDouble(FL[2])*0.25;
+        //}
     }
 }
