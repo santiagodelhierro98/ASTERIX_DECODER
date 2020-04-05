@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <None Remove="Images\airplane.png" />
+=======
+    <None Remove="Images\asterix.png" />
+    <None Remove="Images\asterixPERF.png" />
+    <None Remove="Images\asterixProblem.png" />
+>>>>>>> 1666a149972604ca5fcd5453c9ea8a1aaf03bdc6
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
     <None Remove="Images\upc-logo.png" />
   </ItemGroup>
@@ -27,9 +33,18 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+=======
+    <Resource Include="Images\asterix.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\asterixPERF.png" />
+    <Resource Include="Images\asterixProblem.png" />
+    <Resource Include="Images\Eurocontrol_logo_2010.svg.png" />
+>>>>>>> 1666a149972604ca5fcd5453c9ea8a1aaf03bdc6
     <Resource Include="Images\upc-logo.png" />
   </ItemGroup>
 
