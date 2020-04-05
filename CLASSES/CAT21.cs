@@ -11,65 +11,65 @@ namespace CLASSES
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT21)
 
-        public double Data_Source_ID_SIC;
-        public double Data_Source_ID_SAC;
+        public double Data_Source_ID_SIC = double.NaN;
+        public double Data_Source_ID_SAC = double.NaN;
         public string[] Target_Report_Desc = new string[15];
-        public double Track_Num;
-        public string Service_ID;
-        public double ToA_Position; // seconds, ToA=Time of Aplicability
-        public double Lat_WGS_84; //in degrees
-        public double Lon_WGS_84; //in degrees
-        public double High_Res_Lat_WGS_84; //high resolution Lat WGS 84 in degrees
-        public double High_Res_Lon_WGS_84; //high resolution Lon WGS 84 in degrees
-        public double ToA_Velocity; // seconds
+        public double Track_Num = double.NaN;
+        public string Service_ID = null;
+        public double ToA_Position = double.NaN; // seconds, ToA=Time of Aplicability
+        public double Lat_WGS_84 = double.NaN; //in degrees
+        public double Lon_WGS_84 = double.NaN; //in degrees
+        public double High_Res_Lat_WGS_84 = double.NaN; //high resolution Lat WGS 84 in degrees
+        public double High_Res_Lon_WGS_84 = double.NaN; //high resolution Lon WGS 84 in degrees
+        public double ToA_Velocity = double.NaN; // seconds
         public double[] Air_Speed = new double[2];// ias and mach
-        public double True_Airspeed; //kt
-        public string Target_Address;//Target address (emitter identifier) assigned uniquely to each target. en hexa
-        public double TMRP; // s
+        public double True_Airspeed = double.NaN; //kt
+        public string Target_Address = null;//Target address (emitter identifier) assigned uniquely to each target. en hexa
+        public double TMRP = double.NaN; // 
         public string[] TMRP_HP = new string[2]; // high precision TMRP
-        public double TMRV; // s
+        public double TMRV = double.NaN; // s
         public string[] TMRV_HP = new string[2];// high precision TMRV
-        public double GH; // ft
-        public string M3AC; //Mode 3/A Code
-        public double Roll; // roll angle in degrees
-        public double FL; //flight level in feet
-        public double MH; //Magnetic heading in degrees
-        public string RE;
-        public double BVR; // Barometric Vertical Rate in feet/minute
-        public double GVR; // Geometric Vertical Rate in feet/minute
-        public double GS; // ground speed in kt
-        public double TA; // Track angle in degrees
-        public double TAR; // Track Angle Rate in degees/s
-        public double ToART; // Time of ASTERIX Report Transmission in s
-        public string Target_ID;
-        public string ECAT;
-        public string SAS;
-        public string Source;
-        public double SA; //selected altitude in ft
-        public string MV;
-        public string AH;
-        public string AM;
-        public double FSSA; //final state selected altitde in ft
-        public string TIS;
-        public string TID;
-        public string NAV;
-        public double RP; //in seconds
-        public string POA;
-        public string CDTIS;
-        public string B2LOW;
-        public string RAS;
-        public string IDENT;
-        public string LenWidth; //length and width of the aircraft in meters
-        public double MAM; //in dBm;
-        public double TYP;
-        public double STYP;
-        public double ARA;
-        public double RAC;
-        public double RAT;
-        public double MTE;
-        public double TTI;
-        public double TID_ACAS;
-        public double RID;
+        public double GH = double.NaN; // ft
+        public string M3AC = null; //Mode 3/A Code
+        public double Roll = double.NaN; // roll angle in degrees
+        public double FL = double.NaN; //flight level in feet
+        public double MH = double.NaN; //Magnetic heading in degrees
+        public string RE = null;
+        public double BVR = double.NaN; // Barometric Vertical Rate in feet/minute
+        public double GVR = double.NaN; // Geometric Vertical Rate in feet/minute
+        public double GS = double.NaN; // ground speed in kt
+        public double TA = double.NaN; // Track angle in degrees
+        public double TAR = double.NaN; // Track Angle Rate in degees/s
+        public double ToART = double.NaN; // Time of ASTERIX Report Transmission in s
+        public string Target_ID = null;
+        public string ECAT = null;
+        public string SAS = null;
+        public string Source = null;
+        public double SA = double.NaN; //selected altitude in ft
+        public string MV = null;
+        public string AH = null;
+        public string AM = null;
+        public double FSSA = double.NaN; //final state selected altitde in ft
+        public string TIS = null;
+        public string TID = null;
+        public string NAV = null;
+        public double RP = double.NaN; //in seconds
+        public string POA = null;
+        public string CDTIS = null;
+        public string B2LOW = null;
+        public string RAS = null;
+        public string IDENT = null;
+        public string LenWidth = null; //length and width of the aircraft in meters
+        public double MAM = double.NaN; //in dBm;
+        public double TYP = double.NaN;
+        public double STYP = double.NaN;
+        public double ARA = double.NaN;
+        public double RAC = double.NaN;
+        public double RAT = double.NaN;
+        public double MTE = double.NaN;
+        public double TTI = double.NaN;
+        public double TID_ACAS = double.NaN;
+        public double RID = double.NaN;
         public string[] Op_Status = new string[7];
         public string[] MOPS = new string[3];
         public string[] Met_Report = new string[4];

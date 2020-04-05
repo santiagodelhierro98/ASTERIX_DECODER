@@ -180,7 +180,7 @@ namespace CLASSES
                     
                     // Complete Multiple CAT table
 
-                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, C21.getTOD21(),
+                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SAC + "/" + C21.Data_Source_ID_SIC, C21.Target_ID, C21.Track_Num, CheckTOD(C21),
                         C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
 
                         "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
@@ -418,7 +418,7 @@ namespace CLASSES
         
         private double CheckTOD(CAT21 C21)
         {
-            if (C21.getTOD21() == 0) { return C21.getTOD21ADSB23(); }
+            if (C21.getTOD21() == double.NaN) { return C21.getTOD21ADSB23(); }
             else { return C21.getTOD21(); }
         }
     }
