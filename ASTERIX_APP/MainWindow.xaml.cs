@@ -37,8 +37,8 @@ namespace ASTERIX_APP
             asterixPNG.Visibility = Visibility.Visible;
             Instructions_Label.Visibility = Visibility.Visible; ;
             Instructions_Label.FontSize = 18;
-            Instructions_Label.Content = "Welcome to ASTERIX APP!" + '\n' + '\n' + "We need some file to read!" + '\n' +
-                "Please, load a '.ast' format file with the 'Load File' button above.";
+            Instructions_Label.Content = "Hi I'm Asterix, welcome to my App!" + '\n' + '\n' + "I need some file to read." + '\n' +
+                "Please, load a '.ast' file using the 'Load File' button above.";
             bubbleWord.Height = 150;
             bubbleWord.Width = 550;
         }
@@ -49,36 +49,60 @@ namespace ASTERIX_APP
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            // HIDE BUTTONS
             map.Visibility = Visibility.Hidden;
             MapButton.Visibility = Visibility.Hidden;
             TableButton.Visibility = Visibility.Hidden;
+
+            // HIDE AND CLEAN TABLES
             Track_Table.Visibility = Visibility.Hidden;
             gridlista.Visibility = Visibility.Hidden;
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
+
+            // HIDE VISUAL ELEMENTS
             bubbleWord.Visibility = Visibility.Hidden;
             circle.Visibility = Visibility.Hidden;
             circle2.Visibility = Visibility.Hidden;
             asterixPNG.Visibility = Visibility.Hidden;
+            asterixPerf.Visibility = Visibility.Hidden;
 
             OpenFileDialog OpenFile = new OpenFileDialog();
+            OpenFile.Filter = "AST |*.ast";
+
             Instructions_Label.Visibility = Visibility.Visible;
             Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
-            F = new Fichero(OpenFile.FileName);
-            F.leer();
 
-            asterixPerf.Visibility = Visibility.Visible;            
-            Instructions_Label.Content = "Perfectly read!" + '\n' + "1) View the displayed data by clicking on 'Tracking Table'" +
-                    '\n' + "2) Run a data simulation by clicking on 'Tracking Map'";
-            bubbleWord.Height = 100;
-            bubbleWord.Width = 550;
-            bubbleWord.Visibility = Visibility.Visible;
-            circle.Visibility = Visibility.Visible;
-            circle2.Visibility = Visibility.Visible;
+            // When you click Cancel
+            if(OpenFile.FileName == "")
+            {
+                asterixPNG.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
+            }
+            // When slecting a correct file
+            else
+            {                
+                F = new Fichero(OpenFile.FileName);
+                F.leer();
 
-            MapButton.Visibility = Visibility.Visible; ;
-            TableButton.Visibility = Visibility.Visible; ;
+                asterixPerf.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
+                        '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
+
+                MapButton.Visibility = Visibility.Visible; ;
+                TableButton.Visibility = Visibility.Visible;
+            }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
