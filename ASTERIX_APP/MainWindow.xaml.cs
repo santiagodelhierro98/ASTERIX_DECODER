@@ -22,7 +22,7 @@ namespace ASTERIX_APP
         double latindegrees;
         double lonindegrees;
 
-        //lat lon os MLAT system of reference (at LEBL airport)
+        //lat lon of MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.0 + (17.0/60.0)+(49.0/3600.0)+(426.0/3600000.0);
         double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
 
@@ -93,6 +93,12 @@ namespace ASTERIX_APP
             StartButton.Visibility = Visibility.Hidden;
             StopButton.Visibility = Visibility.Hidden;
             timer.Visibility = Visibility.Hidden;
+            x1butt.Visibility = Visibility.Hidden;
+            x2butt.Visibility = Visibility.Hidden;
+            x4butt.Visibility = Visibility.Hidden;
+            zoomlebl.Visibility = Visibility.Hidden;
+            zoombcn.Visibility = Visibility.Hidden;
+            zoomcat.Visibility = Visibility.Hidden;
 
             if (F.CAT_list[0] == 10)
             {
@@ -137,6 +143,12 @@ namespace ASTERIX_APP
             StartButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Visible;
             timer.Visibility = Visibility.Visible;
+            x1butt.Visibility = Visibility.Visible;
+            x2butt.Visibility = Visibility.Visible;
+            x4butt.Visibility = Visibility.Visible;
+            zoomlebl.Visibility = Visibility.Visible;
+            zoombcn.Visibility = Visibility.Visible;
+            zoomcat.Visibility = Visibility.Visible;
 
             if (F.CAT_list[0] == 10)
             {
@@ -173,6 +185,7 @@ namespace ASTERIX_APP
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
         }
+
         public void AddMarker(double latitude, double longitude)
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude , longitude);
@@ -244,6 +257,37 @@ namespace ASTERIX_APP
         {
             return lonindegrees;
         }
+
+        //to change the refreshing speed of the map files
+        private void x1_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+        }
+        private void x2_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        }
+        private void x4_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+        }
+
+        //to change map zoom
+        private void zoomlebl_Click(object sender, RoutedEventArgs e)
+        {
+            map.Zoom = 14;
+        }
+        private void zoombcn_Click(object sender, RoutedEventArgs e)
+        {
+            map.Zoom = 11;
+        }
+        private void zoomcat_Click(object sender, RoutedEventArgs e)
+        {
+            map.Zoom = 7;
+        }
+
+
+
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
             DataGridCell cell = (DataGridCell)sender;

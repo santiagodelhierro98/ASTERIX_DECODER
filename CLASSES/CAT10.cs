@@ -684,7 +684,7 @@ namespace CLASSES
         //}
         //public double getFL10()
         //{
-        //    return Convert.ToDouble(FL[2])*0.25;
+        //    return Convert.ToDouble(FL[2]) * 0.25;
         //}
     }
 }

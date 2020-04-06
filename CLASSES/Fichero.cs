@@ -395,23 +395,19 @@ namespace CLASSES
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
         {
-            double MLAT_lat = 41.29694444;
-            double MLAT_lon = 2.07833333;
-            CAT10 C10 = new CAT10();
+            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;
             double R = 6371 * 1000;
             double d = Math.Sqrt((X * X) + (Y * Y));
             double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
             double phi1 = MLAT_lat * (Math.PI / 180);
-            double lamda1 = MLAT_lon * (Math.PI / 180);
             double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             return phi2 * (180.0/Math.PI);
 
         }
         private double cartesiantolonmlat(double X, double Y)
         {
-            double MLAT_lat = 41.29694444;
-            double MLAT_lon = 2.07833333;
-            CAT10 C10 = new CAT10();
+            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;
+            double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
             double R = 6371 * 1000;
             double d = Math.Sqrt((X * X) + (Y * Y));
             double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
