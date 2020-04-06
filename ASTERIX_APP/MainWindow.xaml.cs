@@ -21,7 +21,8 @@ namespace ASTERIX_APP
         //lat and lon os cat10 files 
         double latindegrees;
         double lonindegrees;
-
+        //Datatable that shows flights for each second (used at the map)
+        DataTable updatedtable = new DataTable();
         //lat lon of MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.0 + (17.0/60.0)+(49.0/3600.0)+(426.0/3600000.0);
         double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
@@ -184,6 +185,8 @@ namespace ASTERIX_APP
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
+            updatedtable = F.gettablacat10reducida().Clone();
+
         }
 
         public void AddMarker(double latitude, double longitude)
@@ -224,14 +227,24 @@ namespace ASTERIX_APP
                     s++;
                 }
                 clock(tiempo);
+                gridlista.Visibility = Visibility.Hidden;
+                updatedlista.Visibility = Visibility.Visible;
+                rellenartablaCAT10(i);
             }
         }
+        private void rellenartablaCAT10(int i)
+        {
+            //we copy/paste all data from that specific flight
+            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i]);
+            updatedlista.ItemsSource = updatedtable.DefaultView;
+    
+        }
+
         private void clock(double tiempo)
         {
-           
             TimeSpan time = TimeSpan.FromSeconds(tiempo);
-            string tod = time.ToString(@"hh\:mm\:ss");
-            timer.Text = tod;
+            string tiempoact = time.ToString(@"hh\:mm\:ss");
+            timer.Text = tiempoact;
         }
         private void stop_Click (object sender, RoutedEventArgs e)
         { dt_Timer.Stop(); }
@@ -248,7 +261,7 @@ namespace ASTERIX_APP
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
         }
-
+      
         public double getlatMLAT()
         {
             return latindegrees;

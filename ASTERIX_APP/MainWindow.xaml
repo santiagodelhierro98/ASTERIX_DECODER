@@ -114,5 +114,33 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
+        
+        <DataGrid x:Name ="updatedlista" Margin="10,300,710,10" 
+                  RenderTransformOrigin="0.5,0.5" Background="#222" 
+                  Foreground="white" Visibility="Hidden"  
+                  IsReadOnly="True" BorderBrush="#FFF5F6F7" 
+                  RowBackground="Black" CanUserSortColumns="False" 
+                  CanUserResizeRows="False" >
+            
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#004778"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Margin" Value="0 0 1 1"/>
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Background" Value="#222"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
     </Grid>
 </Window>
