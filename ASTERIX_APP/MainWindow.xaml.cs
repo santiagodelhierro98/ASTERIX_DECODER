@@ -182,6 +182,7 @@ namespace ASTERIX_APP
             if (F.CAT_list[0] == 10)
             {
                 dt_Timer.Tick += dt_Timer_Tick;
+                   
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
@@ -237,9 +238,9 @@ namespace ASTERIX_APP
             //we copy/paste all data from that specific flight
             updatedtable.ImportRow(F.gettablacat10reducida().Rows[i]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
-    
+         
         }
-
+      
         private void clock(double tiempo)
         {
             TimeSpan time = TimeSpan.FromSeconds(tiempo);
@@ -299,8 +300,7 @@ namespace ASTERIX_APP
             map.Zoom = 7;
         }
 
-
-
+    
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
             DataGridCell cell = (DataGridCell)sender;
