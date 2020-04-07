@@ -73,6 +73,7 @@
                 </Style>
             </DataGrid.CellStyle>
         </DataGrid>
+        
         <!-- Search Table -->
         <DataGrid x:Name="Search_Table" Padding="0 5 5 5"
                   Margin="900 90 0 0" Background="#222" 
@@ -84,31 +85,41 @@
                     <Setter Property="Foreground" Value="#fff"/>
                     <Setter Property="BorderBrush" Value="#000"/>
                 </Style>
-
             </DataGrid.RowStyle>
             <!-- Rotating the grid -->
-            <DataGrid.Resources>
-                <Style x:Key="DataGridBase" TargetType="Control">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="LayoutTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <RotateTransform Angle="-90" />
+                                <RotateTransform Angle="-90"/>
+                                <ScaleTransform ScaleY="-1"/>
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="#004778"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Padding" Value="5"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90"/>
+                    <MatrixTransform Matrix="-1, 0, 0, 1, 0, 0"/>
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <DataGrid.CellStyle>
+                <Style  TargetType="DataGridCell">
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90"/>
                                 <ScaleTransform ScaleX="1" ScaleY="-1" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-                </Style >
-                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridBase}"/>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridBase}"/>
-                <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource DataGridBase}"/>
-            </DataGrid.Resources>
-            <DataGrid.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="90" />
-                    <MatrixTransform Matrix="-1, 0, 0, 1, 0, 0" />
-                </TransformGroup>
-            </DataGrid.LayoutTransform>
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
         
         <!-- Map -->

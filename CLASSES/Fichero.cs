@@ -428,7 +428,8 @@ namespace CLASSES
         public CAT21 getCAT21(int num)
         {
             return listaCAT21[num];
-        }        public CAT21_v23 getCAT21_v23(int num)
+        }
+        public CAT21_v23 getCAT21_v23(int num)
         {
             return listaCAT21_v23[num];
         }
@@ -516,6 +517,55 @@ namespace CLASSES
         public DataTable getSearchTable21(CAT21 C21, int i)
         {
             DataTable SearchTable21 = new DataTable();
+
+            SearchTable21.Columns.Add(new DataColumn("#"));
+            SearchTable21.Columns.Add(new DataColumn("SIC"));
+            SearchTable21.Columns.Add(new DataColumn("SAC"));
+            SearchTable21.Columns.Add(new DataColumn("Target ID"));
+            SearchTable21.Columns.Add(new DataColumn("Track Number"));
+            SearchTable21.Columns.Add(new DataColumn("Target Report")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time Of Day"));
+            SearchTable21.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            SearchTable21.Columns.Add(new DataColumn("High Resolution\nPosition WGS-84\n(Latitude, Longitude)"));
+            SearchTable21.Columns.Add(new DataColumn("Flight Level"));
+            SearchTable21.Columns.Add(new DataColumn("Geometric Height"));
+            SearchTable21.Columns.Add(new DataColumn("Operational Status")); //array
+            SearchTable21.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
+            SearchTable21.Columns.Add(new DataColumn("True Airspeed"));
+            SearchTable21.Columns.Add(new DataColumn("Airborne Ground Vector\n(GS, Track Angle)"));
+            SearchTable21.Columns.Add(new DataColumn("Track Angle Rate"));
+            SearchTable21.Columns.Add(new DataColumn("Selected Altitude"));
+            SearchTable21.Columns.Add(new DataColumn("MOPS version")); //array
+            SearchTable21.Columns.Add(new DataColumn("Magnetic Heading"));
+            SearchTable21.Columns.Add(new DataColumn("Barometric Vertical Rate"));
+            SearchTable21.Columns.Add(new DataColumn("Geometric Vertical Rate"));
+            SearchTable21.Columns.Add(new DataColumn("Mode 3A Code"));
+            SearchTable21.Columns.Add(new DataColumn("Met Report")); //array
+            SearchTable21.Columns.Add(new DataColumn("Emitter Category"));
+            SearchTable21.Columns.Add(new DataColumn("Target Address"));
+            SearchTable21.Columns.Add(new DataColumn("Target Status")); // array
+            SearchTable21.Columns.Add(new DataColumn("Roll Angle"));
+            SearchTable21.Columns.Add(new DataColumn("Service Identification"));
+            SearchTable21.Columns.Add(new DataColumn("Quality Indicators")); //array
+            SearchTable21.Columns.Add(new DataColumn("Mode S")); //array
+            SearchTable21.Columns.Add(new DataColumn("Message amplitude"));
+            SearchTable21.Columns.Add(new DataColumn("Receiver ID"));
+            SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor position"));
+            SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor velocity"));
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor position"));
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor velocity"));
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor position - High precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor velocity - High precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
+            SearchTable21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
+            SearchTable21.Columns.Add(new DataColumn("Data ages")); // array
+            SearchTable21.Columns.Add(new DataColumn("Service Management"));
+
+            SearchTable21.Rows.Add(i, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
+                            convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
+                            C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
+                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
+                            C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
             
             return SearchTable21;
         }
