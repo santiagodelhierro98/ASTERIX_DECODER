@@ -4,6 +4,8 @@ using System.Text;
 using System.IO;
 using System.Data;
 using System.Linq;
+using System.Windows;
+
 
 
 namespace CLASSES
@@ -16,16 +18,16 @@ namespace CLASSES
         public List<int> CAT_list = new List<int>();
 
         List<CAT10> listaCAT10 = new List<CAT10>();
-        //List<CAT20> listaCAT20 = new List<CAT20>();
         List<CAT21> listaCAT21 = new List<CAT21>();
-        
+        List<CAT21_v23> listaCAT21_v23 = new List<CAT21_v23>();
+
+
         //Reduced table with items for display on map
         DataTable tablacat10reducida = new DataTable();
         DataTable tablacat21reducida = new DataTable();
         DataTable multiplecattablereducida = new DataTable();
         
         DataTable tablaCAT10 = new DataTable();
-        //DataTable tablaCAT20 = new DataTable();
         DataTable tablaCAT21 = new DataTable();
         DataTable tablaMultipleCAT = new DataTable();
 
@@ -47,6 +49,10 @@ namespace CLASSES
         public List<CAT21> getListCAT21()
         {
             return listaCAT21;
+        }
+        public List<CAT21_v23> getListCAT21_v23()
+        {
+            return listaCAT21_v23;
         }
 
         public DataTable getmultiplecattablereducida()
@@ -125,6 +131,7 @@ namespace CLASSES
 
                 CAT10 C10 = new CAT10();
                 CAT21 C21 = new CAT21();
+                CAT21_v23 C21_v23 = new CAT21_v23();
 
                 if (CAT == 10)
                 {
@@ -136,7 +143,6 @@ namespace CLASSES
                     multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)),C10.FL, C10.Data_Source_ID[0], C10.Data_Source_ID[1],
                         Math.Round(cartesiantolatmlat(C10.Pos_Cartesian[0],C10.Pos_Cartesian[1]),2), Math.Round(cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]),2), 
                         C10.Target_Add, C10.Track_Num);
-
                     // CAT10 reduced table for maptrack
                     tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL, C10.Data_Source_ID[0], C10.Data_Source_ID[1], 
                         Math.Round(cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]),2),
@@ -167,35 +173,72 @@ namespace CLASSES
                 else if (CAT == 21)
                 {
                     contadorCAT21++;                    
-                    C21.Decode21(arraystring, q);
-                    listaCAT21.Add(C21);
+                   
+                   
 
-                    // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, convert_to_hms(Math.Floor(CheckTOD(C21))) , C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, 
+                    if (filename.Contains("v023") == true || filename.Contains("v23") == true)
+                    {
+                        C21_v23.Decode21(arraystring, q);
+                        listaCAT21_v23.Add(C21_v23);
+                        // Multiple CAT reduced table for maptrack
+                        multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
+                        C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
+                        // CAT21 reduced table for maptrack
+                        tablacat21reducida.Rows.Add(contadorCAT21, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
+                            C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
+
+                        // Complete CAT21 table
+                        //tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, C21_v23.Track_Num, C21_v23.Target_Report_Desc,
+                        //    convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.FL, C21_v23.GA,
+                        //    C21_v23.Op_Status, "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", C21_v23.TAR, C21_v23.SA, C21_v23.MOPS,
+                        //    C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, C21_v23.Met_Report, C21_v23.ECAT, C21_v23.Target_Address, C21_v23.Target_Status, C21_v23.Roll, C21_v23.Service_ID,
+                        //    C21_v23.Quality_Indicators, C21_v23.Mode_S, C21_v23.MAM, C21_v23.RID, C21_v23.ToA_Position, C21_v23.ToA_Velocity, C21_v23.TMRP, C21_v23.TMRV, C21_v23.TMRP_HP, C21_v23.TMRV_HP, C21_v23.Trajectory_Intent, C21_v23.Data_Ages, C21_v23.RP);
+
+                        // Complete Multiple CAT table
+
+                        //tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, C21_v23.Track_Num, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                        //    C21_v23.Target_Report_Desc, "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.M3AC, C21_v23.Mode_S, C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, C21_v23.MAM,
+
+                        //    "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
+                        //    ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
+                        //    ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
+                        //    "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
+                        //    ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.Op_Status, "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                        //    C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", C21_v23.TAR, C21_v23.SA, C21_v23.MOPS, C21_v23.MH, C21_v23.BVR, C21_v23.GVR, C21_v23.Met_Report, C21_v23.ECAT, C21_v23.Target_Status, C21_v23.Roll, C21_v23.Service_ID,
+                        //    C21_v23.Quality_Indicators, C21_v23.RID, C21_v23.ToA_Position, C21_v23.ToA_Velocity, C21_v23.TMRP, C21_v23.TMRV, C21_v23.TMRP_HP, C21_v23.TMRV_HP, C21_v23.Trajectory_Intent, C21_v23.Data_Ages, C21_v23.RP);
+                    }
+                    if (filename.Contains("v021") == true || filename.Contains("v21") == true)
+                    {
+                        C21.Decode21(arraystring, q);
+                        listaCAT21.Add(C21);
+                        // Multiple CAT reduced table for maptrack
+                        multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
                         C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
-                    // CAT21 reduced table for maptrack
-                    tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, convert_to_hms(Math.Floor(CheckTOD(C21))), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
-                        C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
+                        // CAT21 reduced table for maptrack
+                        tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
+                            C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
 
-                    // Complete CAT21 table
-                    tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID,C21.Track_Num,C21.Target_Report_Desc,
-                        convert_to_hms(Math.Floor(CheckTOD(C21))), "("+C21.Lat_WGS_84+", "+C21.Lon_WGS_84+")","("+C21.High_Res_Lat_WGS_84+", "+C21.High_Res_Lon_WGS_84+")",C21.FL,C21.GH,
-                        C21.Op_Status,"("+C21.Air_Speed[0]+", "+C21.Air_Speed[1]+")",C21.True_Airspeed, "("+C21.GS+", "+C21.TA+")",C21.TAR, C21.SA, C21.MOPS,
-                        C21.MH, C21.BVR, C21.GVR, C21.M3AC,C21.Met_Report,C21.ECAT,C21.Target_Address,C21.Target_Status, C21.Roll,C21.Service_ID,
-                        C21.Quality_Indicators,C21.Mode_S, C21.MAM,C21.RID,C21.ToA_Position, C21.ToA_Velocity, C21.TMRP,C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
-                    
-                    // Complete Multiple CAT table
+                        // Complete CAT21 table
+                        tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
+                            convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
+                            C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
+                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
+                            C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
 
-                    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, convert_to_hms(Math.Floor(CheckTOD(C21))),
-                        C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
+                        // Complete Multiple CAT table
 
-                        "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
-                        ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                        ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
-                        "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
-                        ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", 
-                        C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
-                        C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, convert_to_hms(Math.Floor(C21.Time_Rep_Transm)),
+                            C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
+
+                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
+                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
+                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
+                            ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
+                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
+                            C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                    }
+                    //else { MessageBox.Show("ERROR: Make sure file containing category 21 '\n' is version 2.1 or 0.23"); }
                 }                
             }
         }            
@@ -419,16 +462,10 @@ namespace CLASSES
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             return lamda2 * (180.0 / Math.PI);
         }
-        // if time of asterix message report is not reported we will show Time of message reception for position        
-        private double CheckTOD(CAT21 C21)
-        {
-            if (C21.Time_Rep_Transm == 0) { return C21.ToA_Position; }
-            else { return C21.Time_Rep_Transm; }
-        }
-       
+
         private string convert_to_hms(double tod)
         {
-            if (tod!=double.NaN)
+            if (tod!=0)
             {
                 TimeSpan time = TimeSpan.FromSeconds(tod);
                 string tiempoact = time.ToString(@"hh\:mm\:ss");

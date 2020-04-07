@@ -6,7 +6,6 @@ namespace CLASSES
 {
     public class CAT21
     {
-        Metodos Met = new Metodos();
 
         // Definir los Data Items como variables, para procesar las que están en el paquete (las que son 1)
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT21)
@@ -16,7 +15,7 @@ namespace CLASSES
         public string[] Target_Report_Desc = new string[15];
         public double Track_Num = double.NaN;
         public string Service_ID = null;
-        public double ToA_Position = double.NaN; // seconds, ToA=Time of Aplicability
+        public double ToA_Position; // seconds, ToA=Time of Aplicability
         public double Lat_WGS_84 = double.NaN; //in degrees
         public double Lon_WGS_84 = double.NaN; //in degrees
         public double High_Res_Lat_WGS_84 = double.NaN; //high resolution Lat WGS 84 in degrees
