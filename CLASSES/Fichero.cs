@@ -6,11 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-
-
 namespace CLASSES
 {
-
     public class Fichero
     {
         string path;
@@ -20,7 +17,6 @@ namespace CLASSES
         List<CAT10> listaCAT10 = new List<CAT10>();
         List<CAT21> listaCAT21 = new List<CAT21>();
         List<CAT21_v23> listaCAT21_v23 = new List<CAT21_v23>();
-
 
         //Reduced table with items for display on map
         DataTable tablacat10reducida = new DataTable();
@@ -54,7 +50,6 @@ namespace CLASSES
         {
             return listaCAT21_v23;
         }
-
         public DataTable getmultiplecattablereducida()
         {
             return multiplecattablereducida;
@@ -67,7 +62,6 @@ namespace CLASSES
         {
             return tablacat21reducida;
         }
-
         public DataTable getTablaCAT10()
         {
             return tablaCAT10;
@@ -80,13 +74,11 @@ namespace CLASSES
         {
             return tablaMultipleCAT;
         }
-
         string filename;
         public string getFileName()
         {
             return filename;
         }
-         
         public void leer()
         {
             //StreamReader fichero = new StreamReader(path);
@@ -112,7 +104,6 @@ namespace CLASSES
                     contador = fileBytes[i + 2];
                 }
             }
-
             List<string[]> listahex = new List<string[]>();
             for (int x = 0; x < listabyte.Count; x++)
             {
@@ -178,10 +169,7 @@ namespace CLASSES
                 }
                 else if (CAT == 21)
                 {
-                    contadorCAT21++;                    
-                   
-                   
-
+                    contadorCAT21++;
                     if (filename.Contains("v023") == true || filename.Contains("v23") == true)
                     {
                         C21_v23.Decode21(arraystring, q);
@@ -432,7 +420,6 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
         }
-       
         // returns the pack in the 'num' position
         public CAT10 getCAT10(int num)
         {
@@ -441,13 +428,10 @@ namespace CLASSES
         public CAT21 getCAT21(int num)
         {
             return listaCAT21[num];
-        }
-        public CAT21_v23 getCAT21_v23(int num)
+        }        public CAT21_v23 getCAT21_v23(int num)
         {
             return listaCAT21_v23[num];
         }
-
-
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
         {
@@ -458,7 +442,6 @@ namespace CLASSES
             double phi1 = MLAT_lat * (Math.PI / 180);
             double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             return phi2 * (180.0/Math.PI);
-
         }
         private double cartesiantolonmlat(double X, double Y)
         {
@@ -473,7 +456,6 @@ namespace CLASSES
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             return lamda2 * (180.0 / Math.PI);
         }
-
         private string convert_to_hms(double tod)
         {
             if (tod!=0)
@@ -487,7 +469,55 @@ namespace CLASSES
                 string p = "NaN";
                 return p;
             }
-           
+        }
+        public DataTable getSearchTable10(CAT10 C10, int i)
+        {
+            DataTable SearchTable10 = new DataTable();
+
+            SearchTable10.Columns.Add(new DataColumn("#"));
+            SearchTable10.Columns.Add(new DataColumn("SIC"));
+            SearchTable10.Columns.Add(new DataColumn("SAC"));
+            SearchTable10.Columns.Add(new DataColumn("Target ID"));
+            SearchTable10.Columns.Add(new DataColumn("Track Number"));
+            SearchTable10.Columns.Add(new DataColumn("Target Report")); //array
+            SearchTable10.Columns.Add(new DataColumn("Message type"));
+            SearchTable10.Columns.Add(new DataColumn("Time Of Day (UTC)"));
+            SearchTable10.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Polar Coords\n(Distance, Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Status")); //array
+            SearchTable10.Columns.Add(new DataColumn("Mode 3/A Code")); //array
+            SearchTable10.Columns.Add(new DataColumn("Target Address"));
+            SearchTable10.Columns.Add(new DataColumn("Mode S MB Data")); //array
+            SearchTable10.Columns.Add(new DataColumn("Vehicle Fleet ID"));
+            SearchTable10.Columns.Add(new DataColumn("Flight Level"));
+            SearchTable10.Columns.Add(new DataColumn("Measured Height"));
+            SearchTable10.Columns.Add(new DataColumn("Target Size\n(Length x Width)"));
+            SearchTable10.Columns.Add(new DataColumn("Target Heading"));
+            SearchTable10.Columns.Add(new DataColumn("System Status")); //array
+            SearchTable10.Columns.Add(new DataColumn("Pre Programmed MSG")); //array
+            SearchTable10.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Covariance of deviation"));
+            SearchTable10.Columns.Add(new DataColumn("Presence")); //array
+            SearchTable10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
+            SearchTable10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
+
+            SearchTable10.Rows.Add(i, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
+                C10.Message_Type, convert_to_hms(Math.Floor(C10.Time_Day)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
+                "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", "(" + C10.Track_Vel_Cartesian[0] +
+                ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
+                "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
+                "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "(" + C10.Acceleration[0] +
+                ", " + C10.Acceleration[1] + ")");
+            return SearchTable10;
+        }
+        public DataTable getSearchTable21(CAT21 C21, int i)
+        {
+            DataTable SearchTable21 = new DataTable();
+            
+            return SearchTable21;
         }
     }
 }

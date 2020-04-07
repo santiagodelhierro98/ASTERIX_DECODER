@@ -31,6 +31,7 @@
                 <Button x:Name="SearchIDButton" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search ID" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
                 <TextBox x:Name="NumBox" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
                 <TextBox x:Name="IDBox" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
+                <Label x:Name="SearchResult" Grid.Column="3" Grid.Row="1" Content="Search Result:" Foreground="WhiteSmoke" FontSize="14" HorizontalAlignment="Stretch" Margin="5 10 10 0"/>
             </Grid>
         </StackPanel>
         <Label x:Name="Instructions_Label" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff" Visibility="Hidden"/>
@@ -45,7 +46,7 @@
 
         <!-- Data Table -->
         <DataGrid x:Name="Track_Table" Padding="5"
-                  Margin="0 90 0 0" Background="#222" 
+                  Margin="0 90 300 0" Background="#222" 
                   Visibility="Hidden" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}">
 
@@ -57,7 +58,6 @@
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
-
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Height" Value="20"/>
@@ -73,7 +73,44 @@
                 </Style>
             </DataGrid.CellStyle>
         </DataGrid>
+        <!-- Search Table -->
+        <DataGrid x:Name="Search_Table" Padding="0 5 5 5"
+                  Margin="900 90 0 0" Background="#222" 
+                  Visibility="Hidden" IsReadOnly="True" 
+                  BorderThickness="1" ItemsSource="{Binding}">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="#222"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
 
+            </DataGrid.RowStyle>
+            <!-- Rotating the grid -->
+            <DataGrid.Resources>
+                <Style x:Key="DataGridBase" TargetType="Control">
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90" />
+                                <ScaleTransform ScaleX="1" ScaleY="-1" />
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                </Style >
+                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridBase}"/>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridBase}"/>
+                <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource DataGridBase}"/>
+            </DataGrid.Resources>
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90" />
+                    <MatrixTransform Matrix="-1, 0, 0, 1, 0, 0" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+        </DataGrid>
+        
         <!-- Map -->
         <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" 
                            Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1"/>
