@@ -665,8 +665,8 @@ namespace ASTERIX_APP
                 if (F.getFileName().Contains("v021") == true || F.getFileName().Contains("v21") == true)
                 {
                     CAT21 C21 = F.getCAT21(i);
-                    start = Math.Floor(F.getCAT21(0).ToA_Position) + s;
-                    tiempo = Math.Floor(C21.ToA_Position);
+                    start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
+                    tiempo = Math.Floor(C21.Time_Rep_Transm);
                     if (tiempo == start)
                     {
                         AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
@@ -691,13 +691,13 @@ namespace ASTERIX_APP
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i]);
+            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i-1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;         
         }
         private void rellenartablaCAT21(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i]);
+            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i-1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
         }
 
