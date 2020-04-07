@@ -637,32 +637,46 @@ namespace ASTERIX_APP
             Boolean x = true;
             while (x == true)
             {
-                CAT21 C21 = F.getCAT21(i);
-                if (C21.Time_Rep_Transm == 0) 
+                if (F.getFileName().Contains("v023") == true || F.getFileName().Contains("v23") == true)
                 {
-                     start = Math.Floor(F.getCAT21(0).ToA_Position) + s;
-                     tiempo = Math.Floor(C21.ToA_Position);
-                }
-                else 
-                {
-                    start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
-                    tiempo = Math.Floor(C21.Time_Rep_Transm);
-                }
-                
-                if (tiempo == start)
-                {
-                    AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
-                    i++;
-                    if (map.Markers.Count >= 200)
+                    CAT21_v23 C21_v23 = F.getCAT21_v23(i);
+                    start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
+                    tiempo = Math.Floor(C21_v23.Time_of_Day);
+                    if (tiempo == start)
                     {
-                        map.Markers[map.Markers.Count - 200].Clear();
+                        AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84);
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
+                    }
+                    else
+                    {
+                        x = false;
+                        s++;
                     }
                 }
-                else
+                if (F.getFileName().Contains("v021") == true || F.getFileName().Contains("v21") == true)
                 {
-                    x = false;
-                    s++;
-                }
+                    CAT21 C21 = F.getCAT21(i);
+                    start = Math.Floor(F.getCAT21(0).ToA_Position) + s;
+                    tiempo = Math.Floor(C21.ToA_Position);
+                    if (tiempo == start)
+                    {
+                        AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
+                    }
+                    else
+                    {
+                        x = false;
+                        s++;
+                    }
+                } 
                 clock(tiempo);
                 gridlista.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Visible;

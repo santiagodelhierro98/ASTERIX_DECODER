@@ -80,7 +80,13 @@ namespace CLASSES
         {
             return tablaMultipleCAT;
         }
+
         string filename;
+        public string getFileName()
+        {
+            return filename;
+        }
+         
         public void leer()
         {
             //StreamReader fichero = new StreamReader(path);
