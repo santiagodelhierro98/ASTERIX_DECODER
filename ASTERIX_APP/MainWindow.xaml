@@ -11,7 +11,7 @@
     <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458" Margin="0">
         <StackPanel Margin="0" Height="Auto" VerticalAlignment="Stretch">
             <!-- Buttons -->
-            <Grid Margin="5" Height="465">
+            <Grid Margin="5" Height="70">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -20,13 +20,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="LoadButton" Click="LoadFile_Click" Grid.Column="0" Grid.Row="0" Content="Load File" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
                 <Button x:Name="TableButton" Click="TableTrack_Click" Grid.Column="1" Grid.Row="0" Content="Tracking Table" Background="#222" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1"/>
                 <Button x:Name="MapButton" Click="MapTrack_Click" Grid.Column="2" Grid.Row="0" Content="Tracking Map" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
                 <Button x:Name="ExitButton" Click="Exit_Click" Grid.Column="3" Grid.Row="0" Content="Exit" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
-
+                <!-- Track Table elements-->
+                <Button x:Name="SearchNumButton" Click="SearchNum_Click" Grid.Column="0" Grid.Row="1" Content="Search #" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <Button x:Name="SearchIDButton" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search ID" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <TextBox x:Name="NumBox" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
+                <TextBox x:Name="IDBox" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
             </Grid>
         </StackPanel>
         <Label x:Name="Instructions_Label" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff" Visibility="Hidden"/>
@@ -41,10 +45,9 @@
 
         <!-- Data Table -->
         <DataGrid x:Name="Track_Table" Padding="5"
-                  Margin="0 40 0 0" Background="#222" 
+                  Margin="0 90 0 0" Background="#222" 
                   Visibility="Hidden" IsReadOnly="True" 
-                  BorderBrush="#000" BorderThickness="1" 
-                  ItemsSource="{Binding}">
+                  BorderThickness="1" ItemsSource="{Binding}">
 
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
