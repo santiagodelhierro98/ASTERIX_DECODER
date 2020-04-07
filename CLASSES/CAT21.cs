@@ -162,7 +162,7 @@ namespace CLASSES
                     if (Convert.ToInt32(Target1_Bits[4].ToString()) == 1) { Target_Report_Desc[8] = "Equipment not capable to provide Selected Altitude"; }
 
                     string CL_Bin = Target1_Bits[5].ToString() + Target1_Bits[6].ToString();
-                    Int32 CL = Convert.ToInt32(ARC_Bin, 2);
+                    Int32 CL = Convert.ToInt32(CL_Bin, 2);
                     if (CL == 0) { Target_Report_Desc[9] = "Report Valid"; }
                     if (CL == 1) { Target_Report_Desc[9] = "Report suspect"; }
                     if (CL == 2) { Target_Report_Desc[9] = "No information"; }

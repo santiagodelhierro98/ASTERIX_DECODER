@@ -436,6 +436,11 @@ namespace CLASSES
         {
             return listaCAT21[num];
         }
+        public CAT21_v23 getCAT21_v23(int num)
+        {
+            return listaCAT21_v23[num];
+        }
+
 
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)

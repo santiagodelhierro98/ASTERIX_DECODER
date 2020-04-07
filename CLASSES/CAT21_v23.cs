@@ -10,7 +10,7 @@ namespace CLASSES
         // El tipo de cada variable depende de la precisión con la que se nos proporciona (especificado pdf CAT21 v023)
         public double Data_Source_ID_SIC = double.NaN;
         public double Data_Source_ID_SAC = double.NaN;
-        public string[] Target_Report_Desc = new string[15];
+        public string[] Target_Report_Desc = new string[9];
         public double Time_of_Day = double.NaN;
         public double Lat_WGS_84 = double.NaN; //in degrees
         public double Lon_WGS_84 = double.NaN; //in degrees
@@ -83,91 +83,47 @@ namespace CLASSES
             {
                 // I021/040 : Target Report Descriptor
                 string TargetReport_Bin = Met.Octeto_A_Bin(paquete0[contador]);
-                char[] Target_Bits = TargetReport_Bin.ToCharArray();
 
-                string ATP_Bin = Target_Bits[0].ToString() + Target_Bits[1].ToString() + Target_Bits[2].ToString();
-                Int32 ATP = Convert.ToInt32(ATP_Bin, 2);
-                if (ATP == 0) { Target_Report_Desc[0] = "24-Bit ICAO address"; }
-                if (ATP == 1) { Target_Report_Desc[0] = "Duplicate address"; }
-                if (ATP == 2) { Target_Report_Desc[0] = "Surface vehicle address"; }
-                if (ATP == 3) { Target_Report_Desc[0] = "Anonymous address"; }
-                if (ATP == 4 || ATP == 5 || ATP == 6 || ATP == 7) { Target_Report_Desc[0] = "Reserved for future use"; }
+                if (TargetReport_Bin[0].ToString() == "0") { Target_Report_Desc[0] = "No differential correction (ADS-B)"; }
+                if (TargetReport_Bin[0].ToString() == "1") { Target_Report_Desc[0] = "Differential correction (ADS-B)"; }
+                if (TargetReport_Bin[1].ToString() == "0") { Target_Report_Desc[1] = "Ground Bit not set"; }
+                if (TargetReport_Bin[1].ToString() == "1") { Target_Report_Desc[1] = "Ground Bit set"; }
+                if (TargetReport_Bin[2].ToString() == "0") { Target_Report_Desc[2] = "Actual target report"; }
+                if (TargetReport_Bin[2].ToString() == "1") { Target_Report_Desc[2] = "Simulated target report"; }
+                if (TargetReport_Bin[3].ToString() == "0") { Target_Report_Desc[3] = "Default"; }
+                if (TargetReport_Bin[3].ToString() == "1") { Target_Report_Desc[3] = "Test Target"; }
+                if (TargetReport_Bin[4].ToString() == "0") { Target_Report_Desc[4] = "Report from target transponder"; }
+                if (TargetReport_Bin[4].ToString() == "1") { Target_Report_Desc[4] = "Report from field monitor (fixed transponder)"; }
+                if (TargetReport_Bin[5].ToString() == "0") { Target_Report_Desc[5] = "Equipement not capable to provide Selected Altitude"; }
+                if (TargetReport_Bin[5].ToString() == "1") { Target_Report_Desc[5] = "Equipement capable to provide Selected Altitude"; }
+                if (TargetReport_Bin[6].ToString() == "0") { Target_Report_Desc[6] = "Absence of SPI"; }
+                if (TargetReport_Bin[6].ToString() == "1") { Target_Report_Desc[6] = "Special Position Identification"; }
 
-                string ARC_Bin = Target_Bits[3].ToString() + Target_Bits[4].ToString();
+                string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
+
+                string ARC_Bin = octeto2[0].ToString() + octeto2[1].ToString() + octeto2[2].ToString();
                 Int32 ARC = Convert.ToInt32(ARC_Bin, 2);
-                if (ARC == 0) { Target_Report_Desc[1] = "25 ft"; }
-                if (ARC == 1) { Target_Report_Desc[1] = "100 ft"; }
-                if (ARC == 2) { Target_Report_Desc[1] = "Unknown"; }
-                if (ARC == 3) { Target_Report_Desc[1] = "Invalid"; }
+                if (ARC == 0) { Target_Report_Desc[7] = "Non unique address"; }
+                if (ARC == 1) { Target_Report_Desc[7] = "24-Bit ICAO address"; }
+                if (ARC == 2) { Target_Report_Desc[7] = "Surface vehicle address"; }
+                if (ARC == 3) { Target_Report_Desc[7] = "Anonymous address"; }
+                if (ARC == 4 || ARC == 5 || ARC == 6 || ARC == 7) { Target_Report_Desc[7] = "Reserved for future use"; }
+                string bits2 = octeto2[3].ToString() + octeto2[4].ToString();
+                Int32 bb = Convert.ToInt32(bits2, 2);
 
-                if (Convert.ToInt32(Target_Bits[5].ToString()) == 0) { Target_Report_Desc[2] = "Default"; }
-                if (Convert.ToInt32(Target_Bits[5].ToString()) == 1) { Target_Report_Desc[2] = "Range Check passed, CPR Validation pending"; }
+                if (bb == 0) { Target_Report_Desc[8] = "Unknown"; }
+                if (bb == 1) { Target_Report_Desc[8] = "25 ft"; }
+                if (bb == 2) { Target_Report_Desc[8] = "100 ft"; }
+                contador = contador + 2;
 
-                if (Convert.ToInt32(Target_Bits[6].ToString()) == 0) { Target_Report_Desc[3] = "Report from target transponder"; }
-                if (Convert.ToInt32(Target_Bits[6].ToString()) == 1) { Target_Report_Desc[3] = "Report from field monitor (fixed transponder)"; }
-
-                if (Convert.ToInt32(Target_Bits[7].ToString()) == 0) { contador = contador + 1; }
-                if (Convert.ToInt32(Target_Bits[7].ToString()) == 1)
-                {
-                    //I021/040 - First Extension
-                    contador = contador + 1;
-                    string TargetReport1_Bin = Met.Octeto_A_Bin(paquete0[contador]);
-                    char[] Target1_Bits = TargetReport1_Bin.ToCharArray();
-
-                    if (Convert.ToInt32(Target1_Bits[0].ToString()) == 0) { Target_Report_Desc[4] = "No Differential Correction(ADS-B)"; }
-                    if (Convert.ToInt32(Target1_Bits[0].ToString()) == 1) { Target_Report_Desc[4] = "Differential correction (ADS-B)"; }
-
-                    if (Convert.ToInt32(Target1_Bits[1].ToString()) == 0) { Target_Report_Desc[5] = "Ground Bit not set"; }
-                    if (Convert.ToInt32(Target1_Bits[1].ToString()) == 1) { Target_Report_Desc[5] = "Ground Bit set"; }
-
-                    if (Convert.ToInt32(Target1_Bits[2].ToString()) == 0) { Target_Report_Desc[6] = "Actual target report"; }
-                    if (Convert.ToInt32(Target1_Bits[2].ToString()) == 1) { Target_Report_Desc[6] = "Simulated target report"; }
-
-                    if (Convert.ToInt32(Target1_Bits[3].ToString()) == 0) { Target_Report_Desc[7] = "Default"; }
-                    if (Convert.ToInt32(Target1_Bits[3].ToString()) == 1) { Target_Report_Desc[7] = "Test Target"; }
-
-                    if (Convert.ToInt32(Target1_Bits[4].ToString()) == 0) { Target_Report_Desc[8] = "Equipment capable to provide Selected Altitude"; }
-                    if (Convert.ToInt32(Target1_Bits[4].ToString()) == 1) { Target_Report_Desc[8] = "Equipment not capable to provide Selected Altitude"; }
-
-                    string CL_Bin = Target1_Bits[5].ToString() + Target1_Bits[6].ToString();
-                    Int32 CL = Convert.ToInt32(ARC_Bin, 2);
-                    if (CL == 0) { Target_Report_Desc[9] = "Report Valid"; }
-                    if (CL == 1) { Target_Report_Desc[9] = "Report suspect"; }
-                    if (CL == 2) { Target_Report_Desc[9] = "No information"; }
-                    if (CL == 3) { Target_Report_Desc[9] = "Reserved for future use"; }
-
-                    if (Convert.ToInt32(Target1_Bits[7].ToString()) == 0) { contador = contador + 1; }
-                    if (Convert.ToInt32(Target1_Bits[7].ToString()) == 1)
-                    {
-                        //I021/040 - Second Extension : Error Conditions
-                        contador = contador + 1;
-                        string TargetReport2_Bin = Met.Octeto_A_Bin(paquete0[contador]);
-                        char[] Target2_Bits = TargetReport2_Bin.ToCharArray();
-
-                        if (Convert.ToInt32(Target2_Bits[2].ToString()) == 0) { Target_Report_Desc[10] = "Independent Position Check default"; }
-                        if (Convert.ToInt32(Target2_Bits[2].ToString()) == 1) { Target_Report_Desc[10] = "Independent Position Check failed"; }
-
-                        if (Convert.ToInt32(Target2_Bits[3].ToString()) == 0) { Target_Report_Desc[11] = "NOGO-bit not set"; }
-                        if (Convert.ToInt32(Target2_Bits[3].ToString()) == 1) { Target_Report_Desc[11] = "NOGO-bit set"; }
-
-                        if (Convert.ToInt32(Target2_Bits[4].ToString()) == 0) { Target_Report_Desc[12] = "CPR Validation correct"; }
-                        if (Convert.ToInt32(Target2_Bits[4].ToString()) == 1) { Target_Report_Desc[12] = "CPR Validation failed"; }
-
-                        if (Convert.ToInt32(Target2_Bits[5].ToString()) == 0) { Target_Report_Desc[13] = "LDPJ not detected"; }
-                        if (Convert.ToInt32(Target2_Bits[5].ToString()) == 1) { Target_Report_Desc[13] = "LDPJ detected"; }
-
-                        if (Convert.ToInt32(Target2_Bits[6].ToString()) == 0) { Target_Report_Desc[14] = "Range Check default"; }
-                        if (Convert.ToInt32(Target2_Bits[6].ToString()) == 1) { Target_Report_Desc[14] = "Range Check failed"; }
-
-                        contador = contador + 1;
-                    }
-                }
             }
+            
+        
             if (FSPEC[2] == "1")
             {
                 //Data Item I021/030, Time of Day
                 string TODbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]);
-                Time_of_Day = Math.Round(Met.ComplementoA2(TODbits) * (1.0 / 128.0), 3);
+                Time_of_Day = Math.Round(Convert.ToInt32(TODbits, 2) * (1.0 / 128.0), 3);
                 contador = contador + 3;
             }
             if (FSPEC[3] == "1")
@@ -177,12 +133,12 @@ namespace CLASSES
                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                 string octeto3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
                 string octeto_total = octeto1 + octeto2 + octeto3;
-                Lat_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total) * (180 / Math.Pow(2, 23)), 3);
+                Lat_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total) * (180.0 / Math.Pow(2, 23)), 3);
                 string octeto4 = Met.Octeto_A_Bin(paquete0[contador + 3]);
                 string octeto5 = Met.Octeto_A_Bin(paquete0[contador + 4]);
                 string octeto6 = Met.Octeto_A_Bin(paquete0[contador + 5]);
                 string octeto_total1 = octeto4 + octeto5 + octeto6;
-                Lon_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 23)), 3);
+                Lon_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total1) * (180.0 / Math.Pow(2, 23)), 3);
                 contador = contador + 6;
             }
             if (FSPEC[4] == "1")
@@ -262,6 +218,7 @@ namespace CLASSES
                     string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                     string octeto_total = octeto1.ToString() + octeto2.ToString();
                     FL = Math.Round(Met.ComplementoA2(octeto_total) * 0.25, 3);
+                    contador = contador + 2;
                 }
                 if (FSPEC[10] == "1")
                 {
@@ -288,23 +245,9 @@ namespace CLASSES
                 {
                     //I021/151 True Airspeed
                     string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
-                    try
-                    {
-                        string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                        string octeto_total = octeto1 + octeto2;
-                        if (Convert.ToInt32(octeto_total[0].ToString()) == 0)
-                        {
-                            True_Airspeed = Met.ComplementoA2(octeto_total.Remove(0, 1));// knots
-                        }
-                        else
-                        {
-                            True_Airspeed = 0;
-                        }
-                    }
-                    catch
-                    {
-                        True_Airspeed = 0;
-                    }
+                    string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
+                    string octeto_total = octeto1 + octeto2;
+                    True_Airspeed = Met.ComplementoA2(octeto_total);// knots
                     contador = contador + 2;
                 }
                 if (FSPEC[12] == "1")
@@ -322,12 +265,8 @@ namespace CLASSES
                 {
                     // I021/155: Barometric Vertical Rate
 
-                    string REbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
-                    if (Convert.ToInt32(REbits[0].ToString()) == 0) { RE = "Value in defined range"; }
-                    else { RE = "Value exceeds defined range"; }
-                    string BVRbits = REbits.Remove(0, 1);
-                    BVR = Math.Round(Met.ComplementoA2(BVRbits) * 6.25, 3);
-
+                    string totalbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
+                    BVR = Math.Round(Met.ComplementoA2(totalbits) * 6.25, 3);
                     contador = contador + 2;
                 }
                 if (FSPEC.Count > 14)
@@ -337,11 +276,8 @@ namespace CLASSES
                     {
                         //021/157: Geometric Vertical Rate
 
-                        string REbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
-                        if (Convert.ToInt32(REbits[0].ToString()) == 0) { RE = "Value in defined range"; }
-                        else { RE = "Value exceeds defined range"; }
-                        string BVRbits = REbits.Remove(0, 1);
-                        GVR = Math.Round(Met.ComplementoA2(BVRbits) * 6.25, 3);
+                        string totalbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
+                        GVR = Math.Round(Met.ComplementoA2(totalbits) * 6.25, 3);
 
                         contador = contador + 2;
                     }
@@ -350,10 +286,7 @@ namespace CLASSES
                         //I021/160: Airborne Ground Vector
 
                         string GSbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]);
-                        if (Convert.ToInt32(GSbits[0].ToString()) == 0) { RE = "Value in defined range"; }
-                        else { RE = "Value exceeds defined range"; }
-                        string GSBITS = GSbits.Remove(0, 1);
-                        GS = Math.Round(Met.ComplementoA2(GSBITS) * 0.22, 3);
+                        GS = Math.Round(Met.ComplementoA2(GSbits) * 0.22, 3);
                         string TAbits = Met.Octeto_A_Bin(paquete0[contador + 2]) + Met.Octeto_A_Bin(paquete0[contador + 3]);
                         TA = Math.Round(Met.ComplementoA2(TAbits) * (360.0 / Math.Pow(2, 16)), 3);
                         contador = contador + 4;
@@ -433,19 +366,18 @@ namespace CLASSES
                         {
                             // I021/020 Emitter Category
                             string octeto = Met.Octeto_A_Bin(paquete0[contador]);
-                            if (Convert.ToInt32(octeto, 2) == 0) { ECAT = "No ADS-B Emitter Category Information"; }
-                            if (Convert.ToInt32(octeto, 2) == 1) { ECAT = "light aircraft <= 15500 lbs"; }
-                            if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "15500 lbs < small aircraft < 75000 lbs"; }
-                            if (Convert.ToInt32(octeto, 2) == 3) { ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
-                            if (Convert.ToInt32(octeto, 2) == 4) { ECAT = "High Vortex Large"; }
-                            if (Convert.ToInt32(octeto, 2) == 5) { ECAT = "300000 lbs <= heavy aircraft"; }
+                            if (Convert.ToInt32(octeto, 2) == 1) { ECAT = "light aircraft <= 7000 kg"; }
+                            if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "reserved"; }
+                            if (Convert.ToInt32(octeto, 2) == 3) { ECAT = "7000 kg < medium aircraft < 136000 kg"; }
+                            if (Convert.ToInt32(octeto, 2) == 4) { ECAT = "reserved"; }
+                            if (Convert.ToInt32(octeto, 2) == 5) { ECAT = "136000 kg <= heavy aircraft"; }
                             if (Convert.ToInt32(octeto, 2) == 6) { ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400knots cruise)"; }
                             if (Convert.ToInt32(octeto, 2) == 7) { ECAT = "reserved"; }
                             if (Convert.ToInt32(octeto, 2) == 8) { ECAT = "reserved"; }
                             if (Convert.ToInt32(octeto, 2) == 9) { ECAT = "reserved"; }
                             if (Convert.ToInt32(octeto, 2) == 10) { ECAT = "rotocraft"; }
                             if (Convert.ToInt32(octeto, 2) == 11) { ECAT = "glider / sailplane"; }
-                            if (Convert.ToInt32(octeto, 2) == 12) { ECAT = "ighter-than-air"; }
+                            if (Convert.ToInt32(octeto, 2) == 12) { ECAT = "lighter-than-air"; }
                             if (Convert.ToInt32(octeto, 2) == 13) { ECAT = "unmanned aerial vehicle"; }
                             if (Convert.ToInt32(octeto, 2) == 14) { ECAT = "space / transatmospheric vehicle"; }
                             if (Convert.ToInt32(octeto, 2) == 15) { ECAT = "ultralight / handglider / paraglider"; }
@@ -456,8 +388,8 @@ namespace CLASSES
                             if (Convert.ToInt32(octeto, 2) == 20) { ECAT = "surface emergency vehicle"; }
                             if (Convert.ToInt32(octeto, 2) == 21) { ECAT = "surface service vehicle"; }
                             if (Convert.ToInt32(octeto, 2) == 22) { ECAT = "fixed ground or tethered obstruction"; }
-                            if (Convert.ToInt32(octeto, 2) == 23) { ECAT = "cluster obstacle"; }
-                            if (Convert.ToInt32(octeto, 2) == 24) { ECAT = "line obstacle"; }
+                            if (Convert.ToInt32(octeto, 2) == 23) { ECAT = "reserved"; }
+                            if (Convert.ToInt32(octeto, 2) == 24) { ECAT = "reserved"; }
                             contador = contador + 1;
                         }
                         if (FSPEC[22] == "1")
