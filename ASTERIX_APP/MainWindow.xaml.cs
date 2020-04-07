@@ -541,17 +541,52 @@ namespace ASTERIX_APP
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;
         }
-        public void addMarker_Click(object sender, RoutedEventArgs e)
+        int categoria;
+        public int comprobarcat()
         {
             if (F.CAT_list[0] == 10)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true)
+                {
+                    return categoria = 1021;
+                }
+                else
+                {
+                    return categoria = 10;
+                }
+            }
+            if (F.CAT_list[0] == 21)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true)
+                {
+                    return categoria = 1021;
+                }
+                else
+                {
+                    return categoria = 21;
+                }
+               
+            }
+            else { return 0; }
+        }
+        public void addMarker_Click(object sender, RoutedEventArgs e)
+        {
+            if (comprobarcat() == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
                 updatedtable = F.gettablacat10reducida().Clone();
             }
-            if (F.CAT_list[0] == 21)
+            if (comprobarcat() == 21)
             {
                 dt_Timer.Tick += dt_Timer_TickC21;
                 updatedtable = F.gettablacat21reducida().Clone();
+            }
+            if (comprobarcat() == 1021)
+            {
+                dt_Timer.Tick += dt_Timer_TickMULTICAT;
+                updatedtable = F.getmultiplecattablereducida().Clone();
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
@@ -676,13 +711,76 @@ namespace ASTERIX_APP
                         x = false;
                         s++;
                     }
-                } 
+                    
+
+                }
                 clock(tiempo);
                 gridlista.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Visible;
                 rellenartablaCAT21(i);
             }
         }
+        private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
+        {
+            Boolean x = true;
+            while (x == true)
+            {
+                if (F.CAT_list[i] == 10)
+                {
+                    CAT10 C10 = F.getCAT10(i);
+                    double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
+                    double tiempo = Math.Floor(C10.Time_Day);
+                    if (tiempo == start)
+                    {
+                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        {
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                        {
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
+                    }
+                    else
+                    {
+                        x = false;
+                        s++;
+                    }
+                    
+                }
+                if (F.CAT_list[i] == 21)
+                {
+                    CAT21_v23 C21_v23 = F.getCAT21_v23(i);
+                    start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
+                    tiempo = Math.Floor(C21_v23.Time_of_Day);
+                    if (tiempo == start)
+                    {
+                        AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84);
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
+                    }
+                    else
+                    {
+                        x = false;
+                        s++;
+                    }
+                }        
+                clock(tiempo);
+                gridlista.Visibility = Visibility.Hidden;
+                updatedlista.Visibility = Visibility.Visible;
+                rellenartablaMULTICAT(i);
+            }
+        }
+     
+
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
@@ -693,6 +791,12 @@ namespace ASTERIX_APP
         {
             //we copy/paste all data from that specific flight
             updatedtable.ImportRow(F.gettablacat21reducida().Rows[i-1]);
+            updatedlista.ItemsSource = updatedtable.DefaultView;
+        }
+        private void rellenartablaMULTICAT(int i)
+        {
+            //we copy/paste all data from that specific flight
+            updatedtable.ImportRow(F.getmultiplecattablereducida().Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
         }
 

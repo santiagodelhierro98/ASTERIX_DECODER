@@ -55,10 +55,7 @@ namespace CLASSES
             return listaCAT21_v23;
         }
 
-        public DataTable getmultiplecattablereducida()
-        {
-            return multiplecattablereducida;
-        }
+      
         public DataTable gettablacat10reducida()
         {
             return tablacat10reducida;
@@ -180,8 +177,6 @@ namespace CLASSES
                 {
                     contadorCAT21++;                    
                    
-                   
-
                     if (filename.Contains("v023") == true || filename.Contains("v23") == true)
                     {
                         C21_v23.Decode21(arraystring, q);
@@ -243,6 +238,11 @@ namespace CLASSES
                             ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
                             C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
                             C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                    }
+                    if (filename.Contains("smr") == true && filename.Contains("mlat"))
+                    {
+                        C21_v23.Decode21(arraystring, q);
+                        listaCAT21_v23.Add(C21_v23);
                     }
                     //else { MessageBox.Show("ERROR: Make sure file containing category 21 '\n' is version 2.1 or 0.23"); }
                 }                
@@ -446,7 +446,14 @@ namespace CLASSES
         {
             return listaCAT21_v23[num];
         }
-
+        public DataTable getmultiplecattablereducida()
+        {
+            return multiplecattablereducida;
+        }
+       public int getCAT()
+        {
+            return CAT;
+        }
 
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
