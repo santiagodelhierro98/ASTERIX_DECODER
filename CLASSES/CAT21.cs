@@ -661,7 +661,7 @@ namespace CLASSES
                             // I021/077 Time of Report Transmission
 
                             string ToARTbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]);
-                            Time_Rep_Transm = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0), 3);
+                            Time_Rep_Transm = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0)+ 43200.0, 3);
                             contador = contador + 3;
                         }
 
