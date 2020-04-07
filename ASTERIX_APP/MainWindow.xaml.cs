@@ -16,6 +16,7 @@ namespace ASTERIX_APP
     public partial class MainWindow : Window
     {
         Fichero F;
+        bool chivato = false;
         int category;
         int i = 0;
         //lat and lon os cat10 files 
@@ -52,10 +53,7 @@ namespace ASTERIX_APP
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
-            // HIDE BUTTONS
             map.Visibility = Visibility.Hidden;
-            MapButton.Visibility = Visibility.Collapsed;
-            TableButton.Visibility = Visibility.Collapsed;
 
             // HIDE AND CLEAN TABLES
             Track_Table.Visibility = Visibility.Hidden;
@@ -80,6 +78,7 @@ namespace ASTERIX_APP
             // When you click Cancel
             if(OpenFile.FileName == "")
             {
+                chivato = false;
                 asterixPNG.Visibility = Visibility.Visible;
                 Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
                 bubbleWord.Height = 100;
@@ -90,7 +89,8 @@ namespace ASTERIX_APP
             }
             // When slecting a correct file
             else
-            {                
+            {
+                chivato = true;
                 F = new Fichero(OpenFile.FileName);
                 F.leer();
 
@@ -102,96 +102,124 @@ namespace ASTERIX_APP
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
-
-                MapButton.Visibility = Visibility.Visible; ;
-                TableButton.Visibility = Visibility.Visible;
             }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
         {
-            Instructions_Label.Visibility = Visibility.Hidden;
-            Track_Table.Visibility = Visibility.Visible;
-            map.Visibility = Visibility.Hidden;
-            gridlista.Visibility = Visibility.Hidden;
-            asterixPNG.Visibility = Visibility.Hidden;
-            asterixPerf.Visibility = Visibility.Hidden;
-            bubbleWord.Visibility = Visibility.Hidden;
-            circle.Visibility = Visibility.Hidden;
-            circle2.Visibility = Visibility.Hidden;
-            StartButton.Visibility = Visibility.Hidden;
-            StopButton.Visibility = Visibility.Hidden;
-            timer.Visibility = Visibility.Hidden;
-            x1butt.Visibility = Visibility.Hidden;
-            x2butt.Visibility = Visibility.Hidden;
-            x4butt.Visibility = Visibility.Hidden;
-            zoomlebl.Visibility = Visibility.Hidden;
-            zoombcn.Visibility = Visibility.Hidden;
-            zoomcat.Visibility = Visibility.Hidden;
-            updatedlista.Visibility = Visibility.Hidden;
-
-
-            if (F.CAT_list[0] == 10)
+            // When clicking button before loading a file
+            if (chivato == false)
             {
-                bool IsMultipleCAT = F.CAT_list.Contains(21);
-                if (IsMultipleCAT == true)
-                {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                    category = 1021;
-                }
-                else
-                {
-                    Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
-                    category = 10;
-                }
+                asterixPNG.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
             }
-            if (F.CAT_list[0] == 21)
+            else
             {
-                bool IsMultipleCAT = F.CAT_list.Contains(10);
-                if (IsMultipleCAT == true)
+                // Table and Map Stuff
+                Instructions_Label.Visibility = Visibility.Hidden;
+                Track_Table.Visibility = Visibility.Visible;
+                map.Visibility = Visibility.Hidden;
+                gridlista.Visibility = Visibility.Hidden;
+                StartButton.Visibility = Visibility.Hidden;
+                StopButton.Visibility = Visibility.Hidden;
+                timer.Visibility = Visibility.Hidden;
+                x1butt.Visibility = Visibility.Hidden;
+                x2butt.Visibility = Visibility.Hidden;
+                x4butt.Visibility = Visibility.Hidden;
+                zoomlebl.Visibility = Visibility.Hidden;
+                zoombcn.Visibility = Visibility.Hidden;
+                zoomcat.Visibility = Visibility.Hidden;
+                updatedlista.Visibility = Visibility.Hidden;
+                // Visual Elements
+                asterixPNG.Visibility = Visibility.Hidden;
+                asterixPerf.Visibility = Visibility.Hidden;
+                bubbleWord.Visibility = Visibility.Hidden;
+                circle.Visibility = Visibility.Hidden;
+                circle2.Visibility = Visibility.Hidden;             
+                
+                if (F.CAT_list[0] == 10)
                 {
-                    Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
-                    category = 1021;
+                    bool IsMultipleCAT = F.CAT_list.Contains(21);
+                    if (IsMultipleCAT == true)
+                    {
+                        Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                        category = 1021;
+                    }
+                    else
+                    {
+                        Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+                        category = 10;
+                    }
                 }
-                else
+                if (F.CAT_list[0] == 21)
                 {
-                    Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
-                    category = 21;
+                    bool IsMultipleCAT = F.CAT_list.Contains(10);
+                    if (IsMultipleCAT == true)
+                    {
+                        Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                        category = 1021;
+                    }
+                    else
+                    {
+                        Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
+                        category = 21;
+                    }
                 }
-            }
+            }            
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
-            Instructions_Label.Visibility = Visibility.Hidden;
-            Track_Table.Visibility = Visibility.Hidden;
-            map.Visibility = Visibility.Visible;
-            gridlista.Visibility = Visibility.Visible;
-            asterixPNG.Visibility = Visibility.Hidden;
-            asterixPerf.Visibility = Visibility.Hidden;
-            bubbleWord.Visibility = Visibility.Hidden;
-            circle.Visibility = Visibility.Hidden;
-            circle2.Visibility = Visibility.Hidden;
-            StartButton.Visibility = Visibility.Visible;
-            StopButton.Visibility = Visibility.Visible;
-            timer.Visibility = Visibility.Visible;
-            x1butt.Visibility = Visibility.Visible;
-            x2butt.Visibility = Visibility.Visible;
-            x4butt.Visibility = Visibility.Visible;
-            zoomlebl.Visibility = Visibility.Visible;
-            zoombcn.Visibility = Visibility.Visible;
-            zoomcat.Visibility = Visibility.Visible;
+            // When clicking button before loading a file
+            if (chivato == false)
+            {
+                asterixPNG.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Table and Map Stuff
+                Instructions_Label.Visibility = Visibility.Hidden;
+                Track_Table.Visibility = Visibility.Hidden;
+                map.Visibility = Visibility.Visible;
+                gridlista.Visibility = Visibility.Visible;
+                StartButton.Visibility = Visibility.Visible;
+                StopButton.Visibility = Visibility.Visible;
+                timer.Visibility = Visibility.Visible;
+                x1butt.Visibility = Visibility.Visible;
+                x2butt.Visibility = Visibility.Visible;
+                x4butt.Visibility = Visibility.Visible;
+                zoomlebl.Visibility = Visibility.Visible;
+                zoombcn.Visibility = Visibility.Visible;
+                zoomcat.Visibility = Visibility.Visible;
+                // Visual Stuff
+                asterixPNG.Visibility = Visibility.Hidden;
+                asterixPerf.Visibility = Visibility.Hidden;
+                bubbleWord.Visibility = Visibility.Hidden;
+                circle.Visibility = Visibility.Hidden;
+                circle2.Visibility = Visibility.Hidden;              
 
-            if (F.CAT_list[0] == 10)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(21);
-                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
-                else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
-            }
-            if (F.CAT_list[0] == 21)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(10);
-                if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
-                else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
-            }
+                if (F.CAT_list[0] == 10)
+                {
+                    bool IsMultipleCAT = F.CAT_list.Contains(21);
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                    else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+                }
+                if (F.CAT_list[0] == 21)
+                {
+                    bool IsMultipleCAT = F.CAT_list.Contains(10);
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                    else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
+                }
+            }            
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
