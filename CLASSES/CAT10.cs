@@ -98,7 +98,6 @@ namespace CLASSES
                 // Item I010/020: Target Report Descriptor
                 string TargetReport_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 char[] Target_Bits = TargetReport_Bin.ToCharArray();
-
                 string TYP_Bin = Target_Bits[0].ToString() + Target_Bits[1].ToString() + Target_Bits[2].ToString();
                 Int32 TYP = Convert.ToInt32(TYP_Bin, 2);
                 // TYP

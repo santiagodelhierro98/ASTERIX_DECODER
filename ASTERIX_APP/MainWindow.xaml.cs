@@ -26,7 +26,9 @@ namespace ASTERIX_APP
         //lat lon of MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.0 + (17.0/60.0)+(49.0/3600.0)+(426.0/3600000.0);
         double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-
+        //lat lon of SMR system of reference (at LEBL airport)
+        double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+        double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +48,7 @@ namespace ASTERIX_APP
         {
             MessageBox.Show("Are you sure you want to exit?");
             this.Close();
+            Application.Current.Shutdown();
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
@@ -124,6 +127,8 @@ namespace ASTERIX_APP
             zoomlebl.Visibility = Visibility.Hidden;
             zoombcn.Visibility = Visibility.Hidden;
             zoomcat.Visibility = Visibility.Hidden;
+            updatedlista.Visibility = Visibility.Hidden;
+
 
             if (F.CAT_list[0] == 10)
             {
@@ -205,18 +210,46 @@ namespace ASTERIX_APP
         {
             if (F.CAT_list[0] == 10)
             {
-                dt_Timer.Tick += dt_Timer_Tick;
-                   
+                dt_Timer.Tick += dt_Timer_TickC10;
+                updatedtable = F.gettablacat10reducida().Clone();
+            }
+            if (F.CAT_list[0] == 21)
+            {
+                dt_Timer.Tick += dt_Timer_TickC21;
+                updatedtable = F.gettablacat21reducida().Clone();
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
-            updatedtable = F.gettablacat10reducida().Clone();
 
         }
 
-        public void AddMarker(double latitude, double longitude)
+        public void AddMarkerMLAT(double latitude, double longitude)
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude , longitude);
+            GMapMarker marker = new GMapMarker(point);
+            marker.Shape = new Image
+            {
+                Width = 15,
+                Height = 15,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+            };
+            map.Markers.Add(marker);
+        }
+        public void AddMarkerSMR(double latitude, double longitude)
+        {
+            PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
+            GMapMarker marker = new GMapMarker(point);
+            marker.Shape = new Image
+            {
+                Width = 15,
+                Height = 15,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+            };
+            map.Markers.Add(marker);
+        }
+        public void AddMarkerC21(double latitude, double longitude)
+        {
+            PointLatLng point = new PointLatLng(latitude,longitude);
             GMapMarker marker = new GMapMarker(point);
             marker.Shape = new Image
             {
@@ -229,7 +262,7 @@ namespace ASTERIX_APP
         DispatcherTimer dt_Timer = new DispatcherTimer();
 
         double s = 0;
-        private void dt_Timer_Tick(object sender,EventArgs e)
+        private void dt_Timer_TickC10(object sender,EventArgs e)
         {
             Boolean x = true;
             while (x == true)
@@ -239,7 +272,14 @@ namespace ASTERIX_APP
                 double tiempo = Math.Floor(C10.Time_Day);
                 if (tiempo == start)
                 {
-                    AddMarker(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                    if (C10.Target_Rep_Descript[0] == "PSR")
+                    {
+                        AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                    }
+                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                    {
+                        AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                    }
                     i++;
                     if (map.Markers.Count >= 200)
                     {
@@ -257,6 +297,46 @@ namespace ASTERIX_APP
                 rellenartablaCAT10(i);
             }
         }
+        double start;
+        double tiempo;
+        private void dt_Timer_TickC21(object sender, EventArgs e)
+        {
+            Boolean x = true;
+            while (x == true)
+            {
+                CAT21 C21 = F.getCAT21(i);
+                if (C21.Time_Rep_Transm == 0) 
+                {
+                     start = Math.Floor(F.getCAT21(0).ToA_Position) + s;
+                     tiempo = Math.Floor(C21.ToA_Position);
+                }
+                else 
+                {
+                    start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
+                    tiempo = Math.Floor(C21.Time_Rep_Transm);
+                }
+                
+                if (tiempo == start)
+                {
+                    AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                    i++;
+                    if (map.Markers.Count >= 200)
+                    {
+                        map.Markers[map.Markers.Count - 200].Clear();
+                    }
+                }
+                else
+                {
+                    x = false;
+                    s++;
+                }
+                clock(tiempo);
+                gridlista.Visibility = Visibility.Hidden;
+                updatedlista.Visibility = Visibility.Visible;
+                rellenartablaCAT21(i);
+            }
+        }
+
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
@@ -264,7 +344,14 @@ namespace ASTERIX_APP
             updatedlista.ItemsSource = updatedtable.DefaultView;
          
         }
-      
+        private void rellenartablaCAT21(int i)
+        {
+            //we copy/paste all data from that specific flight
+            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i]);
+            updatedlista.ItemsSource = updatedtable.DefaultView;
+
+        }
+
         private void clock(double tiempo)
         {
             TimeSpan time = TimeSpan.FromSeconds(tiempo);
@@ -286,7 +373,20 @@ namespace ASTERIX_APP
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
         }
-      
+        private PointLatLng fromXYtoLatLongSMR(double X, double Y)
+        {
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double φ1 = SMR_lat * (Math.PI / 180);
+            double λ1 = SMR_lon * (Math.PI / 180);
+            var φ2 = Math.Asin(Math.Sin(φ1) * Math.Cos(d / R) + Math.Cos(φ1) * Math.Sin(d / R) * Math.Cos(brng));
+            var λ2 = λ1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(φ1), Math.Cos(d / R) - Math.Sin(φ1) * Math.Sin(φ2));
+
+            PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
+            return coordinates;
+        }
+
         public double getlatMLAT()
         {
             return latindegrees;
