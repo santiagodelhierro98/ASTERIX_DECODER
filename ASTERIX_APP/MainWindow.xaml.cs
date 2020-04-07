@@ -34,6 +34,8 @@ namespace ASTERIX_APP
         {
             InitializeComponent();
 
+            Search_Table.Visibility = Visibility.Hidden;
+            SearchResult.Visibility = Visibility.Hidden;
             SearchNumButton.Visibility = Visibility.Hidden;
             SearchIDButton.Visibility = Visibility.Hidden;
             NumBox.Visibility = Visibility.Hidden;
@@ -63,6 +65,8 @@ namespace ASTERIX_APP
             SearchIDButton.Visibility = Visibility.Hidden;
             NumBox.Visibility = Visibility.Hidden;
             IDBox.Visibility = Visibility.Hidden;
+            Search_Table.Visibility = Visibility.Hidden;
+            SearchResult.Visibility = Visibility.Hidden;
 
             // HIDE AND CLEAN TABLES
             Track_Table.Visibility = Visibility.Hidden;
@@ -129,6 +133,8 @@ namespace ASTERIX_APP
             else
             {
                 // Table and Map Stuff
+                Search_Table.Visibility = Visibility.Visible;
+                SearchResult.Visibility = Visibility.Visible;
                 SearchNumButton.Visibility = Visibility.Visible;
                 SearchIDButton.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
@@ -419,7 +425,7 @@ namespace ASTERIX_APP
                     try
                     {
                         CAT10 pack = F.getCAT10(search);
-
+                        Search_Table.ItemsSource = F.getSearchTable10(pack, search).DefaultView;
                     }
                     catch { MessageBox.Show("There is no item number " + search + " in this file"); }
                 }
@@ -428,6 +434,7 @@ namespace ASTERIX_APP
                     try
                     {
                         CAT21 pack = F.getCAT21(search);
+                        Search_Table.ItemsSource = F.getSearchTable21(pack, search).DefaultView;
                     }
                     catch { MessageBox.Show("There is no item number " + search + " in this file"); }
                 }
@@ -435,16 +442,12 @@ namespace ASTERIX_APP
                 {
                     try
                     {
-                        CAT10 pack10 = F.getCAT10(search);
-                        CAT21 pack21 = F.getCAT21(search);
+                        MessageBox.Show("Working on this");
                     }
                     catch { MessageBox.Show("There is no item number " + search + " in this file"); }
                 }
             }
-            catch
-            {
-                MessageBox.Show("ERROR:\n\nIt must be an integer");                
-            }            
+            catch { MessageBox.Show("It must be an integer"); }
         }
         private void SearchID_Click(object sender, RoutedEventArgs e)
         {
@@ -491,6 +494,8 @@ namespace ASTERIX_APP
             else
             {
                 // Table and Map Stuff
+                Search_Table.Visibility = Visibility.Hidden;
+                SearchResult.Visibility = Visibility.Hidden;
                 SearchNumButton.Visibility = Visibility.Hidden;
                 SearchIDButton.Visibility = Visibility.Hidden;
                 NumBox.Visibility = Visibility.Hidden;
@@ -871,6 +876,7 @@ namespace ASTERIX_APP
         private void zoomcat_Click(object sender, RoutedEventArgs e)
         {
             map.Zoom = 7;
+            map.MinZoom = 1;
         }    
     }
 }
