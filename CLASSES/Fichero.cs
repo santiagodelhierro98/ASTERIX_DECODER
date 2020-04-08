@@ -449,9 +449,7 @@ namespace CLASSES
        public int getCAT()
         {
             return CAT;
-        }
-
-      
+        }     
    
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
@@ -477,7 +475,7 @@ namespace CLASSES
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             return lamda2 * (180.0 / Math.PI);
         }
-        private string convert_to_hms(double tod)
+        public string convert_to_hms(double tod)
         {
             if (tod!=0)
             {
@@ -491,7 +489,7 @@ namespace CLASSES
                 return p;
             }
         }
-        public DataTable getSearchTable10(CAT10 C10, int i)
+        public DataTable getSearchTable10()
         {
             DataTable SearchTable10 = new DataTable();
 
@@ -523,18 +521,11 @@ namespace CLASSES
             SearchTable10.Columns.Add(new DataColumn("Covariance of deviation"));
             SearchTable10.Columns.Add(new DataColumn("Presence")); //array
             SearchTable10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
-            SearchTable10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
-
-            SearchTable10.Rows.Add(i, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
-                C10.Message_Type, convert_to_hms(Math.Floor(C10.Time_Day)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
-                "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", "(" + C10.Track_Vel_Cartesian[0] +
-                ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
-                "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
-                "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "(" + C10.Acceleration[0] +
-                ", " + C10.Acceleration[1] + ")");
+            SearchTable10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));            
+            
             return SearchTable10;
         }
-        public DataTable getSearchTable21(CAT21 C21, int i)
+        public DataTable getSearchTable21()
         {
             DataTable SearchTable21 = new DataTable();
 
@@ -579,13 +570,7 @@ namespace CLASSES
             SearchTable21.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
             SearchTable21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
             SearchTable21.Columns.Add(new DataColumn("Data ages")); // array
-            SearchTable21.Columns.Add(new DataColumn("Service Management"));
-
-            SearchTable21.Rows.Add(i, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
-                            convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
-                            C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
-                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
-                            C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+            SearchTable21.Columns.Add(new DataColumn("Service Management"));           
             
             return SearchTable21;
         }
