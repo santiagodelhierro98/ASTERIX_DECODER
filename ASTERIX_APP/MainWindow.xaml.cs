@@ -10,6 +10,7 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using System.Windows.Threading;
 using System.Data;
+using System.Windows.Data;
 
 namespace ASTERIX_APP
 {
@@ -159,8 +160,13 @@ namespace ASTERIX_APP
                 asterixPerf.Visibility = Visibility.Hidden;
                 bubbleWord.Visibility = Visibility.Hidden;
                 circle.Visibility = Visibility.Hidden;
-                circle2.Visibility = Visibility.Hidden;             
-                
+                circle2.Visibility = Visibility.Hidden;
+                SearchNumButton.Visibility = Visibility.Visible;
+                SearchIDButton.Visibility = Visibility.Visible;
+                NumBox.Visibility = Visibility.Visible;
+                IDBox.Visibility = Visibility.Visible;
+                SearchResult.Visibility = Visibility.Visible;
+
                 if (F.CAT_list[0] == 10)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
@@ -518,7 +524,12 @@ namespace ASTERIX_APP
                 asterixPerf.Visibility = Visibility.Hidden;
                 bubbleWord.Visibility = Visibility.Hidden;
                 circle.Visibility = Visibility.Hidden;
-                circle2.Visibility = Visibility.Hidden;              
+                circle2.Visibility = Visibility.Hidden;
+                SearchNumButton.Visibility = Visibility.Hidden;
+                SearchIDButton.Visibility = Visibility.Hidden;
+                NumBox.Visibility = Visibility.Hidden;
+                IDBox.Visibility = Visibility.Hidden;
+                SearchResult.Visibility = Visibility.Hidden;
 
                 if (F.CAT_list[0] == 10)
                 {
@@ -795,19 +806,24 @@ namespace ASTERIX_APP
         {
             //we copy/paste all data from that specific flight
             updatedtable.ImportRow(F.gettablacat10reducida().Rows[i-1]);
-            updatedlista.ItemsSource = updatedtable.DefaultView;         
+            updatedlista.ItemsSource = updatedtable.DefaultView;
+            updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
+
         }
         private void rellenartablaCAT21(int i)
         {
             //we copy/paste all data from that specific flight
             updatedtable.ImportRow(F.gettablacat21reducida().Rows[i-1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
+            updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }
         private void rellenartablaMULTICAT(int i)
         {
             //we copy/paste all data from that specific flight
             updatedtable.ImportRow(F.gettablamixtareducida().Rows[i]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
+            updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
+
         }
 
         private void clock(double tiempo)
@@ -882,6 +898,34 @@ namespace ASTERIX_APP
         {
             map.Zoom = 7;
             map.MinZoom = 1;
-        }    
+        }
+
+      
+        //private Boolean AutoScroll = true;
+
+        //private void ScrollViewer_ScrollChanged(Object sender, ScrollChangedEventArgs e)
+        //{
+        //    // User scroll event : set or unset auto-scroll mode
+        //    if (e.ExtentHeightChange == 0)
+        //    {   // Content unchanged : user scroll event
+        //        if (_scrollViewer.VerticalOffset == _scrollViewer.ScrollableHeight)
+        //        {   // Scroll bar is in bottom
+        //            // Set auto-scroll mode
+        //            AutoScroll = true;
+        //        }
+        //        else
+        //        {   // Scroll bar isn't in bottom
+        //            // Unset auto-scroll mode
+        //            AutoScroll = false;
+        //        }
+        //    }
+
+        //    // Content scroll event : auto-scroll eventually
+        //    if (AutoScroll && e.ExtentHeightChange != 0)
+        //    {   // Content changed and auto-scroll mode set
+        //        // Autoscroll
+        //        _scrollViewer.ScrollToVerticalOffset(_scrollViewer.ExtentHeight);
+        //    }
+        //}
     }
 }

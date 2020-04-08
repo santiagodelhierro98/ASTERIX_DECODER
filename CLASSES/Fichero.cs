@@ -233,7 +233,7 @@ namespace CLASSES
                             C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
                             C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                     }
-                    if (filename.Contains("smr") == true && filename.Contains("mlat"))
+                    if (filename.Contains("smr") == true && filename.Contains("mlat")==true)
                     {
                         C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
