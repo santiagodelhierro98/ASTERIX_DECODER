@@ -45,7 +45,7 @@ namespace CLASSES
         public string[] Trajectory_Intent = new string[16];
 
 
-        public void Decode21(string[] paquete, int q)
+        public void Decode21(string[] paquete)
         {
             Metodos Met = new Metodos();
             int longitud = Met.Longitud_Paquete(paquete);

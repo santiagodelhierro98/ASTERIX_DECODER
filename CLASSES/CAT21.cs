@@ -78,7 +78,7 @@ namespace CLASSES
         public double[] Data_Ages = new double[23];
         public double Time_Rep_Transm;
 
-        public void Decode21(string[] paquete, int q)
+        public void Decode21(string[] paquete)
         {
             Metodos Met = new Metodos();
             int longitud = Met.Longitud_Paquete(paquete);

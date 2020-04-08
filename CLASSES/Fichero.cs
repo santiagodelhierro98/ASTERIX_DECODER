@@ -58,6 +58,10 @@ namespace CLASSES
         {
             return tablacat21reducida;
         }
+        public DataTable gettablamixtareducida()
+        {
+            return multiplecattablereducida;
+        }
         public DataTable getTablaCAT10()
         {
             return tablaCAT10;
@@ -133,7 +137,7 @@ namespace CLASSES
                     listaCAT10.Add(C10);
 
                     // Multiple CAT reduced table for maptrack
-                    multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)),C10.FL, C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                    multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)),C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
                         Math.Round(cartesiantolatmlat(C10.Pos_Cartesian[0],C10.Pos_Cartesian[1]),2), Math.Round(cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]),2), 
                         C10.Target_Add, C10.Track_Num);
                     // CAT10 reduced table for maptrack
@@ -169,7 +173,7 @@ namespace CLASSES
                     contadorCAT21++;
                     if (filename.Contains("v023") == true || filename.Contains("v23") == true)
                     {
-                        C21_v23.Decode21(arraystring, q);
+                        C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
                         // Multiple CAT reduced table for maptrack
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
@@ -200,7 +204,7 @@ namespace CLASSES
                     }
                     if (filename.Contains("v021") == true || filename.Contains("v21") == true)
                     {
-                        C21.Decode21(arraystring, q);
+                        C21.Decode21(arraystring);
                         listaCAT21.Add(C21);
                         // Multiple CAT reduced table for maptrack
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
@@ -231,8 +235,10 @@ namespace CLASSES
                     }
                     if (filename.Contains("smr") == true && filename.Contains("mlat"))
                     {
-                        C21_v23.Decode21(arraystring, q);
+                        C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
+                        multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
+                        C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
                     }
                     //else { MessageBox.Show("ERROR: Make sure file containing category 21 '\n' is version 2.1 or 0.23"); }
                 }                
@@ -445,7 +451,8 @@ namespace CLASSES
             return CAT;
         }
 
-
+      
+   
         //to show lat and lon from cat10 files (convert from cartesian). These formulas were given in NACC lectures.
         private double cartesiantolatmlat(double X, double Y)
         {

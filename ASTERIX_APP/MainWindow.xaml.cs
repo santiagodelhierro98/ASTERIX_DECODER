@@ -725,67 +725,72 @@ namespace ASTERIX_APP
                 rellenartablaCAT21(i);
             }
         }
+        int n = 0;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
             Boolean x = true;
+            DataTable tabla = F.gettablamixtareducida();
             while (x == true)
             {
-                if (F.CAT_list[i] == 10)
+                for (int i= 0; i < tabla.Rows.Count; i++)
                 {
-                    CAT10 C10 = F.getCAT10(i);
-                    double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
-                    double tiempo = Math.Floor(C10.Time_Day);
-                    if (tiempo == start)
+                    try
                     {
-                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        string tiempomal = Convert.ToString(tabla.Rows[i][2]);
+                        string starttiempo = Convert.ToString(tabla.Rows[0][2]);
+                        string[] tiemposplited = tiempomal.Split(':');
+                        string[] tiemposplitedstart = starttiempo.Split(':');
+
+                        int tiempo = gettimecorrectly(tiemposplited);
+                        int start = gettimecorrectly(tiemposplitedstart) + n;
+
+                        if (F.CAT_list[i] == 10 && tiempo == start)
                         {
-                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                            double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                            AddMarkerMLAT(poscartx, poscarty);
+                            if (map.Markers.Count >= 200)
+                            {
+                                map.Markers[map.Markers.Count - 200].Clear();
+                            }
+                            rellenartablaMULTICAT(i);
+                            clock(tiempo);
+
                         }
-                        if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                        if (F.CAT_list[i] == 21 && tiempo == start)
                         {
-                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                            double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                            AddMarkerC21(poscartx, poscarty);
+                            if (map.Markers.Count >= 200)
+                            {
+                                map.Markers[map.Markers.Count - 200].Clear();
+                            }
+                            rellenartablaMULTICAT(i);
+                            clock(tiempo);
+
                         }
+                    }
+                    catch
+                    {
                         i++;
-                        if (map.Markers.Count >= 200)
-                        {
-                            map.Markers[map.Markers.Count - 200].Clear();
-                        }
                     }
-                    else
-                    {
-                        x = false;
-                        s++;
-                    }
+                        
                     
                 }
-                if (F.CAT_list[i] == 21)
-                {
-                    CAT21_v23 C21_v23 = F.getCAT21_v23(i);
-                    start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
-                    tiempo = Math.Floor(C21_v23.Time_of_Day);
-                    if (tiempo == start)
-                    {
-                        AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84);
-                        i++;
-                        if (map.Markers.Count >= 200)
-                        {
-                            map.Markers[map.Markers.Count - 200].Clear();
-                        }
-                    }
-                    else
-                    {
-                        x = false;
-                        s++;
-                    }
-                }        
-                clock(tiempo);
-                gridlista.Visibility = Visibility.Hidden;
-                updatedlista.Visibility = Visibility.Visible;
-                rellenartablaMULTICAT(i);
+                x = false;
+                n++;
             }
+            gridlista.Visibility = Visibility.Hidden;
+            updatedlista.Visibility = Visibility.Visible;
         }
      
-
+        public int gettimecorrectly(string[] tod)
+        {
+            int secabs = Convert.ToInt32(tod[0]) * 3600 + Convert.ToInt32(tod[1]) * 60 + Convert.ToInt32(tod[2]);
+            return secabs;
+          
+        }
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
@@ -801,7 +806,7 @@ namespace ASTERIX_APP
         private void rellenartablaMULTICAT(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.getmultiplecattablereducida().Rows[i - 1]);
+            updatedtable.ImportRow(F.gettablamixtareducida().Rows[i]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
         }
 
