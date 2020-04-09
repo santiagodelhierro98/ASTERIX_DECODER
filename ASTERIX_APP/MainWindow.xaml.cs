@@ -26,7 +26,7 @@ namespace ASTERIX_APP
         //Datatable that shows flights for each second (used at the map)
         DataTable updatedtable = new DataTable();
         //lat lon of MLAT system of reference (at LEBL airport)
-        double MLAT_lat = 41.0 + (17.0/60.0)+(49.0/3600.0)+(426.0/3600000.0);
+        double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
         double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
         //lat lon of SMR system of reference (at LEBL airport)
         double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
@@ -90,7 +90,7 @@ namespace ASTERIX_APP
             OpenFile.ShowDialog();
 
             // When you click Cancel
-            if(OpenFile.FileName == "")
+            if (OpenFile.FileName == "")
             {
                 chivato = false;
                 asterixPNG.Visibility = Visibility.Visible;
@@ -158,6 +158,8 @@ namespace ASTERIX_APP
                 zoombcn.Visibility = Visibility.Hidden;
                 zoomcat.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Hidden;
+                SearchMapbyID.Visibility = Visibility.Hidden;
+                callsignbox.Visibility = Visibility.Hidden;
                 // Visual Elements
                 asterixPNG.Visibility = Visibility.Hidden;
                 asterixPerf.Visibility = Visibility.Hidden;
@@ -198,7 +200,7 @@ namespace ASTERIX_APP
                         category = 21;
                     }
                 }
-            }            
+            }
         }
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
@@ -329,7 +331,7 @@ namespace ASTERIX_APP
             }
             // Mixt category
             if (category == 1021)
-            {                
+            {
                 DataTable tabla = F.getTablaMixtCAT();
                 int cat = Convert.ToInt32(tabla.Rows[Row_Num][1]);
                 if (cat == 10)
@@ -453,13 +455,13 @@ namespace ASTERIX_APP
                     //        DA[11] + "\nMH: " + DA[12] + "\nBVR: " + DA[13] + "\nGVR: " + DA[14] + "\nGV: " + DA[15] + "\nTAR: " + DA[16] + "\nTarget ID: " +
                     //        DA[17] + "\nTS: " + DA[18] + "Met: " + DA[19] + "\nROA: " + DA[20] + "\nARA: " + DA[21] + "\nSCC: " + DA[22]);
                     //}
-                }                
+                }
             }
         }
         private void SearchNum_Click(object sender, RoutedEventArgs e)
         {
             Search_Table.ItemsSource = null;
-            Search_Table.Items.Clear();            
+            Search_Table.Items.Clear();
             try
             {
                 // Searching
@@ -470,7 +472,7 @@ namespace ASTERIX_APP
                     {
                         DataTable C10 = F.getTablaCAT10();
                         DataTable table = F.getSearchTable10();
-                        table.ImportRow(C10.Rows[search-1]);
+                        table.ImportRow(C10.Rows[search - 1]);
 
                         Search_Table.ItemsSource = table.DefaultView;
                     }
@@ -482,7 +484,7 @@ namespace ASTERIX_APP
                     {
                         DataTable C21 = F.getTablaCAT21();
                         DataTable table = F.getSearchTable21();
-                        table.ImportRow(C21.Rows[search-1]);
+                        table.ImportRow(C21.Rows[search - 1]);
 
                         Search_Table.ItemsSource = table.DefaultView;
                     }
@@ -494,7 +496,7 @@ namespace ASTERIX_APP
                     {
                         DataTable table = F.getTablaMixtCAT();
                         DataTable searchtable = F.getSearchTableMixed();
-                        searchtable.ImportRow(table.Rows[search-1]);
+                        searchtable.ImportRow(table.Rows[search - 1]);
 
                         Search_Table.ItemsSource = searchtable.DefaultView;
                     }
@@ -504,7 +506,7 @@ namespace ASTERIX_APP
             catch { MessageBox.Show("It must be an integer"); }
         }
         private void SearchID_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
 
@@ -549,7 +551,7 @@ namespace ASTERIX_APP
             {
                 DataTable tableMix = F.getTablaMixtCAT();
                 DataTable searchtable = F.getSearchTableMixed();
-                for (int i=0; i<tableMix.Rows.Count; i++)
+                for (int i = 0; i < tableMix.Rows.Count; i++)
                 {
                     string ID = tableMix.Rows[i][4].ToString();
                     if (ID != null && ID.Contains(search))
@@ -599,6 +601,10 @@ namespace ASTERIX_APP
                 zoomlebl.Visibility = Visibility.Visible;
                 zoombcn.Visibility = Visibility.Visible;
                 zoomcat.Visibility = Visibility.Visible;
+                SearchMapbyID.Visibility = Visibility.Visible;
+                callsignbox.Visibility = Visibility.Visible;
+
+
                 // Visual Stuff
                 asterixPNG.Visibility = Visibility.Hidden;
                 asterixPerf.Visibility = Visibility.Hidden;
@@ -623,7 +629,7 @@ namespace ASTERIX_APP
                     if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
                     else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
                 }
-            }            
+            }
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -631,8 +637,8 @@ namespace ASTERIX_APP
             map.MapProvider = OpenStreetMapProvider.Instance;
             map.MinZoom = 8;
             map.MaxZoom = 16;
-            map.Zoom = 14;           
-            map.Position = new PointLatLng(MLAT_lat,MLAT_lon);
+            map.Zoom = 14;
+            map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
             map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             map.CanDragMap = true;
             map.DragButton = MouseButton.Left;
@@ -663,7 +669,7 @@ namespace ASTERIX_APP
                 {
                     return categoria = 21;
                 }
-               
+
             }
             else { return 0; }
         }
@@ -689,7 +695,7 @@ namespace ASTERIX_APP
         }
         public void AddMarkerMLAT(double latitude, double longitude)
         {
-            PointLatLng point = fromXYtoLatLongMLAT(latitude , longitude);
+            PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
             marker.Shape = new Image
             {
@@ -713,7 +719,7 @@ namespace ASTERIX_APP
         }
         public void AddMarkerC21(double latitude, double longitude)
         {
-            PointLatLng point = new PointLatLng(latitude,longitude);
+            PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
             marker.Shape = new Image
             {
@@ -726,34 +732,62 @@ namespace ASTERIX_APP
         DispatcherTimer dt_Timer = new DispatcherTimer();
 
         double s = 0;
-        private void dt_Timer_TickC10(object sender,EventArgs e)
+        private void dt_Timer_TickC10(object sender, EventArgs e)
         {
             Boolean x = true;
             while (x == true)
             {
+                
                 CAT10 C10 = F.getCAT10(i);
-                double start = Math.Floor(F.getCAT10(0).Time_Day)+s;
+                double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 double tiempo = Math.Floor(C10.Time_Day);
-                if (tiempo == start)
+                if (C10.Target_ID.Contains(searchedcallsign))
                 {
-                    if (C10.Target_Rep_Descript[0] == "PSR")
+                    if (tiempo == start)
                     {
-                        AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        {
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                        {
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
                     }
-                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                    else
                     {
-                        AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                    }
-                    i++;
-                    if (map.Markers.Count >= 200)
-                    {
-                        map.Markers[map.Markers.Count - 200].Clear();
+                        x = false;
+                        s++;
                     }
                 }
                 else
                 {
-                    x = false;
-                    s++;
+                    if (tiempo == start)
+                    {
+                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        {
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
+                        {
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                        }
+                        i++;
+                        if (map.Markers.Count >= 200)
+                        {
+                            map.Markers[map.Markers.Count - 200].Clear();
+                        }
+                    }
+                    else
+                    {
+                        x = false;
+                        s++;
+                    }
                 }
                 clock(tiempo);
                 gridlista.Visibility = Visibility.Hidden;
@@ -793,23 +827,48 @@ namespace ASTERIX_APP
                     CAT21 C21 = F.getCAT21(i);
                     start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
-                    if (tiempo == start)
+                    if (searchedcallsign == null) { searchedcallsign = "Nada"; }
+                    if (idbuttonclicked==true)
                     {
-                        AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
-                        i++;
-                        if (map.Markers.Count >= 200)
+                        //HACER UNA FOR QUE PLOTEE SOLAMENTE LOS PAQUETES CON TARGET ID IGUAL A SEARCHEDCALLSIGN Y SOLAMENTE RELLENE EN RELLENAR TABLA CAT21 ESOS PAQUETES. TENER EM CUENTA QUE EL TIMER TIENE K SEGUIR RULANDO
+                        if (C21.Target_ID.Contains(searchedcallsign))
                         {
-                            map.Markers[map.Markers.Count - 200].Clear();
+                            if (tiempo == start)
+                            {
+                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                                i++;
+                                if (map.Markers.Count >= 200)
+                                {
+                                    map.Markers[map.Markers.Count - 200].Clear();
+                                }
+                            }
+                            else
+                            {
+                                x = false;
+                                s++;
+                            }
                         }
-                    }
-                    else
-                    {
-                        x = false;
-                        s++;
+                        else { i++; }
                     }
                     
-
-                }
+                    else
+                    {
+                        if (tiempo == start)
+                        {
+                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                            i++;
+                            if (map.Markers.Count >= 200)
+                            {
+                                map.Markers[map.Markers.Count - 200].Clear();
+                            }
+                        }
+                        else
+                        {
+                            x = false;
+                            s++;
+                        }
+                    }
+               }
                 clock(tiempo);
                 gridlista.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Visible;
@@ -823,7 +882,7 @@ namespace ASTERIX_APP
             DataTable tabla = F.gettablamixtareducida();
             while (x == true)
             {
-                for (int i= 0; i < tabla.Rows.Count; i++)
+                for (int i = 0; i < tabla.Rows.Count; i++)
                 {
                     try
                     {
@@ -866,8 +925,8 @@ namespace ASTERIX_APP
                     {
                         i++;
                     }
-                        
-                    
+
+
                 }
                 x = false;
                 n++;
@@ -875,17 +934,17 @@ namespace ASTERIX_APP
             gridlista.Visibility = Visibility.Hidden;
             updatedlista.Visibility = Visibility.Visible;
         }
-     
+
         public int gettimecorrectly(string[] tod)
         {
             int secabs = Convert.ToInt32(tod[0]) * 3600 + Convert.ToInt32(tod[1]) * 60 + Convert.ToInt32(tod[2]);
             return secabs;
-          
+
         }
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i-1]);
+            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
 
@@ -893,7 +952,7 @@ namespace ASTERIX_APP
         private void rellenartablaCAT21(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i-1]);
+            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }
@@ -912,8 +971,8 @@ namespace ASTERIX_APP
             string tiempoact = time.ToString(@"hh\:mm\:ss");
             timer.Text = tiempoact;
         }
-        private void stop_Click (object sender, RoutedEventArgs e)
-        { 
+        private void stop_Click(object sender, RoutedEventArgs e)
+        {
             dt_Timer.Stop();
         }
         private PointLatLng fromXYtoLatLongMLAT(double X, double Y)
@@ -979,33 +1038,20 @@ namespace ASTERIX_APP
             map.Zoom = 7;
             map.MinZoom = 1;
         }
+        string searchedcallsign;
+        bool idbuttonclicked = false;
+        //plot only airplanes with searched callsign
+        private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
+        {
+            idbuttonclicked = true;
+            string id = Convert.ToString(updatedtable.Rows[i-1][4]);
+            if (id != null)
+            {
+                searchedcallsign = callsignbox.Text;
+            }
+            else { MessageBox.Show("Make sure Target ID exists"); }
 
-      
-        //private Boolean AutoScroll = true;
 
-        //private void ScrollViewer_ScrollChanged(Object sender, ScrollChangedEventArgs e)
-        //{
-        //    // User scroll event : set or unset auto-scroll mode
-        //    if (e.ExtentHeightChange == 0)
-        //    {   // Content unchanged : user scroll event
-        //        if (_scrollViewer.VerticalOffset == _scrollViewer.ScrollableHeight)
-        //        {   // Scroll bar is in bottom
-        //            // Set auto-scroll mode
-        //            AutoScroll = true;
-        //        }
-        //        else
-        //        {   // Scroll bar isn't in bottom
-        //            // Unset auto-scroll mode
-        //            AutoScroll = false;
-        //        }
-        //    }
-
-        //    // Content scroll event : auto-scroll eventually
-        //    if (AutoScroll && e.ExtentHeightChange != 0)
-        //    {   // Content changed and auto-scroll mode set
-        //        // Autoscroll
-        //        _scrollViewer.ScrollToVerticalOffset(_scrollViewer.ExtentHeight);
-        //    }
-        //}
+        }
     }
 }
