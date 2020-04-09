@@ -482,48 +482,49 @@ namespace ASTERIX_APP
             if (category == 10)
             {
                 DataTable table10 = F.getTablaCAT10();
-                try
+                DataTable searchtable = F.getSearchTable10();
+                for (int i = 0; i < table10.Rows.Count; i++)
                 {
-                    DataTable searchtable = F.getSearchTable10();
-                    for (int i=0; i<table10.Rows.Count; i++)
+                    CAT10 C10 = F.getCAT10(i);
+                    if (C10.Target_ID.Contains(search))
                     {
-                        CAT10 C10 = F.getCAT10(i);
-                        if (C10.Target_ID == search)
-                        {                            
-                            searchtable.Rows.Add(i, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
-                            C10.Message_Type, F.convert_to_hms(Math.Floor(C10.Time_Day)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
-                            "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", "(" + C10.Track_Vel_Cartesian[0] +
-                            ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
-                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
-                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "(" + C10.Acceleration[0] +
-                            ", " + C10.Acceleration[1] + ")");
-                        }
+                        searchtable.Rows.Add(i, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
+                        C10.Message_Type, F.convert_to_hms(Math.Floor(C10.Time_Day)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
+                        "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", "(" + C10.Track_Vel_Cartesian[0] +
+                        ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
+                        "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
+                        "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "(" + C10.Acceleration[0] +
+                        ", " + C10.Acceleration[1] + ")");
                     }
-                    Search_Table.ItemsSource = searchtable.DefaultView;
                 }
-                catch { MessageBox.Show("There is no flight with callsign" + search); }
+                if (searchtable.Rows.Count == 0)
+                {
+                    MessageBox.Show("There is no flight with callsign" + search);
+                }
+                else { Search_Table.ItemsSource = searchtable.DefaultView; }
             }
             if (category == 21)
+            // buscar si es v23
             {
                 DataTable table21 = F.getTablaCAT21();
-                try
+                DataTable searchtable = F.getSearchTable21();
+                for (int i = 0; i < table21.Rows.Count; i++)
                 {
-                    DataTable searchtable = F.getSearchTable21();
-                    for (int i = 0; i < table21.Rows.Count; i++)
+                    CAT21 C21 = F.getCAT21(i);
+                    if (C21.Target_ID != null && C21.Target_ID.Contains(search))
                     {
-                        CAT21 C21 = F.getCAT21(i);
-                        if (C21.Target_ID == search)
-                        {
-                            searchtable.Rows.Add(i, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
-                            F.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
-                            C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
-                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
-                            C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
-                        }
+                        searchtable.Rows.Add(i, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
+                        F.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
+                        C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
+                        C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
+                        C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
                     }
-                    Search_Table.ItemsSource = searchtable.DefaultView;
+                }                
+                if (searchtable.Rows.Count == 0)
+                {
+                    MessageBox.Show("There is no flight with callsign" + search);
                 }
-                catch { MessageBox.Show("There is no flight with callsign" + search); }
+                else { Search_Table.ItemsSource = searchtable.DefaultView; }
             }
             if (category == 1021)
             {
