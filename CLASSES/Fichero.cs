@@ -146,31 +146,31 @@ namespace CLASSES
                         C10.Target_Add, C10.Track_Num);
                     
                     // Complete CAT10 table
-                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, C10.Target_Rep_Descript,
+                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, "Click to View Data",
                            C10.Message_Type, convert_to_hms(Math.Floor(C10.Time_Day)), "("+C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1]+")","("+C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1]+")",
                            "("+C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1]+")","("+C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1]+")","("+C10.Track_Vel_Cartesian[0] +
-                           ", " + C10.Track_Vel_Cartesian[1]+")", C10.Track_Status, C10.Mode3A_Code, C10.Target_Add, C10.Mode_SMB, C10.Fleet_ID, C10.FL[2], C10.Height,
-                           "("+C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2]+")", C10.Target_Size_Heading[1], C10.Sys_Status, C10.Pre_Prog_Message,
-                           "("+C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1]+")", C10.StndrdDev_Position[2], C10.Presence, C10.Amplitude, "("+C10.Acceleration[0] +
+                           ", " + C10.Track_Vel_Cartesian[1]+")", "Click to View Data", "Click to View Data", C10.Target_Add, "Click to View Data", C10.Fleet_ID, C10.FL[2], C10.Height,
+                           "("+C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2]+")", C10.Target_Size_Heading[1], "Click to View Data", "Click to View Data",
+                           "("+C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1]+")", C10.StndrdDev_Position[2], "Click to View Data", C10.Amplitude, "("+C10.Acceleration[0] +
                            ", " + C10.Acceleration[1] + ")");
                     
                     // Complete Multiple CAT table
                     tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0],C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, convert_to_hms(Math.Floor(C10.Time_Day)),
-                           C10.Target_Rep_Descript, "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", C10.Mode3A_Code, C10.Mode_SMB, C10.FL[2], C10.Height, 
+                           "Click to View Data", "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "Click to View Data", "Click to View Data", C10.FL[2], C10.Height, 
                            C10.Target_Add, C10.Amplitude,
 
                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                           ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
-                           "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] + 
-                           ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
-                           C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status,
-                           C21.Roll, C21.Service_ID, C21.Quality_Indicators, C21.RID, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                           ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data",
+                           "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] + 
+                           ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
+                           C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "Click to View Data",
+                           C21.Roll, C21.Service_ID, "Click to View Data", C21.RID, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "Click to View Data", "Click to View Data", "Click to View Data", "Click to View Data", C21.RP);
                 }
                 else if (CAT == 21)
                 {
-
                     contadorCAT21++;
+                    // Check if its version 23
                     if (filename.Contains("v023") == true || filename.Contains("v23") == true)
                     {
                         C21_v23.Decode21(arraystring);
@@ -183,25 +183,25 @@ namespace CLASSES
                             C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
 
                         // Complete CAT21 table
-                        //tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, C21_v23.Track_Num, C21_v23.Target_Report_Desc,
-                        //    convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.FL, C21_v23.GA,
-                        //    C21_v23.Op_Status, "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", C21_v23.TAR, C21_v23.SA, C21_v23.MOPS,
-                        //    C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, C21_v23.Met_Report, C21_v23.ECAT, C21_v23.Target_Address, C21_v23.Target_Status, C21_v23.Roll, C21_v23.Service_ID,
-                        //    C21_v23.Quality_Indicators, C21_v23.Mode_S, C21_v23.MAM, C21_v23.RID, C21_v23.ToA_Position, C21_v23.ToA_Velocity, C21_v23.TMRP, C21_v23.TMRV, C21_v23.TMRP_HP, C21_v23.TMRV_HP, C21_v23.Trajectory_Intent, C21_v23.Data_Ages, C21_v23.RP);
+                        tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", "Click to View Data",
+                            convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.FL, C21_v23.GA,
+                            "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-",
+                            C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "-",
+                            "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", C21_v23.Trajectory_Intent, "-", "-");
 
                         // Complete Multiple CAT table
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "-", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "-",
 
-                        //tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, C21_v23.Track_Num, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
-                        //    C21_v23.Target_Report_Desc, "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.M3AC, C21_v23.Mode_S, C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, C21_v23.MAM,
-
-                        //    "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
-                        //    ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                        //    ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
-                        //    "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
-                        //    ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.Op_Status, "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
-                        //    C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", C21_v23.TAR, C21_v23.SA, C21_v23.MOPS, C21_v23.MH, C21_v23.BVR, C21_v23.GVR, C21_v23.Met_Report, C21_v23.ECAT, C21_v23.Target_Status, C21_v23.Roll, C21_v23.Service_ID,
-                        //    C21_v23.Quality_Indicators, C21_v23.RID, C21_v23.ToA_Position, C21_v23.ToA_Velocity, C21_v23.TMRP, C21_v23.TMRV, C21_v23.TMRP_HP, C21_v23.TMRV_HP, C21_v23.Trajectory_Intent, C21_v23.Data_Ages, C21_v23.RP);
+                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
+                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click to View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data", "-",
+                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
+                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "-",
+                            "-", "-", "-", "-", "-", "-", "-", "-", "Click to View Data", "-", "-");
                     }
+                    // Check if its version 21
                     if (filename.Contains("v021") == true || filename.Contains("v21") == true)
                     {
                         C21.Decode21(arraystring);
@@ -214,33 +214,44 @@ namespace CLASSES
                             C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
 
                         // Complete CAT21 table
-                        tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, C21.Target_Report_Desc,
+                        tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, "Click to View Data",
                             convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
-                            C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS,
-                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, C21.Met_Report, C21.ECAT, C21.Target_Address, C21.Target_Status, C21.Roll, C21.Service_ID,
-                            C21.Quality_Indicators, C21.Mode_S, C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                            "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data",
+                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, "Click to View Data", C21.ECAT, C21.Target_Address, "Click to View Data", C21.Roll, C21.Service_ID,
+                            "Click to View Data", "Click to View Data", C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "Click to View Data", "Click to View Data", "Click to View Data", "Click to View Data", C21.RP);
 
                         // Complete Multiple CAT table
 
                         tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, convert_to_hms(Math.Floor(C21.Time_Rep_Transm)),
-                            C21.Target_Report_Desc, "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.M3AC, C21.Mode_S, C21.FL, C21.GH, C21.Target_Address, C21.MAM,
+                            "Click to View Data", "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "Click to View Data", "Click to View Data", C21.FL, C21.GH, C21.Target_Address, C21.MAM,
 
                             "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                             ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, C10.Sys_Status, C10.Pre_Prog_Message,
-                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], C10.Presence, "(" + C10.Acceleration[0] +
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data",
+                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
                             ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
-                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, C21.MOPS, C21.MH, C21.BVR, C21.GVR, C21.Met_Report, C21.ECAT, C21.Target_Status, C21.Roll, C21.Service_ID,
-                            C21.Quality_Indicators, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, C21.TMRP_HP, C21.TMRV_HP, C21.Trajectory_Intent, C21.Data_Ages, C21.RP);
+                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "Click to View Data", C21.Roll, C21.Service_ID,
+                            "Click to View Data", C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "Click to View Data", "Click to View Data", "Click to View Data", C21.Data_Ages, C21.RP);
                     }
-                    if (filename.Contains("smr") == true && filename.Contains("mlat")==true)
+                    if (filename.Contains("smr") == true && filename.Contains("mlat") == true)
                     {
                         C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
                         C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
+
+                        // Complete Multiple CAT table
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "-", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "-",
+
+                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
+                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data", "-",
+                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
+                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "-",
+                            "-", "-", "-", "-", "-", "-", "-", "-", "Click to View Data", "-", "-");
                     }
-                    //else { MessageBox.Show("ERROR: Make sure file containing category 21 '\n' is version 2.1 or 0.23"); }
                 }                
             }
         }            
@@ -441,7 +452,6 @@ namespace CLASSES
         {
             return listaCAT21_v23[num];
         }
-
         public DataTable getmultiplecattablereducida()
         {
             return multiplecattablereducida;
@@ -502,10 +512,10 @@ namespace CLASSES
             SearchTable10.Columns.Add(new DataColumn("Message type"));
             SearchTable10.Columns.Add(new DataColumn("Time Of Day (UTC)"));
             SearchTable10.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
-            SearchTable10.Columns.Add(new DataColumn("Position Polar Coords\n(Distance, Angle)"));
-            SearchTable10.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
-            SearchTable10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
-            SearchTable10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Polar\n(Distance, Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Cartesian\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Polar\n(Ground Speed, Track Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Cartesian\n(Vx, Vy)"));
             SearchTable10.Columns.Add(new DataColumn("Track Status")); //array
             SearchTable10.Columns.Add(new DataColumn("Mode 3/A Code")); //array
             SearchTable10.Columns.Add(new DataColumn("Target Address"));
@@ -517,10 +527,10 @@ namespace CLASSES
             SearchTable10.Columns.Add(new DataColumn("Target Heading"));
             SearchTable10.Columns.Add(new DataColumn("System Status")); //array
             SearchTable10.Columns.Add(new DataColumn("Pre Programmed MSG")); //array
-            SearchTable10.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Standard Deviation Position\n(X, Y)"));
             SearchTable10.Columns.Add(new DataColumn("Covariance of deviation"));
             SearchTable10.Columns.Add(new DataColumn("Presence")); //array
-            SearchTable10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
+            SearchTable10.Columns.Add(new DataColumn("Amplitude\nPrimary Plot"));
             SearchTable10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));            
             
             return SearchTable10;
@@ -563,16 +573,86 @@ namespace CLASSES
             SearchTable21.Columns.Add(new DataColumn("Receiver ID"));
             SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor position"));
             SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor velocity"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor position"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor velocity"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor position - High precision")); // array
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nfor velocity - High precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nPosition"));
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nVelocity"));
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nPosition-High Precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nVelocity-High Precision")); // array
             SearchTable21.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
             SearchTable21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
             SearchTable21.Columns.Add(new DataColumn("Data ages")); // array
             SearchTable21.Columns.Add(new DataColumn("Service Management"));           
             
-            return SearchTable21;
+            return SearchTable21;            
+        }
+        public DataTable getSearchTableMixed()
+        {
+            DataTable SearchTableMixed = new DataTable();
+
+            //Common Items
+            SearchTableMixed.Columns.Add(new DataColumn("#"));
+            SearchTableMixed.Columns.Add(new DataColumn("CAT"));
+            SearchTableMixed.Columns.Add(new DataColumn("SIC"));
+            SearchTableMixed.Columns.Add(new DataColumn("SAC"));
+            SearchTableMixed.Columns.Add(new DataColumn("Target ID"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Number"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Of Day (UTC)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Target Report"));
+            SearchTableMixed.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Mode 3A Code"));
+            SearchTableMixed.Columns.Add(new DataColumn("Mode S MB Data"));
+            SearchTableMixed.Columns.Add(new DataColumn("Flight Level"));
+            SearchTableMixed.Columns.Add(new DataColumn("Measured Height"));
+            SearchTableMixed.Columns.Add(new DataColumn("Target Address"));
+            SearchTableMixed.Columns.Add(new DataColumn("Amplitude"));
+
+            //CAT10 Items
+            SearchTableMixed.Columns.Add(new DataColumn("Target Size\n(Length x Width)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Target Heading"));
+            SearchTableMixed.Columns.Add(new DataColumn("Message type"));
+            SearchTableMixed.Columns.Add(new DataColumn("Position Polar\n(Distance, Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Position Cartesian\n(X, Y)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Polar\n(GS, Track Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Cartesian\n(Vx, Vy)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Status"));
+            SearchTableMixed.Columns.Add(new DataColumn("Vehicle Fleet ID"));
+            SearchTableMixed.Columns.Add(new DataColumn("System Status"));
+            SearchTableMixed.Columns.Add(new DataColumn("Pre Programmed MSG"));
+            SearchTableMixed.Columns.Add(new DataColumn("Standard Deviation\nPosition\n(X, Y)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Covariance of deviation"));
+            SearchTableMixed.Columns.Add(new DataColumn("Presence"));
+            SearchTableMixed.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
+
+            // CAT21 Items
+            SearchTableMixed.Columns.Add(new DataColumn("High Resolution\nPosition WGS-84\n(Latitude, Longitude)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Operational Status"));
+            SearchTableMixed.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
+            SearchTableMixed.Columns.Add(new DataColumn("True Airspeed"));
+            SearchTableMixed.Columns.Add(new DataColumn("Airborne Ground Vector\n(GS, Track Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Angle Rate"));
+            SearchTableMixed.Columns.Add(new DataColumn("Selected Altitude"));
+            SearchTableMixed.Columns.Add(new DataColumn("MOPS version"));
+            SearchTableMixed.Columns.Add(new DataColumn("Magnetic Heading"));
+            SearchTableMixed.Columns.Add(new DataColumn("Barometric Vertical Rate"));
+            SearchTableMixed.Columns.Add(new DataColumn("Geometric Vertical Rate"));
+            SearchTableMixed.Columns.Add(new DataColumn("Met Report"));
+            SearchTableMixed.Columns.Add(new DataColumn("Emitter Category"));
+            SearchTableMixed.Columns.Add(new DataColumn("Target Status"));
+            SearchTableMixed.Columns.Add(new DataColumn("Roll Angle"));
+            SearchTableMixed.Columns.Add(new DataColumn("Service Identification"));
+            SearchTableMixed.Columns.Add(new DataColumn("Quality Indicators"));
+            SearchTableMixed.Columns.Add(new DataColumn("Receiver ID"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Applicability\nPosition"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Applicability\nVelocity"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nPosition"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nVelocity"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nPosition-High precision"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nVelocity-High precision"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
+            SearchTableMixed.Columns.Add(new DataColumn("Trajectory Intent Data"));
+            SearchTableMixed.Columns.Add(new DataColumn("Data ages"));
+            SearchTableMixed.Columns.Add(new DataColumn("Service Management"));
+
+            return SearchTableMixed;
         }
     }
 }
