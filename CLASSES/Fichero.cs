@@ -141,7 +141,7 @@ namespace CLASSES
                         Math.Round(cartesiantolatmlat(C10.Pos_Cartesian[0],C10.Pos_Cartesian[1]),2), Math.Round(cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]),2), 
                         C10.Target_Add, C10.Track_Num);
                     // CAT10 reduced table for maptrack
-                    tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL, C10.Data_Source_ID[0], C10.Data_Source_ID[1], 
+                    tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1], 
                         Math.Round(cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]),2),
                         C10.Target_Add, C10.Track_Num);
                     
