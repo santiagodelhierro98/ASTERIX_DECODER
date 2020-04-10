@@ -156,7 +156,6 @@ namespace ASTERIX_APP
                 x4butt.Visibility = Visibility.Hidden;
                 zoomlebl.Visibility = Visibility.Hidden;
                 zoombcn.Visibility = Visibility.Hidden;
-                zoomcat.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Hidden;
                 SearchMapbyID.Visibility = Visibility.Hidden;
                 callsignbox.Visibility = Visibility.Hidden;
@@ -173,7 +172,6 @@ namespace ASTERIX_APP
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
                 SearchResult.Visibility = Visibility.Visible;
-                StopSearchbytarget.Visibility = Visibility.Visible;
 
                 if (F.CAT_list[0] == 10)
                 {
@@ -609,9 +607,9 @@ namespace ASTERIX_APP
                 x4butt.Visibility = Visibility.Visible;
                 zoomlebl.Visibility = Visibility.Visible;
                 zoombcn.Visibility = Visibility.Visible;
-                zoomcat.Visibility = Visibility.Visible;
                 SearchMapbyID.Visibility = Visibility.Visible;
                 callsignbox.Visibility = Visibility.Visible;
+                StopSearchbytarget.Visibility = Visibility.Visible;
 
 
                 // Visual Stuff
@@ -642,10 +640,11 @@ namespace ASTERIX_APP
         }
         private void Map_Load(object sender, RoutedEventArgs e)
         {
+            
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             map.MapProvider = OpenStreetMapProvider.Instance;
-            map.MinZoom = 8;
-            map.MaxZoom = 16;
+            map.MinZoom = 1;
+            map.MaxZoom = 18;
             map.Zoom = 14;
             map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
             map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
@@ -702,28 +701,53 @@ namespace ASTERIX_APP
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
         }
-        public void AddMarkerMLAT(double latitude, double longitude)
+        public void AddMarkerMLAT(double latitude, double longitude,string targetid)
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            marker.Shape = new Image
+            if (targetid != null)
             {
-                Width = 15,
-                Height = 15,
-                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
-            };
+                marker.Shape = new Image
+                {
+                    Width = 15,
+                    Height = 15,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+                };
+            }
+            if (targetid == "Not available")
+            {
+                marker.Shape = new Image
+                {
+                    Width = 15,
+                    Height = 15,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                };
+            }
             map.Markers.Add(marker);
         }
-        public void AddMarkerSMR(double latitude, double longitude)
+        public void AddMarkerSMR(double latitude, double longitude, string targetid)
         {
             PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            marker.Shape = new Image
+            if (targetid != null)
             {
-                Width = 15,
-                Height = 15,
-                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
-            };
+                marker.Shape = new Image
+                {
+                   
+                    Width = 15,
+                    Height = 15,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+                };
+            }
+            if (targetid == "Not available") 
+            {
+                marker.Shape = new Image
+                {
+                    Width = 5,
+                    Height = 5,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                };
+            }
             map.Markers.Add(marker);
         }
         public void AddMarkerC21(double latitude, double longitude)
@@ -759,11 +783,11 @@ namespace ASTERIX_APP
                         {
                             if (C10.Target_Rep_Descript[0] == "PSR")
                             {
-                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
                             }
                             if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                             {
-                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
                             }
                             i++;
                             if (map.Markers.Count >= 200)
@@ -791,11 +815,11 @@ namespace ASTERIX_APP
                     {
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
                         }
                         if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                         {
-                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
                         }
                         i++;
                         if (map.Markers.Count >= 200)
@@ -830,6 +854,8 @@ namespace ASTERIX_APP
                     CAT21_v23 C21_v23 = F.getCAT21_v23(i);
                     start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
                     tiempo = Math.Floor(C21_v23.Time_of_Day);
+                    if (C21_v23.Target_ID == null) { C21_v23.Target_ID = "Not available"; }
+
                     if (searchedcallsign == null) { searchedcallsign = "Nada"; }
                     if (idbuttonclicked == true)
                     {
@@ -885,6 +911,8 @@ namespace ASTERIX_APP
                     CAT21 C21 = F.getCAT21(i);
                     start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
+                    if (C21.Target_ID == null) { C21.Target_ID = "Not available"; }
+
                     if (searchedcallsign == null) { searchedcallsign = "Nada"; }
                     if (idbuttonclicked==true)
                     {
@@ -959,16 +987,17 @@ namespace ASTERIX_APP
                         int tiempo = gettimecorrectly(tiemposplited);
                         int start = gettimecorrectly(tiemposplitedstart) + n;
                         if (searchedcallsign == null) { searchedcallsign = "Nada"; }
-                        if (idbuttonclicked == true)
+                        if (idbuttonclicked == true && tiempo == start)
                         {
                             string targetid = Convert.ToString(tabla.Rows[i][1]);
                             if (targetid.Contains(searchedcallsign))
                             {
-                                if (F.CAT_list[i] == 10 && tiempo == start)
+                                if (F.CAT_list[i] == 10 )
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerMLAT(poscartx, poscarty);
+                                    
+                                    AddMarkerMLAT(poscartx, poscarty,targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -977,7 +1006,7 @@ namespace ASTERIX_APP
                                     clock(tiempo);
 
                                 }
-                                if (F.CAT_list[i] == 21 && tiempo == start)
+                                if (F.CAT_list[i] == 21 )
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -999,11 +1028,13 @@ namespace ASTERIX_APP
                         }
                         else
                         {
+                            string targetid = Convert.ToString(tabla.Rows[i][1]);
+
                             if (F.CAT_list[i] == 10 && tiempo == start)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerMLAT(poscartx, poscarty);
+                                AddMarkerMLAT(poscartx, poscarty,targetid);
                                 if (map.Markers.Count >= 200)
                                 {
                                     map.Markers[map.Markers.Count - 200].Clear();
@@ -1023,7 +1054,6 @@ namespace ASTERIX_APP
                                 }
                                 rellenartablaMULTICAT(i);
                                 clock(tiempo);
-
                             }
                         }
                     }
@@ -1131,19 +1161,17 @@ namespace ASTERIX_APP
         }
 
         //to change map zoom
-        private void zoomlebl_Click(object sender, RoutedEventArgs e)
+        private void zoomin_Click(object sender, RoutedEventArgs e)
         {
-            map.Zoom = 14;
+           map.Zoom = map.Zoom + 2;
+
         }
-        private void zoombcn_Click(object sender, RoutedEventArgs e)
+      
+        private void zoomout_Click(object sender, RoutedEventArgs e)
         {
-            map.Zoom = 11;
+            map.Zoom = map.Zoom - 2;
         }
-        private void zoomcat_Click(object sender, RoutedEventArgs e)
-        {
-            map.Zoom = 7;
-            map.MinZoom = 1;
-        }
+      
         string searchedcallsign;
         bool idbuttonclicked = false;
         //plot only airplanes with searched callsign
@@ -1156,6 +1184,6 @@ namespace ASTERIX_APP
         {
             idbuttonclicked = false;
         }
-        
+       
     }
 }

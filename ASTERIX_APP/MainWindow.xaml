@@ -33,9 +33,9 @@
                 <TextBox x:Name="NumBox" Visibility="Hidden" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
                 <TextBox x:Name="IDBox" Visibility="Hidden" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
                 <Label x:Name="SearchResult" Visibility="Hidden" Grid.Column="3" Grid.Row="1" Content="Search Result:" Foreground="WhiteSmoke" FontSize="14" HorizontalAlignment="Stretch" Margin="5 10 10 0"/>
-                <Button  x:Name="SearchMapbyID" Click="SearchIDMAP_Click" Visibility="Hidden" Content="Search ID" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="103,3,0,2" Height="30" Width="80" Grid.Column="2" Grid.Row="1"/>
-                <TextBox x:Name="callsignbox" Visibility="Hidden" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" HorizontalAlignment="Left" BorderThickness="1" Margin="202,5,0,0" TextAlignment="Center" BorderBrush="#74aed6" Height="30" Width="130" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="1"/>
-                <Button x:Name="StopSearchbytarget" Visibility="Visible" Click="Stopsearchtarget" Content="X" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="68,3,0,2" Height="30" Width="34" Grid.Column="3" Grid.Row="1"/>
+                <Button  x:Name="SearchMapbyID" Click="SearchIDMAP_Click" Visibility="Hidden" Content="Search ID" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="206,62,0,-57" Height="30" Width="80" Grid.Column="1" Grid.Row="1"/>
+                <TextBox x:Name="callsignbox" Visibility="Hidden" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" HorizontalAlignment="Left" BorderThickness="1" Margin="10,63,0,-58" TextAlignment="Center" BorderBrush="#74aed6" Height="30" Width="130" Grid.Column="2" Grid.Row="1"/>
+                <Button x:Name="StopSearchbytarget" Visibility="Hidden" Click="Stopsearchtarget" Content="X" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="153,63,0,-58" Height="30" Width="34" Grid.Column="2" Grid.Row="1"/>
                 <!--Map elements-->
 
             </Grid>
@@ -134,19 +134,38 @@
 
         <!-- Map -->
         <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" 
-                           Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1"/>
-        <Button x:Name ="StartButton" Content="Start" Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="57,233,0,0" VerticalAlignment="Top" Height="30" Width="85"/>
-        <Button x:Name ="StopButton" Content="Stop" Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="165,233,0,0" VerticalAlignment="Top" Height="30" Width="84"/>
+                           Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1" />
+        <Button x:Name ="StartButton"  Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="57,233,0,0" VerticalAlignment="Top" Height="30" Width="85">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Images/playbut.jpg" />
+
+            </StackPanel>
+        </Button>
+        <Button x:Name ="StopButton"  Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="165,233,0,0" VerticalAlignment="Top" Height="30" Width="84">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Images/stopbut.jpg" />
+
+            </StackPanel>
+        </Button>
         <TextBlock x:Name="timer" HorizontalAlignment="Left" Margin="48,131,0,0"  Visibility="Hidden" VerticalAlignment="Top" FontFamily ="Segoe UI" FontSize="50" Height="91" Width="222" Foreground="#FFD31C1C"/>
 
         <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,141,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
         <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,185,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
         <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,230,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
 
-        <Button x:Name="zoomlebl" Click ="zoomlebl_Click" Content="Zoom LEBL"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="380,138,0,0" VerticalAlignment="Top" Height="30" Width="77"/>
-        <Button x:Name="zoombcn" Click="zoombcn_Click" Content="Zoom BCN"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="382,187,0,0" VerticalAlignment="Top" Height="30" Width="73"/>
-        <Button x:Name="zoomcat" Click="zoomcat_Click" Content="Zoom CAT"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="382,232,0,0" VerticalAlignment="Top" Height="30" Width="71"/>
+        <Button x:Name="zoomlebl" Click ="zoomin_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="380,138,0,0" VerticalAlignment="Top" Height="30" Width="77">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Images/Zoomin.jpg" />
 
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="zoombcn" Click="zoomout_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="382,187,0,0" VerticalAlignment="Top" Height="30" Width="73">
+        <StackPanel>
+            <Image Source="pack://application:,,,/Images/Zoomout.jpg" />
+
+        </StackPanel>
+        </Button>
         <Label x:Name="speedlabel" Content="Speed"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="309,104,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
 
         <DataGrid x:Name ="gridlista" Margin="10,300,710,10" 

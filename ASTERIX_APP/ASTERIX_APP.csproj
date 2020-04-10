@@ -12,7 +12,12 @@
     <None Remove="Images\asterixPERF.png" />
     <None Remove="Images\asterixProblem.png" />
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
+    <None Remove="Images\playbut.jpg" />
+    <None Remove="Images\reddot.png" />
+    <None Remove="Images\stopbut.jpg" />
     <None Remove="Images\upc-logo.png" />
+    <None Remove="Images\Zoomin.jpg" />
+    <None Remove="Images\Zoomout.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +47,22 @@
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Images\reddot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\playbut.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\stopbut.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\upc-logo.png" />
+    <Resource Include="Images\Zoomin.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Zoomout.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
