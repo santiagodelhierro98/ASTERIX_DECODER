@@ -146,7 +146,7 @@ namespace CLASSES
                         C10.Target_Add, C10.Track_Num);
                     
                     // Complete CAT10 table
-                    tablaCAT10.Rows.Add(contadorCAT10, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, "Click to View Data",
+                    tablaCAT10.Rows.Add(contadorCAT10, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, "Click to View Data",
                            C10.Message_Type, convert_to_hms(Math.Floor(C10.Time_Day)), "("+C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1]+")","("+C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1]+")",
                            "("+C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1]+")","("+C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1]+")","("+C10.Track_Vel_Cartesian[0] +
                            ", " + C10.Track_Vel_Cartesian[1]+")", "Click to View Data", "Click to View Data", C10.Target_Add, "Click to View Data", C10.Fleet_ID, C10.FL[2], C10.Height,
@@ -184,11 +184,11 @@ namespace CLASSES
                             C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
 
                         // Complete CAT21 table
-                        tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, " ", "Click to View Data",
+                        tablaCAT21.Rows.Add(contadorCAT21, CAT+0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, " ", "Click to View Data",
                             convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.FL, C21_v23.GA,
                             "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "",
-                            C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "",
-                            "", "", "", "", "", "", "", "", "", "", C21_v23.Trajectory_Intent, "", "");
+                            C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "", "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "",
+                            "", "", "", "", "", "", "", "", "", "", "", "Click To View Data", "", "");
 
                         // Complete Multiple CAT table
                         tablaMultipleCAT.Rows.Add(contadorGeneral, CAT+0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
@@ -213,7 +213,7 @@ namespace CLASSES
                             C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_Address, C21.Track_Num);
 
                         // Complete CAT21 table
-                        tablaCAT21.Rows.Add(contadorCAT21, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, "Click to View Data",
+                        tablaCAT21.Rows.Add(contadorCAT21, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, "Click to View Data",
                             convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.FL, C21.GH,
                             "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data",
                             C21.MH, C21.BVR, C21.GVR, C21.M3AC, "Click to View Data", C21.ECAT, C21.Target_Address, "Click to View Data", C21.Roll, C21.Service_ID,
@@ -291,6 +291,7 @@ namespace CLASSES
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
+            tablaCAT10.Columns.Add(new DataColumn("CAT"));
             tablaCAT10.Columns.Add(new DataColumn("SIC"));
             tablaCAT10.Columns.Add(new DataColumn("SAC"));
             tablaCAT10.Columns.Add(new DataColumn("Target ID"));
@@ -322,6 +323,7 @@ namespace CLASSES
 
             //CAT21
             tablaCAT21.Columns.Add(new DataColumn("#"));
+            tablaCAT21.Columns.Add(new DataColumn("CAT"));
             tablaCAT21.Columns.Add(new DataColumn("SIC"));
             tablaCAT21.Columns.Add(new DataColumn("SAC"));
             tablaCAT21.Columns.Add(new DataColumn("Target ID"));
