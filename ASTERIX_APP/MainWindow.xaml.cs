@@ -733,7 +733,7 @@ namespace ASTERIX_APP
         int categoria;
         public int comprobarcat()
         {
-            if (F.CAT_list[0] == 10)
+            if (Math.Floor(F.CAT_list[0]) == 10)
             {
                 bool IsMultipleCAT = F.CAT_list.Contains(21);
                 if (IsMultipleCAT == true)
@@ -745,7 +745,7 @@ namespace ASTERIX_APP
                     return categoria = 10;
                 }
             }
-            if (F.CAT_list[0] == 21)
+            if (Math.Floor(F.CAT_list[0]) == 21)
             {
                 bool IsMultipleCAT = F.CAT_list.Contains(10);
                 if (IsMultipleCAT == true)
