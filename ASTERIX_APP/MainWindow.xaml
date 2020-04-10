@@ -135,38 +135,32 @@
         <!-- Map -->
         <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" 
                            Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1" />
-        <Button x:Name ="StartButton"  Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="57,233,0,0" VerticalAlignment="Top" Height="30" Width="85">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Images/playbut.jpg" />
+        <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="73,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
 
-            </StackPanel>
         </Button>
-        <Button x:Name ="StopButton"  Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="165,233,0,0" VerticalAlignment="Top" Height="30" Width="84">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Images/stopbut.jpg" />
+        <Button x:Name ="StopButton" Content="STOP" Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="168,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
 
-            </StackPanel>
         </Button>
-        <TextBlock x:Name="timer" HorizontalAlignment="Left" Margin="48,131,0,0"  Visibility="Hidden" VerticalAlignment="Top" FontFamily ="Segoe UI" FontSize="50" Height="91" Width="222" Foreground="#FFD31C1C"/>
+        <Button x:Name ="RestartButton" Content="RESTART"  Click="Restart_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="112,232,0,0" VerticalAlignment="Top" Height="27" Width="78">
+
+        </Button>
+
+        <TextBlock x:Name="timer"  HorizontalAlignment="Left" Margin="49,81,0,0"  Visibility="Hidden" VerticalAlignment="Top"  FontFamily ="Segoe UI" FontSize="60" Height="91" Width="222" Foreground="#FFD31C1C"/>
 
         <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,141,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
         <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,185,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
         <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,230,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
 
-        <Button x:Name="zoomlebl" Click ="zoomin_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="380,138,0,0" VerticalAlignment="Top" Height="30" Width="77">
-            <StackPanel>
-                <Image Source="pack://application:,,,/Images/Zoomin.jpg" />
+        <Button x:Name="zoomlebl" Content="ZOOM +" Click ="zoomin_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="386,139,0,0" VerticalAlignment="Top" Height="65" Width="86">
 
-            </StackPanel>
         </Button>
 
-        <Button x:Name="zoombcn" Click="zoomout_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="382,187,0,0" VerticalAlignment="Top" Height="30" Width="73">
-        <StackPanel>
-            <Image Source="pack://application:,,,/Images/Zoomout.jpg" />
+        <Button x:Name="zoombcn" Content="ZOOM -" Click="zoomout_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="387,214,0,0" VerticalAlignment="Top" Height="65" Width="83">
 
-        </StackPanel>
         </Button>
         <Label x:Name="speedlabel" Content="Speed"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="309,104,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
+        <Label x:Name="ZOOM" Content="Zoom"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="409,105,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
+        <Label x:Name="Timer" Content="Timer"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="47,52,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
 
         <DataGrid x:Name ="gridlista" Margin="10,300,710,10" 
                   RenderTransformOrigin="0.5,0.5" Background="#222" 

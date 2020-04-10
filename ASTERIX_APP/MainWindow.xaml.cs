@@ -81,7 +81,7 @@ namespace ASTERIX_APP
             circle2.Visibility = Visibility.Hidden;
             asterixPNG.Visibility = Visibility.Hidden;
             asterixPerf.Visibility = Visibility.Hidden;
-
+            MessageBox.Show("WARNING!: \n - If you want to enter a multi-category file please make sure the filename contains smr and mlat. \n - If you want to enter a category 21 file please make sure the filename contains v21, v021, v23 or v023.");
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
 
@@ -160,7 +160,9 @@ namespace ASTERIX_APP
                 SearchMapbyID.Visibility = Visibility.Hidden;
                 callsignbox.Visibility = Visibility.Hidden;
                 StopSearchbytarget.Visibility = Visibility.Hidden;
-
+                ZOOM.Visibility = Visibility.Hidden;
+                Timer.Visibility = Visibility.Hidden;
+                RestartButton.Visibility = Visibility.Hidden;
                 // Visual Elements
                 asterixPNG.Visibility = Visibility.Hidden;
                 asterixPerf.Visibility = Visibility.Hidden;
@@ -610,7 +612,9 @@ namespace ASTERIX_APP
                 SearchMapbyID.Visibility = Visibility.Visible;
                 callsignbox.Visibility = Visibility.Visible;
                 StopSearchbytarget.Visibility = Visibility.Visible;
-
+                ZOOM.Visibility = Visibility.Visible;
+                Timer.Visibility = Visibility.Visible;
+                RestartButton.Visibility = Visibility.Visible;
 
                 // Visual Stuff
                 asterixPNG.Visibility = Visibility.Hidden;
@@ -683,6 +687,8 @@ namespace ASTERIX_APP
         }
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {
+            timer.Visibility = Visibility.Visible;
+
             if (comprobarcat() == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
@@ -723,6 +729,8 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
+            marker.Offset = new Point(-7.5, -7.5);
+
             map.Markers.Add(marker);
         }
         public void AddMarkerSMR(double latitude, double longitude, string targetid)
@@ -743,23 +751,40 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
-                    Width = 5,
-                    Height = 5,
+                    Width = 15,
+                    Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
+            marker.Offset = new Point(-7.5, -7.5);
+
             map.Markers.Add(marker);
         }
-        public void AddMarkerC21(double latitude, double longitude)
+        public void AddMarkerC21(double latitude, double longitude, string targetid)
         {
             PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            marker.Shape = new Image
+            if (targetid != null)
             {
-                Width = 15,
-                Height = 15,
-                Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
-            };
+                marker.Shape = new Image
+                {
+                    Width = 15,
+                    Height = 15,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+                };
+            }
+            if (targetid == "Not available")
+            {
+                marker.Shape = new Image
+                {
+                    Width = 15,
+                    Height = 15,
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                };
+            }
+
+            marker.Offset = new Point(-7.5, -7.5);
+
             map.Markers.Add(marker);
         }
         DispatcherTimer dt_Timer = new DispatcherTimer();
@@ -863,7 +888,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84);
+                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84,C21_v23.Target_ID);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -888,7 +913,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84);
+                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84,C21_v23.Target_ID);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -920,7 +945,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84,C21.Target_ID);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -945,7 +970,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84);
+                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84,C21.Target_ID);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -990,6 +1015,7 @@ namespace ASTERIX_APP
                         if (idbuttonclicked == true && tiempo == start)
                         {
                             string targetid = Convert.ToString(tabla.Rows[i][1]);
+                            if (targetid == null) { targetid = "Not available"; }
                             if (targetid.Contains(searchedcallsign))
                             {
                                 if (F.CAT_list[i] == 10 )
@@ -1010,7 +1036,7 @@ namespace ASTERIX_APP
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerC21(poscartx, poscarty);
+                                    AddMarkerC21(poscartx, poscarty,targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -1047,7 +1073,7 @@ namespace ASTERIX_APP
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty);
+                                AddMarkerC21(poscartx, poscarty,targetid);
                                 if (map.Markers.Count >= 200)
                                 {
                                     map.Markers[map.Markers.Count - 200].Clear();
@@ -1183,6 +1209,21 @@ namespace ASTERIX_APP
         private void Stopsearchtarget(object sender, RoutedEventArgs e)
         {
             idbuttonclicked = false;
+        }
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Stop();
+            map.Markers.Clear();
+            updatedtable.Rows.Clear();
+            i = 0;
+            s = 0;
+            n = 0;
+            if (comprobarcat() == 10) { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+            if (comprobarcat() == 21) { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
+            if (comprobarcat() == 1021) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
+            gridlista.Visibility = Visibility.Visible;
+            updatedlista.Visibility = Visibility.Hidden;
+            timer.Visibility = Visibility.Hidden;
         }
        
     }
