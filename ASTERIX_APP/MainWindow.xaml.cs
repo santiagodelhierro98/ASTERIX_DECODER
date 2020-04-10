@@ -106,19 +106,15 @@ namespace ASTERIX_APP
             {
                 chivato = true;
                 F = new Fichero(OpenFile.FileName);
-                try
-                {
-                    F.leer();
-                    asterixPerf.Visibility = Visibility.Visible;
-                    Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
-                        '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
-                    bubbleWord.Height = 100;
-                    bubbleWord.Width = 550;
-                    bubbleWord.Visibility = Visibility.Visible;
-                    circle.Visibility = Visibility.Visible;
-                    circle2.Visibility = Visibility.Visible;
-                }
-                catch { MessageBox.Show("ERROR: Make sure file containing category 21 '\n' is version 2.1 or 0.23"); }
+                F.leer();
+                asterixPerf.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
+                    '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
             }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
