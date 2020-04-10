@@ -12,7 +12,7 @@ namespace CLASSES
     {
         string path;
         int CAT;
-        public List<int> CAT_list = new List<int>();
+        public List<double> CAT_list = new List<double>();
 
         List<CAT10> listaCAT10 = new List<CAT10>();
         List<CAT21> listaCAT21 = new List<CAT21>();
@@ -122,8 +122,7 @@ namespace CLASSES
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
-                CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
-                CAT_list.Add(CAT); // Adds the pack category into this list
+                CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);                
                 contadorGeneral++;
 
                 CAT10 C10 = new CAT10();
@@ -132,6 +131,7 @@ namespace CLASSES
 
                 if (CAT == 10)
                 {
+                    CAT_list.Add(CAT); // Adds the pack category into this list
                     contadorCAT10++;
                     C10.Decode10(arraystring);
                     listaCAT10.Add(C10);
@@ -161,18 +161,19 @@ namespace CLASSES
 
                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                            ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                           ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data",
+                           ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click To View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data",
                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] + 
                            ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "Click to View Data",
                            C21.Roll, C21.Service_ID, "Click to View Data", C21.RID, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "Click to View Data", "Click to View Data", "Click to View Data", "Click to View Data", C21.RP);
                 }
                 else if (CAT == 21)
-                {
+                {                    
                     contadorCAT21++;
                     // Check if its version 23
                     if (filename.Contains("v023") == true || filename.Contains("v23") == true)
                     {
+                        CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
                         C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
                         // Multiple CAT reduced table for maptrack
@@ -183,27 +184,28 @@ namespace CLASSES
                             C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
 
                         // Complete CAT21 table
-                        tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", "Click to View Data",
+                        tablaCAT21.Rows.Add(contadorCAT21, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, " ", "Click to View Data",
                             convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", C21_v23.FL, C21_v23.GA,
-                            "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-",
-                            C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "-",
-                            "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", C21_v23.Trajectory_Intent, "-", "-");
+                            "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "",
+                            C21_v23.MH, C21.BVR, C21_v23.GVR, C21.M3AC, "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "",
+                            "", "", "", "", "", "", "", "", "", "", C21_v23.Trajectory_Intent, "", "");
 
                         // Complete Multiple CAT table
-                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
-                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "-", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "-",
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT+0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "",
 
                             "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                             ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click to View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data", "-",
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click to View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data", "",
                             "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
-                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
-                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "-",
-                            "-", "-", "-", "-", "-", "-", "-", "-", "Click to View Data", "-", "-");
+                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "-",
+                            "", "", "", "", "", "", "", "", "Click to View Data", "", "");
                     }
                     // Check if its version 21
                     if (filename.Contains("v021") == true || filename.Contains("v21") == true)
                     {
+                        CAT_list.Add(CAT); // Adds the pack category into this list
                         C21.Decode21(arraystring);
                         listaCAT21.Add(C21);
                         // Multiple CAT reduced table for maptrack
@@ -227,7 +229,7 @@ namespace CLASSES
 
                             "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                             ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data",
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click To View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data",
                             "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
                             ", " + C10.Acceleration[1] + ")", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
                             C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "Click to View Data", C21.Roll, C21.Service_ID,
@@ -235,22 +237,23 @@ namespace CLASSES
                     }
                     if (filename.Contains("smr") == true && filename.Contains("mlat") == true)
                     {
+                        CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
                         C21_v23.Decode21(arraystring);
                         listaCAT21_v23.Add(C21_v23);
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
                         C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
 
                         // Complete Multiple CAT table
-                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "-", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
-                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "-", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "-",
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT+0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "",
 
                             "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], C10.Message_Type, "(" + C10.Pos_PolarCoord[0] +
                             ", " + C10.Pos_PolarCoord[1] + ")", "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] +
-                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", C10.Track_Status, C10.Fleet_ID, "Click to View Data", "Click to View Data", "-",
+                            ")", "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", "Click To View Data", C10.Fleet_ID, "Click to View Data", "Click to View Data", "",
                             "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", C10.StndrdDev_Position[2], "Click to View Data", "(" + C10.Acceleration[0] +
-                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "-", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
-                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "-", "-", "-", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "-",
-                            "-", "-", "-", "-", "-", "-", "-", "-", "Click to View Data", "-", "-");
+                            ", " + C10.Acceleration[1] + ")", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "Click to View Data", C21_v23.Roll, "",
+                            "", "", "", "", "", "", "", "", "Click to View Data", "", "");
                     }
                 }                
             }

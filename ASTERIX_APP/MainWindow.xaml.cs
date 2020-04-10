@@ -173,7 +173,7 @@ namespace ASTERIX_APP
                 IDBox.Visibility = Visibility.Visible;
                 SearchResult.Visibility = Visibility.Visible;
 
-                if (F.CAT_list[0] == 10)
+                if (Math.Floor(F.CAT_list[0]) == 10)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
                     if (IsMultipleCAT == true)
@@ -187,7 +187,7 @@ namespace ASTERIX_APP
                         category = 10;
                     }
                 }
-                if (F.CAT_list[0] == 21)
+                if (Math.Floor(F.CAT_list[0]) == 21)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(10);
                     if (IsMultipleCAT == true)
@@ -340,7 +340,7 @@ namespace ASTERIX_APP
             if (category == 1021)
             {
                 DataTable tabla = F.getTablaMixtCAT();
-                int cat = Convert.ToInt32(tabla.Rows[Row_Num][1]);
+                double cat = Convert.ToDouble(tabla.Rows[Row_Num][1]);
                 if (cat == 10)
                 {
                     CAT10 pack10 = F.getCAT10(Row_Num);
@@ -371,7 +371,7 @@ namespace ASTERIX_APP
                     {
                         string[] SS = pack10.Sys_Status;
                         MessageBox.Show("System Status:\n\nNOGO: " + SS[0] + "\nOVL: " + SS[1] + "\nTSV: " + SS[2] + "\nDIV: " + SS[3] +
-                            "\nTTF: " + SS[5]);
+                            "\nTTF: " + SS[4]);
                     }
                     if (Col_Num == 25 && pack10.Pre_Prog_Message != null)
                     {
@@ -386,82 +386,110 @@ namespace ASTERIX_APP
                 }
                 if (cat == 21)
                 {
-                    MessageBox.Show("Solving CAT21_v23 compatibility problems");
-                    //DataTable table = F.getTablaMixtCAT();
-                    //DataTable pack21 = new DataTable();
-                    //pack21.ImportRow(table.Rows[Row_Num]);
-                    //if (Col_Num == 7 && pack21.Target_Report_Desc != null)
-                    //{
-                    //    string[] TRD = pack21.Target_Report_Desc;
-                    //    MessageBox.Show("Target Report:\n\nATP: " + TRD[0] + "\nARC: " + TRD[1] + "\nRC: " + TRD[2] + "\nRAB :" + TRD[3] +
-                    //        "\nDCR: " + TRD[4] + "\nGBS: " + TRD[5] + "\nSIM: " + TRD[6] + "\nTST: " + TRD[7] + "\nSAA: " + TRD[8] + "\nCL: " +
-                    //        TRD[9] + "\nIPC: " + TRD[10] + "\nNOGO" + TRD[11] + "\nCPR: " + TRD[12] + "\nLDPJ: " + TRD[13] + "\nRCF: " + TRD[14]);
-                    //}
-                    //if (Col_Num == 9 && pack21.M3AC != null)
-                    //{
+                    CAT21 pack21 = F.getCAT21(Row_Num);
+                    if (Col_Num == 7)
+                    {
+                        string[] TRD = pack21.Target_Report_Desc;
+                        MessageBox.Show("Target Report:\n\nATP: " + TRD[0] + "\nARC: " + TRD[1] + "\nRC: " + TRD[2] + "\nRAB :" + TRD[3] +
+                            "\nDCR: " + TRD[4] + "\nGBS: " + TRD[5] + "\nSIM: " + TRD[6] + "\nTST: " + TRD[7] + "\nSAA: " + TRD[8] + "\nCL: " +
+                            TRD[9] + "\nIPC: " + TRD[10] + "\nNOGO" + TRD[11] + "\nCPR: " + TRD[12] + "\nLDPJ: " + TRD[13] + "\nRCF: " + TRD[14]);
+                    }
+                    if (Col_Num == 9 && pack21.M3AC != null)
+                    {
 
-                    //}
-                    //if (Col_Num == 10 && pack21.Mode_S != null)
-                    //{
-                    //    int[] MS = pack21.Mode_S;
-                    //    MessageBox.Show("Mode S MB Data:\n\nRep. Mode S MB Data: " + MS[0] + "\nMB Data: " + MS[1] + "\nBDS 1: " + MS[2] +
-                    //        "\nBDS 2: " + MS[3]);
-                    //}
-                    //if (Col_Num == 31 && pack21.Op_Status != null)
-                    //{
-                    //    string[] OS = pack21.Op_Status;
-                    //    MessageBox.Show("Operational Status:\n\nRA: " + OS[0] + "\nTC: " + OS[1] + "\nTS: " + OS[2] + "\nARV: " + OS[3] +
-                    //        "\nCDITA: " + OS[4] + "\nNot TCAS: " + OS[5] + "\nSing. Ant.: " + OS[6]);
-                    //}
-                    //if (Col_Num == 37 && pack21.MOPS != null)
-                    //{
-                    //    string[] MOPS = pack21.MOPS;
-                    //    MessageBox.Show("MOPS Version:\n\nVNS: " + MOPS[0] + "\nVN: " + MOPS[1] + "\nLTT: " + MOPS[2]);
-                    //}
-                    //if (Col_Num == 41 && pack21.Met_Report != null)
-                    //{
-                    //    string[] MR = pack21.Met_Report;
-                    //    MessageBox.Show("Met Report:\n\nWind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
-                    //        "Turbulence: " + MR[3]);
-                    //}
-                    //if (Col_Num == 43 && pack21.Target_Status != null)
-                    //{
-                    //    string[] TS = pack21.Target_Status;
-                    //    MessageBox.Show("Target Status:\n\nICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3]);
-                    //}
-                    //if (Col_Num == 46 && pack21.Quality_Indicators != null)
-                    //{
-                    //    string[] QI = pack21.Quality_Indicators;
-                    //    MessageBox.Show("Quality Indicators:\n\n" + QI[0] + "\n" + QI[1] + "\n" + QI[2] + "\n" + "\nSIL Supplement: " +
-                    //        QI[3] + "\nSDA: " + QI[4] + "\nGVA: " + QI[5] + "\nPIC: " + QI[6]);
-                    //}
-                    //if (Col_Num == 52 && pack21.TMRP_HP != null)
-                    //{
-                    //    string[] TMRP = pack21.TMRP_HP;
-                    //    MessageBox.Show("Time of Message Reception for Position\nHigh Precision:\n\nFull Second Indication: " + TMRP[0] +
-                    //        "\nTMR Posiotion: " + TMRP[1]);
-                    //}
-                    //if (Col_Num == 53 && pack21.TMRV_HP != null)
-                    //{
-                    //    string[] TMRV = pack21.TMRV_HP;
-                    //    MessageBox.Show("Time of Message Reception for velocity\nHigh Precision:\n\nFull Second Indication: " + TMRV[0] +
-                    //        "\nTMR Velocity: " + TMRV[1]);
-                    //}
-                    //if (Col_Num == 55 && pack21.Trajectory_Intent != null)
-                    //{
-                    //    string[] TI = pack21.Trajectory_Intent;
-                    //    MessageBox.Show("Trajectory Intent:\n\n" + TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
-                    //        "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
-                    //        TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15]);
-                    //}
-                    //if (Col_Num == 56 && pack21.Data_Ages != null)
-                    //{
-                    //    double[] DA = pack21.Data_Ages;
-                    //    MessageBox.Show("Data Ages:\n\nAOS: " + DA[0] + "\nTRD: " + DA[1] + "\n Mode 3A: " + DA[2] + "\nQI: " + DA[3] + "\nTI: " + DA[4] +
-                    //        "\nMAM: " + DA[5] + "\nGH: " + DA[6] + "\nFL: " + DA[7] + "\nISA: " + DA[8] + "\nFSA: " + DA[9] + "\nAS: " + DA[10] + "\nTAS: " +
-                    //        DA[11] + "\nMH: " + DA[12] + "\nBVR: " + DA[13] + "\nGVR: " + DA[14] + "\nGV: " + DA[15] + "\nTAR: " + DA[16] + "\nTarget ID: " +
-                    //        DA[17] + "\nTS: " + DA[18] + "Met: " + DA[19] + "\nROA: " + DA[20] + "\nARA: " + DA[21] + "\nSCC: " + DA[22]);
-                    //}
+                    }
+                    if (Col_Num == 10 && pack21.Mode_S != null)
+                    {
+                        int[] MS = pack21.Mode_S;
+                        MessageBox.Show("Mode S MB Data:\n\nRep. Mode S MB Data: " + MS[0] + "\nMB Data: " + MS[1] + "\nBDS 1: " + MS[2] +
+                            "\nBDS 2: " + MS[3]);
+                    }
+                    if (Col_Num == 31 && pack21.Op_Status != null)
+                    {
+                        string[] OS = pack21.Op_Status;
+                        MessageBox.Show("Operational Status:\n\nRA: " + OS[0] + "\nTC: " + OS[1] + "\nTS: " + OS[2] + "\nARV: " + OS[3] +
+                            "\nCDITA: " + OS[4] + "\nNot TCAS: " + OS[5] + "\nSing. Ant.: " + OS[6]);
+                    }
+                    if (Col_Num == 37 && pack21.MOPS != null)
+                    {
+                        string[] MOPS = pack21.MOPS;
+                        MessageBox.Show("MOPS Version:\n\nVNS: " + MOPS[0] + "\nVN: " + MOPS[1] + "\nLTT: " + MOPS[2]);
+                    }
+                    if (Col_Num == 41 && pack21.Met_Report != null)
+                    {
+                        string[] MR = pack21.Met_Report;
+                        MessageBox.Show("Met Report:\n\nWind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
+                            "Turbulence: " + MR[3]);
+                    }
+                    if (Col_Num == 43 && pack21.Target_Status != null)
+                    {
+                        string[] TS = pack21.Target_Status;
+                        MessageBox.Show("Target Status:\n\nICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3]);
+                    }
+                    if (Col_Num == 46 && pack21.Quality_Indicators != null)
+                    {
+                        string[] QI = pack21.Quality_Indicators;
+                        MessageBox.Show("Quality Indicators:\n\n" + QI[0] + "\n" + QI[1] + "\n" + QI[2] + "\n" + "\nSIL Supplement: " +
+                            QI[3] + "\nSDA: " + QI[4] + "\nGVA: " + QI[5] + "\nPIC: " + QI[6]);
+                    }
+                    if (Col_Num == 52 && pack21.TMRP_HP != null)
+                    {
+                        string[] TMRP = pack21.TMRP_HP;
+                        MessageBox.Show("Time of Message Reception for Position\nHigh Precision:\n\nFull Second Indication: " + TMRP[0] +
+                            "\nTMR Posiotion: " + TMRP[1]);
+                    }
+                    if (Col_Num == 53 && pack21.TMRV_HP != null)
+                    {
+                        string[] TMRV = pack21.TMRV_HP;
+                        MessageBox.Show("Time of Message Reception for velocity\nHigh Precision:\n\nFull Second Indication: " + TMRV[0] +
+                            "\nTMR Velocity: " + TMRV[1]);
+                    }
+                    if (Col_Num == 55 && pack21.Trajectory_Intent != null)
+                    {
+                        string[] TI = pack21.Trajectory_Intent;
+                        MessageBox.Show("Trajectory Intent:\n\n" + TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
+                            "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
+                            TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15]);
+                    }
+                    if (Col_Num == 56 && pack21.Data_Ages != null)
+                    {
+                        double[] DA = pack21.Data_Ages;
+                        MessageBox.Show("Data Ages:\n\nAOS: " + DA[0] + "\nTRD: " + DA[1] + "\n Mode 3A: " + DA[2] + "\nQI: " + DA[3] + "\nTI: " + DA[4] +
+                            "\nMAM: " + DA[5] + "\nGH: " + DA[6] + "\nFL: " + DA[7] + "\nISA: " + DA[8] + "\nFSA: " + DA[9] + "\nAS: " + DA[10] + "\nTAS: " +
+                            DA[11] + "\nMH: " + DA[12] + "\nBVR: " + DA[13] + "\nGVR: " + DA[14] + "\nGV: " + DA[15] + "\nTAR: " + DA[16] + "\nTarget ID: " +
+                            DA[17] + "\nTS: " + DA[18] + "Met: " + DA[19] + "\nROA: " + DA[20] + "\nARA: " + DA[21] + "\nSCC: " + DA[22]);
+                    }
+                }
+                if (cat == 21.23)
+                {
+                    CAT21_v23 pack21 = F.getCAT21_v23(Row_Num);
+                    if (Col_Num == 7)
+                    {
+                        string[] TRD = pack21.Target_Report_Desc;
+                        MessageBox.Show(TRD[0] + "\n" + TRD[1] + "\n" + TRD[2] + "\n" + TRD[3] +
+                            "\n" + TRD[4] + "\n" + TRD[5] + "\n" + TRD[6] + "\n" + TRD[7] + "\n" + TRD[8],
+                            "Target Report");
+                    }
+                    if (Col_Num == 41 && pack21.Met_Report != null)
+                    {
+                        string[] MR = pack21.Met_Report;
+                        MessageBox.Show("Wind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
+                            "Turbulence: " + MR[3], "Met Report");
+                    }
+                    if (Col_Num == 43 && pack21.Target_Status != null)
+                    {
+                        string[] TS = pack21.Target_Status;
+                        MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],
+                            "Target Status");
+                    }
+                    if (Col_Num == 55 && pack21.Trajectory_Intent != null)
+                    {
+                        string[] TI = pack21.Trajectory_Intent;
+                        MessageBox.Show(TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
+                            "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
+                            TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15],
+                            "Trajectory Intnet");
+                    }
                 }
             }
         }
@@ -624,13 +652,13 @@ namespace ASTERIX_APP
                 IDBox.Visibility = Visibility.Hidden;
                 SearchResult.Visibility = Visibility.Hidden;
 
-                if (F.CAT_list[0] == 10)
+                if (Math.Floor(F.CAT_list[0]) == 10)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
                     if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
                     else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
                 }
-                if (F.CAT_list[0] == 21)
+                if (Math.Floor(F.CAT_list[0]) == 21)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(10);
                     if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
@@ -1165,8 +1193,7 @@ namespace ASTERIX_APP
         {
            map.Zoom = map.Zoom + 2;
 
-        }
-      
+        }      
         private void zoomout_Click(object sender, RoutedEventArgs e)
         {
             map.Zoom = map.Zoom - 2;
@@ -1183,7 +1210,6 @@ namespace ASTERIX_APP
         private void Stopsearchtarget(object sender, RoutedEventArgs e)
         {
             idbuttonclicked = false;
-        }
-       
+        }       
     }
 }
