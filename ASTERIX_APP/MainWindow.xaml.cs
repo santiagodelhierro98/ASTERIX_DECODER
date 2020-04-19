@@ -880,8 +880,7 @@ namespace ASTERIX_APP
                     else
                     {
                         i++;
-                    }
-                    
+                    }                    
                 }
                 else
                 {
@@ -940,7 +939,6 @@ namespace ASTERIX_APP
                                     map.Markers[map.Markers.Count - 200].Clear();
                                 }
                                 rellenartablaCAT21(i);
-
                             }
                             else
                             {
@@ -965,14 +963,12 @@ namespace ASTERIX_APP
                                 map.Markers[map.Markers.Count - 200].Clear();
                             }
                             rellenartablaCAT21(i);
-
                         }
                         else
                         {
                             x = false;
                             s++;
                             rellenartablaCAT21(i);
-
                         }
                     }
                 }
@@ -983,7 +979,7 @@ namespace ASTERIX_APP
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
                     if (C21.Target_ID == null) { C21.Target_ID = "Not available"; }
 
-                    if (searchedcallsign == null) { searchedcallsign = "Nada"; }
+                    if (searchedcallsign == null) { searchedcallsign = "Nothing"; }
                     if (idbuttonclicked==true)
                     {
                         if (C21.Target_ID.Contains(searchedcallsign))
@@ -997,7 +993,6 @@ namespace ASTERIX_APP
                                     map.Markers[map.Markers.Count - 200].Clear();
                                 }
                                 rellenartablaCAT21(i);
-
                             }
                             else
                             {
@@ -1022,17 +1017,15 @@ namespace ASTERIX_APP
                                 map.Markers[map.Markers.Count - 200].Clear();
                             }
                             rellenartablaCAT21(i);
-
                         }
                         else
                         {
                             x = false;
                             s++;
                             rellenartablaCAT21(i);
-
                         }
                     }
-               }
+                }
                 clock(tiempo);
                 gridlista.Visibility = Visibility.Hidden;
                 updatedlista.Visibility = Visibility.Visible;
@@ -1074,7 +1067,6 @@ namespace ASTERIX_APP
                                     }
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
-
                                 }
                                 if (F.CAT_list[i] == 21 )
                                 {
@@ -1087,14 +1079,12 @@ namespace ASTERIX_APP
                                     }
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
-
                                 }
                             }
                             else
                             {
                                 i++;
                             }
-
                         }
                         else
                         {
@@ -1111,7 +1101,6 @@ namespace ASTERIX_APP
                                 }
                                 rellenartablaMULTICAT(i);
                                 clock(tiempo);
-
                             }
                             if (F.CAT_list[i] == 21 && tiempo == start)
                             {

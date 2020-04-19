@@ -244,7 +244,6 @@ namespace CLASSES
                 return p;
             }
         }
-        // Generating each CAT columns for the tables
         public void CreateReducedTable(DataTable multiplecattablereducida, DataTable tablacat10reducida, DataTable tablacat21reducida)
         {
             //multiple CAT reduced table
