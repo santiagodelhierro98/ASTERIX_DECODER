@@ -10,19 +10,18 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using System.Windows.Threading;
 using System.Data;
-using System.Windows.Data;
 
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
         Fichero F;
+        Metodos M = new Metodos();
+        DispatcherTimer dt_Timer = new DispatcherTimer();
+
         bool chivato = false;
         int category;
         int i = 0;
-        //lat and lon os cat10 files 
-        double latindegrees;
-        double lonindegrees;
         //Datatable that shows flights for each second (used at the map)
         DataTable updatedtable = new DataTable();
         //lat lon of MLAT system of reference (at LEBL airport)
@@ -31,6 +30,14 @@ namespace ASTERIX_APP
         //lat lon of SMR system of reference (at LEBL airport)
         double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
         double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
+
+        string searchedcallsign;
+        bool idbuttonclicked = false;
+        double start;
+        double tiempo;
+        double s = 0;
+        int n = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,6 +60,7 @@ namespace ASTERIX_APP
             bubbleWord.Height = 150;
             bubbleWord.Width = 550;
         }
+        // MAIN APP BUTTONS
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Are you sure you want to exit?");
@@ -201,6 +209,20 @@ namespace ASTERIX_APP
                 }
             }
         }
+        private void Map_Load(object sender, RoutedEventArgs e)
+        {
+
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            map.MapProvider = OpenStreetMapProvider.Instance;
+            map.MinZoom = 1;
+            map.MaxZoom = 18;
+            map.Zoom = 14;
+            map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
+            map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+            map.CanDragMap = true;
+            map.DragButton = MouseButton.Left;
+        }
+        // TRACK TABLE METHODS
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
             DataGridCell cell = (DataGridCell)sender;
@@ -536,7 +558,7 @@ namespace ASTERIX_APP
                     try
                     {
                         DataTable C10 = F.getTablaCAT10();
-                        DataTable table = F.getSearchTable10();
+                        DataTable table = M.getSearchTable10();
                         table.ImportRow(C10.Rows[search - 1]);
 
                         Search_Table.ItemsSource = table.DefaultView;
@@ -548,7 +570,7 @@ namespace ASTERIX_APP
                     try
                     {
                         DataTable C21 = F.getTablaCAT21();
-                        DataTable table = F.getSearchTable21();
+                        DataTable table = M.getSearchTable21();
                         table.ImportRow(C21.Rows[search - 1]);
 
                         Search_Table.ItemsSource = table.DefaultView;
@@ -560,7 +582,7 @@ namespace ASTERIX_APP
                     try
                     {
                         DataTable table = F.getTablaMixtCAT();
-                        DataTable searchtable = F.getSearchTableMixed();
+                        DataTable searchtable = M.getSearchTableMixed();
                         searchtable.ImportRow(table.Rows[search - 1]);
 
                         Search_Table.ItemsSource = searchtable.DefaultView;
@@ -579,7 +601,7 @@ namespace ASTERIX_APP
             if (category == 10)
             {
                 DataTable table10 = F.getTablaCAT10();
-                DataTable searchtable = F.getSearchTable10();
+                DataTable searchtable = M.getSearchTable10();
                 for (int i = 0; i < table10.Rows.Count; i++)
                 {
                     CAT10 C10 = F.getCAT10(i);
@@ -597,7 +619,7 @@ namespace ASTERIX_APP
             if (category == 21)
             {
                 DataTable table21 = F.getTablaCAT21();
-                DataTable searchtable = F.getSearchTable21();
+                DataTable searchtable = M.getSearchTable21();
                 if (Convert.ToDouble(table21.Rows[0][1]) == 21)
                 {
                     for (int i = 0; i < table21.Rows.Count; i++)
@@ -634,7 +656,7 @@ namespace ASTERIX_APP
             if (category == 1021)
             {
                 DataTable tableMix = F.getTablaMixtCAT();
-                DataTable searchtable = F.getSearchTableMixed();
+                DataTable searchtable = M.getSearchTableMixed();
                 for (int i = 0; i < tableMix.Rows.Count; i++)
                 {
                     string ID = tableMix.Rows[i][4].ToString();
@@ -650,6 +672,7 @@ namespace ASTERIX_APP
                 else { Search_Table.ItemsSource = searchtable.DefaultView; }
             }
         }
+        // TRACK MAP METHODS
         private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
             // When clicking button before loading a file
@@ -706,83 +729,40 @@ namespace ASTERIX_APP
                 if (Math.Floor(F.CAT_list[0]) == 10)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
                     else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
                 }
                 if (Math.Floor(F.CAT_list[0]) == 21)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(10);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.getmultiplecattablereducida().DefaultView; }
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
                     else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
                 }
             }
-        }
-        private void Map_Load(object sender, RoutedEventArgs e)
-        {
-            
-            GMaps.Instance.Mode = AccessMode.ServerAndCache;
-            map.MapProvider = OpenStreetMapProvider.Instance;
-            map.MinZoom = 1;
-            map.MaxZoom = 18;
-            map.Zoom = 14;
-            map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
-            map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
-            map.CanDragMap = true;
-            map.DragButton = MouseButton.Left;
-        }
-        int categoria;
-        public int comprobarcat()
-        {
-            if (F.CAT_list[0] == 10)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(21);
-                if (IsMultipleCAT == true)
-                {
-                    return categoria = 1021;
-                }
-                else
-                {
-                    return categoria = 10;
-                }
-            }
-            if (F.CAT_list[0] == 21)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(10);
-                if (IsMultipleCAT == true)
-                {
-                    return categoria = 1021;
-                }
-                else
-                {
-                    return categoria = 21;
-                }
-
-            }
-            else { return 0; }
         }
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {
             timer.Visibility = Visibility.Visible;
 
-            if (comprobarcat() == 10)
+            if (category == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
                 updatedtable = F.gettablacat10reducida().Clone();
             }
-            if (comprobarcat() == 21)
+            if (category == 21)
             {
                 dt_Timer.Tick += dt_Timer_TickC21;
                 updatedtable = F.gettablacat21reducida().Clone();
             }
-            if (comprobarcat() == 1021)
+            if (category == 1021)
             {
                 dt_Timer.Tick += dt_Timer_TickMULTICAT;
-                updatedtable = F.getmultiplecattablereducida().Clone();
+                updatedtable = F.gettablamixtareducida().Clone();
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
         }
-        public void AddMarkerMLAT(double latitude, double longitude,string targetid)
+        public void AddMarkerMLAT(double latitude, double longitude, string targetid)
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
@@ -815,8 +795,7 @@ namespace ASTERIX_APP
             if (targetid != null)
             {
                 marker.Shape = new Image
-                {
-                   
+                {                   
                     Width = 15,
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
@@ -862,15 +841,11 @@ namespace ASTERIX_APP
 
             map.Markers.Add(marker);
         }
-        DispatcherTimer dt_Timer = new DispatcherTimer();
-
-        double s = 0;
         private void dt_Timer_TickC10(object sender, EventArgs e)
         {
             Boolean x = true;
             while (x == true)
-            {
-                
+            {                
                 CAT10 C10 = F.getCAT10(i);
                 double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 double tiempo = Math.Floor(C10.Time_Day);
@@ -895,7 +870,6 @@ namespace ASTERIX_APP
                                 map.Markers[map.Markers.Count - 200].Clear();
                             }
                             rellenartablaCAT10(i);
-
                         }
                         else
                         {
@@ -927,14 +901,12 @@ namespace ASTERIX_APP
                             map.Markers[map.Markers.Count - 200].Clear();
                         }
                         rellenartablaCAT10(i);
-
                     }
                     else
                     {
                         x = false;
                         s++;
                         rellenartablaCAT10(i);
-
                     }
                 }
                 clock(tiempo);
@@ -942,8 +914,6 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
-        double start;
-        double tiempo;
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
             Boolean x = true;
@@ -1068,7 +1038,6 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
-        int n = 0;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
             Boolean x = true;
@@ -1084,8 +1053,8 @@ namespace ASTERIX_APP
                         string[] tiemposplited = tiempomal.Split(':');
                         string[] tiemposplitedstart = starttiempo.Split(':');
 
-                        int tiempo = gettimecorrectly(tiemposplited);
-                        int start = gettimecorrectly(tiemposplitedstart) + n;
+                        int tiempo = M.gettimecorrectly(tiemposplited);
+                        int start = M.gettimecorrectly(tiemposplitedstart) + n;
                         if (searchedcallsign == null) { searchedcallsign = "Nada"; }
                         if (idbuttonclicked == true && tiempo == start)
                         {
@@ -1162,8 +1131,6 @@ namespace ASTERIX_APP
                     {
                         i++;
                     }
-
-
                 }
                 x = false;
                 n++;
@@ -1171,12 +1138,63 @@ namespace ASTERIX_APP
             gridlista.Visibility = Visibility.Hidden;
             updatedlista.Visibility = Visibility.Visible;
         }
-
-        public int gettimecorrectly(string[] tod)
+        private void clock(double tiempo)
         {
-            int secabs = Convert.ToInt32(tod[0]) * 3600 + Convert.ToInt32(tod[1]) * 60 + Convert.ToInt32(tod[2]);
-            return secabs;
-
+            TimeSpan time = TimeSpan.FromSeconds(tiempo);
+            string tiempoact = time.ToString(@"hh\:mm\:ss");
+            timer.Text = tiempoact;
+        }
+        private void stop_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Stop();
+        }
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Stop();
+            map.Markers.Clear();
+            updatedtable.Rows.Clear();
+            i = 0;
+            s = 0;
+            n = 0;
+            if (category == 10) { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+            if (category == 21) { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
+            if (category == 1021) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
+            gridlista.Visibility = Visibility.Visible;
+            updatedlista.Visibility = Visibility.Hidden;
+            timer.Visibility = Visibility.Hidden;
+        }
+        // MAP VIEWING OPTIONS        
+        // Change the refreshing speed of the map files
+        private void x1_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+        }
+        private void x2_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        }
+        private void x4_Click(object sender, RoutedEventArgs e)
+        {
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+        }
+        // Change map zoom
+        private void zoomin_Click(object sender, RoutedEventArgs e)
+        {
+           map.Zoom = map.Zoom + 2;
+        }      
+        private void zoomout_Click(object sender, RoutedEventArgs e)
+        {
+            map.Zoom = map.Zoom - 2;
+        }        
+        // Plot only airplanes with searched callsign
+        private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
+        {
+           idbuttonclicked = true;
+           searchedcallsign = callsignbox.Text;
+        }
+        private void Stopsearchtarget(object sender, RoutedEventArgs e)
+        {
+            idbuttonclicked = false;
         }
         private void rellenartablaCAT10(int i)
         {
@@ -1184,7 +1202,6 @@ namespace ASTERIX_APP
             updatedtable.ImportRow(F.gettablacat10reducida().Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
-
         }
         private void rellenartablaCAT21(int i)
         {
@@ -1199,18 +1216,6 @@ namespace ASTERIX_APP
             updatedtable.ImportRow(F.gettablamixtareducida().Rows[i]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
-
-        }
-
-        private void clock(double tiempo)
-        {
-            TimeSpan time = TimeSpan.FromSeconds(tiempo);
-            string tiempoact = time.ToString(@"hh\:mm\:ss");
-            timer.Text = tiempoact;
-        }
-        private void stop_Click(object sender, RoutedEventArgs e)
-        {
-            dt_Timer.Stop();
         }
         private PointLatLng fromXYtoLatLongMLAT(double X, double Y)
         {
@@ -1225,7 +1230,7 @@ namespace ASTERIX_APP
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
         }
-        private PointLatLng fromXYtoLatLongSMR(double X, double Y)
+        public PointLatLng fromXYtoLatLongSMR(double X, double Y)
         {
             double R = 6371 * 1000;
             double d = Math.Sqrt((X * X) + (Y * Y));
@@ -1238,67 +1243,5 @@ namespace ASTERIX_APP
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
         }
-        public double getlatMLAT()
-        {
-            return latindegrees;
-        }
-        public double getlonMLAT()
-        {
-            return lonindegrees;
-        }
-
-        //to change the refreshing speed of the map files
-        private void x1_Click(object sender, RoutedEventArgs e)
-        {
-            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-        }
-        private void x2_Click(object sender, RoutedEventArgs e)
-        {
-            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-        }
-        private void x4_Click(object sender, RoutedEventArgs e)
-        {
-            dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-        }
-
-        //to change map zoom
-        private void zoomin_Click(object sender, RoutedEventArgs e)
-        {
-           map.Zoom = map.Zoom + 2;
-
-        }      
-        private void zoomout_Click(object sender, RoutedEventArgs e)
-        {
-            map.Zoom = map.Zoom - 2;
-        }
-      
-        string searchedcallsign;
-        bool idbuttonclicked = false;
-        //plot only airplanes with searched callsign
-        private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
-        {
-           idbuttonclicked = true;
-           searchedcallsign = callsignbox.Text;
-        }
-        private void Stopsearchtarget(object sender, RoutedEventArgs e)
-        {
-            idbuttonclicked = false;
-        }
-        private void Restart_Click(object sender, RoutedEventArgs e)
-        {
-            dt_Timer.Stop();
-            map.Markers.Clear();
-            updatedtable.Rows.Clear();
-            i = 0;
-            s = 0;
-            n = 0;
-            if (comprobarcat() == 10) { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
-            if (comprobarcat() == 21) { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
-            if (comprobarcat() == 1021) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
-            gridlista.Visibility = Visibility.Visible;
-            updatedlista.Visibility = Visibility.Hidden;
-            timer.Visibility = Visibility.Hidden;
-        }
-       
     }
 }
