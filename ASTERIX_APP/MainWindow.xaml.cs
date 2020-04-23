@@ -63,9 +63,17 @@ namespace ASTERIX_APP
         // MAIN APP BUTTONS
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Are you sure you want to exit?");
-            this.Close();
-            Application.Current.Shutdown();
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to exit?","Exit", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    this.Close();
+                    Application.Current.Shutdown();                    
+                    break;
+                case MessageBoxResult.No:
+                    break;
+          
+            }
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
@@ -89,10 +97,8 @@ namespace ASTERIX_APP
             circle2.Visibility = Visibility.Hidden;
             asterixPNG.Visibility = Visibility.Hidden;
             asterixPerf.Visibility = Visibility.Hidden;
-            MessageBox.Show("WARNING!: \n - If you want to enter a multi-category file please make sure the filename contains smr and mlat. \n - If you want to enter a category 21 file please make sure the filename contains v21, v021, v23 or v023.");
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
-
             Instructions_Label.Visibility = Visibility.Visible;
             Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
@@ -743,7 +749,7 @@ namespace ASTERIX_APP
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {
             timer.Visibility = Visibility.Visible;
-
+            checkCAT(); //checks file category
             if (category == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
@@ -784,8 +790,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
-            marker.Offset = new Point(-7.5, -7.5);
-
+            marker.Offset = new Point(-10, -10);
             map.Markers.Add(marker);
         }
         public void AddMarkerSMR(double latitude, double longitude, string targetid)
@@ -810,8 +815,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
-            marker.Offset = new Point(-7.5, -7.5);
-
+            marker.Offset = new Point(-10, -10);
             map.Markers.Add(marker);
         }
         public void AddMarkerC21(double latitude, double longitude, string targetid)
@@ -836,9 +840,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
-
-            marker.Offset = new Point(-7.5, -7.5);
-
+            marker.Offset = new Point(-10, -10);
             map.Markers.Add(marker);
         }
         private void dt_Timer_TickC10(object sender, EventArgs e)
@@ -918,7 +920,7 @@ namespace ASTERIX_APP
             Boolean x = true;
             while (x == true)
             {
-                if (F.getFileName().Contains("v023") == true || F.getFileName().Contains("v23") == true)
+                if (F.getFileName().Contains("v023") == true || F.getFileName().Contains("v23") == true )
                 {
                     CAT21_v23 C21_v23 = F.getCAT21_v23(i);
                     start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
@@ -1149,8 +1151,8 @@ namespace ASTERIX_APP
             if (category == 21) { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
             if (category == 1021) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
             gridlista.Visibility = Visibility.Visible;
-            updatedlista.Visibility = Visibility.Hidden;
-            timer.Visibility = Visibility.Hidden;
+            updatedlista.Visibility = Visibility.Collapsed;
+            timer.Visibility = Visibility.Collapsed;
         }
         // MAP VIEWING OPTIONS        
         // Change the refreshing speed of the map files
@@ -1179,6 +1181,7 @@ namespace ASTERIX_APP
         private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
         {
            idbuttonclicked = true;
+           map.Markers.Clear();
            searchedcallsign = callsignbox.Text;
         }
         private void Stopsearchtarget(object sender, RoutedEventArgs e)
@@ -1231,6 +1234,33 @@ namespace ASTERIX_APP
 
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
+        }
+        public void checkCAT()
+        {
+            if (Math.Floor(F.CAT_list[0]) == 10)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true)
+                {
+                     category = 1021;
+                }
+                else
+                {
+                     category = 10;
+                }
+            }
+            if (Math.Floor(F.CAT_list[0]) == 21)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true)
+                {
+                     category = 1021;
+                }
+                else
+                {
+                     category = 21;
+                }
+            }
         }
     }
 }

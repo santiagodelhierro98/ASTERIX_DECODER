@@ -23,6 +23,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
+                <!-- Load Buttons-->
                 <Button x:Name="LoadButton" Click="LoadFile_Click" Grid.Column="0" Grid.Row="0" Content="Load File" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
                 <Button x:Name="TableButton" Click="TableTrack_Click" Grid.Column="1" Grid.Row="0" Content="Tracking Table" Background="#222" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1"/>
                 <Button x:Name="MapButton" Click="MapTrack_Click" Grid.Column="2" Grid.Row="0" Content="Tracking Map" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
@@ -50,6 +52,13 @@
         <Ellipse x:Name="circle" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Height="20" Margin="290" Visibility="Hidden"/>
         <Ellipse x:Name="circle2" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10" Height="10" Margin="280" Visibility="Hidden"/>
 
+        <!-- CheckBox version load-->
+        <!--<CheckBox Content="Version 2.1" Margin="398,328,-398,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
+        <CheckBox Content="Version 0.23" Margin="488,328,-481,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
+        <CheckBox Content="Multi Category" Margin="598,328,-579,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
+        <Label Content="If you have selected file containing Category 21, please specify its version:" Name="LabelCheckVersion" Margin="364,266,380,392"  Foreground="White"/>
+        <Label Content="Otherwise click continue" Margin="365,366,551,292" Name="LabelCheckVersion2"   Foreground="White"/>
+        <Button Content="Continue" Name="Continue_but" Margin="548,389,549,263" Background="#222" Foreground="#fff" Padding="5"/>-->
         <!-- Data Table -->
         <DataGrid x:Name="Track_Table" Padding="5"
                   Margin="0 90 300 0" Background="#222" 
@@ -138,7 +147,7 @@
         <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="73,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
 
         </Button>
-        <Button x:Name ="StopButton" Content="STOP" Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="168,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
+        <Button x:Name ="StopButton" Content="PAUSE" Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="168,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
 
         </Button>
         <Button x:Name ="RestartButton" Content="RESTART"  Click="Restart_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="112,232,0,0" VerticalAlignment="Top" Height="27" Width="78">
@@ -217,6 +226,8 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
+        
+
 
     </Grid>
 </Window>
