@@ -950,7 +950,7 @@ namespace ASTERIX_APP
             Boolean x = true;
             while (x == true)
             {
-                if ((F.getFileName().Contains("v023") == true || F.getFileName().Contains("v23") == true) || (F.SICSAC[0] != 107 || F.SICSAC[1] != 0))
+                if (F.SICSAC[0] == 107 && F.SICSAC[1] == 0)
                 {
                     CAT21_v23 C21_v23 = F.getCAT21_v23(i);
                     start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
@@ -1003,7 +1003,8 @@ namespace ASTERIX_APP
                         }
                     }
                 }
-                if((F.getFileName().Contains("v021") == true || F.getFileName().Contains("v21") == true) || (F.SICSAC[0] == 107 && F.SICSAC[1] == 0))
+                // version 2.1
+                if( F.SICSAC[0] != 107 || F.SICSAC[1] != 0)
                 {
                     CAT21 C21 = F.getCAT21(i);
                     start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
