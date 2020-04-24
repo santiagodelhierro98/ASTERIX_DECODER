@@ -53,6 +53,7 @@ namespace ASTERIX_APP
             bubbleWord.Height = 150;
             bubbleWord.Width = 550;
         }
+        
         // MAIN APP BUTTONS
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -288,6 +289,7 @@ namespace ASTERIX_APP
                 }
             }
         }
+        
         // TRACK TABLE METHODS
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
@@ -760,6 +762,7 @@ namespace ASTERIX_APP
                 else { Search_Table.ItemsSource = searchtable.DefaultView; }
             }
         }
+        
         // TRACK MAP METHODS
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -1181,6 +1184,7 @@ namespace ASTERIX_APP
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
         }
+        
         // MAP VIEWING OPTIONS        
         // Change the refreshing speed of the map files
         private void x1_Click(object sender, RoutedEventArgs e)
