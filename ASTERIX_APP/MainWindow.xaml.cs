@@ -42,13 +42,6 @@ namespace ASTERIX_APP
         {
             InitializeComponent();
 
-            Search_Table.Visibility = Visibility.Hidden;
-            SearchResult.Visibility = Visibility.Hidden;
-            SearchNumButton.Visibility = Visibility.Hidden;
-            SearchIDButton.Visibility = Visibility.Hidden;
-            NumBox.Visibility = Visibility.Hidden;
-            IDBox.Visibility = Visibility.Hidden;
-
             bubbleWord.Visibility = Visibility.Visible;
             circle.Visibility = Visibility.Visible;
             circle2.Visibility = Visibility.Visible;
@@ -71,32 +64,47 @@ namespace ASTERIX_APP
                     Application.Current.Shutdown();                    
                     break;
                 case MessageBoxResult.No:
-                    break;
-          
+                    break;          
             }
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
-            map.Visibility = Visibility.Hidden;
-            SearchNumButton.Visibility = Visibility.Hidden;
-            SearchIDButton.Visibility = Visibility.Hidden;
-            NumBox.Visibility = Visibility.Hidden;
-            IDBox.Visibility = Visibility.Hidden;
-            Search_Table.Visibility = Visibility.Hidden;
-            SearchResult.Visibility = Visibility.Hidden;
+            map.Visibility = Visibility.Collapsed;
+            SearchNumButton.Visibility = Visibility.Collapsed;
+            SearchIDButton.Visibility = Visibility.Collapsed;
+            ClearSearch.Visibility = Visibility.Collapsed;
+            NumBox.Visibility = Visibility.Collapsed;
+            IDBox.Visibility = Visibility.Collapsed;
+            Search_Table.Visibility = Visibility.Collapsed;
 
             // HIDE AND CLEAN TABLES
-            Track_Table.Visibility = Visibility.Hidden;
-            gridlista.Visibility = Visibility.Hidden;
+            map.Visibility = Visibility.Collapsed;
+            gridlista.Visibility = Visibility.Collapsed;
+            StartButton.Visibility = Visibility.Collapsed;
+            StopButton.Visibility = Visibility.Collapsed;
+            timer.Visibility = Visibility.Collapsed;
+            x1butt.Visibility = Visibility.Collapsed;
+            x2butt.Visibility = Visibility.Collapsed;
+            x4butt.Visibility = Visibility.Collapsed;
+            zoomlebl.Visibility = Visibility.Collapsed;
+            zoombcn.Visibility = Visibility.Collapsed;
+            SearchMapbyID.Visibility = Visibility.Collapsed;
+            callsignbox.Visibility = Visibility.Collapsed;
+            StopSearchbytarget.Visibility = Visibility.Collapsed;
+            ZOOM.Visibility = Visibility.Collapsed;
+            Timer.Visibility = Visibility.Collapsed;
+            RestartButton.Visibility = Visibility.Collapsed;
+            Track_Table.Visibility = Visibility.Collapsed;
+            gridlista.Visibility = Visibility.Collapsed;
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
 
             // HIDE VISUAL ELEMENTS
-            bubbleWord.Visibility = Visibility.Hidden;
-            circle.Visibility = Visibility.Hidden;
-            circle2.Visibility = Visibility.Hidden;
-            asterixPNG.Visibility = Visibility.Hidden;
-            asterixPerf.Visibility = Visibility.Hidden;
+            bubbleWord.Visibility = Visibility.Collapsed;
+            circle.Visibility = Visibility.Collapsed;
+            circle2.Visibility = Visibility.Collapsed;
+            asterixPNG.Visibility = Visibility.Collapsed;
+            asterixPerf.Visibility = Visibility.Collapsed;
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
             Instructions_Label.Visibility = Visibility.Visible;
@@ -147,43 +155,42 @@ namespace ASTERIX_APP
             else
             {
                 // Table and Map Stuff
-                Search_Table.Visibility = Visibility.Visible;
-                SearchResult.Visibility = Visibility.Visible;
+                Search_Table.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Visible;
                 SearchIDButton.Visibility = Visibility.Visible;
+                ClearSearch.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
 
-                Instructions_Label.Visibility = Visibility.Hidden;
+                Instructions_Label.Visibility = Visibility.Collapsed;
                 Track_Table.Visibility = Visibility.Visible;
-                map.Visibility = Visibility.Hidden;
-                gridlista.Visibility = Visibility.Hidden;
-                StartButton.Visibility = Visibility.Hidden;
-                StopButton.Visibility = Visibility.Hidden;
-                timer.Visibility = Visibility.Hidden;
-                x1butt.Visibility = Visibility.Hidden;
-                x2butt.Visibility = Visibility.Hidden;
-                x4butt.Visibility = Visibility.Hidden;
-                zoomlebl.Visibility = Visibility.Hidden;
-                zoombcn.Visibility = Visibility.Hidden;
-                updatedlista.Visibility = Visibility.Hidden;
-                SearchMapbyID.Visibility = Visibility.Hidden;
-                callsignbox.Visibility = Visibility.Hidden;
-                StopSearchbytarget.Visibility = Visibility.Hidden;
-                ZOOM.Visibility = Visibility.Hidden;
-                Timer.Visibility = Visibility.Hidden;
-                RestartButton.Visibility = Visibility.Hidden;
+                map.Visibility = Visibility.Collapsed;
+                gridlista.Visibility = Visibility.Collapsed;
+                StartButton.Visibility = Visibility.Collapsed;
+                StopButton.Visibility = Visibility.Collapsed;
+                timer.Visibility = Visibility.Collapsed;
+                x1butt.Visibility = Visibility.Collapsed;
+                x2butt.Visibility = Visibility.Collapsed;
+                x4butt.Visibility = Visibility.Collapsed;
+                zoomlebl.Visibility = Visibility.Collapsed;
+                zoombcn.Visibility = Visibility.Collapsed;
+                updatedlista.Visibility = Visibility.Collapsed;
+                SearchMapbyID.Visibility = Visibility.Collapsed;
+                callsignbox.Visibility = Visibility.Collapsed;
+                StopSearchbytarget.Visibility = Visibility.Collapsed;
+                ZOOM.Visibility = Visibility.Collapsed;
+                Timer.Visibility = Visibility.Collapsed;
+                RestartButton.Visibility = Visibility.Collapsed;
                 // Visual Elements
-                asterixPNG.Visibility = Visibility.Hidden;
-                asterixPerf.Visibility = Visibility.Hidden;
-                bubbleWord.Visibility = Visibility.Hidden;
-                circle.Visibility = Visibility.Hidden;
-                circle2.Visibility = Visibility.Hidden;
+                asterixPNG.Visibility = Visibility.Collapsed;
+                asterixPerf.Visibility = Visibility.Collapsed;
+                bubbleWord.Visibility = Visibility.Collapsed;
+                circle.Visibility = Visibility.Collapsed;
+                circle2.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Visible;
                 SearchIDButton.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
-                SearchResult.Visibility = Visibility.Visible;
 
                 if (Math.Floor(F.CAT_list[0]) == 10)
                 {
@@ -215,18 +222,71 @@ namespace ASTERIX_APP
                 }
             }
         }
-        private void Map_Load(object sender, RoutedEventArgs e)
+        private void MapTrack_Click(object sender, RoutedEventArgs e)
         {
+            // When clicking button before loading a file
+            if (chivato == false)
+            {
+                asterixPNG.Visibility = Visibility.Visible;
+                Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
+                bubbleWord.Height = 100;
+                bubbleWord.Width = 550;
+                bubbleWord.Visibility = Visibility.Visible;
+                circle.Visibility = Visibility.Visible;
+                circle2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Table and Map Stuff
+                Search_Table.Visibility = Visibility.Collapsed;
+                SearchNumButton.Visibility = Visibility.Collapsed;
+                SearchIDButton.Visibility = Visibility.Collapsed;
+                ClearSearch.Visibility = Visibility.Collapsed;
+                NumBox.Visibility = Visibility.Collapsed;
+                IDBox.Visibility = Visibility.Collapsed;
+                Instructions_Label.Visibility = Visibility.Collapsed;
+                Track_Table.Visibility = Visibility.Collapsed;
+                map.Visibility = Visibility.Visible;
+                gridlista.Visibility = Visibility.Visible;
+                StartButton.Visibility = Visibility.Visible;
+                StopButton.Visibility = Visibility.Visible;
+                timer.Visibility = Visibility.Visible;
+                x1butt.Visibility = Visibility.Visible;
+                x2butt.Visibility = Visibility.Visible;
+                x4butt.Visibility = Visibility.Visible;
+                zoomlebl.Visibility = Visibility.Visible;
+                zoombcn.Visibility = Visibility.Visible;
+                SearchMapbyID.Visibility = Visibility.Visible;
+                callsignbox.Visibility = Visibility.Visible;
+                StopSearchbytarget.Visibility = Visibility.Visible;
+                ZOOM.Visibility = Visibility.Visible;
+                Timer.Visibility = Visibility.Visible;
+                RestartButton.Visibility = Visibility.Visible;
 
-            GMaps.Instance.Mode = AccessMode.ServerAndCache;
-            map.MapProvider = OpenStreetMapProvider.Instance;
-            map.MinZoom = 1;
-            map.MaxZoom = 18;
-            map.Zoom = 14;
-            map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
-            map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
-            map.CanDragMap = true;
-            map.DragButton = MouseButton.Left;
+                // Visual Stuff
+                asterixPNG.Visibility = Visibility.Collapsed;
+                asterixPerf.Visibility = Visibility.Collapsed;
+                bubbleWord.Visibility = Visibility.Collapsed;
+                circle.Visibility = Visibility.Collapsed;
+                circle2.Visibility = Visibility.Collapsed;
+                SearchNumButton.Visibility = Visibility.Collapsed;
+                SearchIDButton.Visibility = Visibility.Collapsed;
+                NumBox.Visibility = Visibility.Collapsed;
+                IDBox.Visibility = Visibility.Collapsed;
+
+                if (Math.Floor(F.CAT_list[0]) == 10)
+                {
+                    bool IsMultipleCAT = F.CAT_list.Contains(21);
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
+                    else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+                }
+                if (Math.Floor(F.CAT_list[0]) == 21)
+                {
+                    bool IsMultipleCAT = F.CAT_list.Contains(10);
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
+                    else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
+                }
+            }
         }
         // TRACK TABLE METHODS
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
@@ -551,8 +611,24 @@ namespace ASTERIX_APP
                 }
             }
         }
+        private void ClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Track_Table.Visibility = Visibility.Visible;
+            Search_Table.Visibility = Visibility.Collapsed;
+
+            SearchNumButton.Visibility = Visibility.Visible;
+            NumBox.Visibility = Visibility.Visible;
+            SearchIDButton.Visibility = Visibility.Visible;
+            IDBox.Visibility = Visibility.Visible;
+        }
         private void SearchNum_Click(object sender, RoutedEventArgs e)
         {
+            Track_Table.Visibility = Visibility.Hidden;
+            Search_Table.Visibility = Visibility.Visible;
+            SearchIDButton.Visibility = Visibility.Collapsed;
+            SearchNumButton.Visibility = Visibility.Collapsed;
+            IDBox.Visibility = Visibility.Collapsed;
+            
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
             try
@@ -600,6 +676,12 @@ namespace ASTERIX_APP
         }
         private void SearchID_Click(object sender, RoutedEventArgs e)
         {
+            Track_Table.Visibility = Visibility.Hidden;
+            Search_Table.Visibility = Visibility.Visible;
+            SearchNumButton.Visibility = Visibility.Collapsed;
+            SearchIDButton.Visibility = Visibility.Collapsed;
+            NumBox.Visibility = Visibility.Collapsed;
+
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
 
@@ -679,72 +761,17 @@ namespace ASTERIX_APP
             }
         }
         // TRACK MAP METHODS
-        private void MapTrack_Click(object sender, RoutedEventArgs e)
+        private void Map_Load(object sender, RoutedEventArgs e)
         {
-            // When clicking button before loading a file
-            if (chivato == false)
-            {
-                asterixPNG.Visibility = Visibility.Visible;
-                Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
-                bubbleWord.Height = 100;
-                bubbleWord.Width = 550;
-                bubbleWord.Visibility = Visibility.Visible;
-                circle.Visibility = Visibility.Visible;
-                circle2.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                // Table and Map Stuff
-                Search_Table.Visibility = Visibility.Hidden;
-                SearchResult.Visibility = Visibility.Hidden;
-                SearchNumButton.Visibility = Visibility.Hidden;
-                SearchIDButton.Visibility = Visibility.Hidden;
-                NumBox.Visibility = Visibility.Hidden;
-                IDBox.Visibility = Visibility.Hidden;
-                Instructions_Label.Visibility = Visibility.Hidden;
-                Track_Table.Visibility = Visibility.Hidden;
-                map.Visibility = Visibility.Visible;
-                gridlista.Visibility = Visibility.Visible;
-                StartButton.Visibility = Visibility.Visible;
-                StopButton.Visibility = Visibility.Visible;
-                timer.Visibility = Visibility.Visible;
-                x1butt.Visibility = Visibility.Visible;
-                x2butt.Visibility = Visibility.Visible;
-                x4butt.Visibility = Visibility.Visible;
-                zoomlebl.Visibility = Visibility.Visible;
-                zoombcn.Visibility = Visibility.Visible;
-                SearchMapbyID.Visibility = Visibility.Visible;
-                callsignbox.Visibility = Visibility.Visible;
-                StopSearchbytarget.Visibility = Visibility.Visible;
-                ZOOM.Visibility = Visibility.Visible;
-                Timer.Visibility = Visibility.Visible;
-                RestartButton.Visibility = Visibility.Visible;
-
-                // Visual Stuff
-                asterixPNG.Visibility = Visibility.Hidden;
-                asterixPerf.Visibility = Visibility.Hidden;
-                bubbleWord.Visibility = Visibility.Hidden;
-                circle.Visibility = Visibility.Hidden;
-                circle2.Visibility = Visibility.Hidden;
-                SearchNumButton.Visibility = Visibility.Hidden;
-                SearchIDButton.Visibility = Visibility.Hidden;
-                NumBox.Visibility = Visibility.Hidden;
-                IDBox.Visibility = Visibility.Hidden;
-                SearchResult.Visibility = Visibility.Hidden;
-
-                if (Math.Floor(F.CAT_list[0]) == 10)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(21);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
-                    else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
-                }
-                if (Math.Floor(F.CAT_list[0]) == 21)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(10);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
-                    else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
-                }
-            }
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            map.MapProvider = OpenStreetMapProvider.Instance;
+            map.MinZoom = 1;
+            map.MaxZoom = 18;
+            map.Zoom = 14;
+            map.Position = new PointLatLng(MLAT_lat, MLAT_lon);
+            map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+            map.CanDragMap = true;
+            map.DragButton = MouseButton.Left;
         }
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {

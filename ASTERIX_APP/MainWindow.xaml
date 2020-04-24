@@ -24,33 +24,33 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Load Buttons-->
+                <!-- Main Buttons-->
                 <Button x:Name="LoadButton" Click="LoadFile_Click" Grid.Column="0" Grid.Row="0" Content="Load File" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
                 <Button x:Name="TableButton" Click="TableTrack_Click" Grid.Column="1" Grid.Row="0" Content="Tracking Table" Background="#222" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1"/>
                 <Button x:Name="MapButton" Click="MapTrack_Click" Grid.Column="2" Grid.Row="0" Content="Tracking Map" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 1 1"/>
                 <Button x:Name="ExitButton" Click="Exit_Click" Grid.Column="3" Grid.Row="0" Content="Exit" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
                 <!-- Track Table elements-->
-                <Button x:Name="SearchNumButton" Visibility="Hidden" Click="SearchNum_Click" Grid.Column="0" Grid.Row="1" Content="Search #" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
-                <Button x:Name="SearchIDButton" Visibility="Hidden" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search ID" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
-                <TextBox x:Name="NumBox" Visibility="Hidden" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
-                <TextBox x:Name="IDBox" Visibility="Hidden" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
-                <Label x:Name="SearchResult" Visibility="Hidden" Grid.Column="3" Grid.Row="1" Content="Search Result:" Foreground="WhiteSmoke" FontSize="14" HorizontalAlignment="Stretch" Margin="5 10 10 0"/>
-                <Button  x:Name="SearchMapbyID" Click="SearchIDMAP_Click" Visibility="Hidden" Content="Search ID" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="206,62,0,-57" Height="30" Width="80" Grid.Column="1" Grid.Row="1"/>
-                <TextBox x:Name="callsignbox" Visibility="Hidden" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" HorizontalAlignment="Left" BorderThickness="1" Margin="10,63,0,-58" TextAlignment="Center" BorderBrush="#74aed6" Height="30" Width="130" Grid.Column="2" Grid.Row="1"/>
-                <Button x:Name="StopSearchbytarget" Visibility="Hidden" Click="Stopsearchtarget" Content="X" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="153,63,0,-58" Height="30" Width="34" Grid.Column="2" Grid.Row="1"/>
+                <Button x:Name="SearchNumButton" Visibility="Collapsed" Click="SearchNum_Click" Grid.Column="0" Grid.Row="1" Content="Search #" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <Button x:Name="SearchIDButton" Visibility="Collapsed" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search ID" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <TextBox x:Name="NumBox" Visibility="Collapsed" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
+                <TextBox x:Name="IDBox" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
+                <Button x:Name="ClearSearch" Visibility="Collapsed" Click="ClearSearch_Click" Grid.Column="2" Grid.Row="1" Content="Clear Search" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
                 <!--Map elements-->
+                <Button  x:Name="SearchMapbyID" Click="SearchIDMAP_Click" Visibility="Collapsed" Content="Search ID" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="206,62,0,-57" Height="30" Width="80" Grid.Column="1" Grid.Row="1"/>
+                <TextBox x:Name="callsignbox" Visibility="Collapsed" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" HorizontalAlignment="Left" BorderThickness="1" Margin="10,63,0,-58" TextAlignment="Center" BorderBrush="#74aed6" Height="30" Width="130" Grid.Column="2" Grid.Row="1"/>
+                <Button x:Name="StopSearchbytarget" Visibility="Collapsed" Click="Stopsearchtarget" Content="X" HorizontalAlignment="Left" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="153,63,0,-58" Height="30" Width="34" Grid.Column="2" Grid.Row="1"/>
 
             </Grid>
         </StackPanel>
-        <Label x:Name="Instructions_Label" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff" Visibility="Hidden"/>
+        <Label x:Name="Instructions_Label" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff" Visibility="Collapsed"/>
         <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./Images/upc-logo.png"/>
-        <Image x:Name="asterixPNG" Source="./Images/asterix.png" Opacity="0.7" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Hidden"/>
-        <Image x:Name="asterixPerf" Source="./Images/asterixPERF.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Hidden"/>
+        <Image x:Name="asterixPNG" Source="./Images/asterix.png" Opacity="0.7" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Collapsed"/>
+        <Image x:Name="asterixPerf" Source="./Images/asterixPERF.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Collapsed"/>
 
         <!-- Instructions Bubble Word -->
-        <Rectangle x:Name="bubbleWord" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden" RadiusX="10" RadiusY="10"/>
-        <Ellipse x:Name="circle" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Height="20" Margin="290" Visibility="Hidden"/>
-        <Ellipse x:Name="circle2" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10" Height="10" Margin="280" Visibility="Hidden"/>
+        <Rectangle x:Name="bubbleWord" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed" RadiusX="10" RadiusY="10"/>
+        <Ellipse x:Name="circle" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Height="20" Margin="290" Visibility="Collapsed"/>
+        <Ellipse x:Name="circle2" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10" Height="10" Margin="280" Visibility="Collapsed"/>
 
         <!-- CheckBox version load-->
         <!--<CheckBox Content="Version 2.1" Margin="398,328,-398,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
@@ -62,7 +62,7 @@
         <!-- Data Table -->
         <DataGrid x:Name="Track_Table" Padding="5"
                   Margin="0 90 300 0" Background="#222" 
-                  Visibility="Hidden" IsReadOnly="True" 
+                  Visibility="Collapsed" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}">
 
             <DataGrid.ColumnHeaderStyle>
@@ -92,88 +92,59 @@
         </DataGrid>
 
         <!-- Search Table -->
-        <DataGrid x:Name="Search_Table" Padding="0 5 5 5"
-                  Margin="890 90 0 0" Background="#222" 
-                  Visibility="Hidden" IsReadOnly="True" 
+        <DataGrid x:Name="Search_Table" Padding="5"
+                  Margin="0 90 300 0" Background="#222" 
+                  Visibility="Collapsed" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}">
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="#222"/>
-                    <Setter Property="Foreground" Value="#fff"/>
-                    <Setter Property="BorderBrush" Value="#000"/>
-                </Style>
-            </DataGrid.RowStyle>
-            <!-- Rotating the grid -->
+
             <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="LayoutTransform">
-                        <Setter.Value>
-                            <TransformGroup>
-                                <RotateTransform Angle="-90"/>
-                                <ScaleTransform ScaleY="-1"/>
-                            </TransformGroup>
-                        </Setter.Value>
-                    </Setter>
+                <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#004778"/>
                     <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Margin" Value="0 0 1 1"/>
                     <Setter Property="Padding" Value="5"/>
                     <Setter Property="BorderThickness" Value="0 0 1 1"/>
                     <Setter Property="BorderBrush" Value="#000"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
-            <DataGrid.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="90"/>
-                    <MatrixTransform Matrix="-1, 0, 0, 1, 0, 0"/>
-                </TransformGroup>
-            </DataGrid.LayoutTransform>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Background" Value="#222"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.RowStyle>
+
             <DataGrid.CellStyle>
-                <Style  TargetType="DataGridCell">
-                    <Setter Property="LayoutTransform">
-                        <Setter.Value>
-                            <TransformGroup>
-                                <RotateTransform Angle="-90"/>
-                                <ScaleTransform ScaleX="1" ScaleY="-1" />
-                            </TransformGroup>
-                        </Setter.Value>
-                    </Setter>
+                <Style TargetType="DataGridCell">
+                    <EventSetter Event="MouseDoubleClick" Handler="ClickDataGrid"/>
                 </Style>
             </DataGrid.CellStyle>
         </DataGrid>
 
         <!-- Map -->
         <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500,150,10,10" 
-                           Loaded ="Map_Load" Visibility="Hidden" BorderThickness="1" />
-        <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="73,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
+                           Loaded ="Map_Load" Visibility="Collapsed" BorderThickness="1" />
+        <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="73,188,0,0" VerticalAlignment="Top" Height="27" Width="78"/>
+        <Button x:Name ="StopButton" Content="PAUSE" Click="stop_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="168,188,0,0" VerticalAlignment="Top" Height="27" Width="78"/>
+        <Button x:Name ="RestartButton" Content="RESTART"  Click="Restart_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="112,232,0,0" VerticalAlignment="Top" Height="27" Width="78"/>
+        <TextBlock x:Name="timer"  HorizontalAlignment="Left" Margin="49,81,0,0"  Visibility="Collapsed" VerticalAlignment="Top"  FontFamily ="Segoe UI" FontSize="60" Height="91" Width="222" Foreground="#FFD31C1C"/>
 
-        </Button>
-        <Button x:Name ="StopButton" Content="PAUSE" Click="stop_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="168,188,0,0" VerticalAlignment="Top" Height="27" Width="78">
+        <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,141,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
+        <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,185,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
+        <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,230,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
 
-        </Button>
-        <Button x:Name ="RestartButton" Content="RESTART"  Click="Restart_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="112,232,0,0" VerticalAlignment="Top" Height="27" Width="78">
+        <Button x:Name="zoomlebl" Content="ZOOM +" Click ="zoomin_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="386,139,0,0" VerticalAlignment="Top" Height="65" Width="86"/>
+        <Button x:Name="zoombcn" Content="ZOOM -" Click="zoomout_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="387,214,0,0" VerticalAlignment="Top" Height="65" Width="83"/>
 
-        </Button>
-
-        <TextBlock x:Name="timer"  HorizontalAlignment="Left" Margin="49,81,0,0"  Visibility="Hidden" VerticalAlignment="Top"  FontFamily ="Segoe UI" FontSize="60" Height="91" Width="222" Foreground="#FFD31C1C"/>
-
-        <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,141,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
-        <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,185,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
-        <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="312,230,0,0" VerticalAlignment="Top" Height="30" Width="40"/>
-
-        <Button x:Name="zoomlebl" Content="ZOOM +" Click ="zoomin_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="386,139,0,0" VerticalAlignment="Top" Height="65" Width="86">
-
-        </Button>
-
-        <Button x:Name="zoombcn" Content="ZOOM -" Click="zoomout_Click"   Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="387,214,0,0" VerticalAlignment="Top" Height="65" Width="83">
-
-        </Button>
-        <Label x:Name="speedlabel" Content="Speed"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="309,104,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
-        <Label x:Name="ZOOM" Content="Zoom"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="409,105,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
-        <Label x:Name="Timer" Content="Timer"  Visibility="Hidden" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="47,52,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
+        <Label x:Name="speedlabel" Content="Speed"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="309,104,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
+        <Label x:Name="ZOOM" Content="Zoom"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="409,105,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
+        <Label x:Name="Timer" Content="Timer"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="47,52,0,0" VerticalAlignment="Top" Height="30" Width="80"/>
 
         <DataGrid x:Name ="gridlista" Margin="10,300,710,10" 
                   RenderTransformOrigin="0.5,0.5" Background="#222" 
-                  Foreground="white" Visibility="Hidden"  
+                  Foreground="white" Visibility="Collapsed"  
                   IsReadOnly="True" BorderBrush="#FFF5F6F7" 
                   RowBackground="Black" CanUserSortColumns="False" 
                   CanUserResizeRows="False">
@@ -197,16 +168,14 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-
-
+        
         <DataGrid x:Name ="updatedlista" Margin="10,300,710,10" 
                   RenderTransformOrigin="0.5,0.5" Background="#222" 
-                  Foreground="white" Visibility="Hidden"  
+                  Foreground="white" Visibility="Collapsed"  
                   IsReadOnly="True" BorderBrush="#FFF5F6F7" 
                   RowBackground="Black" CanUserSortColumns="False" 
-                  CanUserResizeRows="False"  >
-
-
+                  CanUserResizeRows="False">
+            
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#004778"/>
@@ -226,8 +195,5 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        
-
-
     </Grid>
 </Window>
