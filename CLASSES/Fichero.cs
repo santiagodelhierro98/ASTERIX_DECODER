@@ -13,6 +13,7 @@ namespace CLASSES
         Metodos M = new Metodos();
         string path;
         int CAT;
+        public double[] SICSAC;
         public List<double> CAT_list = new List<double>();
 
         List<CAT10> listaCAT10 = new List<CAT10>();
@@ -167,13 +168,14 @@ namespace CLASSES
                            "", "", "", "", "", "", "", "", "", "", "", "");
                 }
                 else if (CAT == 21)
-                {                    
+                {
+                    SICSAC = M.getSIC_SAC(arraystring);
                     contadorCAT21++;
                     // Check if its version 23
-                    if (filename.Contains("v023") == true || filename.Contains("v23") == true)
+                    if (SICSAC[0] != 107 || SICSAC[1] != 0)
                     {
                         CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
-                        C21_v23.Decode21(arraystring);
+                        C21_v23.Decode21_23(arraystring);
                         listaCAT21_v23.Add(C21_v23);
                         // Multiple CAT reduced table for maptrack
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
@@ -198,8 +200,27 @@ namespace CLASSES
                             C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "", C21_v23.Roll, "",
                             "", "", "", "", "", "", "", "", "", "Click to View Data", "", "");
                     }
+                    //if (CAT_list.Contains(10) && (SICSAC[0] != 107 || SICSAC[1] != 0))
+                    //{
+                    //    CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
+                    //    C21_v23.Decode21_23(arraystring);
+                    //    listaCAT21_v23.Add(C21_v23);
+
+                    //    // Multiple CAT reduced table for maptrack
+                    //    multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
+                    //    C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
+
+                    //    // Complete Multiple CAT table
+                    //    tablaMultipleCAT.Rows.Add(contadorGeneral, CAT + 0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
+                    //        "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "",
+
+                    //        "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+                    //        "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
+                    //        C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "", C21_v23.Roll, "",
+                    //        "", "", "", "", "", "", "", "", "", "Click to View Data", "", "");
+                    //}
                     // Check if its version 21
-                    if (filename.Contains("v021") == true || filename.Contains("v21") == true)
+                    if (SICSAC[0] == 107 && SICSAC[1] == 0)
                     {
                         CAT_list.Add(CAT); // Adds the pack category into this list
                         C21.Decode21(arraystring);
@@ -225,23 +246,6 @@ namespace CLASSES
                             "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "(" + C21.High_Res_Lat_WGS_84 + ", " + C21.High_Res_Lon_WGS_84 + ")", C21.Op_Status, "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
                             C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "Click to View Data", C21.Roll, C21.Service_ID,
                             "Click to View Data", C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "Click to View Data", "Click to View Data", "Click to View Data", C21.Data_Ages, C21.RP);
-                    }
-                    if (filename.Contains("smr") == true && filename.Contains("mlat") == true)
-                    {
-                        CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
-                        C21_v23.Decode21(arraystring);
-                        listaCAT21_v23.Add(C21_v23);
-                        multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
-                        C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_Address, "Null");
-
-                        // Complete Multiple CAT table
-                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT + 0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
-                            "Click to View Data", "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "", C21_v23.FL, C21_v23.GA, C21_v23.Target_Address, "",
-
-                            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-                            "(" + C21_v23.Lat_WGS_84 + ", " + C21_v23.Lon_WGS_84 + ")", "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")",
-                            C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "", C21_v23.Roll, "",
-                            "", "", "", "", "", "", "", "","", "Click to View Data", "", "");
                     }
                 }                
             }

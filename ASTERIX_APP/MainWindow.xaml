@@ -52,13 +52,6 @@
         <Ellipse x:Name="circle" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Height="20" Margin="290" Visibility="Collapsed"/>
         <Ellipse x:Name="circle2" Fill="Transparent" Stroke="White" Opacity="0.6" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10" Height="10" Margin="280" Visibility="Collapsed"/>
 
-        <!-- CheckBox version load-->
-        <!--<CheckBox Content="Version 2.1" Margin="398,328,-398,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
-        <CheckBox Content="Version 0.23" Margin="488,328,-481,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
-        <CheckBox Content="Multi Category" Margin="598,328,-579,341" Visibility="Visible" Background="#333" Foreground="#74aed6" />
-        <Label Content="If you have selected file containing Category 21, please specify its version:" Name="LabelCheckVersion" Margin="364,266,380,392"  Foreground="White"/>
-        <Label Content="Otherwise click continue" Margin="365,366,551,292" Name="LabelCheckVersion2"   Foreground="White"/>
-        <Button Content="Continue" Name="Continue_but" Margin="548,389,549,263" Background="#222" Foreground="#fff" Padding="5"/>-->
         <!-- Data Table -->
         <DataGrid x:Name="Track_Table" Padding="5"
                   Margin="0 90 0 0" Background="#222" 

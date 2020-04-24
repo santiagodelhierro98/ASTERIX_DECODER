@@ -44,7 +44,7 @@ namespace CLASSES
         public double FSSA = double.NaN; //final state selected altitde in ft
         public string[] Trajectory_Intent = new string[16];
 
-        public void Decode21(string[] paquete)
+        public void Decode21_23(string[] paquete)
         {
             Metodos Met = new Metodos();
             int longitud = Met.Longitud_Paquete(paquete);

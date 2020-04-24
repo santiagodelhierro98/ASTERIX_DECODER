@@ -587,5 +587,39 @@ namespace CLASSES
             int secabs = Convert.ToInt32(tod[0]) * 3600 + Convert.ToInt32(tod[1]) * 60 + Convert.ToInt32(tod[2]);
             return secabs;
         }
+
+        public double[] getSIC_SAC(string[] paquete)
+        {
+            Metodos Met = new Metodos();
+            int longitud = Met.Longitud_Paquete(paquete);
+            string[] paquete0 = new string[longitud];
+
+            for (int i = 0; i < longitud; i++)
+            {
+                paquete0[i] = Met.Poner_Zeros_Delante(paquete[i]);
+                string bitscat = Convert.ToString(Convert.ToInt32(paquete0[0], 16), 2);
+                double CAT = Convert.ToInt32(bitscat, 2);
+                if (CAT != 21) { i = i + 1; }
+            }
+            List<string> FSPEC = new List<string>(Met.FSPEC(paquete0));
+            // Posicion del vector paquete0 donde empieza la info despues del FSPEC
+            int contador = Convert.ToInt32(FSPEC[FSPEC.Count - 1]) + 1;
+            FSPEC.RemoveAt(FSPEC.Count - 1);
+            double[] SIC_SAC = new double[2];
+
+            if (FSPEC[0] == "1")
+            {
+                // Item I021/010 : Data Source Identification
+                string SAC_Bin = Met.Octeto_A_Bin(paquete0[contador]);
+                string SIC_Bin = Met.Octeto_A_Bin(paquete0[contador + 1]);
+                double SAC = (Convert.ToInt32(SAC_Bin, 2));
+                double SIC = (Convert.ToInt32(SIC_Bin, 2));
+
+                //decodificamos , solo utilizaremos estos dos 
+                SIC_SAC[0] = SIC;
+                SIC_SAC[1] = SAC;
+            }
+            return SIC_SAC;
+        }
     }
 }
