@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CLASSES
 {
@@ -184,9 +183,9 @@ namespace CLASSES
                 string ToD2 = M.Octeto_A_Bin(paquete0[contador + 1]);
                 string ToD3 = M.Octeto_A_Bin(paquete0[contador + 2]);
 
-                string ToD = ToD1 + ToD2 + ToD3;                
+                string ToD = ToD1 + ToD2 + ToD3;
 
-                Time_Day = Math.Round(Convert.ToInt32(ToD, 2)/128.0, 3);
+                Time_Day = Math.Round(Convert.ToInt32(ToD, 2) / 128.0, 3);
                 contador += 3;
             }
             if (FSPEC[4] == "1")
@@ -241,7 +240,7 @@ namespace CLASSES
 
                 contador += 4;
             }
-            
+
             if (FSPEC.Count > 7)
             {
                 if (FSPEC[7] == "1")
@@ -290,7 +289,7 @@ namespace CLASSES
                     string Status_Bin = M.Octeto_A_Bin(paquete0[contador]);
                     char[] Status = Status_Bin.ToCharArray();
                     //CNF
-                    if (Status[0].ToString() == "1") { Track_Status[0] ="Track in initalisation phase"; }
+                    if (Status[0].ToString() == "1") { Track_Status[0] = "Track in initalisation phase"; }
                     if (Status[0].ToString() == "0") { Track_Status[0] = "Confirmed Track"; }
                     //TRE
                     if (Status[1].ToString() == "1") { Track_Status[1] = "Last Report for a Track"; }
@@ -419,9 +418,9 @@ namespace CLASSES
                     if (sti == 1) { STI = "Callsign not downlinked from transponder"; }
                     if (sti == 2) { STI = "Registration not downlinked from transponder"; }
 
-                    for (int i=8; i<TI_v.Length; i++) { Target_ID += TI_v[i].ToString(); }
+                    for (int i = 8; i < TI_v.Length; i++) { Target_ID += TI_v[i].ToString(); }
                     Target_ID = M.Compare_bits(Target_ID);
-                    
+
                     contador += 7;
                 }
 
@@ -485,14 +484,14 @@ namespace CLASSES
                         string FL_ = FL1 + FL2;
                         char[] FL_bin = FL_.ToCharArray();
                         //V
-                        if (FL_bin[0].ToString() == "0") { FL[0] = "Code Validated"; } 
+                        if (FL_bin[0].ToString() == "0") { FL[0] = "Code Validated"; }
                         if (FL_bin[0].ToString() == "1") { FL[0] = "Code Not Validated"; }
                         //G
                         if (FL_bin[1].ToString() == "0") { FL[1] = "Default"; }
                         if (FL_bin[1].ToString() == "1") { FL[1] = "Garbled Code"; }
 
                         string FL3 = FL_bin[2].ToString();
-                        for(int i=3; i<FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
+                        for (int i = 3; i < FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
                         FL[2] = (Convert.ToInt32(FL3, 2)).ToString();
                         contador += 2;
                     }
@@ -636,7 +635,7 @@ namespace CLASSES
                     else { }
                 }
                 else { }
-            }          
+            }
             else { }
         }
         // getters for flight class

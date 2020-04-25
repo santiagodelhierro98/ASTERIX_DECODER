@@ -1,15 +1,15 @@
-﻿using System;
+﻿using CLASSES;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
+using Microsoft.Win32;
+using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using CLASSES;
-using Microsoft.Win32;
-using GMap.NET;
-using GMap.NET.MapProviders;
-using GMap.NET.WindowsPresentation;
 using System.Windows.Threading;
-using System.Data;
 
 namespace ASTERIX_APP
 {
@@ -53,19 +53,19 @@ namespace ASTERIX_APP
             bubbleWord.Height = 150;
             bubbleWord.Width = 550;
         }
-        
+
         // MAIN APP BUTTONS
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to exit?","Exit", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButton.YesNo);
             switch (result)
             {
                 case MessageBoxResult.Yes:
                     this.Close();
-                    Application.Current.Shutdown();                    
+                    Application.Current.Shutdown();
                     break;
                 case MessageBoxResult.No:
-                    break;          
+                    break;
             }
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
@@ -294,7 +294,7 @@ namespace ASTERIX_APP
                 }
             }
         }
-        
+
         // TRACK TABLE METHODS
         void ClickDataGrid(object sender, RoutedEventArgs e) // When we click over a clickable cell
         {
@@ -454,7 +454,7 @@ namespace ASTERIX_APP
                         string[] TS = pack.Target_Status;
                         MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],
                             "Target Status");
-                    }                    
+                    }
                     if (Col_Num == 40 && pack.Trajectory_Intent != null)
                     {
                         string[] TI = pack.Trajectory_Intent;
@@ -463,7 +463,7 @@ namespace ASTERIX_APP
                             TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15],
                             "Trajectory Intnet");
                     }
-                }                
+                }
             }
             // Mixt category
             if (category == 1021)
@@ -635,7 +635,7 @@ namespace ASTERIX_APP
             SearchIDButton.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             IDBox.Visibility = Visibility.Collapsed;
-            
+
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
             try
@@ -767,7 +767,7 @@ namespace ASTERIX_APP
                 else { Search_Table.ItemsSource = searchtable.DefaultView; }
             }
         }
-        
+
         // TRACK MAP METHODS
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -784,7 +784,6 @@ namespace ASTERIX_APP
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {
             timer.Visibility = Visibility.Visible;
-            checkCAT(); //checks file category
             if (category == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
@@ -835,13 +834,13 @@ namespace ASTERIX_APP
             if (targetid != null)
             {
                 marker.Shape = new Image
-                {                   
+                {
                     Width = 15,
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
             }
-            if (targetid == "Not available") 
+            if (targetid == "Not available")
             {
                 marker.Shape = new Image
                 {
@@ -882,11 +881,11 @@ namespace ASTERIX_APP
         {
             Boolean x = true;
             while (x == true)
-            {                
+            {
                 CAT10 C10 = F.getCAT10(i);
                 double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 double tiempo = Math.Floor(C10.Time_Day);
-                if(C10.Target_ID == null) { C10.Target_ID = "Not available"; }
+                if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
                 {
@@ -896,11 +895,11 @@ namespace ASTERIX_APP
                         {
                             if (C10.Target_Rep_Descript[0] == "PSR")
                             {
-                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
+                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                             }
                             if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                             {
-                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
+                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                             }
                             i++;
                             if (map.Markers.Count >= 200)
@@ -918,7 +917,7 @@ namespace ASTERIX_APP
                     else
                     {
                         i++;
-                    }                    
+                    }
                 }
                 else
                 {
@@ -926,11 +925,11 @@ namespace ASTERIX_APP
                     {
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                         }
                         if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                         {
-                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1],C10.Target_ID);
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                         }
                         i++;
                         if (map.Markers.Count >= 200)
@@ -969,7 +968,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84,C21_v23.Target_ID);
+                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -992,7 +991,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84,C21_v23.Target_ID);
+                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -1009,7 +1008,7 @@ namespace ASTERIX_APP
                     }
                 }
                 // version 2.1
-                if( F.SICSAC[0] != 107 || F.SICSAC[1] != 0)
+                if (F.SICSAC[0] != 107 || F.SICSAC[1] != 0)
                 {
                     CAT21 C21 = F.getCAT21(i);
                     start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
@@ -1017,13 +1016,13 @@ namespace ASTERIX_APP
                     if (C21.Target_ID == null) { C21.Target_ID = "Not available"; }
 
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
-                    if (idbuttonclicked==true)
+                    if (idbuttonclicked == true)
                     {
                         if (C21.Target_ID.Contains(searchedcallsign))
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84,C21.Target_ID);
+                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -1037,17 +1036,17 @@ namespace ASTERIX_APP
                                 s++;
                             }
                         }
-                        else 
+                        else
                         {
-                            i++; 
+                            i++;
                         }
                     }
-                    
+
                     else
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84,C21.Target_ID);
+                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -1092,12 +1091,12 @@ namespace ASTERIX_APP
                             if (targetid == "") { targetid = "Not available"; }
                             if (targetid.Contains(searchedcallsign))
                             {
-                                if (F.CAT_list[i] == 10 )
+                                if (F.CAT_list[i] == 10)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    
-                                    AddMarkerMLAT(poscartx, poscarty,targetid);
+
+                                    AddMarkerMLAT(poscartx, poscarty, targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -1105,11 +1104,11 @@ namespace ASTERIX_APP
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
                                 }
-                                if (F.CAT_list[i] == 21.23 )
+                                if (F.CAT_list[i] == 21.23)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerC21(poscartx, poscarty,targetid);
+                                    AddMarkerC21(poscartx, poscarty, targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -1132,7 +1131,7 @@ namespace ASTERIX_APP
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerMLAT(poscartx, poscarty,targetid);
+                                AddMarkerMLAT(poscartx, poscarty, targetid);
                                 if (map.Markers.Count >= 200)
                                 {
                                     map.Markers[map.Markers.Count - 200].Clear();
@@ -1144,7 +1143,7 @@ namespace ASTERIX_APP
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty,targetid);
+                                AddMarkerC21(poscartx, poscarty, targetid);
                                 if (map.Markers.Count >= 200)
                                 {
                                     map.Markers[map.Markers.Count - 200].Clear();
@@ -1190,7 +1189,7 @@ namespace ASTERIX_APP
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
         }
-        
+
         // MAP VIEWING OPTIONS        
         // Change the refreshing speed of the map files
         private void x1_Click(object sender, RoutedEventArgs e)
@@ -1208,19 +1207,17 @@ namespace ASTERIX_APP
         // Change map zoom
         private void zoomin_Click(object sender, RoutedEventArgs e)
         {
-           map.Zoom = map.Zoom + 2;
-        }      
+            map.Zoom = map.Zoom + 2;
+        }
         private void zoomout_Click(object sender, RoutedEventArgs e)
         {
             map.Zoom = map.Zoom - 2;
         }
 
         // Plot only airplanes with searched callsign
-
         private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
         {
             idbuttonclicked = true;
-            checkCAT();
             if (callsignbox.Text == "")
             {
                 MessageBox.Show("Make sure textbox is not empty!");
@@ -1230,13 +1227,13 @@ namespace ASTERIX_APP
                 if (category == 10)
                 {
                     bool fuera = false;
-                    for (int q = 0; q < F.gettablacat10reducida().Rows.Count; q++)
+                    for (int q = 0; q < F.tablacat10reducida.Rows.Count; q++)
                     {
-                        string targetID = Convert.ToString(F.gettablacat10reducida().Rows[q][1]);
+                        string targetID = Convert.ToString(F.tablacat10reducida.Rows[q][1]);
                         if (targetID.Contains(callsignbox.Text))
                         {
                             fuera = true;
-                            q = F.gettablacat10reducida().Rows.Count;
+                            q = F.tablacat10reducida.Rows.Count;
                             map.Markers.Clear();
                             searchedcallsign = callsignbox.Text;
                         }
@@ -1249,34 +1246,14 @@ namespace ASTERIX_APP
                 if (category == 21)
                 {
                     bool fuera = false;
-                    for (int q = 0; q < F.gettablacat21reducida().Rows.Count; q++)
+                    for (int q = 0; q < F.tablacat21reducida.Rows.Count; q++)
                     {
-                        string targetID = Convert.ToString(F.gettablacat21reducida().Rows[q][1]);
+                        string targetID = Convert.ToString(F.tablacat21reducida.Rows[q][1]);
 
                         if (targetID.Contains(callsignbox.Text))
                         {
                             fuera = true;
-                            q = F.gettablacat21reducida().Rows.Count;
-                            map.Markers.Clear();
-                            searchedcallsign = callsignbox.Text;
-                        }
-                    }
-                    if (fuera == false)
-                    {
-                        MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)" );
-                    }
-                }
-                if (category == 1021)
-                {
-                    bool fuera = false;
-                    for (int q = 0; q < F.gettablamixtareducida().Rows.Count; q++)
-                    {
-                        string targetID = Convert.ToString(F.gettablamixtareducida().Rows[q][1]);
-
-                        if (targetID.Contains(callsignbox.Text))
-                        {
-                            fuera = true;
-                            q = F.gettablamixtareducida().Rows.Count;
+                            q = F.tablacat21reducida.Rows.Count;
                             map.Markers.Clear();
                             searchedcallsign = callsignbox.Text;
                         }
@@ -1284,12 +1261,31 @@ namespace ASTERIX_APP
                     if (fuera == false)
                     {
                         MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)");
+                    }
+                }
+                if (category == 1021)
+                {
+                    bool fuera = false;
+                    for (int q = 0; q < F.multiplecattablereducida.Rows.Count; q++)
+                    {
+                        string targetID = Convert.ToString(F.multiplecattablereducida.Rows[q][1]);
 
+                        if (targetID.Contains(callsignbox.Text))
+                        {
+                            fuera = true;
+                            q = F.multiplecattablereducida.Rows.Count;
+                            map.Markers.Clear();
+                            searchedcallsign = callsignbox.Text;
+                        }
+                    }
+                    if (fuera == false)
+                    {
+                        MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! " +
+                            "\n Make sure Target ID is written in capital letters (e.g. VLG)");
                     }
                 }
                 else { }
             }
-           
         }
         private void Stopsearchtarget(object sender, RoutedEventArgs e)
         {
@@ -1341,33 +1337,6 @@ namespace ASTERIX_APP
 
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
-        }
-        public void checkCAT()
-        {
-            if (Math.Floor(F.CAT_list[0]) == 10)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(21);
-                if (IsMultipleCAT == true)
-                {
-                     category = 1021;
-                }
-                else
-                {
-                     category = 10;
-                }
-            }
-            if (Math.Floor(F.CAT_list[0]) == 21)
-            {
-                bool IsMultipleCAT = F.CAT_list.Contains(10);
-                if (IsMultipleCAT == true)
-                {
-                     category = 1021;
-                }
-                else
-                {
-                     category = 21;
-                }
-            }
         }
     }
 }

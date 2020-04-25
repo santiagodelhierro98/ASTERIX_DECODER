@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CLASSES
 {
@@ -116,8 +115,8 @@ namespace CLASSES
                 contador = contador + 2;
 
             }
-            
-        
+
+
             if (FSPEC[2] == "1")
             {
                 //Data Item I021/030, Time of Day
@@ -175,7 +174,7 @@ namespace CLASSES
                 if (mnbits == "01") { Fig_of_Merit[2] = "Differential correction"; }
                 if (mnbits == "10") { Fig_of_Merit[2] = "No Differential correction"; }
                 if (mnbits == "11") { Fig_of_Merit[2] = "invalid"; }
-                string octeto2 = Met.Octeto_A_Bin(paquete0[contador+1]);
+                string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                 string pabits = octeto2[4].ToString() + octeto2[5].ToString() + octeto2[6].ToString() + octeto2[7].ToString();
                 Fig_of_Merit[3] = pabits;
                 contador = contador + 2;

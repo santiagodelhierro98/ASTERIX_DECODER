@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using System.Data;
+using System.Text;
 
 namespace CLASSES
 {
@@ -37,7 +36,7 @@ namespace CLASSES
                 result.Append(hexCharacterToBinary[char.ToLower(c)]);
             }
             return result.ToString();
-        }        
+        }
         public string Poner_Zeros_Delante(string octeto)
         {
             string octeto0;
@@ -159,8 +158,8 @@ namespace CLASSES
             while (6 + j <= targetbits.Length)
             {
                 char[] target_bits = targetbits.ToCharArray();
-                
-                string sext = target_bits[j].ToString() + target_bits[j + 1].ToString() + target_bits[j + 2].ToString() + target_bits[j + 3].ToString() + target_bits[j + 4].ToString() + target_bits[j + 5].ToString() ;
+
+                string sext = target_bits[j].ToString() + target_bits[j + 1].ToString() + target_bits[j + 2].ToString() + target_bits[j + 3].ToString() + target_bits[j + 4].ToString() + target_bits[j + 5].ToString();
                 if (sext == "000001") { Target_ID = Target_ID + "A"; }
                 if (sext == "000010") { Target_ID = Target_ID + "B"; }
                 if (sext == "000011") { Target_ID = Target_ID + "C"; }
@@ -199,7 +198,7 @@ namespace CLASSES
                 if (sext == "111000") { Target_ID = Target_ID + "8"; }
                 if (sext == "111001") { Target_ID = Target_ID + "9"; }
 
-                j = j + 6;               
+                j = j + 6;
             }
             return Target_ID;
         }
@@ -280,7 +279,7 @@ namespace CLASSES
             tablacat21reducida.Columns.Add(new DataColumn("Target Address"));
             tablacat21reducida.Columns.Add(new DataColumn("Track Number"));
         }
-        public void Create_TrackTable_Puras(DataTable tablaCAT10, DataTable tablaCAT21) 
+        public void Create_TrackTable_Puras(DataTable tablaCAT10, DataTable tablaCAT21)
         {
             //CAT10
             tablaCAT10.Columns.Add(new DataColumn("#"));
@@ -617,6 +616,61 @@ namespace CLASSES
                 SIC_SAC[1] = SAC;
             }
             return SIC_SAC;
+        }
+        public bool IsAMulticatFile(List<string[]> listahex)
+        {
+            List<int> listasCAT = new List<int>();
+            bool multicat = new bool();
+            int CAT = new int();
+            // to see if is multicat
+            for (int p = 0; p < 100; p++)
+            {
+                multicat = false;
+                string[] arraystring = listahex[p];
+                CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+                listasCAT.Add(CAT);
+                multicat = false;
+                if (listasCAT.Contains(10) && listasCAT.Contains(21))
+                {
+                    multicat = true;
+                    break;
+                }
+            }
+            return multicat;
+        }
+        public List<string[]> File_to_HexaList(byte[] fileBytes, string path)
+        {
+            List<byte[]> listabyte = new List<byte[]>();
+            int i = 0;
+            int contador = fileBytes[2];
+            // int length = 0;
+            while (i < fileBytes.Length)
+            {
+                byte[] array = new byte[contador];
+                for (int j = 0; j < array.Length; j++)
+                {
+                    array[j] = fileBytes[i];
+                    i++;
+                }
+                listabyte.Add(array);
+                //length += array.Length;
+                if (i + 2 < fileBytes.Length)
+                {
+                    contador = fileBytes[i + 2];
+                }
+            }
+            List<string[]> listahex = new List<string[]>();
+            for (int x = 0; x < listabyte.Count; x++)
+            {
+                byte[] buffer = listabyte[x];
+                string[] arrayhex = new string[buffer.Length];
+                for (int y = 0; y < buffer.Length; y++)
+                {
+                    arrayhex[y] = buffer[y].ToString("X");
+                }
+                listahex.Add(arrayhex);
+            }
+            return listahex;
         }
     }
 }
