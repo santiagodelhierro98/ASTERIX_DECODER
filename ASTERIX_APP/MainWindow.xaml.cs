@@ -10,6 +10,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Threading.Tasks;
+using System.Windows.Controls
+
 
 namespace ASTERIX_APP
 {
@@ -69,9 +72,8 @@ namespace ASTERIX_APP
                     break;
             }
         }
-        public void LoadFile_Click(object sender, RoutedEventArgs e)
+        public async void LoadFile_Click(object sender, RoutedEventArgs e)
         {
-            var progress = new Progress<int>(value => progressbar.Value = value);
             STOP_TRACK();
             
             map.Visibility = Visibility.Collapsed;
@@ -113,36 +115,46 @@ namespace ASTERIX_APP
             asterixPNG.Visibility = Visibility.Collapsed;
             asterixPerf.Visibility = Visibility.Collapsed;
             arrow.Visibility = Visibility.Collapsed;
+            Instructions_Label.Visibility = Visibility.Collapsed;
 
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
-            progressbar.Visibility = Visibility.Visible;
+            var progress = new Progress<int>(value => progressbar.Value = value);
             //Instructions_Label.Visibility = Visibility.Visible;
             //Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
-           
+            //Children.Add(progressbar);
+
             // When you click Cancel
             if (OpenFile.FileName == "")
             {
                 chivato = false;
                 asterixPNG.Visibility = Visibility.Visible;
+                Instructions_Label.Visibility = Visibility.Visible;
                 Instructions_Label.Content = "Any file was loaded,\nPlease select a '.ast' file";
                 bubbleWord.Height = 100;
                 bubbleWord.Width = 550;
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
+
             }
             // When slecting a correct file
             else
             {
-                chivato = true;
-                F = new Fichero(OpenFile.FileName);
-                ((IProgress<int>)progress).Report(10);
-                F.leer();
-                ((IProgress<int>)progress).Report(100);
+                progressbar.Visibility = Visibility.Visible;
+                await Task.Run(() =>
+                {
+                    chivato = true;
+                    F = new Fichero(OpenFile.FileName);
+                    ((IProgress<int>)progress).Report(10);
+                    F.leer();
+                    ((IProgress<int>)progress).Report(100);
+                });
                 asterixPerf.Visibility = Visibility.Visible;
                 progressbar.Visibility = Visibility.Collapsed;
+
+                Instructions_Label.Visibility = Visibility.Visible;
                 Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
                 bubbleWord.Height = 100;
@@ -1374,5 +1386,7 @@ namespace ASTERIX_APP
                 }
             }
         }
+
+        
     }
 }
