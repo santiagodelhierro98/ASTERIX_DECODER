@@ -246,13 +246,13 @@ namespace CLASSES
                 string octeto3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
                 string octeto4 = Met.Octeto_A_Bin(paquete0[contador + 3]);
                 string octeto_total = octeto1 + octeto2 + octeto3 + octeto4;
-                High_Res_Lat_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total) * (180 / Math.Pow(2, 30)), 3);
+                High_Res_Lat_WGS_84 = Met.ComplementoA2(octeto_total) * (180 / Math.Pow(2, 30));
                 string octeto5 = Met.Octeto_A_Bin(paquete0[contador + 4]);
                 string octeto6 = Met.Octeto_A_Bin(paquete0[contador + 5]);
                 string octeto7 = Met.Octeto_A_Bin(paquete0[contador + 6]);
                 string octeto8 = Met.Octeto_A_Bin(paquete0[contador + 7]);
                 string octeto_total1 = octeto5 + octeto6 + octeto7 + octeto8;
-                High_Res_Lon_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 30)), 3);
+                High_Res_Lon_WGS_84 = Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 30));
                 contador = contador + 8;
             }
 

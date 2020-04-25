@@ -94,6 +94,8 @@ namespace ASTERIX_APP
             StopSearchbytarget.Visibility = Visibility.Collapsed;
             ZOOM.Visibility = Visibility.Collapsed;
             Timer.Visibility = Visibility.Collapsed;
+            speedlabel.Visibility = Visibility.Collapsed;
+
             RestartButton.Visibility = Visibility.Collapsed;
             Track_Table.Visibility = Visibility.Collapsed;
             gridlista.Visibility = Visibility.Collapsed;
@@ -180,6 +182,7 @@ namespace ASTERIX_APP
                 callsignbox.Visibility = Visibility.Collapsed;
                 StopSearchbytarget.Visibility = Visibility.Collapsed;
                 ZOOM.Visibility = Visibility.Collapsed;
+                speedlabel.Visibility = Visibility.Collapsed;
                 Timer.Visibility = Visibility.Collapsed;
                 RestartButton.Visibility = Visibility.Collapsed;
                 // Visual Elements
@@ -263,6 +266,8 @@ namespace ASTERIX_APP
                 ZOOM.Visibility = Visibility.Visible;
                 Timer.Visibility = Visibility.Visible;
                 RestartButton.Visibility = Visibility.Visible;
+                speedlabel.Visibility = Visibility.Visible;
+
 
                 // Visual Stuff
                 asterixPNG.Visibility = Visibility.Collapsed;
@@ -882,6 +887,7 @@ namespace ASTERIX_APP
                 double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 double tiempo = Math.Floor(C10.Time_Day);
                 if(C10.Target_ID == null) { C10.Target_ID = "Not available"; }
+                if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
                 {
                     if (C10.Target_ID.Contains(searchedcallsign))
@@ -956,8 +962,7 @@ namespace ASTERIX_APP
                     start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
                     tiempo = Math.Floor(C21_v23.Time_of_Day);
                     if (C21_v23.Target_ID == null) { C21_v23.Target_ID = "Not available"; }
-
-                    if (searchedcallsign == null) { searchedcallsign = "Nada"; }
+                    if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
                     {
                         if (C21_v23.Target_ID.Contains(searchedcallsign))
@@ -1011,7 +1016,7 @@ namespace ASTERIX_APP
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
                     if (C21.Target_ID == null) { C21.Target_ID = "Not available"; }
 
-                    if (searchedcallsign == null) { searchedcallsign = "Nothing"; }
+                    if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked==true)
                     {
                         if (C21.Target_ID.Contains(searchedcallsign))
@@ -1080,11 +1085,11 @@ namespace ASTERIX_APP
 
                         int tiempo = M.gettimecorrectly(tiemposplited);
                         int start = M.gettimecorrectly(tiemposplitedstart) + n;
-                        if (searchedcallsign == null) { searchedcallsign = "Nada"; }
+                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                         if (idbuttonclicked == true && tiempo == start)
                         {
                             string targetid = Convert.ToString(tabla.Rows[i][1]);
-                            if (targetid == null) { targetid = "Not available"; }
+                            if (targetid == "") { targetid = "Not available"; }
                             if (targetid.Contains(searchedcallsign))
                             {
                                 if (F.CAT_list[i] == 10 )
@@ -1100,7 +1105,7 @@ namespace ASTERIX_APP
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
                                 }
-                                if (F.CAT_list[i] == 21 )
+                                if (F.CAT_list[i] == 21.23 )
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1121,6 +1126,7 @@ namespace ASTERIX_APP
                         else
                         {
                             string targetid = Convert.ToString(tabla.Rows[i][1]);
+                            if (targetid == "") { targetid = "Not available"; }
 
                             if (F.CAT_list[i] == 10 && tiempo == start)
                             {
@@ -1134,7 +1140,7 @@ namespace ASTERIX_APP
                                 rellenartablaMULTICAT(i);
                                 clock(tiempo);
                             }
-                            if (F.CAT_list[i] == 21 && tiempo == start)
+                            if (F.CAT_list[i] == 21.23 && tiempo == start)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1207,13 +1213,83 @@ namespace ASTERIX_APP
         private void zoomout_Click(object sender, RoutedEventArgs e)
         {
             map.Zoom = map.Zoom - 2;
-        }        
+        }
+
         // Plot only airplanes with searched callsign
+
         private void SearchIDMAP_Click(object sender, RoutedEventArgs e)
         {
-           idbuttonclicked = true;
-           map.Markers.Clear();
-           searchedcallsign = callsignbox.Text;
+            idbuttonclicked = true;
+            checkCAT();
+            if (callsignbox.Text == "")
+            {
+                MessageBox.Show("Make sure textbox is not empty!");
+            }
+            else
+            {
+                if (category == 10)
+                {
+                    bool fuera = false;
+                    for (int q = 0; q < F.gettablacat10reducida().Rows.Count; q++)
+                    {
+                        string targetID = Convert.ToString(F.gettablacat10reducida().Rows[q][1]);
+                        if (targetID.Contains(callsignbox.Text))
+                        {
+                            fuera = true;
+                            q = F.gettablacat10reducida().Rows.Count;
+                            map.Markers.Clear();
+                            searchedcallsign = callsignbox.Text;
+                        }
+                    }
+                    if (fuera == false)
+                    {
+                        MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)");
+                    }
+                }
+                if (category == 21)
+                {
+                    bool fuera = false;
+                    for (int q = 0; q < F.gettablacat21reducida().Rows.Count; q++)
+                    {
+                        string targetID = Convert.ToString(F.gettablacat21reducida().Rows[q][1]);
+
+                        if (targetID.Contains(callsignbox.Text))
+                        {
+                            fuera = true;
+                            q = F.gettablacat21reducida().Rows.Count;
+                            map.Markers.Clear();
+                            searchedcallsign = callsignbox.Text;
+                        }
+                    }
+                    if (fuera == false)
+                    {
+                        MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)" );
+                    }
+                }
+                if (category == 1021)
+                {
+                    bool fuera = false;
+                    for (int q = 0; q < F.gettablamixtareducida().Rows.Count; q++)
+                    {
+                        string targetID = Convert.ToString(F.gettablamixtareducida().Rows[q][1]);
+
+                        if (targetID.Contains(callsignbox.Text))
+                        {
+                            fuera = true;
+                            q = F.gettablamixtareducida().Rows.Count;
+                            map.Markers.Clear();
+                            searchedcallsign = callsignbox.Text;
+                        }
+                    }
+                    if (fuera == false)
+                    {
+                        MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)");
+
+                    }
+                }
+                else { }
+            }
+           
         }
         private void Stopsearchtarget(object sender, RoutedEventArgs e)
         {
