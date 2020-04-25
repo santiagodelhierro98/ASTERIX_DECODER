@@ -18,68 +18,26 @@ namespace CLASSES
         public double[] SICSAC;
         public List<double> CAT_list = new List<double>();
 
-        List<CAT10> listaCAT10 = new List<CAT10>();
-        List<CAT21> listaCAT21 = new List<CAT21>();
-        List<CAT21_v23> listaCAT21_v23 = new List<CAT21_v23>();
+        public List<CAT10> listaCAT10 = new List<CAT10>();
+        public List<CAT21> listaCAT21 = new List<CAT21>();
+        public List<CAT21_v23> listaCAT21_v23 = new List<CAT21_v23>();
 
         //Reduced table with items for display on map
-        DataTable tablacat10reducida = new DataTable();
-        DataTable tablacat21reducida = new DataTable();
-        DataTable multiplecattablereducida = new DataTable();
-        
-        DataTable tablaCAT10 = new DataTable();
-        DataTable tablaCAT21 = new DataTable();
-        DataTable tablaMultipleCAT = new DataTable();
+        public DataTable tablacat10reducida = new DataTable();
+        public DataTable tablacat21reducida = new DataTable();
+        public DataTable multiplecattablereducida = new DataTable();
 
+        public DataTable tablaCAT10 = new DataTable();
+        public DataTable tablaCAT21 = new DataTable();
+        public DataTable tablaMultipleCAT = new DataTable();
+
+        public string filename;
         public Fichero(string nombre)
         {
-
             this.path = nombre;
-
             M.CreateReducedTable(multiplecattablereducida, tablacat10reducida, tablacat21reducida);
             M.Create_TrackTable_Puras(tablaCAT10, tablaCAT21);
             M.Create_TrackTable_Multiple(tablaMultipleCAT);
-        }
-        public List<CAT10> getListCAT10()
-        {
-            return listaCAT10;
-        }
-        public List<CAT21> getListCAT21()
-        {
-            return listaCAT21;
-        }
-        public List<CAT21_v23> getListCAT21_v23()
-        {
-            return listaCAT21_v23;
-        }
-        public DataTable gettablacat10reducida()
-        {
-            return tablacat10reducida;
-        }
-        public DataTable gettablacat21reducida()
-        {
-            return tablacat21reducida;
-        }
-        public DataTable gettablamixtareducida()
-        {
-            return multiplecattablereducida;
-        }
-        public DataTable getTablaCAT10()
-        {
-            return tablaCAT10;
-        }
-        public DataTable getTablaCAT21()
-        {
-            return tablaCAT21;
-        }
-        public DataTable getTablaMixtCAT()
-        {
-            return tablaMultipleCAT;
-        }
-        string filename;
-        public string getFileName()
-        {
-            return filename;
         }
         public void leer()
         {
@@ -117,7 +75,6 @@ namespace CLASSES
                 }
                 listahex.Add(arrayhex);
             }
-
             int contadorGeneral = 0;
             int contadorCAT10 = 0;
             int contadorCAT21 = 0;
@@ -140,12 +97,9 @@ namespace CLASSES
                 CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);                
                 contadorGeneral++;
 
-                CAT10 C10 = new CAT10();
-                CAT21 C21 = new CAT21();
-                CAT21_v23 C21_v23 = new CAT21_v23();
-
                 if (CAT == 10)
                 {
+                    CAT10 C10 = new CAT10();
                     CAT_list.Add(CAT); // Adds the pack category into this list
                     contadorCAT10++;
                     C10.Decode10(arraystring);
@@ -189,6 +143,7 @@ namespace CLASSES
                     // Check if its version 23
                     if (multicat == false && SICSAC[0] == 107 && SICSAC[1] == 0)
                     {
+                        CAT21_v23 C21_v23 = new CAT21_v23();
                         CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
                         C21_v23.Decode21_23(arraystring);
                         listaCAT21_v23.Add(C21_v23);
@@ -217,6 +172,7 @@ namespace CLASSES
                     }
                     if (multicat == true)
                     {
+                        CAT21_v23 C21_v23 = new CAT21_v23();
                         CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
                         C21_v23.Decode21_23(arraystring);
                         listaCAT21_v23.Add(C21_v23);
@@ -237,6 +193,7 @@ namespace CLASSES
                     // Check if its version 21
                     if (SICSAC[0] != 107 || SICSAC[1] != 0)
                     {
+                        CAT21 C21 = new CAT21();
                         CAT_list.Add(CAT); // Adds the pack category into this list
                         C21.Decode21(arraystring);
                         listaCAT21.Add(C21);

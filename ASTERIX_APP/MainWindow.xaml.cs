@@ -198,12 +198,12 @@ namespace ASTERIX_APP
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
                     if (IsMultipleCAT == true)
                     {
-                        Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                        Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
                         category = 1021;
                     }
                     else
                     {
-                        Track_Table.ItemsSource = F.getTablaCAT10().DefaultView;
+                        Track_Table.ItemsSource = F.tablaCAT10.DefaultView;
                         category = 10;
                     }
                 }
@@ -212,12 +212,12 @@ namespace ASTERIX_APP
                     bool IsMultipleCAT = F.CAT_list.Contains(10);
                     if (IsMultipleCAT == true)
                     {
-                        Track_Table.ItemsSource = F.getTablaMixtCAT().DefaultView;
+                        Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
                         category = 1021;
                     }
                     else
                     {
-                        Track_Table.ItemsSource = F.getTablaCAT21().DefaultView;
+                        Track_Table.ItemsSource = F.tablaCAT21.DefaultView;
                         category = 21;
                     }
                 }
@@ -278,14 +278,14 @@ namespace ASTERIX_APP
                 if (Math.Floor(F.CAT_list[0]) == 10)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(21);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
-                    else { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
+                    else { gridlista.ItemsSource = F.tablacat10reducida.DefaultView; }
                 }
                 if (Math.Floor(F.CAT_list[0]) == 21)
                 {
                     bool IsMultipleCAT = F.CAT_list.Contains(10);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
-                    else { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
+                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
+                    else { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
                 }
             }
         }
@@ -351,7 +351,7 @@ namespace ASTERIX_APP
             // CAT 21 case
             if (category == 21)
             {
-                DataTable tabla = F.getTablaCAT21();
+                DataTable tabla = F.tablaCAT21;
                 double cat = Convert.ToDouble(tabla.Rows[Row_Num][1]);
                 if (cat == 21)
                 {
@@ -463,7 +463,7 @@ namespace ASTERIX_APP
             // Mixt category
             if (category == 1021)
             {
-                DataTable tabla = F.getTablaMixtCAT();
+                DataTable tabla = F.tablaMultipleCAT;
                 double cat = Convert.ToDouble(tabla.Rows[Row_Num][1]);
                 if (cat == 10)
                 {
@@ -641,7 +641,7 @@ namespace ASTERIX_APP
                 {
                     try
                     {
-                        DataTable C10 = F.getTablaCAT10();
+                        DataTable C10 = F.tablaCAT10;
                         DataTable table = M.getSearchTable10();
                         table.ImportRow(C10.Rows[search - 1]);
 
@@ -653,7 +653,7 @@ namespace ASTERIX_APP
                 {
                     try
                     {
-                        DataTable C21 = F.getTablaCAT21();
+                        DataTable C21 = F.tablaCAT10;
                         DataTable table = M.getSearchTable21();
                         table.ImportRow(C21.Rows[search - 1]);
 
@@ -665,7 +665,7 @@ namespace ASTERIX_APP
                 {
                     try
                     {
-                        DataTable table = F.getTablaMixtCAT();
+                        DataTable table = F.tablaMultipleCAT;
                         DataTable searchtable = M.getSearchTableMixed();
                         searchtable.ImportRow(table.Rows[search - 1]);
 
@@ -690,7 +690,7 @@ namespace ASTERIX_APP
             string search = IDBox.Text;
             if (category == 10)
             {
-                DataTable table10 = F.getTablaCAT10();
+                DataTable table10 = F.tablaCAT10;
                 DataTable searchtable = M.getSearchTable10();
                 for (int i = 0; i < table10.Rows.Count; i++)
                 {
@@ -708,7 +708,7 @@ namespace ASTERIX_APP
             }
             if (category == 21)
             {
-                DataTable table21 = F.getTablaCAT21();
+                DataTable table21 = F.tablaCAT21;
                 DataTable searchtable = M.getSearchTable21();
                 if (Convert.ToDouble(table21.Rows[0][1]) == 21)
                 {
@@ -745,7 +745,7 @@ namespace ASTERIX_APP
             }
             if (category == 1021)
             {
-                DataTable tableMix = F.getTablaMixtCAT();
+                DataTable tableMix = F.tablaMultipleCAT;
                 DataTable searchtable = M.getSearchTableMixed();
                 for (int i = 0; i < tableMix.Rows.Count; i++)
                 {
@@ -783,17 +783,17 @@ namespace ASTERIX_APP
             if (category == 10)
             {
                 dt_Timer.Tick += dt_Timer_TickC10;
-                updatedtable = F.gettablacat10reducida().Clone();
+                updatedtable = F.tablacat10reducida.Clone();
             }
             if (category == 21)
             {
                 dt_Timer.Tick += dt_Timer_TickC21;
-                updatedtable = F.gettablacat21reducida().Clone();
+                updatedtable = F.tablacat21reducida.Clone();
             }
             if (category == 1021)
             {
                 dt_Timer.Tick += dt_Timer_TickMULTICAT;
-                updatedtable = F.gettablamixtareducida().Clone();
+                updatedtable = F.multiplecattablereducida.Clone();
             }
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
@@ -1066,7 +1066,7 @@ namespace ASTERIX_APP
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
             Boolean x = true;
-            DataTable tabla = F.gettablamixtareducida();
+            DataTable tabla = F.multiplecattablereducida;
             while (x == true)
             {
                 for (int i = 0; i < tabla.Rows.Count; i++)
@@ -1177,9 +1177,9 @@ namespace ASTERIX_APP
             i = 0;
             s = 0;
             n = 0;
-            if (category == 10) { gridlista.ItemsSource = F.gettablacat10reducida().DefaultView; }
-            if (category == 21) { gridlista.ItemsSource = F.gettablacat21reducida().DefaultView; }
-            if (category == 1021) { gridlista.ItemsSource = F.gettablamixtareducida().DefaultView; }
+            if (category == 10) { gridlista.ItemsSource = F.tablacat10reducida.DefaultView; }
+            if (category == 21) { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
+            if (category == 1021) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
             gridlista.Visibility = Visibility.Visible;
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
@@ -1222,21 +1222,21 @@ namespace ASTERIX_APP
         private void rellenartablaCAT10(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat10reducida().Rows[i - 1]);
+            updatedtable.ImportRow(F.tablacat10reducida.Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }
         private void rellenartablaCAT21(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablacat21reducida().Rows[i - 1]);
+            updatedtable.ImportRow(F.tablacat21reducida.Rows[i - 1]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }
         private void rellenartablaMULTICAT(int i)
         {
             //we copy/paste all data from that specific flight
-            updatedtable.ImportRow(F.gettablamixtareducida().Rows[i]);
+            updatedtable.ImportRow(F.multiplecattablereducida.Rows[i]);
             updatedlista.ItemsSource = updatedtable.DefaultView;
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }

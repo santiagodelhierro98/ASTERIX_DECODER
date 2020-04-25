@@ -46,7 +46,6 @@ namespace CLASSES
             {
                 contador++;
             }
-
             // Si hay un solo caracter, añadimos un 0 delante
             if (contador == 1)
             {
@@ -56,7 +55,6 @@ namespace CLASSES
             {
                 octeto0 = octeto;
             }
-
             return octeto0;
         }
         public string Octeto_A_Bin(string Pos_Paquete)
@@ -587,7 +585,6 @@ namespace CLASSES
             int secabs = Convert.ToInt32(tod[0]) * 3600 + Convert.ToInt32(tod[1]) * 60 + Convert.ToInt32(tod[2]);
             return secabs;
         }
-
         public double[] getSIC_SAC(string[] paquete)
         {
             Metodos Met = new Metodos();
