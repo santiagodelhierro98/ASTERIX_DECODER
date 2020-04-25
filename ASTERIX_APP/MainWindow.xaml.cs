@@ -71,6 +71,7 @@ namespace ASTERIX_APP
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            var progress = new Progress<int>(value => progressbar.Value = value);
             STOP_TRACK();
             
             map.Visibility = Visibility.Collapsed;
@@ -105,6 +106,7 @@ namespace ASTERIX_APP
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
 
+
             // HIDE VISUAL ELEMENTS
             bubbleWord.Visibility = Visibility.Collapsed;
             circle.Visibility = Visibility.Collapsed;
@@ -115,10 +117,11 @@ namespace ASTERIX_APP
 
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
-            Instructions_Label.Visibility = Visibility.Visible;
-            Instructions_Label.Content = "Loading...";
+            progressbar.Visibility = Visibility.Visible;
+            //Instructions_Label.Visibility = Visibility.Visible;
+            //Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
-
+           
             // When you click Cancel
             if (OpenFile.FileName == "")
             {
@@ -134,10 +137,14 @@ namespace ASTERIX_APP
             // When slecting a correct file
             else
             {
+
                 chivato = true;
                 F = new Fichero(OpenFile.FileName);
+                ((IProgress<int>)progress).Report(10);
                 F.leer();
+                ((IProgress<int>)progress).Report(100);
                 asterixPerf.Visibility = Visibility.Visible;
+                progressbar.Visibility = Visibility.Collapsed;
                 Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
                 bubbleWord.Height = 100;
@@ -1212,7 +1219,9 @@ namespace ASTERIX_APP
             idbuttonclicked = true;
             if (callsignbox.Text == "")
             {
+                idbuttonclicked = false;
                 MessageBox.Show("Make sure textbox is not empty!");
+
             }
             else
             {
@@ -1232,7 +1241,9 @@ namespace ASTERIX_APP
                     }
                     if (fuera == false)
                     {
+                        idbuttonclicked = false;
                         MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)");
+
                     }
                 }
                 if (category == 21)
@@ -1252,7 +1263,9 @@ namespace ASTERIX_APP
                     }
                     if (fuera == false)
                     {
+                        idbuttonclicked = false;
                         MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! \n Make sure Target ID is written in capital letters (e.g. VLG)");
+
                     }
                 }
                 if (category == 1021)
@@ -1272,8 +1285,10 @@ namespace ASTERIX_APP
                     }
                     if (fuera == false)
                     {
+                        idbuttonclicked = false;
                         MessageBox.Show("Target ID: " + callsignbox.Text + " is not available! " +
                             "\n Make sure Target ID is written in capital letters (e.g. VLG)");
+
                     }
                 }
                 else { }
