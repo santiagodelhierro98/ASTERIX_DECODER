@@ -35,5 +35,9 @@ namespace ASTERIX_APP
                 "you can speed-up the simulation by clicking on the SPEED buttons.\n\n" +
                 "Remember that the table shown is a subset of the Tracking Table,\n";
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

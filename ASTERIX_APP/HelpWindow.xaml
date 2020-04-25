@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d"
-        Title="Help" Height="600" Width="900" Background="#222"
+        Title="Help" Height="700" Width="1100" Background="#222"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.2*"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="HelpText1" Grid.Column="0" Background="#222" Foreground="#fff" Height="40" VerticalAlignment="Top" Margin="10" FontSize="14"/>
-        <Label x:Name="HelpText2" Grid.Column="0" Background="#222" Foreground="#fff" Height="200" VerticalAlignment="Top" Margin="10 80 0 0" FontSize="14"/>
-        <Label x:Name="HelpText3" Grid.Column="0" Background="#222" Foreground="#fff" Height="250" VerticalAlignment="Top" Margin="10 320 0 0" FontSize="14"/>
-        <Image x:Name="TrackScreenShot" Source="./Images/CapturaTABLE.png" Grid.Column="1" VerticalAlignment="Top" Height="230" Margin="5 70 0 0"/>
-        <Image x:Name="MapScreenShot" Source="./Images/CapturaMAP.png" Grid.Column="1" VerticalAlignment="Top" Height="230" Margin="5 320 0 0"/>
+        <Label x:Name="HelpText1" Grid.Column="0" Background="#222" Foreground="#fff" Height="40" VerticalAlignment="Top" Margin="10" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="HelpText2" Grid.Column="0" Background="#222" Foreground="#fff" Height="250" VerticalAlignment="Top" Margin="20 80 0 0" FontSize="14"/>
+        <Label x:Name="HelpText3" Grid.Column="0" Background="#222" Foreground="#fff" Height="280" VerticalAlignment="Top" Margin="20 360 0 0" FontSize="14"/>
+        <Image x:Name="TrackScreenShot" Source="./Images/CapturaTABLE.png" Grid.Column="1" VerticalAlignment="Top" Height="300" Margin="5 40 0 0"/>
+        <Image x:Name="MapScreenShot" Source="./Images/CapturaMAP.png" Grid.Column="1" VerticalAlignment="Top" Height="300" Margin="5 360 0 0"/>
+        <Button x:Name="Close" Click="Close_Click" Content="Close" Foreground="#fff" Background="#333" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 10" Height="25" Width="50"/>
     </Grid>
 </Window>
