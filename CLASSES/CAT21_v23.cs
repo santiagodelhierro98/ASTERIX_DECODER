@@ -132,12 +132,12 @@ namespace CLASSES
                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                 string octeto3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
                 string octeto_total = octeto1 + octeto2 + octeto3;
-                Lat_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total) * (180.0 / Math.Pow(2, 23)), 3);
+                Lat_WGS_84 = Met.ComplementoA2(octeto_total) * (180.0 / Math.Pow(2, 23));
                 string octeto4 = Met.Octeto_A_Bin(paquete0[contador + 3]);
                 string octeto5 = Met.Octeto_A_Bin(paquete0[contador + 4]);
                 string octeto6 = Met.Octeto_A_Bin(paquete0[contador + 5]);
                 string octeto_total1 = octeto4 + octeto5 + octeto6;
-                Lon_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total1) * (180.0 / Math.Pow(2, 23)), 3);
+                Lon_WGS_84 = Met.ComplementoA2(octeto_total1) * (180.0 / Math.Pow(2, 23));
                 contador = contador + 6;
             }
             if (FSPEC[4] == "1")

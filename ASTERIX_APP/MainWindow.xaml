@@ -118,20 +118,20 @@
 
         <!-- Map -->
         <gmaps:GMapControl x:Name="map" BorderBrush="Black" Margin="500 90 10 10" Loaded ="Map_Load" Visibility="Collapsed" BorderThickness="1"/>
-        
-        <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Collapsed" Background="#222" Foreground="Green" Padding="4" HorizontalAlignment="Left" Margin="40 160 0 0" VerticalAlignment="Top" Height="25" Width="70"/>
-        <Button x:Name ="StopButton" Content="PAUSE" Click="stop_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="120 160 0 0" VerticalAlignment="Top" Height="25" Width="70"/>
-        <Button x:Name ="RestartButton" Content="STOP"  Click="Restart_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="200 160 0 0" VerticalAlignment="Top" Height="25" Width="65"/>
-        <TextBlock x:Name="timer"  HorizontalAlignment="Left" Margin="40 90 0 0"  Visibility="Collapsed" VerticalAlignment="Top" FontFamily ="Segoe UI" FontSize="55" Height="60" Width="222" Foreground="#FFD31C1C" TextAlignment="Center"/>
 
-        <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="100 200 0 0" VerticalAlignment="Top" Height="30" Width="30"/>
-        <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="140 200 0 0" VerticalAlignment="Top" Height="30" Width="30"/>
-        <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="180 200 0 0" VerticalAlignment="Top" Height="30" Width="30"/>
+        <Button x:Name ="StartButton" Content="START"  Click="addMarker_Click" Visibility="Collapsed" Background="#222" Foreground="Green" Padding="4" HorizontalAlignment="Left" Margin="40,175,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Button x:Name ="StopButton" Content="PAUSE" Click="stop_Click" Visibility="Collapsed" Background="#222" Foreground="red" Padding="4" HorizontalAlignment="Left" Margin="128,175,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Button x:Name ="RestartButton" Content="STOP"  Click="Restart_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="216,175,0,0" VerticalAlignment="Top" Height="25" Width="65"/>
+        <TextBlock x:Name="timer"  HorizontalAlignment="Left" Margin="51,96,0,0"  Visibility="Collapsed" VerticalAlignment="Top" FontFamily ="Segoe UI" FontSize="55" Height="60" Width="222" Foreground="#FFD31C1C" TextAlignment="Center"/>
+
+        <Button x:Name="x1butt" Content="x1" Click="x1_Click"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="371,122,0,0" VerticalAlignment="Top" Height="30" Width="30"/>
+        <Button x:Name="x2butt" Content="x2" Click="x2_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="371,161,0,0" VerticalAlignment="Top" Height="30" Width="30"/>
+        <Button x:Name="x4butt" Content="x4" Click="x4_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="4" HorizontalAlignment="Left" Margin="371,200,0,0" VerticalAlignment="Top" Height="30" Width="30"/>
 
         <Button x:Name="zoomlebl" Content="+" FontSize="30" Click ="zoomin_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" HorizontalAlignment="Left" Margin="440 120 0 0" VerticalAlignment="Top" Height="50" Width="50"/>
         <Button x:Name="zoombcn" Content="-" FontSize="30" Click="zoomout_Click" Visibility="Collapsed" Background="#222" Foreground="#fff" HorizontalAlignment="Left" Margin="440 180 0 0" VerticalAlignment="Top" Height="50" Width="50"/>
 
-        <Label x:Name="speedlabel" Content="SPEED"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="40 202 0 0" VerticalAlignment="Top" Height="30" Width="50"/>
+        <Label x:Name="speedlabel" Content="SPEED"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="362,85,0,0" VerticalAlignment="Top" Height="30" Width="50"/>
         <Label x:Name="ZOOM" Content="ZOOM"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="440 85 0 0" VerticalAlignment="Top" Height="30" Width="50"/>
         <Label x:Name="Timer" Content="TIMER"  Visibility="Collapsed" Background="#222" Foreground="#fff" Padding="5" HorizontalAlignment="Left" Margin="40 60 0 0" VerticalAlignment="Top" Height="25" Width="70"/>
 
@@ -160,13 +160,13 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        
+
         <DataGrid x:Name ="updatedlista" Margin="10 240 700 10" 
                   RenderTransformOrigin="0.5,0.5" Background="#222" 
                   Foreground="white" Visibility="Collapsed"  
                   IsReadOnly="True" BorderBrush="#FFF5F6F7" 
                   CanUserSortColumns="False" CanUserResizeRows="False">
-            
+
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#004778"/>
