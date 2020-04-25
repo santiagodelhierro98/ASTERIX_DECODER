@@ -19,5 +19,9 @@ namespace ASTERIX_APP
             mainwind.Show();
             this.Close();
         }
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Working on that");
+        }
     }
 }

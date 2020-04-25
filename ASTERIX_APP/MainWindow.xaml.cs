@@ -70,6 +70,8 @@ namespace ASTERIX_APP
         }
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            STOP_TRACK();
+
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
@@ -614,7 +616,7 @@ namespace ASTERIX_APP
             try
             {
                 // Searching
-                int search = Convert.ToInt32(NumBox.Text);
+                int search = Convert.ToInt32(NumBox.Text);                
                 if (category == 10)
                 {
                     try
@@ -631,7 +633,7 @@ namespace ASTERIX_APP
                 {
                     try
                     {
-                        DataTable C21 = F.tablaCAT10;
+                        DataTable C21 = F.tablaCAT21;
                         DataTable table = M.getSearchTable21();
                         table.ImportRow(C21.Rows[search - 1]);
 
@@ -1147,7 +1149,7 @@ namespace ASTERIX_APP
         {
             dt_Timer.Stop();
         }
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        private void STOP_TRACK()
         {
             dt_Timer.Stop();
             map.Markers.Clear();
@@ -1161,6 +1163,10 @@ namespace ASTERIX_APP
             gridlista.Visibility = Visibility.Visible;
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
+        }
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            STOP_TRACK();
         }
 
         // MAP VIEWING OPTIONS        
