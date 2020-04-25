@@ -47,6 +47,7 @@ namespace ASTERIX_APP
             circle2.Visibility = Visibility.Visible;
             asterixPNG.Visibility = Visibility.Visible;
             Instructions_Label.Visibility = Visibility.Visible; ;
+            arrow.Visibility = Visibility.Visible;
             Instructions_Label.FontSize = 18;
             Instructions_Label.Content = "Hi I'm Asterix, welcome to my App!" + '\n' + '\n' + "I need some file to read." + '\n' +
                 "Please, load a '.ast' file using the 'Load File' button above.";
@@ -71,7 +72,7 @@ namespace ASTERIX_APP
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             STOP_TRACK();
-
+            
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
@@ -110,6 +111,8 @@ namespace ASTERIX_APP
             circle2.Visibility = Visibility.Collapsed;
             asterixPNG.Visibility = Visibility.Collapsed;
             asterixPerf.Visibility = Visibility.Collapsed;
+            arrow.Visibility = Visibility.Collapsed;
+
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
             Instructions_Label.Visibility = Visibility.Visible;
@@ -142,6 +145,7 @@ namespace ASTERIX_APP
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
+                Help.Visibility = Visibility.Visible;
                 CheckCAT();
             }
         }
@@ -157,6 +161,7 @@ namespace ASTERIX_APP
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
+                arrow.Visibility = Visibility.Visible;
             }
             else
             {
@@ -189,7 +194,9 @@ namespace ASTERIX_APP
                 speedlabel.Visibility = Visibility.Collapsed;
                 Timer.Visibility = Visibility.Collapsed;
                 RestartButton.Visibility = Visibility.Collapsed;
+                Help.Visibility = Visibility.Visible;
                 // Visual Elements
+                arrow.Visibility = Visibility.Collapsed;
                 asterixPNG.Visibility = Visibility.Collapsed;
                 asterixPerf.Visibility = Visibility.Collapsed;
                 bubbleWord.Visibility = Visibility.Collapsed;
@@ -213,6 +220,7 @@ namespace ASTERIX_APP
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
+                arrow.Visibility = Visibility.Visible;
             }
             else
             {
@@ -242,9 +250,9 @@ namespace ASTERIX_APP
                 Timer.Visibility = Visibility.Visible;
                 RestartButton.Visibility = Visibility.Visible;
                 speedlabel.Visibility = Visibility.Visible;
-
-
+                Help.Visibility = Visibility.Visible;
                 // Visual Stuff
+                arrow.Visibility = Visibility.Collapsed;
                 asterixPNG.Visibility = Visibility.Collapsed;
                 asterixPerf.Visibility = Visibility.Collapsed;
                 bubbleWord.Visibility = Visibility.Collapsed;
@@ -268,6 +276,11 @@ namespace ASTERIX_APP
                     else { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
                 }
             }
+        }
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            var HelpWin = new HelpWindow();
+            HelpWin.Show();
         }
 
         // TRACK TABLE METHODS

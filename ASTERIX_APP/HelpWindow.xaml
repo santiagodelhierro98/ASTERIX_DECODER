@@ -1,0 +1,22 @@
+﻿<Window x:Class="ASTERIX_APP.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASTERIX_APP"
+        mc:Ignorable="d"
+        Title="Help" Height="600" Width="900" Background="#222"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="HelpText1" Grid.Column="0" Background="#222" Foreground="#fff" Height="40" VerticalAlignment="Top" Margin="10" FontSize="14"/>
+        <Label x:Name="HelpText2" Grid.Column="0" Background="#222" Foreground="#fff" Height="200" VerticalAlignment="Top" Margin="10 80 0 0" FontSize="14"/>
+        <Label x:Name="HelpText3" Grid.Column="0" Background="#222" Foreground="#fff" Height="250" VerticalAlignment="Top" Margin="10 320 0 0" FontSize="14"/>
+        <Image x:Name="TrackScreenShot" Source="./Images/CapturaTABLE.png" Grid.Column="1" VerticalAlignment="Top" Height="230" Margin="5 70 0 0"/>
+        <Image x:Name="MapScreenShot" Source="./Images/CapturaMAP.png" Grid.Column="1" VerticalAlignment="Top" Height="230" Margin="5 320 0 0"/>
+    </Grid>
+</Window>

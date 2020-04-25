@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <None Remove="Images\airplane.png" />
+    <None Remove="Images\arrow.png" />
     <None Remove="Images\asterix.png" />
     <None Remove="Images\asterixPERF.png" />
     <None Remove="Images\asterixProblem.png" />
+    <None Remove="Images\CapturaLOAD.png" />
+    <None Remove="Images\CapturaMAP.png" />
+    <None Remove="Images\CapturaTABLE.png" />
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
     <None Remove="Images\playbut.jpg" />
     <None Remove="Images\reddot.png" />
@@ -24,6 +28,15 @@
     <Content Include="Images\airplane.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\CapturaLOAD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CapturaMAP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CapturaTABLE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -35,13 +48,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\asterix.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\asterixPERF.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\asterixProblem.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png">
