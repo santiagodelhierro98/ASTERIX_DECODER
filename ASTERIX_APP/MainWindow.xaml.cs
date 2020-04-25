@@ -106,7 +106,6 @@ namespace ASTERIX_APP
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
 
-
             // HIDE VISUAL ELEMENTS
             bubbleWord.Visibility = Visibility.Collapsed;
             circle.Visibility = Visibility.Collapsed;
@@ -137,7 +136,6 @@ namespace ASTERIX_APP
             // When slecting a correct file
             else
             {
-
                 chivato = true;
                 F = new Fichero(OpenFile.FileName);
                 ((IProgress<int>)progress).Report(10);
