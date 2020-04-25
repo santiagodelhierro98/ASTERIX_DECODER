@@ -80,7 +80,6 @@ namespace ASTERIX_APP
 
             // HIDE AND CLEAN TABLES
             map.Visibility = Visibility.Collapsed;
-            gridlista.Visibility = Visibility.Collapsed;
             StartButton.Visibility = Visibility.Collapsed;
             StopButton.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
@@ -99,6 +98,7 @@ namespace ASTERIX_APP
             RestartButton.Visibility = Visibility.Collapsed;
             Track_Table.Visibility = Visibility.Collapsed;
             gridlista.Visibility = Visibility.Collapsed;
+            updatedlista.Visibility = Visibility.Collapsed;
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
 
@@ -140,6 +140,7 @@ namespace ASTERIX_APP
                 bubbleWord.Visibility = Visibility.Visible;
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
+                CheckCAT();
             }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
@@ -169,6 +170,7 @@ namespace ASTERIX_APP
                 Track_Table.Visibility = Visibility.Visible;
                 map.Visibility = Visibility.Collapsed;
                 gridlista.Visibility = Visibility.Collapsed;
+                updatedlista.Visibility = Visibility.Collapsed;
                 StartButton.Visibility = Visibility.Collapsed;
                 StopButton.Visibility = Visibility.Collapsed;
                 timer.Visibility = Visibility.Collapsed;
@@ -195,35 +197,6 @@ namespace ASTERIX_APP
                 SearchIDButton.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
-
-                if (Math.Floor(F.CAT_list[0]) == 10)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(21);
-                    if (IsMultipleCAT == true)
-                    {
-                        Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
-                        category = 1021;
-                    }
-                    else
-                    {
-                        Track_Table.ItemsSource = F.tablaCAT10.DefaultView;
-                        category = 10;
-                    }
-                }
-                if (Math.Floor(F.CAT_list[0]) == 21)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(10);
-                    if (IsMultipleCAT == true)
-                    {
-                        Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
-                        category = 1021;
-                    }
-                    else
-                    {
-                        Track_Table.ItemsSource = F.tablaCAT21.DefaultView;
-                        category = 21;
-                    }
-                }
             }
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
@@ -1337,6 +1310,37 @@ namespace ASTERIX_APP
 
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
+        }
+        public void CheckCAT()
+        {
+            if (Math.Floor(F.CAT_list[0]) == 10)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                if (IsMultipleCAT == true)
+                {
+                    Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
+                    category = 1021;
+                }
+                else
+                {
+                    Track_Table.ItemsSource = F.tablaCAT10.DefaultView;
+                    category = 10;
+                }
+            }
+            if (Math.Floor(F.CAT_list[0]) == 21)
+            {
+                bool IsMultipleCAT = F.CAT_list.Contains(10);
+                if (IsMultipleCAT == true)
+                {
+                    Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
+                    category = 1021;
+                }
+                else
+                {
+                    Track_Table.ItemsSource = F.tablaCAT21.DefaultView;
+                    category = 21;
+                }
+            }
         }
     }
 }
