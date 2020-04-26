@@ -117,7 +117,7 @@ namespace CLASSES
                 char[] Target_Bits = TargetReport_Bin.ToCharArray();
 
                 string ATP_Bin = Target_Bits[0].ToString() + Target_Bits[1].ToString() + Target_Bits[2].ToString();
-                Int32 ATP = Convert.ToInt32(ATP_Bin, 2);
+                int ATP = Convert.ToInt32(ATP_Bin, 2);
                 if (ATP == 0) { Target_Report_Desc[0] = "24-Bit ICAO address"; }
                 if (ATP == 1) { Target_Report_Desc[0] = "Duplicate address"; }
                 if (ATP == 2) { Target_Report_Desc[0] = "Surface vehicle address"; }
@@ -125,7 +125,7 @@ namespace CLASSES
                 if (ATP == 4 || ATP == 5 || ATP == 6 || ATP == 7) { Target_Report_Desc[0] = "Reserved for future use"; }
 
                 string ARC_Bin = Target_Bits[3].ToString() + Target_Bits[4].ToString();
-                Int32 ARC = Convert.ToInt32(ARC_Bin, 2);
+                int ARC = Convert.ToInt32(ARC_Bin, 2);
                 if (ARC == 0) { Target_Report_Desc[1] = "25 ft"; }
                 if (ARC == 1) { Target_Report_Desc[1] = "100 ft"; }
                 if (ARC == 2) { Target_Report_Desc[1] = "Unknown"; }
@@ -161,7 +161,7 @@ namespace CLASSES
                     if (Convert.ToInt32(Target1_Bits[4].ToString()) == 1) { Target_Report_Desc[8] = "Equipment not capable to provide Selected Altitude"; }
 
                     string CL_Bin = Target1_Bits[5].ToString() + Target1_Bits[6].ToString();
-                    Int32 CL = Convert.ToInt32(CL_Bin, 2);
+                    int CL = Convert.ToInt32(CL_Bin, 2);
                     if (CL == 0) { Target_Report_Desc[9] = "Report Valid"; }
                     if (CL == 1) { Target_Report_Desc[9] = "Report suspect"; }
                     if (CL == 2) { Target_Report_Desc[9] = "No information"; }
@@ -339,19 +339,21 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3 + octeto4;
                     // TMRP FSI
                     // first two bits defining parameters of TMRP (FSI: Full Second Indication)
-                    if (Convert.ToInt32(octeto1[0].ToString()) == 1 & Convert.ToInt32(octeto1[1].ToString()) == 1)
+                    int value1 = Convert.ToInt32(octeto1[0].ToString());
+                    int value2 = Convert.ToInt32(octeto1[1].ToString());
+                    if (value1 == 1 & value2 == 1)
                     {
                         TMRP_HP[0] = "Reserved";
                     }
-                    if (Convert.ToInt32(octeto1[0].ToString()) == 1 & Convert.ToInt32(octeto1[1].ToString()) == 0)
+                    if (value1 == 1 & value2 == 0)
                     {
                         TMRP_HP[0] = (TMRP - 1.0).ToString();
                     }
-                    if (Convert.ToInt32(octeto1[0].ToString()) == 0 & Convert.ToInt32(octeto1[1].ToString()) == 1)
+                    if (value1 == 0 & value2 == 1)
                     {
                         TMRP_HP[0] = (TMRP + 1.0).ToString();
                     }
-                    if (Convert.ToInt32(octeto1[0].ToString()) == 0 & Convert.ToInt32(octeto1[1].ToString()) == 0)
+                    if (value1 == 0 & value2 == 0)
                     {
                         TMRP_HP[0] = TMRP.ToString();
                     }
@@ -516,14 +518,16 @@ namespace CLASSES
                         if (Convert.ToInt32(octeto[1].ToString(), 2) == 0) { MOPS[0] = "The MOPS Version is supported by the GS"; }
                         else { MOPS[0] = "The MOPS Version is not supported by the GS"; }
                         // VN
-                        if (Convert.ToInt32(octeto[2].ToString() + octeto[3].ToString() + octeto[4].ToString(), 2) == 0) { MOPS[1] = "ED102/DO-260 [Ref. 8]"; }
-                        if (Convert.ToInt32(octeto[2].ToString() + octeto[3].ToString() + octeto[4].ToString(), 2) == 1) { MOPS[1] = "DO-260A [Ref. 9]"; }
-                        if (Convert.ToInt32(octeto[2].ToString() + octeto[3].ToString() + octeto[4].ToString(), 2) == 2) { MOPS[1] = "ED102A/DO-260B [Ref. 11]"; }
+                        int VN = Convert.ToInt32(octeto[2].ToString() + octeto[3].ToString() + octeto[4].ToString(), 2);
+                        if (VN == 0) { MOPS[1] = "ED102/DO-260 [Ref. 8]"; }
+                        if (VN == 1) { MOPS[1] = "DO-260A [Ref. 9]"; }
+                        if (VN == 2) { MOPS[1] = "ED102A/DO-260B [Ref. 11]"; }
                         //LTT
-                        if (Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2) == 0) { MOPS[2] = "Other"; }
-                        if (Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2) == 1) { MOPS[2] = "UAT"; }
-                        if (Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2) == 2) { MOPS[2] = "1090 ES"; }
-                        if (Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2) == 3) { MOPS[2] = "VDL 4"; }
+                        int LTT = Convert.ToInt32(octeto[5].ToString() + octeto[6].ToString() + octeto[7].ToString(), 2);
+                        if (LTT == 0) { MOPS[2] = "Other"; }
+                        if (LTT == 1) { MOPS[2] = "UAT"; }
+                        if (LTT == 2) { MOPS[2] = "1090 ES"; }
+                        if (LTT == 3) { MOPS[2] = "VDL 4"; }
                         else { MOPS[2] = "Not assigned"; }
 
                         contador = contador + 1;
@@ -531,7 +535,6 @@ namespace CLASSES
                     if (FSPEC[18] == "1")
                     {
                         //I021/070: Mode 3/A Code in Octal Representation
-
                         try
                         {
                             string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
@@ -593,19 +596,21 @@ namespace CLASSES
                             else { Target_Status[1] = "LNAV Mode not engaged "; }
                             string octetoPS = octeto[3].ToString() + octeto[4].ToString() + octeto[5].ToString();
                             // PS
-                            if (Convert.ToInt32(octetoPS, 2) == 0) { Target_Status[2] = "No emergency / not reported"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 1) { Target_Status[2] = "General emergency"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 2) { Target_Status[2] = "Lifeguard / medical emergency"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 3) { Target_Status[2] = "Minimum fuel"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 4) { Target_Status[2] = "No communications"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 5) { Target_Status[2] = "Unlawful interference"; }
-                            if (Convert.ToInt32(octetoPS, 2) == 6) { Target_Status[2] = "Downed aircraft"; }
+                            int PS = Convert.ToInt32(octetoPS, 2);
+                            if (PS == 0) { Target_Status[2] = "No emergency / not reported"; }
+                            if (PS == 1) { Target_Status[2] = "General emergency"; }
+                            if (PS == 2) { Target_Status[2] = "Lifeguard / medical emergency"; }
+                            if (PS == 3) { Target_Status[2] = "Minimum fuel"; }
+                            if (PS == 4) { Target_Status[2] = "No communications"; }
+                            if (PS == 5) { Target_Status[2] = "Unlawful interference"; }
+                            if (PS == 6) { Target_Status[2] = "Downed aircraft"; }
                             string octetoSS = octeto[6].ToString() + octeto[7].ToString();
                             //SS
-                            if (Convert.ToInt32(octetoSS, 2) == 0) { Target_Status[3] = "No condition reported"; }
-                            if (Convert.ToInt32(octetoSS, 2) == 1) { Target_Status[3] = "Permanent Alert (Emergency condition)"; }
-                            if (Convert.ToInt32(octetoSS, 2) == 2) { Target_Status[3] = "Temporary Alert (change in Mode 3/A Code other than emergency"; }
-                            if (Convert.ToInt32(octetoSS, 2) == 3) { Target_Status[3] = "SPI set"; }
+                            int SS = Convert.ToInt32(octetoSS, 2);
+                            if (SS == 0) { Target_Status[3] = "No condition reported"; }
+                            if (SS == 1) { Target_Status[3] = "Permanent Alert (Emergency condition)"; }
+                            if (SS == 2) { Target_Status[3] = "Temporary Alert (change in Mode 3/A Code other than emergency"; }
+                            if (SS == 3) { Target_Status[3] = "SPI set"; }
 
                             contador = contador + 1;
                         }
@@ -677,31 +682,30 @@ namespace CLASSES
                             {
                                 // I021/020 Emitter Category
                                 string octeto = Met.Octeto_A_Bin(paquete0[contador]);
-                                if (Convert.ToInt32(octeto, 2) == 0) { ECAT = "No ADS-B Emitter Category Information"; }
-                                if (Convert.ToInt32(octeto, 2) == 1) { ECAT = "light aircraft <= 15500 lbs"; }
-                                if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "15500 lbs < small aircraft < 75000 lbs"; }
-                                if (Convert.ToInt32(octeto, 2) == 3) { ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
-                                if (Convert.ToInt32(octeto, 2) == 4) { ECAT = "High Vortex Large"; }
-                                if (Convert.ToInt32(octeto, 2) == 5) { ECAT = "300000 lbs <= heavy aircraft"; }
-                                if (Convert.ToInt32(octeto, 2) == 6) { ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400knots cruise)"; }
-                                if (Convert.ToInt32(octeto, 2) == 7) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 8) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 9) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 10) { ECAT = "rotocraft"; }
-                                if (Convert.ToInt32(octeto, 2) == 11) { ECAT = "glider / sailplane"; }
-                                if (Convert.ToInt32(octeto, 2) == 12) { ECAT = "ighter-than-air"; }
-                                if (Convert.ToInt32(octeto, 2) == 13) { ECAT = "unmanned aerial vehicle"; }
-                                if (Convert.ToInt32(octeto, 2) == 14) { ECAT = "space / transatmospheric vehicle"; }
-                                if (Convert.ToInt32(octeto, 2) == 15) { ECAT = "ultralight / handglider / paraglider"; }
-                                if (Convert.ToInt32(octeto, 2) == 16) { ECAT = "parachutist / skydiver"; }
-                                if (Convert.ToInt32(octeto, 2) == 17) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 18) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 19) { ECAT = "reserved"; }
-                                if (Convert.ToInt32(octeto, 2) == 20) { ECAT = "surface emergency vehicle"; }
-                                if (Convert.ToInt32(octeto, 2) == 21) { ECAT = "surface service vehicle"; }
-                                if (Convert.ToInt32(octeto, 2) == 22) { ECAT = "fixed ground or tethered obstruction"; }
-                                if (Convert.ToInt32(octeto, 2) == 23) { ECAT = "cluster obstacle"; }
-                                if (Convert.ToInt32(octeto, 2) == 24) { ECAT = "line obstacle"; }
+                                int value = Convert.ToInt32(octeto, 2);
+                                if (value == 0) { ECAT = "No ADS-B Emitter Category Information"; }
+                                if (value == 1) { ECAT = "Light aircraft <= 15500 lbs"; }
+                                if (value == 2) { ECAT = "15500 lbs < small aircraft < 75000 lbs"; }
+                                if (value == 3) { ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
+                                if (value == 4) { ECAT = "High Vortex Large"; }
+                                if (value == 5) { ECAT = "300000 lbs <= heavy aircraft"; }
+                                if (value == 6) { ECAT = "Highly manoeuvrable (5g acceleration capability) and high speed (>400knots cruise)"; }
+                                if (value == 7 || value == 8 || value == 9) { ECAT = "Reserved"; }
+                                if (value == 10) { ECAT = "rotocraft"; }
+                                if (value == 11) { ECAT = "glider / sailplane"; }
+                                if (value == 12) { ECAT = "ighter-than-air"; }
+                                if (value == 13) { ECAT = "unmanned aerial vehicle"; }
+                                if (value == 14) { ECAT = "space / transatmospheric vehicle"; }
+                                if (value == 15) { ECAT = "ultralight / handglider / paraglider"; }
+                                if (value == 16) { ECAT = "parachutist / skydiver"; }
+                                if (value == 17) { ECAT = "reserved"; }
+                                if (value == 18) { ECAT = "reserved"; }
+                                if (value == 19) { ECAT = "reserved"; }
+                                if (value == 20) { ECAT = "surface emergency vehicle"; }
+                                if (value == 21) { ECAT = "surface service vehicle"; }
+                                if (value == 22) { ECAT = "fixed ground or tethered obstruction"; }
+                                if (value == 23) { ECAT = "cluster obstacle"; }
+                                if (value == 24) { ECAT = "line obstacle"; }
                                 contador = contador + 1;
                             }
                             if (FSPEC[30] == "1")
@@ -831,18 +835,19 @@ namespace CLASSES
                                         string octeto11 = Met.Octeto_A_Bin(paquete0[contador + 9]);
                                         string pointtyopebits = octeto11[0].ToString() + octeto11[1].ToString() + octeto11[2].ToString() + octeto11[3].ToString();
                                         // Point Type
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 0) { Trajectory_Intent[10] = "Unknown"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 1) { Trajectory_Intent[10] = "Fly by waypoint (LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 2) { Trajectory_Intent[10] = "Fly over waypoint (LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 3) { Trajectory_Intent[10] = "Hold pattern (LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 4) { Trajectory_Intent[10] = "Procedure hold(LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 5) { Trajectory_Intent[10] = "Procedure turn (LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 6) { Trajectory_Intent[10] = "RF leg (LT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 7) { Trajectory_Intent[10] = "Top of climb (VT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 8) { Trajectory_Intent[10] = "Top of descent (VT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 9) { Trajectory_Intent[10] = "Start of level (VT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 10) { Trajectory_Intent[10] = "Cross-over altitude (VT)"; }
-                                        if (Convert.ToInt32(pointtyopebits, 2) == 11) { Trajectory_Intent[10] = "Transition altitude (VT)"; }
+                                        int value = Convert.ToInt32(pointtyopebits, 2);
+                                        if (value == 0) { Trajectory_Intent[10] = "Unknown"; }
+                                        if (value == 1) { Trajectory_Intent[10] = "Fly by waypoint (LT)"; }
+                                        if (value == 2) { Trajectory_Intent[10] = "Fly over waypoint (LT)"; }
+                                        if (value == 3) { Trajectory_Intent[10] = "Hold pattern (LT)"; }
+                                        if (value == 4) { Trajectory_Intent[10] = "Procedure hold(LT)"; }
+                                        if (value == 5) { Trajectory_Intent[10] = "Procedure turn (LT)"; }
+                                        if (value == 6) { Trajectory_Intent[10] = "RF leg (LT)"; }
+                                        if (value == 7) { Trajectory_Intent[10] = "Top of climb (VT)"; }
+                                        if (value == 8) { Trajectory_Intent[10] = "Top of descent (VT)"; }
+                                        if (value == 9) { Trajectory_Intent[10] = "Start of level (VT)"; }
+                                        if (value == 10) { Trajectory_Intent[10] = "Cross-over altitude (VT)"; }
+                                        if (value == 11) { Trajectory_Intent[10] = "Transition altitude (VT)"; }
                                         string TDbits = octeto11[4].ToString() + octeto11[5].ToString();
                                         // TD
                                         if (TDbits == "00") { Trajectory_Intent[11] = "N/A"; }
@@ -887,10 +892,11 @@ namespace CLASSES
                                     else { Op_Status[0] = "TCAS RA active"; }
                                     string tcbits = octeto[1].ToString() + octeto[2].ToString();
                                     //TC
-                                    if (Convert.ToInt32(tcbits, 2) == 0) { Op_Status[1] = "no capability for Trajectory Change Reports"; }
-                                    if (Convert.ToInt32(tcbits, 2) == 1) { Op_Status[1] = "support for TC+0 reports only"; }
-                                    if (Convert.ToInt32(tcbits, 2) == 2) { Op_Status[1] = "support for multiple TC reports"; }
-                                    if (Convert.ToInt32(tcbits, 2) == 3) { Op_Status[1] = "Reserved"; }
+                                    int TC = Convert.ToInt32(tcbits, 2);
+                                    if (TC == 0) { Op_Status[1] = "no capability for Trajectory Change Reports"; }
+                                    if (TC == 1) { Op_Status[1] = "support for TC+0 reports only"; }
+                                    if (TC == 2) { Op_Status[1] = "support for multiple TC reports"; }
+                                    if (TC == 3) { Op_Status[1] = "Reserved"; }
                                     //TS
                                     if (octeto[3].ToString() == "0") { Op_Status[2] = "no capability to support Target State Reports"; }
                                     else { Op_Status[2] = "capable of supporting target State Reports"; }
@@ -928,23 +934,23 @@ namespace CLASSES
                                     else
                                     {
                                         string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
-                                        string lenwidthbits = octeto2[4].ToString() + octeto2[5].ToString() + octeto2[6].ToString() + octeto2[7].ToString();
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 0) { LenWidth = "Length < 15 m ; Width < 11.5 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 1) { LenWidth = "Length < 15 m ; Width < 23 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 2) { LenWidth = "Length < 25 m ; Width < 28.5 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 3) { LenWidth = "Length < 25 m ; Width < 34 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 4) { LenWidth = "Length < 35 m ; Width < 33 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 5) { LenWidth = "Length < 35 m ; Width < 38 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 6) { LenWidth = "Length < 45 m ; Width < 39.5 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 7) { LenWidth = "Length < 45 m ; Width < 45 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 8) { LenWidth = "Length < 55 m ; Width < 45 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 9) { LenWidth = "Length < 55 m ; Width < 52 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 10) { LenWidth = "Length < 65 m ; Width < 59.5 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 11) { LenWidth = "Length < 65 m ; Width < 67 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 12) { LenWidth = "Length < 75 m ; Width < 72.5 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 13) { LenWidth = "Length < 75 m ; Width < 80 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 14) { LenWidth = "Length < 85 m ; Width < 80 m"; }
-                                        if (Convert.ToInt32(lenwidthbits, 2) == 15) { LenWidth = "Length < 85 m ; Width > 80 m"; }
+                                        int lenwidth = Convert.ToInt32(octeto2[4].ToString() + octeto2[5].ToString() + octeto2[6].ToString() + octeto2[7].ToString(), 2);
+                                        if (lenwidth == 0) { LenWidth = "Length < 15 m; Width < 11.5 m"; }
+                                        if (lenwidth == 1) { LenWidth = "Length < 15 m; Width < 23 m"; }
+                                        if (lenwidth == 2) { LenWidth = "Length < 25 m; Width < 28.5 m"; }
+                                        if (lenwidth == 3) { LenWidth = "Length < 25 m; Width < 34 m"; }
+                                        if (lenwidth == 4) { LenWidth = "Length < 35 m; Width < 33 m"; }
+                                        if (lenwidth == 5) { LenWidth = "Length < 35 m; Width < 38 m"; }
+                                        if (lenwidth == 6) { LenWidth = "Length < 45 m; Width < 39.5 m"; }
+                                        if (lenwidth == 7) { LenWidth = "Length < 45 m; Width < 45 m"; }
+                                        if (lenwidth == 8) { LenWidth = "Length < 55 m; Width < 45 m"; }
+                                        if (lenwidth == 9) { LenWidth = "Length < 55 m; Width < 52 m"; }
+                                        if (lenwidth == 10) { LenWidth = "Length < 65 m; Width < 59.5 m"; }
+                                        if (lenwidth == 11) { LenWidth = "Length < 65 m; Width < 67 m"; }
+                                        if (lenwidth == 12) { LenWidth = "Length < 75 m; Width < 72.5 m"; }
+                                        if (lenwidth == 13) { LenWidth = "Length < 75 m; Width < 80 m"; }
+                                        if (lenwidth == 14) { LenWidth = "Length < 85 m; Width < 80 m"; }
+                                        if (lenwidth == 15) { LenWidth = "Length < 85 m; Width > 80 m"; }
 
                                         contador = contador + 1;
                                     }
@@ -1204,49 +1210,6 @@ namespace CLASSES
             }
             else { }
         }
-
-        //getters 
-        //public double getSIC21()
-        //{
-        //    return Data_Source_ID_SIC;
-        //}
-        //public double getSAC21()
-        //{
-        //    return Data_Source_ID_SAC;
-        //}
-        //public double getTOD21()
-        //{
-        //    return ToART;
-        //}
-        //public double getLAT21()
-        //{
-        //    return High_Res_Lat_WGS_84;
-        //}
-        //public double getLON21()
-        //{
-        //    return High_Res_Lon_WGS_84;
-        //}
-        //public double getTrackNum21()
-        //{
-        //    return Track_Num;
-        //}
-        //public string getTargetAddress21()
-        //{
-        //    return Target_Address;
-        //}
-        //public string getTargetID21()
-        //{
-        //    return Target_ID;
-        //}
-        //public double getFL21()
-        //{
-        //    return FL;
-        //}
-        ////file that does not report Time of Asterix Report Time will report time of message report for position(ADSB-v023)
-        //public double getTOD21ADSB23()
-        //{
-        //    return ToA_Position;
-        //}
     }
 }
 

@@ -1088,11 +1088,12 @@ namespace ASTERIX_APP
 
                         int tiempo = M.gettimecorrectly(tiemposplited);
                         int start = M.gettimecorrectly(tiemposplitedstart) + n;
-                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }
+                        string targetid = Convert.ToString(tabla.Rows[i][1]);
+
+                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }                        
+                        if (targetid == "") { targetid = "Not available"; }
                         if (idbuttonclicked == true && tiempo == start)
                         {
-                            string targetid = Convert.ToString(tabla.Rows[i][1]);
-                            if (targetid == "") { targetid = "Not available"; }
                             if (targetid.Contains(searchedcallsign))
                             {
                                 if (F.CAT_list[i] == 10)
@@ -1128,9 +1129,6 @@ namespace ASTERIX_APP
                         }
                         else
                         {
-                            string targetid = Convert.ToString(tabla.Rows[i][1]);
-                            if (targetid == "") { targetid = "Not available"; }
-
                             if (F.CAT_list[i] == 10 && tiempo == start)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);

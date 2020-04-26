@@ -115,8 +115,6 @@ namespace CLASSES
                 contador = contador + 2;
 
             }
-
-
             if (FSPEC[2] == "1")
             {
                 //Data Item I021/030, Time of Day
@@ -293,10 +291,11 @@ namespace CLASSES
                     {
                         //Data Item I021/165, Rate Of Turn
                         string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
-                        if (octeto1[0].ToString() + octeto1[1].ToString() == "00") { Rate_of_Turn[0] = "Not available"; }
-                        if (octeto1[0].ToString() + octeto1[1].ToString() == "01") { Rate_of_Turn[0] = "Left"; }
-                        if (octeto1[0].ToString() + octeto1[1].ToString() == "10") { Rate_of_Turn[0] = "Right"; }
-                        if (octeto1[0].ToString() + octeto1[1].ToString() == "11") { Rate_of_Turn[0] = "Straight"; }
+                        string value = octeto1[0].ToString() + octeto1[1].ToString();
+                        if (value == "00") { Rate_of_Turn[0] = "Not available"; }
+                        if (value == "01") { Rate_of_Turn[0] = "Left"; }
+                        if (value == "10") { Rate_of_Turn[0] = "Right"; }
+                        if (value == "11") { Rate_of_Turn[0] = "Straight"; }
                         if (octeto1[7].ToString() == "0") { contador = contador + 1; }
                         if (octeto1[7].ToString() == "1")
                         {
@@ -341,19 +340,21 @@ namespace CLASSES
                         else { Target_Status[1] = "LNAV Mode not engaged "; }
                         string octetoPS = octeto[3].ToString() + octeto[4].ToString() + octeto[5].ToString();
                         // PS
-                        if (Convert.ToInt32(octetoPS, 2) == 0) { Target_Status[2] = "No emergency / not reported"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 1) { Target_Status[2] = "General emergency"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 2) { Target_Status[2] = "Lifeguard / medical emergency"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 3) { Target_Status[2] = "Minimum fuel"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 4) { Target_Status[2] = "No communications"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 5) { Target_Status[2] = "Unlawful interference"; }
-                        if (Convert.ToInt32(octetoPS, 2) == 6) { Target_Status[2] = "Downed aircraft"; }
+                        int PS = Convert.ToInt32(octetoPS, 2);
+                        if (PS == 0) { Target_Status[2] = "No emergency / not reported"; }
+                        if (PS == 1) { Target_Status[2] = "General emergency"; }
+                        if (PS == 2) { Target_Status[2] = "Lifeguard / medical emergency"; }
+                        if (PS == 3) { Target_Status[2] = "Minimum fuel"; }
+                        if (PS == 4) { Target_Status[2] = "No communications"; }
+                        if (PS == 5) { Target_Status[2] = "Unlawful interference"; }
+                        if (PS == 6) { Target_Status[2] = "Downed aircraft"; }
                         string octetoSS = octeto[6].ToString() + octeto[7].ToString();
                         //SS
-                        if (Convert.ToInt32(octetoSS, 2) == 0) { Target_Status[3] = "No condition reported"; }
-                        if (Convert.ToInt32(octetoSS, 2) == 1) { Target_Status[3] = "Permanent Alert (Emergency condition)"; }
-                        if (Convert.ToInt32(octetoSS, 2) == 2) { Target_Status[3] = "Temporary Alert (change in Mode 3/A Code other than emergency"; }
-                        if (Convert.ToInt32(octetoSS, 2) == 3) { Target_Status[3] = "SPI set"; }
+                        int SS = Convert.ToInt32(octetoSS, 2);
+                        if (SS == 0) { Target_Status[3] = "No condition reported"; }
+                        if (SS == 1) { Target_Status[3] = "Permanent Alert (Emergency condition)"; }
+                        if (SS == 2) { Target_Status[3] = "Temporary Alert (change in Mode 3/A Code other than emergency"; }
+                        if (SS == 3) { Target_Status[3] = "SPI set"; }
 
                         contador = contador + 1;
                     }
@@ -364,30 +365,31 @@ namespace CLASSES
                         {
                             // I021/020 Emitter Category
                             string octeto = Met.Octeto_A_Bin(paquete0[contador]);
-                            if (Convert.ToInt32(octeto, 2) == 1) { ECAT = "light aircraft <= 7000 kg"; }
-                            if (Convert.ToInt32(octeto, 2) == 2) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 3) { ECAT = "7000 kg < medium aircraft < 136000 kg"; }
-                            if (Convert.ToInt32(octeto, 2) == 4) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 5) { ECAT = "136000 kg <= heavy aircraft"; }
-                            if (Convert.ToInt32(octeto, 2) == 6) { ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400knots cruise)"; }
-                            if (Convert.ToInt32(octeto, 2) == 7) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 8) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 9) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 10) { ECAT = "rotocraft"; }
-                            if (Convert.ToInt32(octeto, 2) == 11) { ECAT = "glider / sailplane"; }
-                            if (Convert.ToInt32(octeto, 2) == 12) { ECAT = "lighter-than-air"; }
-                            if (Convert.ToInt32(octeto, 2) == 13) { ECAT = "unmanned aerial vehicle"; }
-                            if (Convert.ToInt32(octeto, 2) == 14) { ECAT = "space / transatmospheric vehicle"; }
-                            if (Convert.ToInt32(octeto, 2) == 15) { ECAT = "ultralight / handglider / paraglider"; }
-                            if (Convert.ToInt32(octeto, 2) == 16) { ECAT = "parachutist / skydiver"; }
-                            if (Convert.ToInt32(octeto, 2) == 17) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 18) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 19) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 20) { ECAT = "surface emergency vehicle"; }
-                            if (Convert.ToInt32(octeto, 2) == 21) { ECAT = "surface service vehicle"; }
-                            if (Convert.ToInt32(octeto, 2) == 22) { ECAT = "fixed ground or tethered obstruction"; }
-                            if (Convert.ToInt32(octeto, 2) == 23) { ECAT = "reserved"; }
-                            if (Convert.ToInt32(octeto, 2) == 24) { ECAT = "reserved"; }
+                            int value = Convert.ToInt32(octeto, 2);
+                            if (value == 1) { ECAT = "light aircraft <= 7000 kg"; }
+                            if (value == 2) { ECAT = "reserved"; }
+                            if (value == 3) { ECAT = "7000 kg < medium aircraft < 136000 kg"; }
+                            if (value == 4) { ECAT = "reserved"; }
+                            if (value == 5) { ECAT = "136000 kg <= heavy aircraft"; }
+                            if (value == 6) { ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400knots cruise)"; }
+                            if (value == 7) { ECAT = "reserved"; }
+                            if (value == 8) { ECAT = "reserved"; }
+                            if (value == 9) { ECAT = "reserved"; }
+                            if (value == 10) { ECAT = "rotocraft"; }
+                            if (value == 11) { ECAT = "glider / sailplane"; }
+                            if (value == 12) { ECAT = "lighter-than-air"; }
+                            if (value == 13) { ECAT = "unmanned aerial vehicle"; }
+                            if (value == 14) { ECAT = "space / transatmospheric vehicle"; }
+                            if (value == 15) { ECAT = "ultralight / handglider / paraglider"; }
+                            if (value == 16) { ECAT = "parachutist / skydiver"; }
+                            if (value == 17) { ECAT = "reserved"; }
+                            if (value == 18) { ECAT = "reserved"; }
+                            if (value == 19) { ECAT = "reserved"; }
+                            if (value == 20) { ECAT = "surface emergency vehicle"; }
+                            if (value == 21) { ECAT = "surface service vehicle"; }
+                            if (value == 22) { ECAT = "fixed ground or tethered obstruction"; }
+                            if (value == 23) { ECAT = "reserved"; }
+                            if (value == 24) { ECAT = "reserved"; }
                             contador = contador + 1;
                         }
                         if (FSPEC[22] == "1")
@@ -517,18 +519,19 @@ namespace CLASSES
                                     string octeto11 = Met.Octeto_A_Bin(paquete0[contador + 9]);
                                     string pointtyopebits = octeto11[0].ToString() + octeto11[1].ToString() + octeto11[2].ToString() + octeto11[3].ToString();
                                     // Point Type
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 0) { Trajectory_Intent[10] = "Unknown"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 1) { Trajectory_Intent[10] = "Fly by waypoint (LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 2) { Trajectory_Intent[10] = "Fly over waypoint (LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 3) { Trajectory_Intent[10] = "Hold pattern (LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 4) { Trajectory_Intent[10] = "Procedure hold(LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 5) { Trajectory_Intent[10] = "Procedure turn (LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 6) { Trajectory_Intent[10] = "RF leg (LT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 7) { Trajectory_Intent[10] = "Top of climb (VT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 8) { Trajectory_Intent[10] = "Top of descent (VT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 9) { Trajectory_Intent[10] = "Start of level (VT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 10) { Trajectory_Intent[10] = "Cross-over altitude (VT)"; }
-                                    if (Convert.ToInt32(pointtyopebits, 2) == 11) { Trajectory_Intent[10] = "Transition altitude (VT)"; }
+                                    int value = Convert.ToInt32(pointtyopebits, 2);
+                                    if (value == 0) { Trajectory_Intent[10] = "Unknown"; }
+                                    if (value == 1) { Trajectory_Intent[10] = "Fly by waypoint (LT)"; }
+                                    if (value == 2) { Trajectory_Intent[10] = "Fly over waypoint (LT)"; }
+                                    if (value == 3) { Trajectory_Intent[10] = "Hold pattern (LT)"; }
+                                    if (value == 4) { Trajectory_Intent[10] = "Procedure hold(LT)"; }
+                                    if (value == 5) { Trajectory_Intent[10] = "Procedure turn (LT)"; }
+                                    if (value == 6) { Trajectory_Intent[10] = "RF leg (LT)"; }
+                                    if (value == 7) { Trajectory_Intent[10] = "Top of climb (VT)"; }
+                                    if (value == 8) { Trajectory_Intent[10] = "Top of descent (VT)"; }
+                                    if (value == 9) { Trajectory_Intent[10] = "Start of level (VT)"; }
+                                    if (value == 10) { Trajectory_Intent[10] = "Cross-over altitude (VT)"; }
+                                    if (value == 11) { Trajectory_Intent[10] = "Transition altitude (VT)"; }
                                     string TDbits = octeto11[4].ToString() + octeto11[5].ToString();
                                     // TD
                                     if (TDbits == "00") { Trajectory_Intent[11] = "N/A"; }

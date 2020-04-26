@@ -50,7 +50,7 @@ namespace CLASSES
             int contadorCAT21 = 0;
 
             bool multicat = M.IsAMulticatFile(listahex);
-
+            
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];

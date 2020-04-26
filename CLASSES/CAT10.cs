@@ -140,17 +140,17 @@ namespace CLASSES
                     string LOP_Bin = Target_Bits1[3].ToString() + Target_Bits1[4].ToString();
                     Int32 LOP = Convert.ToInt32(LOP_Bin, 2);
                     //LOP
-                    if (LOP == 0) { Target_Rep_Descript[8] = Target_Rep_Descript + "Undetermined"; }
-                    if (LOP == 1) { Target_Rep_Descript[8] = Target_Rep_Descript + "Loop Start"; }
-                    if (LOP == 2) { Target_Rep_Descript[8] = Target_Rep_Descript + "Loop Finish"; }
+                    if (LOP == 0) { Target_Rep_Descript[8] = "Undetermined"; }
+                    if (LOP == 1) { Target_Rep_Descript[8] = "Loop Start"; }
+                    if (LOP == 2) { Target_Rep_Descript[8] = "Loop Finish"; }
 
                     string TOT_Bin = Target_Bits1[5].ToString() + Target_Bits1[6].ToString();
                     Int32 TOT = Convert.ToInt32(TOT_Bin, 2);
                     //TOT
-                    if (TOT == 0) { Target_Rep_Descript[9] = Target_Rep_Descript + "Undetermined"; }
-                    if (TOT == 1) { Target_Rep_Descript[9] = Target_Rep_Descript + "Aircraft"; }
-                    if (TOT == 2) { Target_Rep_Descript[9] = Target_Rep_Descript + "Ground Vehicle"; }
-                    if (TOT == 3) { Target_Rep_Descript[9] = Target_Rep_Descript + "Helicopter"; }
+                    if (TOT == 0) { Target_Rep_Descript[9] = "Undetermined"; }
+                    if (TOT == 1) { Target_Rep_Descript[9] = "Aircraft"; }
+                    if (TOT == 2) { Target_Rep_Descript[9] = "Ground Vehicle"; }
+                    if (TOT == 3) { Target_Rep_Descript[9] = "Helicopter"; }
 
                     if (Target_Bits1[7].ToString() == "1")
                     {
@@ -638,51 +638,5 @@ namespace CLASSES
             }
             else { }
         }
-        // getters for flight class
-        //public double getSIC10()
-        //{
-        //    return Data_Source_ID[0];
-        //}
-        //public double getSAC10()
-        //{
-        //    return Data_Source_ID[1];
-        //}
-        //public double getTOD10()
-        //{
-        //    return Time_Day;
-        //}
-        //public double getX10()
-        //{
-
-        //    return Pos_Cartesian[0];
-        //}
-        //public double getY10()
-        //{
-        //    return Pos_Cartesian[1];
-        //}
-        //public double getTrackNum10()
-        //{
-        //    if (Track_Num != null)
-        //    {
-        //        return Convert.ToDouble(Track_Num);
-        //    }
-        //    else { return 0; }
-        //}
-        //public double getTargetAddress10()
-        //{
-        //    if (Target_Add != null)
-        //    {
-        //        return Convert.ToDouble(Target_Add);
-        //    }
-        //    else { return 0; }
-        //}
-        //public string getTargetID10()
-        //{
-        //    return Target_ID[1];
-        //}
-        //public double getFL10()
-        //{
-        //    return Convert.ToDouble(FL[2]) * 0.25;
-        //}
     }
 }
