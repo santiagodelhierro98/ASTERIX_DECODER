@@ -10,7 +10,7 @@ namespace CLASSES
         Metodos M = new Metodos();
 
         string path;
-        int CAT;
+        public int CAT;
         public double[] SICSAC;
         public string filename;
 
@@ -184,10 +184,6 @@ namespace CLASSES
         public CAT21_v23 getCAT21_v23(int num)
         {
             return listaCAT21_v23[num];
-        }
-        public int getCAT()
-        {
-            return CAT;
         }
     }
 }

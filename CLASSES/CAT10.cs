@@ -61,8 +61,8 @@ namespace CLASSES
                 string SAC_Bin = M.Octeto_A_Bin(paquete0[contador]);
                 string SIC_Bin = M.Octeto_A_Bin(paquete0[contador + 1]);
 
-                double SAC = (Convert.ToInt32(SAC_Bin, 2));
-                double SIC = (Convert.ToInt32(SIC_Bin, 2));
+                double SAC = Convert.ToInt32(SAC_Bin, 2);
+                double SIC = Convert.ToInt32(SIC_Bin, 2);
 
                 Data_Source_ID[0] = Convert.ToInt32(SIC);
                 Data_Source_ID[1] = Convert.ToInt32(SAC);

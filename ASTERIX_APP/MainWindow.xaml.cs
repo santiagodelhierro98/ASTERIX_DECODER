@@ -6,13 +6,11 @@ using Microsoft.Win32;
 using System;
 using System.Data;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Windows.Controls;
 using System.Threading.Tasks;
-using System.Windows.Controls
-
 
 namespace ASTERIX_APP
 {
@@ -75,7 +73,11 @@ namespace ASTERIX_APP
         public async void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             STOP_TRACK();
-            
+            Track_Table.ItemsSource = null;
+            Track_Table.Items.Clear();
+            gridlista.ItemsSource = null;
+            gridlista.Items.Clear();
+
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
@@ -105,8 +107,6 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Collapsed;
             gridlista.Visibility = Visibility.Collapsed;
             updatedlista.Visibility = Visibility.Collapsed;
-            Track_Table.ItemsSource = null;
-            Track_Table.Items.Clear();
 
             // HIDE VISUAL ELEMENTS
             bubbleWord.Visibility = Visibility.Collapsed;
@@ -1183,13 +1183,13 @@ namespace ASTERIX_APP
         {
             dt_Timer.Stop();
             map.Markers.Clear();
-            updatedtable.Rows.Clear();
+            updatedtable.Clear();
             i = 0;
             s = 0;
             n = 0;
-            if (category == 10) { gridlista.ItemsSource = F.tablacat10reducida.DefaultView; }
-            if (category == 21) { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
-            if (category == 1021) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
+            //if (category == 10) { gridlista.ItemsSource = F.tablacat10reducida.DefaultView; }
+            //if (category == 21) { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
+            //if (category == 1021) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
             gridlista.Visibility = Visibility.Visible;
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
