@@ -76,7 +76,6 @@ namespace ASTERIX_APP
             Track_Table.ItemsSource = null;
             Track_Table.Items.Clear();
             gridlista.ItemsSource = null;
-            gridlista.Items.Clear();
 
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
@@ -1385,8 +1384,6 @@ namespace ASTERIX_APP
                     category = 21;
                 }
             }
-        }
-
-        
+        }        
     }
 }
