@@ -43,6 +43,7 @@ namespace ASTERIX_APP
         {
             InitializeComponent();
 
+            progressbar.Visibility = Visibility.Collapsed;
             bubbleWord.Visibility = Visibility.Visible;
             circle.Visibility = Visibility.Visible;
             circle2.Visibility = Visibility.Visible;
@@ -77,6 +78,7 @@ namespace ASTERIX_APP
             Track_Table.Items.Clear();
             gridlista.ItemsSource = null;
 
+            progressbar.Visibility = Visibility.Collapsed;
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
@@ -118,7 +120,9 @@ namespace ASTERIX_APP
 
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
-            var progress = new Progress<int>(value => progressbar.Value = value);
+            //var progress = new Progress<int>(value => progressbar.Value = value);
+
+
             //Instructions_Label.Visibility = Visibility.Visible;
             //Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
@@ -146,14 +150,15 @@ namespace ASTERIX_APP
                 {
                     chivato = true;
                     F = new Fichero(OpenFile.FileName);
-                    ((IProgress<int>)progress).Report(20);
+                    //((IProgress<int>)progress).Report(20);
                     F.leer();
-                    ((IProgress<int>)progress).Report(100);
+                    //((IProgress<int>)progress).Report(100);
                 });
               
 
                 asterixPerf.Visibility = Visibility.Visible;
-                
+                progressbar.Visibility = Visibility.Collapsed;
+
                 Instructions_Label.Visibility = Visibility.Visible;
                 Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
