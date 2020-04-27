@@ -146,13 +146,14 @@ namespace ASTERIX_APP
                 {
                     chivato = true;
                     F = new Fichero(OpenFile.FileName);
-                    ((IProgress<int>)progress).Report(10);
+                    ((IProgress<int>)progress).Report(20);
                     F.leer();
                     ((IProgress<int>)progress).Report(100);
                 });
-                asterixPerf.Visibility = Visibility.Visible;
-                progressbar.Visibility = Visibility.Collapsed;
+              
 
+                asterixPerf.Visibility = Visibility.Visible;
+                
                 Instructions_Label.Visibility = Visibility.Visible;
                 Instructions_Label.Content = "Perfectly read! Let's get started!" + '\n' + "1) View the file's data by clicking on 'Tracking Table'" +
                     '\n' + "2) Run an amazing simulation by clicking on 'Tracking Map'";
@@ -163,6 +164,7 @@ namespace ASTERIX_APP
                 circle2.Visibility = Visibility.Visible;
                 Help.Visibility = Visibility.Visible;
                 CheckCAT();
+
             }
         }
         private void TableTrack_Click(object sender, RoutedEventArgs e)
@@ -178,10 +180,12 @@ namespace ASTERIX_APP
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
                 arrow.Visibility = Visibility.Visible;
+
             }
             else
             {
                 // Table and Map Stuff
+                progressbar.Visibility = Visibility.Hidden;
                 Search_Table.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Visible;
                 SearchIDButton.Visibility = Visibility.Visible;
@@ -237,10 +241,12 @@ namespace ASTERIX_APP
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
                 arrow.Visibility = Visibility.Visible;
+
             }
             else
             {
                 // Table and Map Stuff
+                progressbar.Visibility = Visibility.Hidden;
                 Search_Table.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Collapsed;
                 SearchIDButton.Visibility = Visibility.Collapsed;

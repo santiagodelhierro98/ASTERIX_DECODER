@@ -44,7 +44,7 @@
             </Grid>
         </StackPanel>
         <Label x:Name="Instructions_Label"  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff" Visibility="Visible"/>
-        <ProgressBar Name="progressbar" Visibility="Collapsed"   Minimum="0" Maximum="100" RenderTransformOrigin="0.5,0.5" Background="#222" Margin="454,334,454,331" />
+        <ProgressBar Name="progressbar"   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,25" Minimum="0" Maximum="100" RenderTransformOrigin="0.5,0.5" Background="#333" Height="20"  Width="225"/>
         <Image Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="./Images/upc-logo.png"/>
         <Image x:Name="asterixPNG" Source="./Images/asterix.png" Opacity="0.7" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Collapsed"/>
         <Image x:Name="asterixPerf" Source="./Images/asterixPERF.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="300" Margin="100" Visibility="Collapsed"/>
