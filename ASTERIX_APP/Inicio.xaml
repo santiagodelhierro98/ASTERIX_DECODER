@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASTERIX_APP"
         mc:Ignorable="d" d:DesignWidth="600" Background="#222"
-        Title="Inicio" Height="313" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Asterix Decoder App" Height="313" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <Grid Height="300" Width="600">
                 <Label HorizontalAlignment="Center" Margin="0,32,0,0" Content="Welcome to ASTERIX decoder application"  VerticalAlignment="Top" Background="#222" FontFamily="Century Gothic" FontSize="25" Foreground="Gray"/>
                 <Button x:Name="Start" Click ="Start_Click" Content="START" Margin="0 0 40 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1"/>
-                <Image  Opacity="0.65" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/Eurocontrol_logo_2010.svg.png" Margin="24,0,0,30" />
+                <Image  Opacity="1" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/Eurocontrol_logo_2010.svg.png" Margin="24,0,0,30" />
+                <Image  Opacity="1" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/upc-logo.png" Margin="130,0,0,30" />
+                <Button  x:Name="AboutUs" Content="About Us" Margin="0 0 120 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1" Click="AboutUs_Click" />
+                <Label Content="In partner with :" Background="#222" FontFamily="Century Gothic" Foreground="Gray" Margin="100,179,395,97" FontSize="10" />
+                <Label Content="All rights reserved ©" Background="#222" FontFamily="Century Gothic" Foreground="Gray" Margin="250,244,240,32" FontSize="9" />
+
+
             </Grid>
         </StackPanel>
     </Grid>

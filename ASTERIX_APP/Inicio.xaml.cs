@@ -19,5 +19,12 @@ namespace ASTERIX_APP
             mainwind.Show();
             this.Close();
         }
+
+        private void AboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            var Aboutus = new AboutUs();
+            Aboutus.Show();
+
+        }
     }
 }

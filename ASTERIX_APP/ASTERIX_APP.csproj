@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Images\airplane.png" />
+    <None Remove="Images\ari.jpg" />
     <None Remove="Images\arrow.png" />
     <None Remove="Images\asterix.png" />
     <None Remove="Images\asterixPERF.png" />
@@ -15,9 +16,13 @@
     <None Remove="Images\CapturaLOAD.png" />
     <None Remove="Images\CapturaMAP.png" />
     <None Remove="Images\CapturaTABLE.png" />
+    <None Remove="Images\carola.jpg" />
     <None Remove="Images\Eurocontrol_logo_2010.svg.png" />
+    <None Remove="Images\joan.jpg" />
+    <None Remove="Images\judit.jpg" />
     <None Remove="Images\playbut.jpg" />
     <None Remove="Images\reddot.png" />
+    <None Remove="Images\santi.jpg" />
     <None Remove="Images\stopbut.jpg" />
     <None Remove="Images\upc-logo.png" />
     <None Remove="Images\Zoomin.jpg" />
@@ -51,11 +56,17 @@
     <Content Include="Images\arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\ari.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\asterix.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\asterixPERF.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\carola.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Eurocontrol_logo_2010.svg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -63,7 +74,16 @@
     <Content Include="Images\reddot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\joan.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\judit.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\playbut.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\santi.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\stopbut.jpg">

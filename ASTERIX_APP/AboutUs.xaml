@@ -1,0 +1,39 @@
+﻿<Window x:Class="ASTERIX_APP.AboutUs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASTERIX_APP"
+        mc:Ignorable="d"
+        Title="About Us" Height="350" Width="850" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#222">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0" HorizontalAlignment="Right" Height="100" Margin="0,40,35,0" Source="./Images/ari.jpg" VerticalAlignment="Top" Width="100"/>
+        <Image Grid.Column="1" HorizontalAlignment="Right" Height="100" Margin="0,40,35,0" Source="./Images/carola.jpg" VerticalAlignment="Top" Width="100"/>
+        <Image Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0,40,35,0" Source="./Images/joan.jpg" VerticalAlignment="Top" Width="100"/>
+        <Image Grid.Column="3" HorizontalAlignment="Right" Height="100" Margin="0,40,35,0" Source="./Images/judit.jpg" VerticalAlignment="Top" Width="100"/>
+        <Image Grid.Column="4" HorizontalAlignment="Right" Height="100" Margin="0,40,35,0" Source="./Images/santi.jpg" VerticalAlignment="Top" Width="100"/>
+        <Label Grid.Column="0" HorizontalAlignment="Right" Content="Ariadna Santaella Cáceres" VerticalAlignment="Top" Margin="0,170,15,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="0" HorizontalAlignment="Right" Content="Age : 22" VerticalAlignment="Top" Margin="0,210,60,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="1" HorizontalAlignment="Right" Content="Carola Moltó Suazo" VerticalAlignment="Top" Margin="0,170,25,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="1" HorizontalAlignment="Right" Content="Age : 21" VerticalAlignment="Top" Margin="0,210,60,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="2" HorizontalAlignment="Right" Content="Joan Hernández Font" VerticalAlignment="Top" Margin="0,170,25,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="2" HorizontalAlignment="Right" Content="Age : 21" VerticalAlignment="Top" Margin="0,210,60,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="3" HorizontalAlignment="Right" Content="Judith Pariente Mejias" VerticalAlignment="Top" Margin="0,170,25,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="3" HorizontalAlignment="Right" Content="Age : 21" VerticalAlignment="Top" Margin="0,210,60,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="4" HorizontalAlignment="Right" Content="Santiago del Hierro" VerticalAlignment="Top" Margin="0,170,30,0"  Background="#222" Foreground="#fff"/>
+        <Label Grid.Column="4" HorizontalAlignment="Right" Content="Age : 21" VerticalAlignment="Top" Margin="0,210,60,0"  Background="#222" Foreground="#fff"/>
+        <Button x:Name="Close" Click="Close_Click" Content="Close" Foreground="#fff" Background="#333" Grid.Column="4"  Margin="60,264,0,0" Width="50" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+
+
+
+
+    </Grid>
+</Window>
