@@ -12,6 +12,7 @@ namespace ASTERIX_APP
             InitializeComponent();
             Window win = new Window();
             win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
         }
         private void Start_Click(object sender, RoutedEventArgs e)
         {
@@ -25,6 +26,12 @@ namespace ASTERIX_APP
             var Aboutus = new AboutUs();
             Aboutus.Show();
 
+        }
+        private void Intrepids_Click(object sender, RoutedEventArgs e)
+        {
+            var ExtraWork = new MainWindow();
+            ExtraWork.Show();
+            this.Close();
         }
     }
 }
