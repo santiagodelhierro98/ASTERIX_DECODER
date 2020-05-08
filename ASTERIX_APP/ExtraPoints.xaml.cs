@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 using CLASSES;
 
 namespace ASTERIX_APP
@@ -28,7 +29,11 @@ namespace ASTERIX_APP
             int CAT_1 = CheckCAT(F_MLAT);
             int CAT_2 = CheckCAT(F_ADSB);
 
-            
+            F_MLAT.
+
+            DataTable ExtraPoints = new DataTable();
+            M.Create_ExtraTable(ExtraPoints);
+            ExtraPoints.Rows.Add();
         }
         public int CheckCAT(Fichero F)
         {
