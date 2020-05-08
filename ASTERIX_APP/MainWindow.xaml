@@ -9,7 +9,7 @@
         Title="Asterix Decoder App" Height="700" Width="1200" Background="#222"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
-    <Grid x:Name="pantalla" RenderTransformOrigin="0.231,0.458" Margin="0">
+    <Grid x:Name="pantalla" RenderTransformOrigin="0.231 0.458" Margin="0">
         <StackPanel Margin="0" Height="Auto" VerticalAlignment="Stretch">
             <!-- Buttons -->
             <Grid Margin="5" Height="70">

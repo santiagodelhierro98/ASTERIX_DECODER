@@ -424,11 +424,25 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
         }
+        public void Create_ExtraTable(DataTable tableExtraCAT)
+        {
+            tableExtraCAT.Columns.Add(new DataColumn("#"));
+            tableExtraCAT.Columns.Add(new DataColumn("Callsign"));
+            tableExtraCAT.Columns.Add(new DataColumn("Time"));
+            tableExtraCAT.Columns.Add(new DataColumn("Horizontal Measured\nDistance (NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("Horizontal Accuracy\n(NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("Vertical Measured\nDistance (NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("Vertical Accuracy\n(NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("Detection Probability"));
+            tableExtraCAT.Columns.Add(new DataColumn("False Alarm Probability"));
+            tableExtraCAT.Columns.Add(new DataColumn("False Alarm Time"));
+        }
         public DataTable getSearchTable10()
         {
             DataTable SearchTable10 = new DataTable();
 
             SearchTable10.Columns.Add(new DataColumn("#"));
+            SearchTable10.Columns.Add(new DataColumn("CAT"));
             SearchTable10.Columns.Add(new DataColumn("SIC"));
             SearchTable10.Columns.Add(new DataColumn("SAC"));
             SearchTable10.Columns.Add(new DataColumn("Target ID"));
@@ -437,10 +451,10 @@ namespace CLASSES
             SearchTable10.Columns.Add(new DataColumn("Message type"));
             SearchTable10.Columns.Add(new DataColumn("Time Of Day (UTC)"));
             SearchTable10.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
-            SearchTable10.Columns.Add(new DataColumn("Position Polar\n(Distance, Angle)"));
-            SearchTable10.Columns.Add(new DataColumn("Position Cartesian\n(X, Y)"));
-            SearchTable10.Columns.Add(new DataColumn("Track Velocity Polar\n(Ground Speed, Track Angle)"));
-            SearchTable10.Columns.Add(new DataColumn("Track Velocity Cartesian\n(Vx, Vy)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Polar Coords\n(Distance, Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
+            SearchTable10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
             SearchTable10.Columns.Add(new DataColumn("Track Status")); //array
             SearchTable10.Columns.Add(new DataColumn("Mode 3/A Code")); //array
             SearchTable10.Columns.Add(new DataColumn("Target Address"));
@@ -452,10 +466,10 @@ namespace CLASSES
             SearchTable10.Columns.Add(new DataColumn("Target Heading"));
             SearchTable10.Columns.Add(new DataColumn("System Status")); //array
             SearchTable10.Columns.Add(new DataColumn("Pre Programmed MSG")); //array
-            SearchTable10.Columns.Add(new DataColumn("Standard Deviation Position\n(X, Y)"));
+            SearchTable10.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
             SearchTable10.Columns.Add(new DataColumn("Covariance of deviation"));
             SearchTable10.Columns.Add(new DataColumn("Presence")); //array
-            SearchTable10.Columns.Add(new DataColumn("Amplitude\nPrimary Plot"));
+            SearchTable10.Columns.Add(new DataColumn("Amplitude of Primary Plot"));
             SearchTable10.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
 
             return SearchTable10;
@@ -465,6 +479,7 @@ namespace CLASSES
             DataTable SearchTable21 = new DataTable();
 
             SearchTable21.Columns.Add(new DataColumn("#"));
+            SearchTable21.Columns.Add(new DataColumn("CAT"));
             SearchTable21.Columns.Add(new DataColumn("SIC"));
             SearchTable21.Columns.Add(new DataColumn("SAC"));
             SearchTable21.Columns.Add(new DataColumn("Target ID"));
@@ -472,13 +487,13 @@ namespace CLASSES
             SearchTable21.Columns.Add(new DataColumn("Target Report")); // array
             SearchTable21.Columns.Add(new DataColumn("Time Of Day"));
             SearchTable21.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
-            SearchTable21.Columns.Add(new DataColumn("High Resolution\nPosition WGS-84\n(Latitude, Longitude)"));
+            SearchTable21.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
             SearchTable21.Columns.Add(new DataColumn("Flight Level"));
             SearchTable21.Columns.Add(new DataColumn("Geometric Height"));
             SearchTable21.Columns.Add(new DataColumn("Operational Status")); //array
             SearchTable21.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
             SearchTable21.Columns.Add(new DataColumn("True Airspeed"));
-            SearchTable21.Columns.Add(new DataColumn("Airborne Ground Vector\n(GS, Track Angle)"));
+            SearchTable21.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
             SearchTable21.Columns.Add(new DataColumn("Track Angle Rate"));
             SearchTable21.Columns.Add(new DataColumn("Selected Altitude"));
             SearchTable21.Columns.Add(new DataColumn("MOPS version")); //array
@@ -496,13 +511,13 @@ namespace CLASSES
             SearchTable21.Columns.Add(new DataColumn("Mode S")); //array
             SearchTable21.Columns.Add(new DataColumn("Message amplitude"));
             SearchTable21.Columns.Add(new DataColumn("Receiver ID"));
-            SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor position"));
-            SearchTable21.Columns.Add(new DataColumn("Time Applicability\nfor velocity"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nPosition"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nVelocity"));
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nPosition-High Precision")); // array
-            SearchTable21.Columns.Add(new DataColumn("Time Message Reception\nVelocity-High Precision")); // array
-            SearchTable21.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
+            SearchTable21.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
+            SearchTable21.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
+            SearchTable21.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
+            SearchTable21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
+            SearchTable21.Columns.Add(new DataColumn("Time of Message Reception\nfor position - High precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision")); // array
+            SearchTable21.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
             SearchTable21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
             SearchTable21.Columns.Add(new DataColumn("Data ages")); // array
             SearchTable21.Columns.Add(new DataColumn("Service Management"));
@@ -534,25 +549,25 @@ namespace CLASSES
             SearchTableMixed.Columns.Add(new DataColumn("Target Size\n(Length x Width)"));
             SearchTableMixed.Columns.Add(new DataColumn("Target Heading"));
             SearchTableMixed.Columns.Add(new DataColumn("Message type"));
-            SearchTableMixed.Columns.Add(new DataColumn("Position Polar\n(Distance, Angle)"));
-            SearchTableMixed.Columns.Add(new DataColumn("Position Cartesian\n(X, Y)"));
-            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Polar\n(GS, Track Angle)"));
-            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Cartesian\n(Vx, Vy)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Position Polar Coords\n(Distance, Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Position Cartesian Coords\n(X, Y)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
             SearchTableMixed.Columns.Add(new DataColumn("Track Status"));
             SearchTableMixed.Columns.Add(new DataColumn("Vehicle Fleet ID"));
             SearchTableMixed.Columns.Add(new DataColumn("System Status"));
             SearchTableMixed.Columns.Add(new DataColumn("Pre Programmed MSG"));
-            SearchTableMixed.Columns.Add(new DataColumn("Standard Deviation\nPosition\n(X, Y)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Standard Deviation of Position\n(X, Y)"));
             SearchTableMixed.Columns.Add(new DataColumn("Covariance of deviation"));
             SearchTableMixed.Columns.Add(new DataColumn("Presence"));
             SearchTableMixed.Columns.Add(new DataColumn("Acceleration\n(Ax, Ay)"));
 
             // CAT21 Items
-            SearchTableMixed.Columns.Add(new DataColumn("High Resolution\nPosition WGS-84\n(Latitude, Longitude)"));
+            SearchTableMixed.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
             SearchTableMixed.Columns.Add(new DataColumn("Operational Status"));
             SearchTableMixed.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
             SearchTableMixed.Columns.Add(new DataColumn("True Airspeed"));
-            SearchTableMixed.Columns.Add(new DataColumn("Airborne Ground Vector\n(GS, Track Angle)"));
+            SearchTableMixed.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
             SearchTableMixed.Columns.Add(new DataColumn("Track Angle Rate"));
             SearchTableMixed.Columns.Add(new DataColumn("Selected Altitude"));
             SearchTableMixed.Columns.Add(new DataColumn("MOPS version"));
@@ -566,13 +581,13 @@ namespace CLASSES
             SearchTableMixed.Columns.Add(new DataColumn("Service Identification"));
             SearchTableMixed.Columns.Add(new DataColumn("Quality Indicators"));
             SearchTableMixed.Columns.Add(new DataColumn("Receiver ID"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Applicability\nPosition"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Applicability\nVelocity"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nPosition"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nVelocity"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nPosition-High precision"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time Message Reception\nVelocity-High precision"));
-            SearchTableMixed.Columns.Add(new DataColumn("Time ASTERIX\nReport Transmission"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Applicability\nfor position"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Applicability\nfor velocity"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Message Reception\nfor position"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Message Reception\nfor position - High precision"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of Message Reception\nfor velocity - High precision"));
+            SearchTableMixed.Columns.Add(new DataColumn("Time of ASTERIX\nReport Transmission"));
             SearchTableMixed.Columns.Add(new DataColumn("Trajectory Intent Data"));
             SearchTableMixed.Columns.Add(new DataColumn("Data ages"));
             SearchTableMixed.Columns.Add(new DataColumn("Service Management"));

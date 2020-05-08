@@ -24,7 +24,7 @@ namespace CLASSES
                 }
                 // tambien filtrat por target id (que lo tenga) en el adsb tb hay k hacer lo mismo)
                 //tambien hay fitlrar por FL (los que estan volando)
-                //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
+                //ID//Hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
 
             }
             return MLATList;
