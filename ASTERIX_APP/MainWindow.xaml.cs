@@ -11,12 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace ASTERIX_APP
 {
     public partial class MainWindow : Window
     {
         Fichero F;
+        Extrapoints E = new Extrapoints();
         Metodos M = new Metodos();
         DispatcherTimer dt_Timer = new DispatcherTimer();
 
@@ -42,7 +44,6 @@ namespace ASTERIX_APP
         public MainWindow()
         {
             InitializeComponent();
-
             progressbar.Visibility = Visibility.Collapsed;
             bubbleWord.Visibility = Visibility.Visible;
             circle.Visibility = Visibility.Visible;
@@ -169,6 +170,7 @@ namespace ASTERIX_APP
                 circle2.Visibility = Visibility.Visible;
                 Help.Visibility = Visibility.Visible;
                 CheckCAT();
+                //computelistMLAT();
 
             }
         }
@@ -1393,6 +1395,11 @@ namespace ASTERIX_APP
                     category = 21;
                 }
             }
-        }        
+        }
+        public void computelistMLAT()
+        {
+            List<CAT10> listMLAT = E.returnMLATList();
+
+        }
     }
 }
