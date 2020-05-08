@@ -153,6 +153,8 @@ namespace ASTERIX_APP
                     F = new Fichero(OpenFile.FileName);
                     //((IProgress<int>)progress).Report(20);
                     F.leer();
+                    computelistMLAT(F);
+
                     //((IProgress<int>)progress).Report(100);
                 });
               
@@ -170,7 +172,6 @@ namespace ASTERIX_APP
                 circle2.Visibility = Visibility.Visible;
                 Help.Visibility = Visibility.Visible;
                 CheckCAT();
-                //computelistMLAT();
 
             }
         }
@@ -1396,9 +1397,9 @@ namespace ASTERIX_APP
                 }
             }
         }
-        public void computelistMLAT()
+        public void computelistMLAT(Fichero F)
         {
-            List<CAT10> listMLAT = E.returnMLATList();
+            List<CAT10> listMLAT = E.returnMLATList(F);
 
         }
     }

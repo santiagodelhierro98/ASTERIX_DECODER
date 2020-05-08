@@ -10,18 +10,17 @@ namespace CLASSES
 
     public class Extrapoints
     {
-        Fichero F;
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
         List<CAT10> MLATList = new List<CAT10>();
-        public List<CAT10> returnMLATList()
+        public List<CAT10> returnMLATList(Fichero Fi)
         {
             
-            for (int i=0;i<=F.lengthlistaCAT10();i++)
+            for (int i=0;i<Fi.lengthlistaCAT10();i++)
             {
-                CAT10 C10 = F.getCAT10(i);
+                CAT10 C10 = Fi.getCAT10(i);
                 if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                 {
-                    MLATList.Add(F.getCAT10(i));
+                    MLATList.Add(Fi.getCAT10(i));
                 }
                 // tambien filtrat por target id (que lo tenga) en el adsb tb hay k hacer lo mismo)
                 //tambien hay fitlrar por FL (los que estan volando)
