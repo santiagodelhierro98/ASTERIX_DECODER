@@ -13,7 +13,7 @@ namespace CLASSES
     {
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
         List<CAT10> MLATList = new List<CAT10>();
-        List<CAT21_v23> ADSBList = new List<CAT21_v23>();
+        List<CAT21> ADSBList = new List<CAT21>();
         Metodos M = new Metodos();
 
         public double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
@@ -36,20 +36,20 @@ namespace CLASSES
             }
             return MLATList;
         }
-        public List<CAT21_v23> returnADSBList(Fichero Fi) //este tendria que ser el Fi_ADSB
+        public List<CAT21> returnADSBList(Fichero Fi) //este tendria que ser el Fi_ADSB
         {
-            for (int i = 0; i < Fi.lengthlistaCAT21_v23(); i++)
+            for (int i = 0; i < Fi.lengthlistaCAT21(); i++)
             {
                 // tambien filtrar por target id (que lo tenga) en el adsb tb hay k hacer lo mismo) y ademas squitter version 2
                 //tambien hay que filtrar por FL (los que estan volando) y por maximo 10MN del ARP 
                 //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
 
-                CAT21_v23 C21_v23 = Fi.getCAT21_v23(i);
-                bool modulo = checkdistanceADSB(C21_v23);
+                CAT21 C21 = Fi.getCAT21(i);
+                bool modulo = checkdistanceADSB(C21);
 
-                if (C21_v23.Target_ID != null && C21_v23.FL != 0 && modulo == true )
+                if (C21.Target_ID != null && C21.FL != 0 && modulo == true )
                 {
-                    ADSBList.Add(Fi.getCAT21_v23(i));
+                    ADSBList.Add(Fi.getCAT21(i));
                 }
             }
             return ADSBList;
@@ -63,12 +63,12 @@ namespace CLASSES
             if (modulo <= 10) { return  true; }
             else { return false; }
         }
-        public bool checkdistanceADSB(CAT21_v23 C21_v23)
+        public bool checkdistanceADSB(CAT21 C21)
         {
             //límite de 10 MN (1 min 1 MN)
 
             // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN
-            double modulo = Math.Sqrt(Math.Pow((C21_v23.Lat_WGS_84 - ARP_lat), 2) + Math.Pow((C21_v23.Lon_WGS_84 - ARP_lon), 2));
+            double modulo = Math.Sqrt(Math.Pow((C21.Lat_WGS_84 - ARP_lat), 2) + Math.Pow((C21.Lon_WGS_84 - ARP_lon), 2));
             if (modulo <= 10) { return true; }
             else { return false; }
         }

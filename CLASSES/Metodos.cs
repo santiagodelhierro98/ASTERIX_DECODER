@@ -429,13 +429,15 @@ namespace CLASSES
             tableExtraCAT.Columns.Add(new DataColumn("#"));
             tableExtraCAT.Columns.Add(new DataColumn("Callsign"));
             tableExtraCAT.Columns.Add(new DataColumn("Time"));
-            tableExtraCAT.Columns.Add(new DataColumn("Horizontal Measured\nDistance (NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("Horizontal Accuracy\n(NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("Vertical Measured\nDistance (NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("Vertical Accuracy\n(NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("Detection Probability"));
-            tableExtraCAT.Columns.Add(new DataColumn("False Alarm Probability"));
-            tableExtraCAT.Columns.Add(new DataColumn("False Alarm Time"));
+            tableExtraCAT.Columns.Add(new DataColumn("MLAT Horizontal\nMeasured Distance (NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("ADSB Horizontal\nMeasured Distance (NM)"));
+            tableExtraCAT.Columns.Add(new DataColumn("MLAT Vertical\nMeasured Distance (feet)"));
+            tableExtraCAT.Columns.Add(new DataColumn("ADSB Vertical\nMeasured Distance (feet)"));
+            tableExtraCAT.Columns.Add(new DataColumn("Version Number\nSubfield"));
+            tableExtraCAT.Columns.Add(new DataColumn("Estimation Position\nUncertainty"));
+            tableExtraCAT.Columns.Add(new DataColumn("Version Number\nSubfield"));
+            tableExtraCAT.Columns.Add(new DataColumn("Horizontal\nContainment Radius"));
+            tableExtraCAT.Columns.Add(new DataColumn("Vertical\nGeometric Accuracy"));
         }
         public DataTable getSearchTable10()
         {

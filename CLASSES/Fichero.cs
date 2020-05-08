@@ -189,6 +189,10 @@ namespace CLASSES
         {
             return listaCAT10.Count;
         }
+        public int lengthlistaCAT21()
+        {
+            return listaCAT21.Count;
+        }
         public int lengthlistaCAT21_v23()
         {
             return listaCAT21_v23.Count;

@@ -2,9 +2,6 @@
 
 namespace ASTERIX_APP
 {
-    /// <summary>
-    /// Lógica de interacción para Inicio.xaml
-    /// </summary>
     public partial class Inicio : Window
     {
         public Inicio()
@@ -29,7 +26,7 @@ namespace ASTERIX_APP
         }
         private void Intrepids_Click(object sender, RoutedEventArgs e)
         {
-            var ExtraWork = new MainWindow();
+            var ExtraWork = new ExtraPoints();
             ExtraWork.Show();
             this.Close();
         }

@@ -18,7 +18,7 @@ namespace ASTERIX_APP
     public partial class MainWindow : Window
     {
         Fichero F;
-        Extrapoints E = new Extrapoints();
+        //Extrapoints E = new Extrapoints();
         Metodos M = new Metodos();
         DispatcherTimer dt_Timer = new DispatcherTimer();
 
@@ -153,8 +153,8 @@ namespace ASTERIX_APP
                     F = new Fichero(OpenFile.FileName);
                     //((IProgress<int>)progress).Report(20);
                     F.leer();
-                    computelistMLAT(F);
-                    computelistADSB(F);
+                    //computelistMLAT(F);
+                    //computelistADSB(F);
 
                     //((IProgress<int>)progress).Report(100);
                 });
@@ -250,7 +250,6 @@ namespace ASTERIX_APP
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
                 arrow.Visibility = Visibility.Visible;
-
             }
             else
             {
@@ -1398,15 +1397,14 @@ namespace ASTERIX_APP
                 }
             }
         }
-        public void computelistMLAT(Fichero F)
-        {
-            List<CAT10> listMLAT = E.returnMLATList(F);
+        //public void computelistMLAT(Fichero F)
+        //{
+        //    List<CAT10> listMLAT = E.returnMLATList(F);
+        //}
+        //public void computelistADSB(Fichero F)
+        //{
+        //    List<CAT21_v23> listADSB = E.returnADSBList(F);
 
-        }
-        public void computelistADSB(Fichero F)
-        {
-            List<CAT21_v23> listADSB = E.returnADSBList(F);
-
-        }
+        //}
     }
 }
