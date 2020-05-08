@@ -154,6 +154,7 @@ namespace ASTERIX_APP
                     //((IProgress<int>)progress).Report(20);
                     F.leer();
                     computelistMLAT(F);
+                    computelistADSB(F);
 
                     //((IProgress<int>)progress).Report(100);
                 });
@@ -1400,6 +1401,11 @@ namespace ASTERIX_APP
         public void computelistMLAT(Fichero F)
         {
             List<CAT10> listMLAT = E.returnMLATList(F);
+
+        }
+        public void computelistADSB(Fichero F)
+        {
+            List<CAT21_v23> listADSB = E.returnADSBList(F);
 
         }
     }
