@@ -168,10 +168,10 @@ namespace CLASSES
                 if (mnbits == "10") { Fig_of_Merit[1] = "Multiple navigational aids operating"; }
                 if (mnbits == "11") { Fig_of_Merit[1] = "invalid"; }
                 string dcbits = octeto1[4].ToString() + octeto1[5].ToString();
-                if (mnbits == "00") { Fig_of_Merit[2] = "Unknown"; }
-                if (mnbits == "01") { Fig_of_Merit[2] = "Differential correction"; }
-                if (mnbits == "10") { Fig_of_Merit[2] = "No Differential correction"; }
-                if (mnbits == "11") { Fig_of_Merit[2] = "invalid"; }
+                if (dcbits == "00") { Fig_of_Merit[2] = "Unknown"; }
+                if (dcbits == "01") { Fig_of_Merit[2] = "Differential correction"; }
+                if (dcbits == "10") { Fig_of_Merit[2] = "No Differential correction"; }
+                if (dcbits == "11") { Fig_of_Merit[2] = "invalid"; }
                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                 string pabits = octeto2[4].ToString() + octeto2[5].ToString() + octeto2[6].ToString() + octeto2[7].ToString();
                 Fig_of_Merit[3] = pabits;
@@ -186,12 +186,16 @@ namespace CLASSES
                     string octeto = Met.Octeto_A_Bin(paquete0[contador]);
                     if (octeto[3].ToString() == "0") { Link_Tech[0] = "Unknown"; }
                     if (octeto[3].ToString() == "1") { Link_Tech[0] = "Aircraft Equiped with CDTI"; }
+
                     if (octeto[4].ToString() == "0") { Link_Tech[1] = "Not Used"; }
                     if (octeto[4].ToString() == "1") { Link_Tech[1] = "Used"; }
+
                     if (octeto[5].ToString() == "0") { Link_Tech[2] = "Not Used"; }
                     if (octeto[5].ToString() == "1") { Link_Tech[2] = "Used"; }
+
                     if (octeto[6].ToString() == "0") { Link_Tech[3] = "Not Used"; }
                     if (octeto[6].ToString() == "1") { Link_Tech[3] = "Used"; }
+
                     if (octeto[7].ToString() == "0") { Link_Tech[4] = "Not Used"; }
                     if (octeto[7].ToString() == "1") { Link_Tech[4] = "Used"; }
                     contador = contador + 1;

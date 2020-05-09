@@ -322,6 +322,7 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Track Number"));
             tablaCAT21.Columns.Add(new DataColumn("Target Report")); // array
             tablaCAT21.Columns.Add(new DataColumn("Time Of Day"));
+            tablaCAT21.Columns.Add(new DataColumn("Time of Day Accuracy"));
             tablaCAT21.Columns.Add(new DataColumn("Position WSG-84\n(Latitude, Longitude)"));
             tablaCAT21.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
             tablaCAT21.Columns.Add(new DataColumn("Flight Level"));
@@ -331,6 +332,9 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("True Airspeed"));
             tablaCAT21.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
             tablaCAT21.Columns.Add(new DataColumn("Track Angle Rate"));
+            tablaCAT21.Columns.Add(new DataColumn("Rate of Turn"));
+            tablaCAT21.Columns.Add(new DataColumn("Intermediate State\nSelected Altitude"));
+            tablaCAT21.Columns.Add(new DataColumn("Final State\nSelected Altitude"));
             tablaCAT21.Columns.Add(new DataColumn("Selected Altitude"));
             tablaCAT21.Columns.Add(new DataColumn("MOPS version")); //array
             tablaCAT21.Columns.Add(new DataColumn("Magnetic Heading"));
@@ -357,6 +361,8 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Trajectory Intent Data")); // array
             tablaCAT21.Columns.Add(new DataColumn("Data ages")); // array
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
+            tablaCAT21.Columns.Add(new DataColumn("Figure of Merit"));
+            tablaCAT21.Columns.Add(new DataColumn("Link Technology"));            
         }
         public void Create_TrackTable_Multiple(DataTable tablaMultipleCAT)
         {

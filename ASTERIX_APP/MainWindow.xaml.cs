@@ -461,25 +461,35 @@ namespace ASTERIX_APP
                             "\n" + TRD[4] + "\n" + TRD[5] + "\n" + TRD[6] + "\n" + TRD[7] + "\n" + TRD[8],
                             "Target Report");
                     }
-                    if (Col_Num == 23 && pack.Met_Report != null)
+                    if (Col_Num == 27 && pack.Met_Report != null)
                     {
                         string[] MR = pack.Met_Report;
                         MessageBox.Show("Wind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
                             "Turbulence: " + MR[3], "Met Report");
                     }
-                    if (Col_Num == 26 && pack.Target_Status != null)
+                    if (Col_Num == 29 && pack.Target_Status != null)
                     {
                         string[] TS = pack.Target_Status;
                         MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],
                             "Target Status");
                     }
-                    if (Col_Num == 40 && pack.Trajectory_Intent != null)
+                    if (Col_Num == 44 && pack.Trajectory_Intent != null)
                     {
                         string[] TI = pack.Trajectory_Intent;
                         MessageBox.Show(TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
                             "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
                             TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15],
                             "Trajectory Intnet");
+                    }
+                    if (Col_Num == 47 && pack.Fig_of_Merit != null)
+                    {
+                        string[] FoM = pack.Fig_of_Merit;
+                        MessageBox.Show("AC: " + FoM[0] + "\nMN: " + FoM[1] + "\nDC: " + FoM[2] + "\nPA: " + FoM[3], "Figure of Merit");
+                    }
+                    if (Col_Num == 48 && pack.Link_Tech != null)
+                    {
+                        string[] LT = pack.Link_Tech;
+                        MessageBox.Show(LT[0] + "\n" + LT[1] + "\n" + LT[2] + "\n" + LT[3] + "\n" + LT[4], "Link Technology");
                     }
                 }
             }
@@ -553,48 +563,48 @@ namespace ASTERIX_APP
                         MessageBox.Show("Operational Status:\n\nRA: " + OS[0] + "\nTC: " + OS[1] + "\nTS: " + OS[2] + "\nARV: " + OS[3] +
                             "\nCDITA: " + OS[4] + "\nNot TCAS: " + OS[5] + "\nSing. Ant.: " + OS[6]);
                     }
-                    if (Col_Num == 37 && pack21.MOPS != null)
+                    if (Col_Num == 41 && pack21.MOPS != null)
                     {
                         string[] MOPS = pack21.MOPS;
                         MessageBox.Show("MOPS Version:\n\nVNS: " + MOPS[0] + "\nVN: " + MOPS[1] + "\nLTT: " + MOPS[2]);
                     }
-                    if (Col_Num == 41 && pack21.Met_Report != null)
+                    if (Col_Num == 45 && pack21.Met_Report != null)
                     {
                         string[] MR = pack21.Met_Report;
                         MessageBox.Show("Met Report:\n\nWind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
                             "Turbulence: " + MR[3]);
                     }
-                    if (Col_Num == 43 && pack21.Target_Status != null)
+                    if (Col_Num == 47 && pack21.Target_Status != null)
                     {
                         string[] TS = pack21.Target_Status;
                         MessageBox.Show("Target Status:\n\nICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3]);
                     }
-                    if (Col_Num == 46 && pack21.Quality_Indicators != null)
+                    if (Col_Num == 50 && pack21.Quality_Indicators != null)
                     {
                         string[] QI = pack21.Quality_Indicators;
                         MessageBox.Show("Quality Indicators:\n\n" + QI[0] + "\n" + QI[1] + "\n" + QI[2] + "\n" + "\nSIL Supplement: " +
                             QI[3] + "\nSDA: " + QI[4] + "\nGVA: " + QI[5] + "\nPIC: " + QI[6]);
                     }
-                    if (Col_Num == 52 && pack21.TMRP_HP != null)
+                    if (Col_Num == 56 && pack21.TMRP_HP != null)
                     {
                         string[] TMRP = pack21.TMRP_HP;
                         MessageBox.Show("Time of Message Reception for Position\nHigh Precision:\n\nFull Second Indication: " + TMRP[0] +
                             "\nTMR Posiotion: " + TMRP[1]);
                     }
-                    if (Col_Num == 53 && pack21.TMRV_HP != null)
+                    if (Col_Num == 57 && pack21.TMRV_HP != null)
                     {
                         string[] TMRV = pack21.TMRV_HP;
                         MessageBox.Show("Time of Message Reception for velocity\nHigh Precision:\n\nFull Second Indication: " + TMRV[0] +
                             "\nTMR Velocity: " + TMRV[1]);
                     }
-                    if (Col_Num == 55 && pack21.Trajectory_Intent != null)
+                    if (Col_Num == 59 && pack21.Trajectory_Intent != null)
                     {
                         string[] TI = pack21.Trajectory_Intent;
                         MessageBox.Show("Trajectory Intent:\n\n" + TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
                             "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
                             TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15]);
                     }
-                    if (Col_Num == 56 && pack21.Data_Ages != null)
+                    if (Col_Num == 60 && pack21.Data_Ages != null)
                     {
                         double[] DA = pack21.Data_Ages;
                         MessageBox.Show("Data Ages:\n\nAOS: " + DA[0] + "\nTRD: " + DA[1] + "\n Mode 3A: " + DA[2] + "\nQI: " + DA[3] + "\nTI: " + DA[4] +
@@ -613,25 +623,35 @@ namespace ASTERIX_APP
                             "\n" + TRD[4] + "\n" + TRD[5] + "\n" + TRD[6] + "\n" + TRD[7] + "\n" + TRD[8],
                             "Target Report");
                     }
-                    if (Col_Num == 41 && pack21.Met_Report != null)
+                    if (Col_Num == 45 && pack21.Met_Report != null)
                     {
                         string[] MR = pack21.Met_Report;
                         MessageBox.Show("Wind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
                             "Turbulence: " + MR[3], "Met Report");
                     }
-                    if (Col_Num == 43 && pack21.Target_Status != null)
+                    if (Col_Num == 47 && pack21.Target_Status != null)
                     {
                         string[] TS = pack21.Target_Status;
                         MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],
                             "Target Status");
                     }
-                    if (Col_Num == 55 && pack21.Trajectory_Intent != null)
+                    if (Col_Num == 59 && pack21.Trajectory_Intent != null)
                     {
                         string[] TI = pack21.Trajectory_Intent;
                         MessageBox.Show(TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
                             "\nNC: " + TI[5] + "\nTCP Number: " + TI[6] + "\nLatitude TID: " + TI[7] + "\nLongitude TID: " + TI[8] + "\nAltitude (feet): " +
                             TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15],
                             "Trajectory Intnet");
+                    }
+                    if (Col_Num == 62 && pack21.Fig_of_Merit != null)
+                    {
+                        string[] FoM = pack21.Fig_of_Merit;
+                        MessageBox.Show("AC: "+FoM[0]+"\nMN: "+FoM[1]+"\nDC: "+FoM[2]+"\nPA: "+FoM[3], "Figure of Merit");
+                    }
+                    if (Col_Num == 63 && pack21.Link_Tech != null)
+                    {
+                        string[] LT = pack21.Link_Tech;
+                        MessageBox.Show(LT[0] + "\n" + LT[1] + "\n" + LT[2] + "\n" + LT[3] + "\n" + LT[4], "Link Technology");
                     }
                 }
             }
@@ -1397,14 +1417,5 @@ namespace ASTERIX_APP
                 }
             }
         }
-        //public void computelistMLAT(Fichero F)
-        //{
-        //    List<CAT10> listMLAT = E.returnMLATList(F);
-        //}
-        //public void computelistADSB(Fichero F)
-        //{
-        //    List<CAT21_v23> listADSB = E.returnADSBList(F);
-
-        //}
     }
 }
