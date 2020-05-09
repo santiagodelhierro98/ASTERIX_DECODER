@@ -131,7 +131,26 @@ namespace CLASSES
                             C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "", "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "",
                             "", "", "", "", "", "", "", "", "", "", "", "Click To View Data", "", "");
                     }
-                    if (multicat == true)
+                    // Check if its version 21
+                    if (multicat == false && (SICSAC[0] != 107 || SICSAC[1] != 0))
+                    {
+                        CAT21 C21 = new CAT21();
+                        CAT_list.Add(CAT); // Adds the pack category into this list
+                        C21.Decode21(arraystring);
+                        listaCAT21.Add(C21);
+
+                        // CAT21 reduced table for maptrack
+                        tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
+                           Math.Round(C21.High_Res_Lat_WGS_84, 3), Math.Round(C21.High_Res_Lon_WGS_84, 3), C21.Target_Address, C21.Track_Num);
+
+                        // Complete CAT21 table
+                        tablaCAT21.Rows.Add(contadorCAT21, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, "Click to View Data",
+                            M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + Math.Round(C21.High_Res_Lat_WGS_84, 3) + ", " + Math.Round(C21.High_Res_Lon_WGS_84, 3) + ")", C21.FL, C21.GH,
+                            "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data",
+                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, "Click to View Data", C21.ECAT, C21.Target_Address, "Click to View Data", C21.Roll, C21.Service_ID,
+                            "Click to View Data", "Click to View Data", C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "(" + C21.TMRP_HP[0] + ", " + C21.TMRV_HP[1] + ")", "(" + C21.TMRV_HP[0] + ", " + C21.TMRP_HP[1] + ")", C21.Time_Rep_Transm, "Click to View Data", "Click to View Data", C21.RP);
+                    }
+                    if (multicat == true && (SICSAC[0] == 107 && SICSAC[1] == 0))
                     {
                         CAT21_v23 C21_v23 = new CAT21_v23();
                         CAT_list.Add(CAT + 0.23); // Adds the pack category into this list
@@ -151,24 +170,25 @@ namespace CLASSES
                             C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "", "", C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "Click to View Data", C21_v23.ECAT, "", C21_v23.Roll, "",
                             "", "", "", "", "", "", "", "", "", "Click to View Data", "", "");
                     }
-                    // Check if its version 21
-                    if (SICSAC[0] != 107 || SICSAC[1] != 0)
+                    if (multicat == true && (SICSAC[0] != 107 || SICSAC[1] != 0))
                     {
                         CAT21 C21 = new CAT21();
                         CAT_list.Add(CAT); // Adds the pack category into this list
                         C21.Decode21(arraystring);
                         listaCAT21.Add(C21);
 
-                        // CAT21 reduced table for maptrack
-                        tablacat21reducida.Rows.Add(contadorCAT21, C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
-                           Math.Round(C21.High_Res_Lat_WGS_84, 3), Math.Round(C21.High_Res_Lon_WGS_84, 3), C21.Target_Address, C21.Track_Num);
+                        // Multiple CAT reduced table for maptrack
+                        multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, M.convert_to_hms(Math.Floor((C21.Time_Rep_Transm))), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
+                        Math.Round(C21.Lat_WGS_84, 3), Math.Round(C21.Lon_WGS_84, 3), C21.Target_Address, "Null");
 
-                        // Complete CAT21 table
-                        tablaCAT21.Rows.Add(contadorCAT21, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, C21.Track_Num, "Click to View Data",
-                            M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", "(" + Math.Round(C21.High_Res_Lat_WGS_84, 3) + ", " + Math.Round(C21.High_Res_Lon_WGS_84, 3) + ")", C21.FL, C21.GH,
-                            "Click to View Data", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")", C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", C21.TAR, C21.SA, "Click to View Data",
-                            C21.MH, C21.BVR, C21.GVR, C21.M3AC, "Click to View Data", C21.ECAT, C21.Target_Address, "Click to View Data", C21.Roll, C21.Service_ID,
-                            "Click to View Data", "Click to View Data", C21.MAM, C21.RID, C21.ToA_Position, C21.ToA_Velocity, C21.TMRP, C21.TMRV, "(" + C21.TMRP_HP[0] + ", " + C21.TMRV_HP[1] + ")", "(" + C21.TMRV_HP[0] + ", " + C21.TMRP_HP[1] + ")", C21.Time_Rep_Transm, "Click to View Data", "Click to View Data", C21.RP);
+                        // Complete Multiple CAT table
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, "", M.convert_to_hms(Math.Floor((C21.Time_Rep_Transm))),
+                            "Click to View Data", "(" + Math.Round(C21.Lat_WGS_84, 3) + ", " + Math.Round(C21.Lon_WGS_84, 3) + ")", "", "", C21.FL, C21.GH, C21.Target_Address, "",
+
+                            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+                            "(" + Math.Round(C21.Lat_WGS_84, 3) + ", " + Math.Round(C21.Lon_WGS_84, 3) + ")", "", "(" + C21.Air_Speed[0] + ", " + C21.Air_Speed[1] + ")",
+                            C21.True_Airspeed, "(" + C21.GS + ", " + C21.TA + ")", "", "", "", C21.MH, C21.BVR, C21.GVR, "Click to View Data", C21.ECAT, "", C21.Roll, "",
+                            "", "", "", "", "", "", "", "", "", "Click to View Data", "", "");
                     }
                 }
             }
