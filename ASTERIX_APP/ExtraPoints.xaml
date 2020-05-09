@@ -33,12 +33,6 @@
                     <Setter Property="BorderBrush" Value="#000"/>
                 </Style>
             </DataGrid.RowStyle>
-
-            <DataGrid.CellStyle>
-                <Style TargetType="DataGridCell">
-                    <EventSetter Event="MouseDoubleClick" Handler="ClickExtraGrid"/>
-                </Style>
-            </DataGrid.CellStyle>
         </DataGrid>
 
     </Grid>

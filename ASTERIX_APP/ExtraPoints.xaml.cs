@@ -20,15 +20,13 @@ namespace ASTERIX_APP
         public ExtraPoints()
         {
             InitializeComponent();
-            Fichero F_MLAT = new Fichero(@"C:\Users\joanh\Desktop\ASTERIX_DECODER\01PGTA_Fitxers_Asterix_de_prova-20200302\mlat_160510-lebl-220001.ast");
-            Fichero F_ADSB = new Fichero(@"C:\Users\joanh\Desktop\ASTERIX_DECODER\01PGTA_Fitxers_Asterix_de_prova-20200302\adsb_v21_bcn.ast");
-            F_MLAT.leer();
-            F_ADSB.leer();
+            Fichero F = new Fichero(@"C:\Users\joanh\Desktop\ASTERIX_DECODER\01PGTA_Fitxers_Asterix_de_prova-20200302\smr_mlat_adsb_v023_160510-lebl-220001.ast");
+            F.leer();
 
             Metodos M = new Metodos();
 
-            List<CAT10> MLAT_List = E.returnMLATList(F_MLAT);
-            List<CAT21> ADSB_List = E.returnADSBList(F_ADSB);
+            List<CAT10> MLAT_List = E.returnMLATList(F);
+            List<CAT21> ADSB_List = E.returnADSBList(F);
 
             DataTable ExtraPoints = new DataTable();
             M.Create_ExtraTable(ExtraPoints);
@@ -52,10 +50,6 @@ namespace ASTERIX_APP
         {            
             double modulo = Math.Sqrt(Math.Pow((lat - E.ARP_lat), 2) + Math.Pow((lon - E.ARP_lon), 2));
             return modulo;
-        }
-        void ClickExtraGrid(object sender, RoutedEventArgs e)
-        {
-            
         }
         private string Version_Number_Subfield(List<CAT21> list, int n)
         {
