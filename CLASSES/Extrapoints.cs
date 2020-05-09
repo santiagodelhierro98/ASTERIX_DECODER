@@ -8,9 +8,7 @@ namespace CLASSES
     // comparant-los amb el que el ADSB v2.1 detecta d'aquests mateixos tràfics, sempre i quan la versió MOPS dels transponders dels tràfics sigui igual a 2.
 
     //para definir que un avión está a máximo 10MN del ARP de LEBL: convertimos estas 10MN en su correspondiente incremento en lat lon (1 min 1 MN)(ya filtramos por FL, así evitamos aviones en tierra)
-    // filtrar por target id (que lo tenga) en el adsb tb hay k hacer lo mismo)
-    //tambien hay que filtrar por FL (los que estan volando) y por maximo 10MN del ARP 
-    //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
+
     public class Extrapoints
     {
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
@@ -39,6 +37,7 @@ namespace CLASSES
             if (modulo <= 10) { return true; }
             else { return false; }
         }
+      
 
     }
 }

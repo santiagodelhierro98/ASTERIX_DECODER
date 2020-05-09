@@ -901,8 +901,8 @@ namespace ASTERIX_APP
             while (x == true)
             {
                 CAT10 C10 = F.getCAT10(i);
-                double start = Math.Floor(F.getCAT10(0).Time_Day) + s;
-                double tiempo = Math.Floor(C10.Time_Day);
+                double start = Math.Floor(F.getCAT10(0).Time_Day + 12 * 3600) + s;
+                double tiempo = Math.Floor(C10.Time_Day + 12 * 3600);
                 if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1135,6 +1135,18 @@ namespace ASTERIX_APP
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
                                 }
+                                if (F.CAT_list[i] == 21 )
+                                {
+                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                    AddMarkerC21(poscartx, poscarty, targetid);
+                                    if (map.Markers.Count >= 200)
+                                    {
+                                        map.Markers[map.Markers.Count - 200].Clear();
+                                    }
+                                    rellenartablaMULTICAT(i);
+                                    clock(tiempo);
+                                }
                             }
                             else
                             {
@@ -1156,6 +1168,18 @@ namespace ASTERIX_APP
                                 clock(tiempo);
                             }
                             if (F.CAT_list[i] == 21.23 && tiempo == start)
+                            {
+                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                AddMarkerC21(poscartx, poscarty, targetid);
+                                if (map.Markers.Count >= 200)
+                                {
+                                    map.Markers[map.Markers.Count - 200].Clear();
+                                }
+                                rellenartablaMULTICAT(i);
+                                clock(tiempo);
+                            }
+                            if (F.CAT_list[i] == 21 && tiempo == start)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
