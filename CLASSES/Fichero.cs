@@ -68,13 +68,13 @@ namespace CLASSES
                         listaCAT10.Add(C10);
 
                         // CAT10 reduced table for maptrack
-                        tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                        tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day + 12 * 3600)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
                             Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
                             C10.Target_Add, C10.Track_Num);
 
                         // Complete CAT10 table
                         tablaCAT10.Rows.Add(contadorCAT10, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, "Click to View Data",
-                               C10.Message_Type, M.convert_to_hms(Math.Floor(C10.Time_Day)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
+                               C10.Message_Type, M.convert_to_hms(Math.Floor(C10.Time_Day + 12 * 3600)), "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
                                "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", "(" + C10.Track_Vel_Cartesian[0] +
                                ", " + C10.Track_Vel_Cartesian[1] + ")", "Click to View Data", "Click to View Data", C10.Target_Add, "Click to View Data", C10.Fleet_ID, C10.FL[2], C10.Height,
                                "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", C10.Target_Size_Heading[1], "Click to View Data", "Click to View Data",

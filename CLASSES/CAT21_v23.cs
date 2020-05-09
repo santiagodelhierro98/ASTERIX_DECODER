@@ -18,7 +18,7 @@ namespace CLASSES
         public string[] Fig_of_Merit = new string[4];
         public string[] Link_Tech = new string[5];
         public double Roll = double.NaN; // roll angle in degrees
-        public double FL = new double(); // flight level in feet
+        public double FL = new double(); // flight level in feetmops v
         public double[] Air_Speed = new double[2];// ias and mach
         public double True_Airspeed = double.NaN; //kt
         public double MH = double.NaN; //Magnetic heading in degrees

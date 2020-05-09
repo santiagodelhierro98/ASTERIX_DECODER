@@ -54,6 +54,7 @@ namespace ASTERIX_APP
             List<string[]> listahex = M.File_to_HexaList(fileBytes, path);
             for (int q = 0; q < listahex.Count; q++)
             {
+                // filtrar por: callsign, FL y distancia al ARP
                 string[] arraystring = listahex[q];
                 CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
                 contadorGeneral++;
@@ -62,7 +63,7 @@ namespace ASTERIX_APP
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
                     bool modulo = E.checkdistanceMLAT(C10);
-                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && C10.FL[2] != "0" && C10.FL[2] != null && modulo == true)
+                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && Convert.ToDouble(C10.FL[2]) > 0.0 && Convert.ToDouble(C10.FL[2]) < 500.0 && C10.FL[2] != null && modulo == true)
                     {
                         double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
                         double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
@@ -75,7 +76,7 @@ namespace ASTERIX_APP
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring);
                     bool modulo21 = E.checkdistanceADSB(C21);
-                    if (C21.Target_ID != null && C21.FL != 0 && modulo21 == true)
+                    if (C21.Target_ID != null && C21.FL != 0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 == true)
                     {
                         ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.FL);
                     }
