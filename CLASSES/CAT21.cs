@@ -30,7 +30,7 @@ namespace CLASSES
         public double GH = double.NaN; // ft
         public string M3AC = null; //Mode 3/A Code
         public double Roll = double.NaN; // roll angle in degrees
-        public double FL = double.NaN; //flight level in feet
+        public double FL = new double(); //flight level in feet
         public double MH = double.NaN; //Magnetic heading in degrees
         public string RE = null;
         public double BVR = double.NaN; // Barometric Vertical Rate in feet/minute
@@ -229,12 +229,12 @@ namespace CLASSES
                 string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                 string octeto3 = Met.Octeto_A_Bin(paquete0[contador + 2]);
                 string octeto_total = octeto1 + octeto2 + octeto3;
-                Lat_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total) * (180 / Math.Pow(2, 23)), 3);
+                Lat_WGS_84 = Met.ComplementoA2(octeto_total) * (180 / Math.Pow(2, 23));
                 string octeto4 = Met.Octeto_A_Bin(paquete0[contador + 3]);
                 string octeto5 = Met.Octeto_A_Bin(paquete0[contador + 4]);
                 string octeto6 = Met.Octeto_A_Bin(paquete0[contador + 5]);
                 string octeto_total1 = octeto4 + octeto5 + octeto6;
-                Lon_WGS_84 = Math.Round(Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 23)), 3);
+                Lon_WGS_84 = Met.ComplementoA2(octeto_total1) * (180 / Math.Pow(2, 23));
                 contador = contador + 6;
             }
             if (FSPEC[6] == "1")
@@ -1126,77 +1126,81 @@ namespace CLASSES
                                             string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
                                             Data_Ages[13] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
                                         }
-                                        if (octeto2[7].ToString() == "1")
+                                        try
                                         {
-                                            string octeto3 = Met.Octeto_A_Bin(paquete0[contadordeoctetos + 2]);
-                                            // GVR age
-                                            if (octeto3[0].ToString() == "1")
+                                            if (octeto2[7].ToString() == "1")
                                             {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[14] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // GV age
-                                            if (octeto3[1].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[15] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // TAR age
-                                            if (octeto3[2].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[16] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // Target ID age
-                                            if (octeto3[3].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[17] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // TS age
-                                            if (octeto3[4].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[18] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // MET age
-                                            if (octeto3[5].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[19] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            // ROA age
-                                            if (octeto3[6].ToString() == "1")
-                                            {
-                                                contador = contador + 1;
-                                                string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                Data_Ages[20] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
-                                            }
-                                            if (octeto3[7].ToString() == "1")
-                                            {
-                                                string octeto4 = Met.Octeto_A_Bin(paquete0[contadordeoctetos + 3]);
-                                                // ARA age
-                                                if (octeto4[0].ToString() == "1")
+                                                string octeto3 = Met.Octeto_A_Bin(paquete0[contadordeoctetos + 2]);
+                                                // GVR age
+                                                if (octeto3[0].ToString() == "1")
                                                 {
                                                     contador = contador + 1;
                                                     string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                    Data_Ages[21] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                    Data_Ages[14] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
                                                 }
-                                                // SCC age
-                                                if (octeto4[1].ToString() == "1")
+                                                // GV age
+                                                if (octeto3[1].ToString() == "1")
                                                 {
                                                     contador = contador + 1;
                                                     string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
-                                                    Data_Ages[22] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                    Data_Ages[15] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                // TAR age
+                                                if (octeto3[2].ToString() == "1")
+                                                {
+                                                    contador = contador + 1;
+                                                    string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                    Data_Ages[16] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                // Target ID age
+                                                if (octeto3[3].ToString() == "1")
+                                                {
+                                                    contador = contador + 1;
+                                                    string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                    Data_Ages[17] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                // TS age
+                                                if (octeto3[4].ToString() == "1")
+                                                {
+                                                    contador = contador + 1;
+                                                    string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                    Data_Ages[18] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                // MET age
+                                                if (octeto3[5].ToString() == "1")
+                                                {
+                                                    contador = contador + 1;
+                                                    string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                    Data_Ages[19] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                // ROA age
+                                                if (octeto3[6].ToString() == "1")
+                                                {
+                                                    contador = contador + 1;
+                                                    string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                    Data_Ages[20] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                }
+                                                if (octeto3[7].ToString() == "1")
+                                                {
+                                                    string octeto4 = Met.Octeto_A_Bin(paquete0[contadordeoctetos + 3]);
+                                                    // ARA age
+                                                    if (octeto4[0].ToString() == "1")
+                                                    {
+                                                        contador = contador + 1;
+                                                        string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                        Data_Ages[21] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                    }
+                                                    // SCC age
+                                                    if (octeto4[1].ToString() == "1")
+                                                    {
+                                                        contador = contador + 1;
+                                                        string AOS_BITS = Met.Octeto_A_Bin(paquete0[contador]);
+                                                        Data_Ages[22] = Math.Round(Convert.ToInt32(AOS_BITS, 2) * 0.1, 3);
+                                                    }
                                                 }
                                             }
                                         }
+                                        catch{}
                                     }
                                 }
                             }

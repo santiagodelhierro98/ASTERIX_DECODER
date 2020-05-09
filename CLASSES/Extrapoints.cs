@@ -8,7 +8,9 @@ namespace CLASSES
     // comparant-los amb el que el ADSB v2.1 detecta d'aquests mateixos tràfics, sempre i quan la versió MOPS dels transponders dels tràfics sigui igual a 2.
 
     //para definir que un avión está a máximo 10MN del ARP de LEBL: convertimos estas 10MN en su correspondiente incremento en lat lon (1 min 1 MN)(ya filtramos por FL, así evitamos aviones en tierra)
-
+    // filtrar por target id (que lo tenga) en el adsb tb hay k hacer lo mismo)
+    //tambien hay que filtrar por FL (los que estan volando) y por maximo 10MN del ARP 
+    //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
     public class Extrapoints
     {
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
@@ -19,41 +21,6 @@ namespace CLASSES
         public double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
         public double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
      
-        public List<CAT10> returnMLATList(Fichero Fi) //este tendria que ser el Fi_ADSB
-        { 
-            for (int i=0;i<Fi.lengthlistaCAT10();i++)
-            {
-                // filtrar por target id (que lo tenga) en el adsb tb hay k hacer lo mismo)
-                //tambien hay que filtrar por FL (los que estan volando) y por maximo 10MN del ARP 
-                //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
-                CAT10 C10 = Fi.getCAT10(i);
-                bool modulo = checkdistanceMLAT(C10);
-                if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && C10.FL[2] != null && modulo==true)
-                {
-                    MLATList.Add(Fi.getCAT10(i));
-                }
-
-            }
-            return MLATList;
-        }
-        public List<CAT21> returnADSBList(Fichero Fi) //este tendria que ser el Fi_ADSB
-        {
-            for (int i = 0; i < Fi.lengthlistaCAT21(); i++)
-            {
-                // tambien filtrar por target id (que lo tenga) en el adsb tb hay k hacer lo mismo) y ademas squitter version 2
-                //tambien hay que filtrar por FL (los que estan volando) y por maximo 10MN del ARP 
-                //ID//Diferencia de hora//Diferencia de Posicion H//Accuracy Horizontal//Diferencia de Posición V//Accuracy Vertical
-
-                CAT21 C21 = Fi.getCAT21(i);
-                bool modulo = checkdistanceADSB(C21);
-
-                if (C21.Target_ID != null && C21.FL != 0 && modulo == true )
-                {
-                    ADSBList.Add(Fi.getCAT21(i));
-                }
-            }
-            return ADSBList;
-        }
         public bool checkdistanceMLAT(CAT10 C10)
         {
             // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN

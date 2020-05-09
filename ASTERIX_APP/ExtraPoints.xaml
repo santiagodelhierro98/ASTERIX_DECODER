@@ -8,12 +8,21 @@
         Title="ExtraPoints" Height="700" Width="1200" Background="#222"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="window" RenderTransformOrigin="0.231 0.458" Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
-        <!-- Data Table -->
-        <DataGrid x:Name="Extras_Table" Padding="5"
-                  Margin="0 90 0 0" Background="#222" 
-                  Visibility="Collapsed" IsReadOnly="True" 
-                  BorderThickness="1" ItemsSource="{Binding}">
+        <!-- MLAT Table -->
+        <DataGrid x:Name="TableMLAT" Padding="5"
+                  Margin="2.5 5 5 0" Background="#222" 
+                  Visibility="Visible" IsReadOnly="True" 
+                  BorderThickness="1" ItemsSource="{Binding}"
+                  Grid.Column="0" Grid.Row="0">
 
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -34,6 +43,57 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
+        <!-- ADSB Table -->
+        <DataGrid x:Name="TableADSB" Padding="5"
+                  Margin="5 5 2.5 5" Background="#222" 
+                  Visibility="Visible" IsReadOnly="True" 
+                  BorderThickness="1" ItemsSource="{Binding}"
+                  Grid.Column="1" Grid.Row="0">
 
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#004778"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Margin" Value="0 0 1 1"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Background" Value="#222"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <!-- MLAT Table -->
+        <DataGrid x:Name="Res_Table" Padding="5"
+                  Margin="250 5 -350 0" Background="#222" 
+                  Visibility="Visible" IsReadOnly="True" 
+                  BorderThickness="1" ItemsSource="{Binding}"
+                  Grid.Row="1">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#004778"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Margin" Value="0 0 1 1"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Background" Value="#222"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="BorderBrush" Value="#000"/>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
     </Grid>
 </Window>

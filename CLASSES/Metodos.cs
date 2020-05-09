@@ -398,9 +398,13 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("High Resolution Position WGS-84\n(Latitude, Longitude)"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Operational Status"));
             tablaMultipleCAT.Columns.Add(new DataColumn("AirSpeed\n(IAS, Mach)"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Velocity Accuracy"));
             tablaMultipleCAT.Columns.Add(new DataColumn("True Airspeed"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Airborne Ground Vector\n(Ground Speed, Track Angle)"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Track Angle Rate"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Rate of Turn\n(Direction, Value)"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Intermediate State\nSelected Altitude"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Final State\nSelected Altitude"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Selected Altitude"));
             tablaMultipleCAT.Columns.Add(new DataColumn("MOPS version"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Magnetic Heading"));
@@ -423,21 +427,29 @@ namespace CLASSES
             tablaMultipleCAT.Columns.Add(new DataColumn("Trajectory Intent Data"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Data ages"));
             tablaMultipleCAT.Columns.Add(new DataColumn("Service Management"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Figure of Merit"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Link Technology"));
+            tablaMultipleCAT.Columns.Add(new DataColumn("Time of Day Accuracy"));
         }
-        public void Create_ExtraTable(DataTable tableExtraCAT)
+        public void Create_ExtraTable_MLAT(DataTable tableExtra_MLAT)
         {
-            tableExtraCAT.Columns.Add(new DataColumn("#"));
-            tableExtraCAT.Columns.Add(new DataColumn("Callsign"));
-            tableExtraCAT.Columns.Add(new DataColumn("Time"));
-            tableExtraCAT.Columns.Add(new DataColumn("MLAT Horizontal\nMeasured Distance (NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("ADSB Horizontal\nMeasured Distance (NM)"));
-            tableExtraCAT.Columns.Add(new DataColumn("MLAT Vertical\nMeasured Distance (feet)"));
-            tableExtraCAT.Columns.Add(new DataColumn("ADSB Vertical\nMeasured Distance (feet)"));
-            tableExtraCAT.Columns.Add(new DataColumn("Version Number\nSubfield"));
-            tableExtraCAT.Columns.Add(new DataColumn("Estimation Position\nUncertainty"));
-            tableExtraCAT.Columns.Add(new DataColumn("Version Number\nSubfield"));
-            tableExtraCAT.Columns.Add(new DataColumn("Horizontal\nContainment Radius"));
-            tableExtraCAT.Columns.Add(new DataColumn("Vertical\nGeometric Accuracy"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Callsign"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Time"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Coordinates (Lat, Lon)"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Flight Level"));
+        }
+        public void Create_ExtraTable_ADSB(DataTable tableExtra_ADSB)
+        {
+            tableExtra_ADSB.Columns.Add(new DataColumn("Callsign"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Time"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Coordinates (Lat, Lon)"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Flight Level"));
+        }
+        public void Create_ResultsTable(DataTable tableExtra_Res)
+        {
+            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Position\nMeasurment Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Vertical Position\nMeasurment Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
         public DataTable getSearchTable10()
         {
