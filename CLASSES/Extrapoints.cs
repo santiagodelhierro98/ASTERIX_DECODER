@@ -22,7 +22,6 @@ namespace CLASSES
         public bool checkdistanceMLAT(CAT10 C10)
         {
             // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN
-            double modulo_comparar = Math.Sqrt(Math.Pow(ARP_lat_10mn - ARP_lat, 2) + Math.Pow(ARP_lon_10mn - ARP_lon, 2));
             double pos_x = C10.Pos_Cartesian[0];
             double pos_y = C10.Pos_Cartesian[0];
             double modulo = Math.Sqrt(Math.Pow(pos_x, 2) + Math.Pow(pos_y, 2));
@@ -37,7 +36,7 @@ namespace CLASSES
             if (modulo <= modulo_comparar) { return true; }
             else { return false; }
         }
-        
+       
 
     }
 }

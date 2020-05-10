@@ -441,19 +441,24 @@ namespace CLASSES
         {
             tableExtra_MLAT.Columns.Add(new DataColumn("Callsign"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Time"));
-            tableExtra_MLAT.Columns.Add(new DataColumn("Coordinates (Lat, Lon)"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Latitude"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Longitude"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Flight Level"));
         }
         public void Create_ExtraTable_ADSB(DataTable tableExtra_ADSB)
         {
             tableExtra_ADSB.Columns.Add(new DataColumn("Callsign"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Time"));
-            tableExtra_ADSB.Columns.Add(new DataColumn("Coordinates (Lat, Lon)"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Latitude"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Longitude"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Flight Level"));
         }
         public void Create_ResultsTable(DataTable tableExtra_Res)
         {
-            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Position\nMeasurment Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Callsign"));
+            tableExtra_Res.Columns.Add(new DataColumn("Time"));
+            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Latitude\nMeasurment Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Longitude\nMeasurment Difference"));
             tableExtra_Res.Columns.Add(new DataColumn("Vertical Position\nMeasurment Difference"));
             tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
