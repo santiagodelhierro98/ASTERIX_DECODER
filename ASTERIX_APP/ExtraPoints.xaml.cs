@@ -75,11 +75,7 @@ namespace ASTERIX_APP
                 {
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring);
-                    double h = C21.GH * 0.3048; // geometric height: ft to meters
-                    E.fromlatlontocartesian(C21.Lat_WGS_84, C21.Lon_WGS_84, h);
-                    double x_adsb = E.x_adsb();
-                    double y_adsb = E.y_adsb();
-                    bool modulo21 = E.checkdistanceADSB(C21, x_adsb, y_adsb);
+                    bool modulo21 = E.checkdistanceADSB(C21);
                     if (C21.Target_ID != null && C21.FL != 0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 == true)
                     {
                         ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), "(" + C21.Lat_WGS_84 + ", " + C21.Lon_WGS_84 + ")", C21.FL);
