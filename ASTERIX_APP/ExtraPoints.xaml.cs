@@ -127,11 +127,9 @@ namespace ASTERIX_APP
                     {
                         acc_ADSB_Table.ImportRow(ADSB_Table.Rows[j]);
                         acc_MLAT_Table.ImportRow(MLAT_Table.Rows[i]);
-
                     }
                     else { }
-                }
-           
+                }           
             }
 
             TableMLAT.ItemsSource = acc_MLAT_Table.DefaultView;
@@ -141,14 +139,20 @@ namespace ASTERIX_APP
             {
                 string callsign = acc_ADSB_Table.Rows[i][0].ToString();
                 string time = acc_ADSB_Table.Rows[i][1].ToString();
-                double horizontal_precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
-                double horizontal_precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
+                // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1') = precision [NM]
+                double precision_lat = 60*(Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
+                double precision_lon = 60*(Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
+                
                 double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
-                ResultsTable.Rows.Add(callsign,time,Math.Round(horizontal_precision_lat,5), Math.Round(horizontal_precision_lon,5), altitude_precision, "");
+                ResultsTable.Rows.Add(callsign,time,Math.Round(precision_lat,5), Math.Round(precision_lon,5), altitude_precision, "");
             }
             Res_Table.ItemsSource = ResultsTable.DefaultView;
-
         }
-
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            var inicio = new Inicio();
+            inicio.Show();
+        }
     }
 }

@@ -457,9 +457,9 @@ namespace CLASSES
         {
             tableExtra_Res.Columns.Add(new DataColumn("Callsign"));
             tableExtra_Res.Columns.Add(new DataColumn("Time"));
-            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Latitude\nMeasurment Difference"));
-            tableExtra_Res.Columns.Add(new DataColumn("Horizontal Longitude\nMeasurment Difference"));
-            tableExtra_Res.Columns.Add(new DataColumn("Vertical Position\nMeasurment Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Latitude Distance\nDifference (NM)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Longitude Distance\nDifference (NM)"));
+            tableExtra_Res.Columns.Add(new DataColumn("FL Difference"));
             tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
         public DataTable getSearchTable10()

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ExtraPoints" Height="700" Width="1200" Background="#222"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    
     <Grid x:Name="window" RenderTransformOrigin="0.231 0.458" Margin="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -16,12 +17,15 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="getresults" Click ="getresults_Click" Content="GET RESULTS" Margin="50,100,385,78" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5">
-           
-        </Button>
+        <Button x:Name="getresults" Click ="getresults_Click" Content="GET RESULTS" Margin="20 120 480 70" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="Close" Click="Close_Click" Content="Close" Grid.Column="0" Grid.Row="1" Margin="20 175 500 20" Background="#333" Foreground="#fff"/>
+        <Label Content="Sort and Compare MLAT and ADS/B tables:" Grid.Row="1" Grid.Column="0" Margin="16 95 360 90" FontSize="10" Foreground="#bbb"/>
+        <Label Content="MLAT Table:" Foreground="#bbb" Margin="10 0 0 430"/>
+        <Label Content="ADS/B Table:" Foreground="#bbb" Grid.Column="1" Margin="10 0 0 430"/>
+
         <!-- MLAT Table -->
         <DataGrid x:Name="TableMLAT" Padding="5"
-                  Margin="2.5 5 5 0" Background="#222" 
+                  Margin="2.5 25 5 0" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Column="0" Grid.Row="0">
@@ -47,7 +51,7 @@
         </DataGrid>
         <!-- ADSB Table -->
         <DataGrid x:Name="TableADSB" Padding="5"
-                  Margin="5 5 2.5 0" Background="#222" 
+                  Margin="5 25 2.5 0" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Column="1" Grid.Row="0">
