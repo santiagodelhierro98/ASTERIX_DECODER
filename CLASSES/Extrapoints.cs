@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CLASSES
 {
@@ -26,7 +24,7 @@ namespace CLASSES
             double pos_x = C10.Pos_Cartesian[0];
             double pos_y = C10.Pos_Cartesian[0];
             double modulo = Math.Sqrt(Math.Pow(pos_x, 2) + Math.Pow(pos_y, 2));
-            if (modulo <= 10 * 1852) { return  true; }
+            if (modulo <= 10 * 1852) { return true; }
             else { return false; }
         }
         public bool checkdistanceADSB(CAT21 C21)
@@ -37,7 +35,7 @@ namespace CLASSES
             if (modulo <= modulo_comparar) { return true; }
             else { return false; }
         }
-        
+
 
     }
 }

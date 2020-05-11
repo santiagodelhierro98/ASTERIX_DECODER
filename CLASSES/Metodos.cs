@@ -362,7 +362,7 @@ namespace CLASSES
             tablaCAT21.Columns.Add(new DataColumn("Data ages")); // array
             tablaCAT21.Columns.Add(new DataColumn("Service Management"));
             tablaCAT21.Columns.Add(new DataColumn("Figure of Merit"));
-            tablaCAT21.Columns.Add(new DataColumn("Link Technology"));            
+            tablaCAT21.Columns.Add(new DataColumn("Link Technology"));
         }
         public void Create_TrackTable_Multiple(DataTable tablaMultipleCAT)
         {

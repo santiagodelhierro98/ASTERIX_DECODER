@@ -185,7 +185,7 @@ namespace CLASSES
 
                 string ToD = ToD1 + ToD2 + ToD3;
 
-                Time_Day = 12*3600 + Math.Round(Convert.ToInt32(ToD, 2) / 128.0, 3);
+                Time_Day = 12 * 3600 + Math.Round(Convert.ToInt32(ToD, 2) / 128.0, 3);
                 contador += 3;
             }
             if (FSPEC[4] == "1")

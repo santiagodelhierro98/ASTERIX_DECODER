@@ -5,13 +5,12 @@ using GMap.NET.WindowsPresentation;
 using Microsoft.Win32;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Windows.Controls;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace ASTERIX_APP
 {
@@ -158,7 +157,7 @@ namespace ASTERIX_APP
 
                     //((IProgress<int>)progress).Report(100);
                 });
-              
+
 
                 asterixPerf.Visibility = Visibility.Visible;
                 progressbar.Visibility = Visibility.Collapsed;
@@ -646,7 +645,7 @@ namespace ASTERIX_APP
                     if (Col_Num == 62 && pack21.Fig_of_Merit != null)
                     {
                         string[] FoM = pack21.Fig_of_Merit;
-                        MessageBox.Show("AC: "+FoM[0]+"\nMN: "+FoM[1]+"\nDC: "+FoM[2]+"\nPA: "+FoM[3], "Figure of Merit");
+                        MessageBox.Show("AC: " + FoM[0] + "\nMN: " + FoM[1] + "\nDC: " + FoM[2] + "\nPA: " + FoM[3], "Figure of Merit");
                     }
                     if (Col_Num == 63 && pack21.Link_Tech != null)
                     {
@@ -679,7 +678,7 @@ namespace ASTERIX_APP
             try
             {
                 // Searching
-                int search = Convert.ToInt32(NumBox.Text);                
+                int search = Convert.ToInt32(NumBox.Text);
                 if (category == 10)
                 {
                     try
@@ -1124,7 +1123,7 @@ namespace ASTERIX_APP
                         int start = M.gettimecorrectly(tiemposplitedstart) + n;
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
 
-                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }                        
+                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                         if (targetid == "") { targetid = "Not available"; }
                         if (idbuttonclicked == true && tiempo == start)
                         {
@@ -1155,7 +1154,7 @@ namespace ASTERIX_APP
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo);
                                 }
-                                if (F.CAT_list[i] == 21 )
+                                if (F.CAT_list[i] == 21)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);

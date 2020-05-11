@@ -45,7 +45,7 @@
         </DataGrid>
         <!-- ADSB Table -->
         <DataGrid x:Name="TableADSB" Padding="5"
-                  Margin="5 5 2.5 5" Background="#222" 
+                  Margin="5 5 2.5 0" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Column="1" Grid.Row="0">
@@ -71,7 +71,7 @@
         </DataGrid>
         <!-- MLAT Table -->
         <DataGrid x:Name="Res_Table" Padding="5"
-                  Margin="250 5 -350 0" Background="#222" 
+                  Margin="250 5 -350 5" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Row="1">

@@ -1200,7 +1200,7 @@ namespace CLASSES
                                                 }
                                             }
                                         }
-                                        catch{}
+                                        catch { }
                                     }
                                 }
                             }

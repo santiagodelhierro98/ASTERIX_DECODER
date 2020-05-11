@@ -127,7 +127,7 @@ namespace CLASSES
                         // Complete CAT21 table
                         tablaCAT21.Rows.Add(contadorCAT21, CAT + 0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, " ", "Click to View Data",
                             M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.ToD_Acc, "(" + Math.Round(C21_v23.Lat_WGS_84, 3) + ", " + Math.Round(C21_v23.Lon_WGS_84, 3) + ")", "(" + Math.Round(C21_v23.Lat_WGS_84, 3) + ", " + Math.Round(C21_v23.Lon_WGS_84, 3) + ")", C21_v23.FL, C21_v23.GA,
-                            "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "(" + C21_v23.Rate_of_Turn[0] + ", " + C21_v23.Rate_of_Turn[1] + ")", C21_v23.Interm_Selec_Alt, C21_v23.FSSA,"", "",
+                            "", "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "", "(" + C21_v23.Rate_of_Turn[0] + ", " + C21_v23.Rate_of_Turn[1] + ")", C21_v23.Interm_Selec_Alt, C21_v23.FSSA, "", "",
                             C21_v23.MH, C21_v23.BVR, C21_v23.GVR, "", "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "",
                             "", "", "", "", "", "", "", "", "", "", "", "Click To View Data", "", "", C21_v23.Fig_of_Merit, C21_v23.Link_Tech);
                     }

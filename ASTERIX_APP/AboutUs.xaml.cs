@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 
 namespace ASTERIX_APP
 {
- 
+
     public partial class AboutUs : Window
     {
         public AboutUs()
@@ -18,6 +17,6 @@ namespace ASTERIX_APP
             this.Close();
         }
 
-       
+
     }
 }

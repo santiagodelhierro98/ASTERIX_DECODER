@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data;
-using CLASSES;
+﻿using CLASSES;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Windows;
 
 namespace ASTERIX_APP
 {
@@ -21,7 +13,6 @@ namespace ASTERIX_APP
         Extrapoints E = new Extrapoints();
         Metodos M = new Metodos();
 
-        string path;
         public int CAT;
         public double[] SICSAC;
         public string filename;
@@ -39,7 +30,7 @@ namespace ASTERIX_APP
             M.Create_ExtraTable_MLAT(MLAT_Table);
             M.Create_ExtraTable_ADSB(ADSB_Table);
             leerEX(path);
-            
+
             M.Create_ResultsTable(ResultsTable);
 
             TableMLAT.ItemsSource = MLAT_Table.DefaultView;
@@ -47,7 +38,7 @@ namespace ASTERIX_APP
 
         }
         public void leerEX(string path)
-        {     
+        {
             byte[] fileBytes = File.ReadAllBytes(path);
 
             int contadorGeneral = 0;
@@ -105,9 +96,9 @@ namespace ASTERIX_APP
             if (list[n].Quality_Indicators[2] == "6") { EPU = "< 0.3 NM\nRNP-0.3 Accuracy"; }
             if (list[n].Quality_Indicators[2] == "7") { EPU = "< 0.1 NM\nRNP-0.1 Accuracy"; }
             if (list[n].Quality_Indicators[2] == "8") { EPU = "< 0.05 NM\nGPS (SA on)"; }
-            if (list[n].Quality_Indicators[2] == "8") { EPU = "< 30 m\nGPS (SA off)"; }
-            if (list[n].Quality_Indicators[2] == "8") { EPU = "< 10 m\nWAAS"; }
-            if (list[n].Quality_Indicators[2] == "8") { EPU = "< 3 m\nLAAS"; }
+            if (list[n].Quality_Indicators[2] == "9") { EPU = "< 30 m\nGPS (SA off)"; }
+            if (list[n].Quality_Indicators[2] == "10") { EPU = "< 10 m\nWAAS"; }
+            if (list[n].Quality_Indicators[2] == "11") { EPU = "< 3 m\nLAAS"; }
             else { EPU = "Reserved"; }
 
             return EPU;
