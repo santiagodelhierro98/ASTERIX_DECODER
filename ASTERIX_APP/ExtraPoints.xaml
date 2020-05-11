@@ -16,7 +16,9 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+        <Button x:Name="getresults" Click ="getresults_Click" Content="GET RESULTS" Margin="50,100,385,78" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5">
+           
+        </Button>
         <!-- MLAT Table -->
         <DataGrid x:Name="TableMLAT" Padding="5"
                   Margin="2.5 5 5 0" Background="#222" 
