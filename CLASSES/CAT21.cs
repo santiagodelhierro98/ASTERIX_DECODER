@@ -451,7 +451,7 @@ namespace CLASSES
                             string NACP1 = octeto2Bits[3].ToString() + octeto2Bits[4].ToString() + octeto2Bits[5].ToString() + octeto2Bits[6].ToString();
                             Int32 NACP11 = Convert.ToInt32(NACP1, 2);
                             // NACp
-                            Quality_Indicators[2] = "Navigation Accuracy Category for Position: " + NACP11;
+                            Quality_Indicators[2] = NACP11.ToString();
 
                             if (Convert.ToInt32(octeto2Bits[7].ToString(), 2) == 0)
                             {
@@ -473,7 +473,7 @@ namespace CLASSES
                                 string GVA1 = octeto3Bits[5].ToString() + octeto3Bits[6].ToString();
                                 Int32 GVA11 = Convert.ToInt32(GVA1, 2);
                                 // GVA
-                                Quality_Indicators[5] = "Geometric Altitude Accuracy: " + GVA11;
+                                Quality_Indicators[5] = GVA11.ToString();
 
                                 if (Convert.ToInt32(octeto3Bits[7].ToString(), 2) == 0)
                                 {
@@ -486,28 +486,23 @@ namespace CLASSES
                                     char[] octeto4Bits = octeto4.ToCharArray();
                                     string total = octeto4Bits[0].ToString() + octeto4Bits[1].ToString() + octeto4Bits[2].ToString() + octeto4Bits[3].ToString();
                                     int PIC1 = Convert.ToInt32(total, 2);
-                                    // PIC
-                                    if (PIC1 == 0) { Quality_Indicators[6] = "No integrity (or > 20.0 NM)"; }
-                                    if (PIC1 == 1) { Quality_Indicators[6] = "< 20.0 NM"; }
-                                    if (PIC1 == 2) { Quality_Indicators[6] = "< 10.0 NM"; }
-                                    if (PIC1 == 3) { Quality_Indicators[6] = "< 8.0 NM"; }
-                                    if (PIC1 == 4) { Quality_Indicators[6] = "< 4.0 NM"; }
-                                    if (PIC1 == 5) { Quality_Indicators[6] = "< 2.0 NM"; }
-                                    if (PIC1 == 6) { Quality_Indicators[6] = "< 1.0 NM"; }
-                                    if (PIC1 == 7) { Quality_Indicators[6] = "< 0.6 NM"; }
-                                    if (PIC1 == 8) { Quality_Indicators[6] = "< 0.5 NM"; }
-                                    if (PIC1 == 9) { Quality_Indicators[6] = "< 0.3 NM"; }
-                                    if (PIC1 == 10) { Quality_Indicators[6] = "< 0.2 NM"; }
-                                    if (PIC1 == 11) { Quality_Indicators[6] = "< 0.1 NM"; }
-                                    if (PIC1 == 2) { Quality_Indicators[6] = "< 0.04 NM"; }
-                                    if (PIC1 == 13) { Quality_Indicators[6] = "< 0.013 NM"; }
-                                    if (PIC1 == 14) { Quality_Indicators[6] = "< 0.004 NM"; }
-                                    if (PIC1 == 15) { Quality_Indicators[6] = "No defined"; }
+                                    // PIC }
+                                    if (PIC1 == 1) { Quality_Indicators[6] = "37040"; }
+                                    if (PIC1 == 2) { Quality_Indicators[6] = "14816"; }
+                                    if (PIC1 == 3) { Quality_Indicators[6] = "7408"; }
+                                    if (PIC1 == 4) { Quality_Indicators[6] = "3704"; }
+                                    if (PIC1 == 5) { Quality_Indicators[6] = "1852"; }
+                                    if (PIC1 == 6) { Quality_Indicators[6] = "926"; } // NIC Supplement BUSCAR
+                                    if (PIC1 == 7) { Quality_Indicators[6] = "370.4"; }
+                                    if (PIC1 == 8) { Quality_Indicators[6] = "185.2"; }
+                                    if (PIC1 == 9) { Quality_Indicators[6] = "75"; }
+                                    if (PIC1 == 10) { Quality_Indicators[6] = "25"; }
+                                    if (PIC1 == 11) { Quality_Indicators[6] = "7.5"; }
+                                    else { Quality_Indicators[6] = null; }
                                     contador = contador + 1;
                                 }
                             }
                         }
-
                     }
                     if (FSPEC[17] == "1")
                     {

@@ -452,14 +452,17 @@ namespace CLASSES
             tableExtra_ADSB.Columns.Add(new DataColumn("Latitude"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Longitude"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Flight Level"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("NACp"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("NIC"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("GVA"));
         }
         public void Create_ResultsTable(DataTable tableExtra_Res)
         {
             tableExtra_Res.Columns.Add(new DataColumn("Callsign"));
             tableExtra_Res.Columns.Add(new DataColumn("Time"));
-            tableExtra_Res.Columns.Add(new DataColumn("Latitude Distance\nDifference (NM)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Longitude Distance\nDifference (NM)"));
-            tableExtra_Res.Columns.Add(new DataColumn("FL Difference"));
+            tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy\n(meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy\n(meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Vertical Accuracy"));
             tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
         public DataTable getSearchTable10()

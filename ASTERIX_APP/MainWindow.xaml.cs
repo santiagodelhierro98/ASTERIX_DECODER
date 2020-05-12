@@ -65,7 +65,8 @@ namespace ASTERIX_APP
             {
                 case MessageBoxResult.Yes:
                     this.Close();
-                    Application.Current.Shutdown();
+                    var inicio = new Inicio();
+                    inicio.Show();
                     break;
                 case MessageBoxResult.No:
                     break;

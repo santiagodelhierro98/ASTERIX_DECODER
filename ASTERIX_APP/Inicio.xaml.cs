@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace ASTERIX_APP
 {
@@ -24,7 +25,7 @@ namespace ASTERIX_APP
             Aboutus.Show();
 
         }
-        private void Intrepids_Click(object sender, RoutedEventArgs e)
+        private async void Intrepids_Click(object sender, RoutedEventArgs e)
         {
             var ExtraWork = new ExtraPoints();
             ExtraWork.Show();
