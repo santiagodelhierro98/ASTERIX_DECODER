@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ASTERIX_APP
@@ -26,11 +27,12 @@ namespace ASTERIX_APP
         public ExtraPoints()
         {
             InitializeComponent();
-                     
+            
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
             OpenFile.ShowDialog();
             string path = OpenFile.FileName;
+
             M.Create_ExtraTable_MLAT(MLAT_Table);
             M.Create_ExtraTable_ADSB(ADSB_Table);
             leerEX(path);
@@ -106,47 +108,54 @@ namespace ASTERIX_APP
             else { return double.NaN; }
         }
 
-        private void getresults_Click(object sender, RoutedEventArgs e)
+        private async void getresults_Click(object sender, RoutedEventArgs e)
         {
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table);
-            //comparar las tablas para tener los mismos vuelos en ambas
-            for (int j = 0;j < ADSB_Table.Rows.Count; j++)
+            progressbar.Visibility = Visibility.Visible;
+            await Task.Run(() =>
             {
-                for (int i = 0; i < MLAT_Table.Rows.Count; i++)
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table);
+                //comparar las tablas para tener los mismos vuelos en ambas
+                for (int j = 0; j < ADSB_Table.Rows.Count; j++)
                 {
-                    string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-                    //si callsign y hora son iguales
-                    if (MLAT_Table.Rows[i][0].ToString() == ADSB_Table.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                    for (int i = 0; i < MLAT_Table.Rows.Count; i++)
                     {
-                        acc_ADSB_Table.ImportRow(ADSB_Table.Rows[j]);
-                        acc_MLAT_Table.ImportRow(MLAT_Table.Rows[i]);
+                        string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+                        //si callsign y hora son iguales
+                        if (MLAT_Table.Rows[i][0].ToString() == ADSB_Table.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table.ImportRow(ADSB_Table.Rows[j]);
+                            acc_MLAT_Table.ImportRow(MLAT_Table.Rows[i]);
+                        }
+                        else { }
                     }
-                    else { }
-                }           
-            }
-
+                }
+            });
             TableMLAT.ItemsSource = acc_MLAT_Table.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
-            //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
-            for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
+            await Task.Run(() =>
             {
-                string callsign = acc_ADSB_Table.Rows[i][0].ToString();
-                string time = acc_ADSB_Table.Rows[i][1].ToString();
-                // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1')*(1852m/1NM) = precision [m]
-                double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852*60*(Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
-                double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 *60*(Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
-                
-                // FL*100 (feet) --> *0.3048 (to meters)
-                double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][7]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
-                ResultsTable.Rows.Add(callsign,time,Math.Round(precision_lat,5), Math.Round(precision_lon,5), Math.Round(altitude_precision, 5), "");
-            }
+                //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
+                for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
+                {
+                    string callsign = acc_ADSB_Table.Rows[i][0].ToString();
+                    string time = acc_ADSB_Table.Rows[i][1].ToString();
+                    // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1')*(1852m/1NM) = precision [m]
+                    double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
+                    double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
+
+                    // FL*100 (feet) --> *0.3048 (to meters)
+                    double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][7]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
+                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(altitude_precision, 5), "");
+                }                
+            });
             Res_Table.ItemsSource = ResultsTable.DefaultView;
+            progressbar.Visibility = Visibility.Hidden;
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

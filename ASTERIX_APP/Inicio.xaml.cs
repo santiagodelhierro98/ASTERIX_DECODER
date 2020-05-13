@@ -25,10 +25,12 @@ namespace ASTERIX_APP
             Aboutus.Show();
 
         }
-        private async void Intrepids_Click(object sender, RoutedEventArgs e)
+        private void Intrepids_Click(object sender, RoutedEventArgs e)
         {
-            var ExtraWork = new ExtraPoints();
+            progressbar.Visibility = Visibility.Visible;
+            var ExtraWork = new ExtraPoints();              
             ExtraWork.Show();
+            progressbar.Visibility = Visibility.Collapsed;
             this.Close();
         }
     }
