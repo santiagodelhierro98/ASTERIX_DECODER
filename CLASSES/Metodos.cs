@@ -463,13 +463,13 @@ namespace CLASSES
             tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy\n(meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy\n(meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Vertical Accuracy"));
-            tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
         public void Create_AverageTable(DataTable tableExtra_Res)
         {
             tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Latitude (meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Longitude (meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Altitude (meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Probability\nDetection (10^9)"));
         }
         public DataTable getSearchTable10()
         {

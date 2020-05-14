@@ -163,9 +163,16 @@ namespace ASTERIX_APP
                     // FL*100 (feet) --> *0.3048 (to meters)
                     double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][7]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
                     mean_error_alt += altitude_precision;
-                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(altitude_precision, 5), "");
+                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(altitude_precision, 5));
                 }
-                Averagetoprint_Table.Rows.Add(mean_error_lat / acc_ADSB_Table.Rows.Count, mean_error_lon /acc_ADSB_Table.Rows.Count, mean_error_alt / acc_ADSB_Table.Rows.Count);
+                // SMR
+                double Rmax = 2500; // meters
+                double BeamWidth = 0.4; // degrees
+                double RotationSpeed = 40; // RPM
+                double P_fd = 1e-4;
+
+                double Pd = Probability_of_Detection(Rmax, BeamWidth, RotationSpeed, P_fd);
+                Averagetoprint_Table.Rows.Add(Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_lon /acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5), Math.Round(Pd / 1e9, 5));
 
             });
             Res_Table.ItemsSource = ResultsTable.DefaultView;
@@ -178,9 +185,21 @@ namespace ASTERIX_APP
             var inicio = new Inicio();
             inicio.Show();
         }
+        private double Probability_of_Detection(double Rmax, double BeamWidth, double RotationSpeed, double P_fd)
+        {
+            double c = 3e8;
+            double PRI = 2 * Rmax / c;
+            double t_obs = BeamWidth / (6 * RotationSpeed);
+            int n = Convert.ToInt32(Math.Floor(t_obs/PRI));
+            double A = Math.Log(0.62 / P_fd);
+            double SNRn = -30; // dB
+            double B = Math.Pow(10, ((SNRn + 5 * Math.Log10(n)) / (10 * (6.2 + (4.54 / Math.Sqrt(n + 0.44))))) - A) / (0.12 * A + 1.7);
+            return -Math.Pow(Math.E, B) / (1 - Math.Pow(Math.E, B));
+        }
         // SMR MLAT:
 
         // Position error = sqrt((x-x0)^2 + (y-y0)^2)
+        // V Suplly = 230V
         // Tau = 40e-9 s
         // wR = 40 RPM
         // f = [9, 9.5]GHz or [15.4, 16.9]GHz
@@ -196,6 +215,6 @@ namespace ASTERIX_APP
         // A = ln(0.62/P_False_Det)
         // SNRn = -5*log10(n) + (6.2 + 4.54/sqrt(n + 0.44))*log10(A + 0.12*A*B + 1.7*B)
         // B = (10^((SNRn + 5*log10(n))/(10*(6.2 + 4.54/sqrt(n + 0.44)))) - A)/(0.12*A + 1.7)
-        // B = ln(Pd/(Pd-1)) --> -e^B = Pd(1 - e^B) --> Pd = -e^B/(1 - e^B)
+        // B = ln(Pd/(Pd-1)) --> Pd = -e^B/(1 - e^B)
     }
 }

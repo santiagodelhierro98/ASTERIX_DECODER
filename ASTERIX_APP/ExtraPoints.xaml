@@ -19,13 +19,13 @@
         </Grid.RowDefinitions>
         <Button x:Name="getresults" Click ="getresults_Click" Content="GET RESULTS" Margin="20 120 480 70" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="Close" Click="Close_Click" Content="Close" Grid.Column="0" Grid.Row="1" Margin="20 175 500 20" Background="#333" Foreground="#fff"/>
-        <Label Content="Sort and Compare:" Grid.Row="1" Grid.Column="0" Margin="16,83,490,110" FontSize="10" Foreground="#bbb"/>
+        <Label Content="Sort and Compare:" Grid.Row="1" Grid.Column="0" Margin="10,91,496,102" FontSize="10" Foreground="#bbb"/>
         <Label Content="MLAT Table:" Foreground="#bbb" Grid.Column="0" Grid.Row="0" Padding="6"/>
         <Label Content="ADS/B Table:" Foreground="#bbb" Grid.Column="1" Grid.Row="0" Padding="6"/>
         <ProgressBar x:Name="progressbar" Grid.Column="1" Grid.Row="1" Height="25" RenderTransformOrigin="-0.497,3.674" Margin="380,183,20,20" Visibility="Collapsed" IsIndeterminate="True" Background="#333"/>
-        <Label Content="Results:" Height="25" Foreground="#fff" Margin="100,5,450,198" Grid.Row="1"/>
-        <Label Content="Averages:" Height="25" Foreground="#fff" Grid.Row="1" Grid.Column="1" Margin="95,9,437,194"/>
-        
+        <Label Content="Results:" Foreground="#fff" Margin="70,6,480,191" Grid.Row="1" Padding="2"/>
+        <Label Content="Averages:" Foreground="#fff" Grid.Row="1" Grid.Column="1" Margin="10,10,522,191" Padding="2"/>
+
         <!-- MLAT Table -->
         <DataGrid x:Name="TableMLAT" Padding="5"
                   Margin="2.5 30 5 0" Background="#222" 
@@ -80,7 +80,7 @@
         </DataGrid>
         <!-- Comparison Table -->
         <DataGrid x:Name="Res_Table" Padding="5"
-                  Margin="150 5 -90 5" Background="#222" 
+                  Margin="125,5,5,5" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Row="1">
@@ -106,7 +106,7 @@
         </DataGrid>
         <!-- Average Table -->
         <DataGrid x:Name="Av_Table" Padding="5"
-                  Margin="95,40,10,70" Background="#222" 
+                  Margin="0,42,7,89" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Row="1" Grid.Column="1" >
