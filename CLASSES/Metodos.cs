@@ -465,6 +465,12 @@ namespace CLASSES
             tableExtra_Res.Columns.Add(new DataColumn("Vertical Accuracy"));
             tableExtra_Res.Columns.Add(new DataColumn("Probability of\nDetection"));
         }
+        public void Create_AverageTable(DataTable tableExtra_Res)
+        {
+            tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Latitude (meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Longitude (meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Mean Accuracy\n Error for Altitude (meters)"));
+        }
         public DataTable getSearchTable10()
         {
             DataTable SearchTable10 = new DataTable();

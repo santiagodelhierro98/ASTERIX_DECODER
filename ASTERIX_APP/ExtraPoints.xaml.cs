@@ -22,8 +22,12 @@ namespace ASTERIX_APP
         DataTable ADSB_Table = new DataTable();
         DataTable acc_MLAT_Table = new DataTable();
         DataTable acc_ADSB_Table = new DataTable();
+        DataTable Averagetoprint_Table = new DataTable();
+
 
         DataTable ResultsTable = new DataTable();
+        DataTable AverageTable = new DataTable();
+
         public ExtraPoints()
         {
             InitializeComponent();
@@ -107,7 +111,9 @@ namespace ASTERIX_APP
             if (NACp == "11") { return 3.0; }
             else { return double.NaN; }
         }
-
+        double mean_error_lat;
+        double mean_error_lon;
+        double mean_error_alt;
         private async void getresults_Click(object sender, RoutedEventArgs e)
         {
             progressbar.Visibility = Visibility.Visible;
@@ -115,6 +121,8 @@ namespace ASTERIX_APP
             {
                 M.Create_ExtraTable_ADSB(acc_ADSB_Table);
                 M.Create_ExtraTable_MLAT(acc_MLAT_Table);
+                M.Create_AverageTable(Averagetoprint_Table);
+                
                 //comparar las tablas para tener los mismos vuelos en ambas
                 for (int j = 0; j < ADSB_Table.Rows.Count; j++)
                 {
@@ -131,6 +139,7 @@ namespace ASTERIX_APP
                         {
                             acc_ADSB_Table.ImportRow(ADSB_Table.Rows[j]);
                             acc_MLAT_Table.ImportRow(MLAT_Table.Rows[i]);
+                            
                         }
                         else { }
                     }
@@ -140,6 +149,7 @@ namespace ASTERIX_APP
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
             await Task.Run(() =>
             {
+                
                 //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
                 for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
                 {
@@ -148,20 +158,29 @@ namespace ASTERIX_APP
                     // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1')*(1852m/1NM) = precision [m]
                     double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
                     double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
-
+                    mean_error_lat += precision_lat;
+                    mean_error_lon += precision_lon;
                     // FL*100 (feet) --> *0.3048 (to meters)
                     double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][7]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
+                    mean_error_alt += altitude_precision;
                     ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(altitude_precision, 5), "");
-                }                
+                }
+                Averagetoprint_Table.Rows.Add(mean_error_lat / acc_ADSB_Table.Rows.Count, mean_error_lon /acc_ADSB_Table.Rows.Count, mean_error_alt / acc_ADSB_Table.Rows.Count);
+
             });
             Res_Table.ItemsSource = ResultsTable.DefaultView;
+            Av_Table.ItemsSource = Averagetoprint_Table.DefaultView;
             progressbar.Visibility = Visibility.Hidden;
         }
+
+    
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
             var inicio = new Inicio();
             inicio.Show();
         }
+
+      
     }
 }
