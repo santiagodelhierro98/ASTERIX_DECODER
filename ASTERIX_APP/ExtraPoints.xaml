@@ -23,7 +23,9 @@
         <Label Content="MLAT Table:" Foreground="#bbb" Grid.Column="0" Grid.Row="0" Padding="6"/>
         <Label Content="ADS/B Table:" Foreground="#bbb" Grid.Column="1" Grid.Row="0" Padding="6"/>
         <ProgressBar x:Name="progressbar" Grid.Column="1" Grid.Row="1" Height="25" RenderTransformOrigin="-0.497,3.674" Margin="380,183,20,20" Visibility="Collapsed" IsIndeterminate="True" Background="#333"/>
-
+        <Label Content="Results:" Height="25" Foreground="#fff" Margin="100,5,450,198" Grid.Row="1"/>
+        <Label Content="Averages:" Height="25" Foreground="#fff" Grid.Row="1" Grid.Column="1" Margin="95,9,437,194"/>
+        
         <!-- MLAT Table -->
         <DataGrid x:Name="TableMLAT" Padding="5"
                   Margin="2.5 30 5 0" Background="#222" 
@@ -104,7 +106,7 @@
         </DataGrid>
         <!-- Average Table -->
         <DataGrid x:Name="Av_Table" Padding="5"
-                  Margin="100 5 5 100" Background="#222" 
+                  Margin="95,40,10,70" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
                   Grid.Row="1" Grid.Column="1" >

@@ -171,16 +171,31 @@ namespace ASTERIX_APP
             Res_Table.ItemsSource = ResultsTable.DefaultView;
             Av_Table.ItemsSource = Averagetoprint_Table.DefaultView;
             progressbar.Visibility = Visibility.Hidden;
-        }
-
-    
+        }    
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
             var inicio = new Inicio();
             inicio.Show();
         }
+        // SMR MLAT:
 
-      
+        // Position error = sqrt((x-x0)^2 + (y-y0)^2)
+        // Tau = 40e-9 s
+        // wR = 40 RPM
+        // f = [9, 9.5]GHz or [15.4, 16.9]GHz
+        // BeamWidth = 0.4º
+        // Rmax = 2500 m
+        // 250 targets min in 360º
+        // P of False detection = 1e-4
+        // P of False Identification = 1e-6
+
+        // PRI = 2*Rmax/c
+        // t_obs = BeamWidth/6*wR
+        // n = t_obs/PRI
+        // A = ln(0.62/P_False_Det)
+        // SNRn = -5*log10(n) + (6.2 + 4.54/sqrt(n + 0.44))*log10(A + 0.12*A*B + 1.7*B)
+        // B = (10^((SNRn + 5*log10(n))/(10*(6.2 + 4.54/sqrt(n + 0.44)))) - A)/(0.12*A + 1.7)
+        // B = ln(Pd/(Pd-1)) --> -e^B = Pd(1 - e^B) --> Pd = -e^B/(1 - e^B)
     }
 }
