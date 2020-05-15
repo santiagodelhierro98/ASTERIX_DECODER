@@ -83,9 +83,11 @@ namespace ASTERIX_APP
             map.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
+            SearchAddButton.Visibility = Visibility.Collapsed;
             ClearSearch.Visibility = Visibility.Collapsed;
             NumBox.Visibility = Visibility.Collapsed;
             IDBox.Visibility = Visibility.Collapsed;
+            AddBox.Visibility = Visibility.Collapsed;
             Search_Table.Visibility = Visibility.Collapsed;
 
             // HIDE AND CLEAN TABLES
@@ -192,14 +194,17 @@ namespace ASTERIX_APP
             }
             else
             {
+                STOP_TRACK();
                 // Table and Map Stuff
                 progressbar.Visibility = Visibility.Hidden;
                 Search_Table.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Visible;
                 SearchIDButton.Visibility = Visibility.Visible;
+                SearchAddButton.Visibility = Visibility.Visible;
                 ClearSearch.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
+                AddBox.Visibility = Visibility.Visible;
 
                 Instructions_Label.Visibility = Visibility.Collapsed;
                 Track_Table.Visibility = Visibility.Visible;
@@ -261,9 +266,11 @@ namespace ASTERIX_APP
                 Search_Table.Visibility = Visibility.Collapsed;
                 SearchNumButton.Visibility = Visibility.Collapsed;
                 SearchIDButton.Visibility = Visibility.Collapsed;
+                SearchAddButton.Visibility = Visibility.Collapsed;
                 ClearSearch.Visibility = Visibility.Collapsed;
                 NumBox.Visibility = Visibility.Collapsed;
                 IDBox.Visibility = Visibility.Collapsed;
+                AddBox.Visibility = Visibility.Collapsed;
                 Instructions_Label.Visibility = Visibility.Collapsed;
                 Track_Table.Visibility = Visibility.Collapsed;
                 map.Visibility = Visibility.Visible;
@@ -669,6 +676,8 @@ namespace ASTERIX_APP
             NumBox.Visibility = Visibility.Visible;
             SearchIDButton.Visibility = Visibility.Visible;
             IDBox.Visibility = Visibility.Visible;
+            SearchAddButton.Visibility = Visibility.Visible;
+            AddBox.Visibility = Visibility.Visible;
         }
         private void SearchNum_Click(object sender, RoutedEventArgs e)
         {
@@ -676,7 +685,9 @@ namespace ASTERIX_APP
             Search_Table.Visibility = Visibility.Visible;
             SearchIDButton.Visibility = Visibility.Collapsed;
             SearchNumButton.Visibility = Visibility.Collapsed;
+            SearchAddButton.Visibility = Visibility.Collapsed;
             IDBox.Visibility = Visibility.Collapsed;
+            AddBox.Visibility = Visibility.Collapsed;
 
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
@@ -744,7 +755,9 @@ namespace ASTERIX_APP
             Search_Table.Visibility = Visibility.Visible;
             SearchNumButton.Visibility = Visibility.Collapsed;
             SearchIDButton.Visibility = Visibility.Collapsed;
+            SearchAddButton.Visibility = Visibility.Collapsed;
             NumBox.Visibility = Visibility.Collapsed;
+            AddBox.Visibility = Visibility.Collapsed;
 
             Search_Table.ItemsSource = null;
             Search_Table.Items.Clear();
@@ -822,6 +835,74 @@ namespace ASTERIX_APP
                     MessageBox.Show("There is no flight with callsign" + search);
                 }
                 else { Search_Table.ItemsSource = searchtable.DefaultView; }
+            }
+        }
+        private void SearchAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Track_Table.Visibility = Visibility.Hidden;
+            Search_Table.Visibility = Visibility.Visible;
+            SearchNumButton.Visibility = Visibility.Collapsed;
+            SearchIDButton.Visibility = Visibility.Collapsed;
+            SearchAddButton.Visibility = Visibility.Collapsed;
+            NumBox.Visibility = Visibility.Collapsed;
+            IDBox.Visibility = Visibility.Collapsed;
+
+            Search_Table.ItemsSource = null;
+            Search_Table.Items.Clear();
+
+            string search = AddBox.Text;
+            if (category == 10)
+            {
+                DataTable table10 = F.tablaCAT10;
+                DataTable searchtable = M.getSearchTable10();
+                for (int i = 0; i < table10.Rows.Count; i++)
+                {
+                    if (table10.Rows[i][16].ToString() == search)
+                    {
+                        searchtable.ImportRow(table10.Rows[i]);
+                    }
+                }
+                Search_Table.ItemsSource = searchtable.DefaultView;
+            }
+            if (category == 21)
+            {
+                DataTable table21 = F.tablaCAT21;
+                DataTable searchtable = M.getSearchTable21();
+                if (Convert.ToDouble(table21.Rows[0][1]) == 21)
+                {
+                    for (int i = 0; i < table21.Rows.Count; i++)
+                    {
+                        if (table21.Rows[i][29].ToString() == search)
+                        {
+                            searchtable.ImportRow(table21.Rows[i]);
+                        }
+                    }
+                    Search_Table.ItemsSource = searchtable.DefaultView;
+                }
+                if (Convert.ToDouble(table21.Rows[0][1]) == 21.23)
+                {
+                    for (int i = 0; i < table21.Rows.Count; i++)
+                    {
+                        if (table21.Rows[i][29].ToString() == search)
+                        {
+                            searchtable.ImportRow(table21.Rows[i]);
+                        }
+                    }
+                    Search_Table.ItemsSource = searchtable.DefaultView;
+                }
+            }
+            if (category == 1021)
+            {
+                DataTable tableMix = F.tablaMultipleCAT;
+                DataTable searchtable = M.getSearchTableMixed();
+                for (int i = 0; i < tableMix.Rows.Count; i++)
+                {
+                    if (tableMix.Rows[i][13].ToString() == search)
+                    {
+                        searchtable.ImportRow(tableMix.Rows[i]);
+                    }
+                }
+                Search_Table.ItemsSource = searchtable.DefaultView;
             }
         }
 
