@@ -1238,7 +1238,7 @@ namespace ASTERIX_APP
 
                         int tiempo = M.gettimecorrectly(tiemposplited);
                         int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
-                        if (tiempo > start1) { i = tabla.Rows.Count; }
+                        if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
                         else
                         {
                             string targetid = Convert.ToString(tabla.Rows[i][1]);
