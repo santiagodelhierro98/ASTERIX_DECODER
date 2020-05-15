@@ -1157,28 +1157,75 @@ namespace ASTERIX_APP
 
                         int tiempo = M.gettimecorrectly(tiemposplited);
                         int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
-                        string targetid = Convert.ToString(tabla.Rows[i][1]);
-
-                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }
-                        if (targetid == "") { targetid = "Not available"; }
-                        if (idbuttonclicked == true && tiempo == start1)
+                        if (tiempo > start1) { i = tabla.Rows.Count; }
+                        else
                         {
-                            if (targetid.Contains(searchedcallsign))
+                            string targetid = Convert.ToString(tabla.Rows[i][1]);
+
+                            if (searchedcallsign == null) { searchedcallsign = "Not available"; }
+                            if (targetid == "") { targetid = "Not available"; }
+                            if (idbuttonclicked == true && tiempo == start1)
                             {
-                                if (F.CAT_list[i] == 10)
+                                if (targetid.Contains(searchedcallsign))
+                                {
+                                    if (F.CAT_list[i] == 10)
+                                    {
+                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+
+                                        AddMarkerMLAT(poscartx, poscarty, targetid);
+                                        if (map.Markers.Count >= 200)
+                                        {
+                                            map.Markers[map.Markers.Count - 200].Clear();
+                                        }
+                                        rellenartablaMULTICAT(i);
+                                        clock(tiempo - 1);
+                                    }
+                                    if (F.CAT_list[i] == 21.23)
+                                    {
+                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                        AddMarkerC21(poscartx, poscarty, targetid);
+                                        if (map.Markers.Count >= 200)
+                                        {
+                                            map.Markers[map.Markers.Count - 200].Clear();
+                                        }
+                                        rellenartablaMULTICAT(i);
+                                        clock(tiempo - 1);
+                                    }
+                                    if (F.CAT_list[i] == 21)
+                                    {
+                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                        AddMarkerC21(poscartx, poscarty, targetid);
+                                        if (map.Markers.Count >= 200)
+                                        {
+                                            map.Markers[map.Markers.Count - 200].Clear();
+                                        }
+                                        rellenartablaMULTICAT(i);
+                                        clock(tiempo - 1);
+                                    }
+                                }
+                                else
+                                {
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                if (F.CAT_list[i] == 10 && tiempo == start1)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-
                                     AddMarkerMLAT(poscartx, poscarty, targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo-1);
+                                    clock(tiempo - 1);
                                 }
-                                if (F.CAT_list[i] == 21.23)
+                                if (F.CAT_list[i] == 21.23 && tiempo == start1)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1188,9 +1235,9 @@ namespace ASTERIX_APP
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo-1);
+                                    clock(tiempo - 1);
                                 }
-                                if (F.CAT_list[i] == 21)
+                                if (F.CAT_list[i] == 21 && tiempo == start1)
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1200,53 +1247,11 @@ namespace ASTERIX_APP
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo-1);
+                                    clock(tiempo - 1);
                                 }
-                            }
-                            else
-                            {
-                                i++;
                             }
                         }
-                        else
-                        {
-                            if (F.CAT_list[i] == 10 && tiempo == start1)
-                            {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerMLAT(poscartx, poscarty, targetid);
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo-1);
-                            }
-                            if (F.CAT_list[i] == 21.23 && tiempo == start1)
-                            {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty, targetid);
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo-1);
-                            }
-                            if (F.CAT_list[i] == 21 && tiempo == start1)
-                            {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty, targetid);
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo-1);
-                            }
-                        }
+                       
                     }
                     catch
                     {
