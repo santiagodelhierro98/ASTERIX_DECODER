@@ -156,8 +156,8 @@ namespace ASTERIX_APP
                     string callsign = acc_ADSB_Table.Rows[i][0].ToString();
                     string time = acc_ADSB_Table.Rows[i][1].ToString();
                     // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1')*(1852m/1NM) = precision [m]
-                    double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
-                    double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
+                    double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
+                    double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
                     mean_error_lat += precision_lat;
                     mean_error_lon += precision_lon;
                     // FL*100 (feet) --> *0.3048 (to meters)
