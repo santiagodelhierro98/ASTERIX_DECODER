@@ -19,13 +19,13 @@ namespace CLASSES
         public double Lon_WGS_84 = double.NaN; //in degrees
         public double High_Res_Lat_WGS_84 = double.NaN; //high resolution Lat WGS 84 in degrees
         public double High_Res_Lon_WGS_84 = double.NaN; //high resolution Lon WGS 84 in degrees
-        public double ToA_Velocity = double.NaN; // seconds
+        public double ToA_Velocity; // seconds
         public double[] Air_Speed = new double[2];// ias and mach
         public double True_Airspeed = double.NaN; //kt
         public string Target_Address = null;//Target address (emitter identifier) assigned uniquely to each target. en hexa
-        public double TMRP = double.NaN; // 
+        public double TMRP ; // 
         public string[] TMRP_HP = new string[2]; // high precision TMRP
-        public double TMRV = double.NaN; // s
+        public double TMRV; // s
         public string[] TMRV_HP = new string[2];// high precision TMRV
         public double GH = double.NaN; // ft
         public string M3AC = null; //Mode 3/A Code
@@ -209,7 +209,7 @@ namespace CLASSES
             {
                 // I021/015: Service Identification
 
-                Service_ID = Met.Octeto_A_Bin(paquete0[contador]);
+                Service_ID = Met.Compare_bits(Met.Octeto_A_Bin(paquete0[contador]));
                 contador = contador + 1;
             }
             if (FSPEC[4] == "1")
@@ -326,7 +326,7 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3;
                     double num1 = 1;
                     double num2 = 128;
-                    TMRP = Math.Round(Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
+                    TMRP = Math.Round(12*3600 + Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
                     contador = contador + 3;
                 }
                 if (FSPEC[12] == "1")
@@ -370,7 +370,7 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3;
                     double num1 = 1;
                     double num2 = 128;
-                    TMRV = Math.Round(Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
+                    TMRV = Math.Round(12 * 3600 + Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
 
                     contador = contador + 3;
                 }
