@@ -863,7 +863,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null)
+            if (targetid != null && targetid!= "Not available")
             {
                 marker.Shape = new Image
                 {
@@ -888,7 +888,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null)
+            if (targetid != null && targetid != "Not available")
             {
                 marker.Shape = new Image
                 {
@@ -913,7 +913,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null)
+            if (targetid != null && targetid != "Not available")
             {
                 marker.Shape = new Image
                 {
