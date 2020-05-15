@@ -109,7 +109,6 @@ namespace ASTERIX_APP
             Track_Table.Visibility = Visibility.Collapsed;
             gridlista.Visibility = Visibility.Collapsed;
             updatedlista.Visibility = Visibility.Collapsed;
-
             // HIDE VISUAL ELEMENTS
             bubbleWord.Visibility = Visibility.Collapsed;
             circle.Visibility = Visibility.Collapsed;
@@ -235,6 +234,10 @@ namespace ASTERIX_APP
                 SearchIDButton.Visibility = Visibility.Visible;
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
+                checktrail.Visibility = Visibility.Hidden;
+                gridlista.Visibility = Visibility.Collapsed;
+
+
             }
         }
         private void MapTrack_Click(object sender, RoutedEventArgs e)
@@ -292,6 +295,7 @@ namespace ASTERIX_APP
                 SearchIDButton.Visibility = Visibility.Collapsed;
                 NumBox.Visibility = Visibility.Collapsed;
                 IDBox.Visibility = Visibility.Collapsed;
+                checktrail.Visibility = Visibility.Visible;
 
                 if (Math.Floor(F.CAT_list[0]) == 10)
                 {
@@ -917,12 +921,18 @@ namespace ASTERIX_APP
         }
         private void dt_Timer_TickC10(object sender, EventArgs e)
         {
+            if (checktrail.IsChecked == true)
+            {
+                showonlyoneairplane();
+
+            }
+            else { }
             Boolean x = true;
             while (x == true)
             {
                 CAT10 C10 = F.getCAT10(i);
-                double start = Math.Floor(F.getCAT10(0).Time_Day + 12 * 3600) + s;
-                double tiempo = Math.Floor(C10.Time_Day + 12 * 3600);
+                start = Math.Floor(F.getCAT10(0).Time_Day) - 12*3600 + s;
+                tiempo =  Math.Floor(C10.Time_Day) - 12*3600;
                 if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -980,16 +990,22 @@ namespace ASTERIX_APP
                     {
                         x = false;
                         s++;
-                        rellenartablaCAT10(i);
                     }
                 }
-                clock(tiempo);
-                gridlista.Visibility = Visibility.Hidden;
+                clock(tiempo - 1);
+                gridlista.Visibility = Visibility.Collapsed;
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
+            if (checktrail.IsChecked == true)
+            {
+                showonlyoneairplane();
+
+            }
+            else { }
+
             Boolean x = true;
             while (x == true)
             {
@@ -1041,7 +1057,6 @@ namespace ASTERIX_APP
                         {
                             x = false;
                             s++;
-                            rellenartablaCAT21(i);
                         }
                     }
                 }
@@ -1096,17 +1111,22 @@ namespace ASTERIX_APP
                         {
                             x = false;
                             s++;
-                            rellenartablaCAT21(i);
                         }
                     }
                 }
-                clock(tiempo);
-                gridlista.Visibility = Visibility.Hidden;
+                clock(tiempo - 1);
+                gridlista.Visibility = Visibility.Collapsed;
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
+            if (checktrail.IsChecked == true)
+            {
+                showonlyoneairplane();
+
+            }
+            else { }
             Boolean x = true;
             DataTable tabla = F.multiplecattablereducida;
             while (x == true)
@@ -1121,12 +1141,12 @@ namespace ASTERIX_APP
                         string[] tiemposplitedstart = starttiempo.Split(':');
 
                         int tiempo = M.gettimecorrectly(tiemposplited);
-                        int start = M.gettimecorrectly(tiemposplitedstart) + n;
+                        int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                         if (targetid == "") { targetid = "Not available"; }
-                        if (idbuttonclicked == true && tiempo == start)
+                        if (idbuttonclicked == true && tiempo == start1)
                         {
                             if (targetid.Contains(searchedcallsign))
                             {
@@ -1141,7 +1161,7 @@ namespace ASTERIX_APP
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo);
+                                    clock(tiempo-1);
                                 }
                                 if (F.CAT_list[i] == 21.23)
                                 {
@@ -1153,7 +1173,7 @@ namespace ASTERIX_APP
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo);
+                                    clock(tiempo-1);
                                 }
                                 if (F.CAT_list[i] == 21)
                                 {
@@ -1165,7 +1185,7 @@ namespace ASTERIX_APP
                                         map.Markers[map.Markers.Count - 200].Clear();
                                     }
                                     rellenartablaMULTICAT(i);
-                                    clock(tiempo);
+                                    clock(tiempo-1);
                                 }
                             }
                             else
@@ -1175,7 +1195,7 @@ namespace ASTERIX_APP
                         }
                         else
                         {
-                            if (F.CAT_list[i] == 10 && tiempo == start)
+                            if (F.CAT_list[i] == 10 && tiempo == start1)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1185,9 +1205,9 @@ namespace ASTERIX_APP
                                     map.Markers[map.Markers.Count - 200].Clear();
                                 }
                                 rellenartablaMULTICAT(i);
-                                clock(tiempo);
+                                clock(tiempo-1);
                             }
-                            if (F.CAT_list[i] == 21.23 && tiempo == start)
+                            if (F.CAT_list[i] == 21.23 && tiempo == start1)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1197,9 +1217,9 @@ namespace ASTERIX_APP
                                     map.Markers[map.Markers.Count - 200].Clear();
                                 }
                                 rellenartablaMULTICAT(i);
-                                clock(tiempo);
+                                clock(tiempo-1);
                             }
-                            if (F.CAT_list[i] == 21 && tiempo == start)
+                            if (F.CAT_list[i] == 21 && tiempo == start1)
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
@@ -1209,7 +1229,7 @@ namespace ASTERIX_APP
                                     map.Markers[map.Markers.Count - 200].Clear();
                                 }
                                 rellenartablaMULTICAT(i);
-                                clock(tiempo);
+                                clock(tiempo-1);
                             }
                         }
                     }
@@ -1221,7 +1241,7 @@ namespace ASTERIX_APP
                 x = false;
                 n++;
             }
-            gridlista.Visibility = Visibility.Hidden;
+            gridlista.Visibility = Visibility.Collapsed;
             updatedlista.Visibility = Visibility.Visible;
         }
         private void clock(double tiempo)
@@ -1409,6 +1429,19 @@ namespace ASTERIX_APP
 
             PointLatLng coordinates = new PointLatLng(φ2 * (180 / Math.PI), λ2 * (180 / Math.PI));
             return coordinates;
+        }
+       
+        private void showonlyoneairplane()
+        {  
+            
+            for (int i = 0; i < map.Markers.Count; i++)
+            {
+                if (map.Markers[i].Shape != null)
+                {
+                    map.Markers[i].Shape.Visibility = Visibility.Collapsed;
+                }
+            }
+
         }
         public void CheckCAT()
         {
