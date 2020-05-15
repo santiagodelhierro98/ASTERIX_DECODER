@@ -31,8 +31,8 @@
                 <Button x:Name="ExitButton" Click="Exit_Click" Grid.Column="3" Grid.Row="0" Content="Exit" Background="#222" Foreground="#fff" Padding="5" BorderThickness="0 1 0 1"/>
                 <Button x:Name="Help" Click="Help_Click" Content="HELP" Grid.Column="3" Grid.Row="1" Width="70" Height="25" Background="#333" Foreground="Yellow" Visibility="Collapsed" Margin="220 10 0 0" BorderThickness="1 1 1 1" BorderBrush="Yellow"/>
                 <!-- Track Table elements-->
-                <Button x:Name="SearchNumButton" Visibility="Collapsed" Click="SearchNum_Click" Grid.Column="0" Grid.Row="1" Content="Search #" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
-                <Button x:Name="SearchIDButton" Visibility="Collapsed" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search ID" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <Button x:Name="SearchNumButton" Visibility="Collapsed" Click="SearchNum_Click" Grid.Column="0" Grid.Row="1" Content="Search Track" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
+                <Button x:Name="SearchIDButton" Visibility="Collapsed" Click="SearchID_Click" Grid.Column="1" Grid.Row="1" Content="Search Callsign" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>
                 <TextBox x:Name="NumBox" Visibility="Collapsed" Grid.Column="0" Grid.Row="1" Text="3435" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
                 <TextBox x:Name="IDBox" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Text="VLG2425" Background="#222" Foreground="#999" Padding="4" BorderThickness="1" Margin="130 10 10 0" TextAlignment="Center" BorderBrush="#74aed6"/>
                 <Button x:Name="ClearSearch" Visibility="Collapsed" Click="ClearSearch_Click" Grid.Column="2" Grid.Row="1" Content="Clear Search" Background="#333" Foreground="#74aed6" Padding="4" BorderThickness="1" Margin="10 10 180 0"/>

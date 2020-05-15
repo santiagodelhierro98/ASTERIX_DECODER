@@ -10,7 +10,7 @@
         <StackPanel>
             <Grid Height="300" Width="600">
                 <Label HorizontalAlignment="Center" Margin="0,32,0,0" Content="Welcome to ASTERIX decoder application"  VerticalAlignment="Top" Background="#222" FontFamily="Century Gothic" FontSize="25" Foreground="Gray"/>
-                <Button x:Name="Start" Click ="Start_Click" Content="START APP" Margin="0 0 40 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1"/>
+                <Button x:Name="Start" Click ="Start_Click" Content="START APP" Margin="0 0 40 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="LightGreen" Width="70" Padding="5" BorderThickness="1 1 1 1" BorderBrush="LightGreen"/>
                 <Image  Opacity="1" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/Eurocontrol_logo_2010.svg.png" Margin="24,0,0,30" />
                 <Image  Opacity="1" Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images/upc-logo.png" Margin="130,0,0,30" />
                 <Button x:Name="AboutUs" Content="About Us" Margin="0 0 120 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1" Click="AboutUs_Click" />

@@ -679,45 +679,60 @@ namespace ASTERIX_APP
             try
             {
                 // Searching
-                int search = Convert.ToInt32(NumBox.Text);
+                string search = NumBox.Text;
                 if (category == 10)
                 {
                     try
                     {
-                        DataTable C10 = F.tablaCAT10;
+                        DataTable tableC10 = F.tablaCAT10;
                         DataTable table = M.getSearchTable10();
-                        table.ImportRow(C10.Rows[search - 1]);
-
+                        for (int i = 0; i < tableC10.Rows.Count; i++)
+                        {
+                            if (tableC10.Rows[i][5].ToString() == search)
+                            {
+                                table.ImportRow(tableC10.Rows[i]);
+                            }
+                        }
                         Search_Table.ItemsSource = table.DefaultView;
                     }
-                    catch { MessageBox.Show("There is no item number " + search + " in this file"); }
+                    catch { MessageBox.Show("Any Track number " + search + " in this file"); }
                 }
                 if (category == 21)
                 {
                     try
                     {
-                        DataTable C21 = F.tablaCAT21;
+                        DataTable tableC21 = F.tablaCAT21;
                         DataTable table = M.getSearchTable21();
-                        table.ImportRow(C21.Rows[search - 1]);
-
+                        for (int i = 0; i < tableC21.Rows.Count; i++)
+                        {
+                            if (tableC21.Rows[i][5].ToString() == search)
+                            {
+                                table.ImportRow(tableC21.Rows[i]);
+                            }
+                        }
                         Search_Table.ItemsSource = table.DefaultView;
-                    }
+                    }                    
                     catch { MessageBox.Show("There is no item number " + search + " in this file"); }
                 }
                 if (category == 1021)
                 {
                     try
                     {
-                        DataTable table = F.tablaMultipleCAT;
-                        DataTable searchtable = M.getSearchTableMixed();
-                        searchtable.ImportRow(table.Rows[search - 1]);
-
-                        Search_Table.ItemsSource = searchtable.DefaultView;
+                        DataTable tableMix = F.tablaMultipleCAT;
+                        DataTable table = M.getSearchTableMixed();
+                        for (int i = 0; i < tableMix.Rows.Count; i++)
+                        {
+                            if (tableMix.Rows[i][5].ToString() == search)
+                            {
+                                table.ImportRow(tableMix.Rows[i]);
+                            }                            
+                        }
+                        Search_Table.ItemsSource = table.DefaultView;
                     }
                     catch { MessageBox.Show("There is no item number " + search + " in this file"); }
                 }
             }
-            catch { MessageBox.Show("It must be an integer"); }
+            catch { MessageBox.Show("Wrong format", "ERROR"); }
         }
         private void SearchID_Click(object sender, RoutedEventArgs e)
         {
