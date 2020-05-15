@@ -18,13 +18,13 @@ namespace CLASSES
         public string[] FL = new string[3];
         public double Height = double.NaN;   //ft
         public double Amplitude = double.NaN;    //dBm
-        public double Time_Day = double.NaN; //seconds
+        public double Time_Day; //seconds
         public int? Track_Num = null;
         public string[] Track_Status = new string[10];
         public double[] Track_Vel_Polar = new double[2];    // (NM/s, degrees)
         public double[] Track_Vel_Cartesian = new double[2];    // m/s
         public double[] Acceleration = new double[2]; // m/s^2
-        public int? Target_Add = null;
+        public string Target_Add;
         public string Target_ID = null;
         public string[] Mode_SMB = new string[4];
         public double[] Target_Size_Heading = new double[3];    // m,degrees
@@ -391,10 +391,7 @@ namespace CLASSES
                 if (FSPEC[12] == "1")
                 {
                     // Item I010/220: Target Address
-                    string TA_Bin1 = M.Octeto_A_Bin(paquete0[contador]);
-                    string TA_Bin2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                    string TA_Bin3 = M.Octeto_A_Bin(paquete0[contador + 2]);
-                    Target_Add = Convert.ToInt32(TA_Bin1 + TA_Bin2 + TA_Bin3, 2);
+                    Target_Add = Convert.ToString(paquete0[contador]) + Convert.ToString(paquete0[contador + 1]) + Convert.ToString(paquete0[contador + 2]);
 
                     contador += 3;
                 }
@@ -477,7 +474,7 @@ namespace CLASSES
                     }
                     if (FSPEC[16] == "1")
                     {
-                        // Item I010/090: Flight Level in Binary
+                        // Item I010/090: Flight Level
                         string FL1 = M.Octeto_A_Bin(paquete0[contador]);
                         string FL2 = M.Octeto_A_Bin(paquete0[contador + 1]);
 
@@ -492,7 +489,7 @@ namespace CLASSES
 
                         string FL3 = FL_bin[2].ToString();
                         for (int i = 3; i < FL_bin.Length; i++) { FL3 += FL_bin[i].ToString(); }
-                        FL[2] = (Convert.ToInt32(FL3, 2) * 0.25).ToString();
+                        FL[2] = (M.ComplementoA2(FL3) * 0.25).ToString();
                         contador += 2;
                     }
                     if (FSPEC[17] == "1")
