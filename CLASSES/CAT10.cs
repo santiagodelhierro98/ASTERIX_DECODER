@@ -382,9 +382,10 @@ namespace CLASSES
                     if (Mode3A_v[2].ToString() == "0") { Mode3A_Code[2] = "Mode-3/A code derived from the reply of the transponder"; }
                     if (Mode3A_v[2].ToString() == "0") { Mode3A_Code[2] = "Mode-3/A code not extracted during the last scan"; }
 
-                    Mode3A_Code[3] = Mode3A_v[4].ToString() + Mode3A_v[5].ToString() + Mode3A_v[6].ToString() + Mode3A_v[7].ToString() +
+                    string Mode3A = Mode3A_v[4].ToString() + Mode3A_v[5].ToString() + Mode3A_v[6].ToString() + Mode3A_v[7].ToString() +
                         Mode3A_v[8].ToString() + Mode3A_v[9].ToString() + Mode3A_v[10].ToString() + Mode3A_v[11].ToString() + Mode3A_v[12].ToString() +
                         Mode3A_v[13].ToString() + Mode3A_v[14].ToString() + Mode3A_v[15].ToString();
+                    Mode3A_Code[3] = Convert.ToInt32(Mode3A, 2).ToString();
 
                     contador += 2;
                 }
