@@ -1215,6 +1215,7 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
+        DataTable tabla;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
             if (checktrail.IsChecked == true)
@@ -1224,13 +1225,12 @@ namespace ASTERIX_APP
             }
             else { }
             Boolean x = true;
-            DataTable tabla = F.multiplecattablereducida;
+            tabla = F.multiplecattablereducida;
             while (x == true)
             {
                 for (int i = 0; i < tabla.Rows.Count; i++)
                 {
-                    try
-                    {
+                   
                         string tiempomal = Convert.ToString(tabla.Rows[i][2]);
                         string starttiempo = Convert.ToString(tabla.Rows[0][2]);
                         string[] tiemposplited = tiempomal.Split(':');
@@ -1254,7 +1254,7 @@ namespace ASTERIX_APP
                                         double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                         double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
 
-                                        AddMarkerMLAT(poscartx, poscarty, targetid);
+                                        AddMarkerSMR(poscartx, poscarty, targetid);
                                         if (map.Markers.Count >= 200)
                                         {
                                             map.Markers[map.Markers.Count - 200].Clear();
@@ -1298,7 +1298,7 @@ namespace ASTERIX_APP
                                 {
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerMLAT(poscartx, poscarty, targetid);
+                                    AddMarkerSMR(poscartx, poscarty, targetid);
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -1330,14 +1330,11 @@ namespace ASTERIX_APP
                                     rellenartablaMULTICAT(i);
                                     clock(tiempo - 1);
                                 }
+                                else { }
                             }
                         }
                        
-                    }
-                    catch
-                    {
-                        i++;
-                    }
+                   
                 }
                 x = false;
                 n++;
@@ -1353,11 +1350,35 @@ namespace ASTERIX_APP
         }
         private void stop_Click(object sender, RoutedEventArgs e)
         {
+            if (category == 10)
+            {
+                dt_Timer.Tick -= dt_Timer_TickC10;
+            }
+            if (category == 21)
+            {
+                dt_Timer.Tick -= dt_Timer_TickC21;
+            }
+            if (category == 1021)
+            {
+                dt_Timer.Tick -= dt_Timer_TickMULTICAT;
+            }
             dt_Timer.Stop();
         }
         private void STOP_TRACK()
         {
-            dt_Timer.Stop();
+            if (category == 10)
+            {
+                dt_Timer.Tick -= dt_Timer_TickC10;
+            }
+            if (category == 21)
+            {
+                dt_Timer.Tick -= dt_Timer_TickC21;
+            }
+            if (category == 1021)
+            {
+                dt_Timer.Tick -= dt_Timer_TickMULTICAT;
+            }
+            dt_Timer.Interval = new TimeSpan(0, 0, 0, 1000);
             map.Markers.Clear();
             updatedtable.Clear();
             i = 0;
@@ -1369,6 +1390,7 @@ namespace ASTERIX_APP
             gridlista.Visibility = Visibility.Visible;
             updatedlista.Visibility = Visibility.Collapsed;
             timer.Visibility = Visibility.Collapsed;
+            dt_Timer.Stop();
         }
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
