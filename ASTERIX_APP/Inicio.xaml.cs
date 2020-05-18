@@ -27,10 +27,10 @@ namespace ASTERIX_APP
         }
         private void Intrepids_Click(object sender, RoutedEventArgs e)
         {
-            progressbar.Visibility = Visibility.Visible;
+            loading.Visibility = Visibility.Visible;
             var ExtraWork = new ExtraPoints();              
             ExtraWork.Show();
-            progressbar.Visibility = Visibility.Collapsed;
+            loading.Visibility = Visibility.Collapsed;
             this.Close();
         }
     }

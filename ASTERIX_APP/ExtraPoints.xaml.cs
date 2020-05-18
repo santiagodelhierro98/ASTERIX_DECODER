@@ -64,16 +64,13 @@ namespace ASTERIX_APP
                 {
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
-                    bool modulo = E.checkdistanceMLAT(C10);
-                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && Convert.ToDouble(C10.FL[2]) > 0.0 && Convert.ToDouble(C10.FL[2]) < 500.0 && C10.FL[2] != null && modulo == true)
+                    double modulo = E.checkdistanceMLAT(C10);
+                    if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && Convert.ToDouble(C10.FL[2]) > 0.0 && Convert.ToDouble(C10.FL[2]) < 500.0 && C10.FL[2] != null && modulo < 10)
                     {
                         double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
                         double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
 
-                        double x = (lat-ARP_lat) * 60 * 1.852; // km
-                        double y = (lon-ARP_lon) * 60 * 1.852; // km
-                        double R = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 5), Math.Round(lon, 5), Math.Round(R, 5), C10.FL[2]);
+                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 5), Math.Round(lon, 5), Math.Round(modulo, 5), C10.FL[2]);
                     }
                     else { }
                 }
@@ -81,17 +78,13 @@ namespace ASTERIX_APP
                 {
                     CAT21 C21 = new CAT21();
                     C21.Decode21(arraystring);
-                    bool modulo21 = E.checkdistanceADSB(C21);
-                    if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 == true)
+                    double modulo21 = E.checkdistanceADSB(C21);
+                    if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 10)
                     {
-                        double x = (C21.Lat_WGS_84 - ARP_lat) * 60 * 1.852; // km
-                        double y = (C21.Lon_WGS_84 - ARP_lon) * 60 * 1.852; // km
-                        double R = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-
                         double EPU = Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
                         double RC = Convert.ToDouble(C21.Quality_Indicators[6]); // Radius of Containments (NIC)
                         double GVA = Compute_GVA(C21); // Altitude Accuracy
-                        ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), Math.Round(C21.Lat_WGS_84, 5), Math.Round(C21.Lon_WGS_84, 5), Math.Round(R, 5), C21.FL, EPU, RC, GVA);
+                        ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), Math.Round(C21.Lat_WGS_84, 5), Math.Round(C21.Lon_WGS_84, 5), Math.Round(modulo21, 5), C21.FL, EPU, RC, GVA);
                     }
                     else { }
                 }
@@ -158,8 +151,7 @@ namespace ASTERIX_APP
             TableMLAT.ItemsSource = acc_MLAT_Table.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
             await Task.Run(() =>
-            {
-                
+            {                
                 //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
                 for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
                 {
@@ -171,7 +163,7 @@ namespace ASTERIX_APP
                     mean_error_lat += precision_lat;
                     mean_error_lon += precision_lon;
                     // R [m]
-                    double precision_R = 1000*Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - 1000*Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
+                    double precision_R = 1852*(Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]));
                     mean_error_R += precision_R;
                     // FL*100 (feet) --> *0.3048 (to meters)
                     double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][5]);
@@ -179,17 +171,22 @@ namespace ASTERIX_APP
                     ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(precision_R, 5), Math.Round(altitude_precision, 5));
                 }
                 // SMR
-                double Rmax = 2500; // meters
-                double BeamWidth = 0.4; // degrees
-                double RotationSpeed = 40; // RPM
-                double P_fd = 1e-4;
+                //double Rmax = 2500; // meters
+                //double BeamWidth = 0.4; // degrees
+                //double RotationSpeed = 40; // RPM
+                //double P_fd = 1e-4;
 
-                double Pd = Probability_of_Detection(Rmax, BeamWidth, RotationSpeed, P_fd);
-                AverageTable.Rows.Add(Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_lon /acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_R/acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5), Math.Round(Pd / 1e9, 5));
+                double lat_percentil = Percentile(2, 0.95);
+                double lon_percentil = Percentile(3, 0.95);
+                double dist_percentil = Percentile(4, 0.95);
+                double alt_percentil = Percentile(5, 0.95);
 
+                AverageTable.Rows.Add(Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_lon /acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_R/acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5), Probability_of_Detection(MLAT_Table));
+                AverageTable.Rows.Add(Math.Round(lat_percentil, 4), Math.Round(lon_percentil, 4), Math.Round(dist_percentil, 4), Math.Round(alt_percentil, 4), "");
             });
             Res_Table.ItemsSource = ResultsTable.DefaultView;
             Av_Table.ItemsSource = AverageTable.DefaultView;
+
             progressbar.Visibility = Visibility.Hidden;
         }    
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -198,17 +195,45 @@ namespace ASTERIX_APP
             var inicio = new Inicio();
             inicio.Show();
         }
-        private double Probability_of_Detection(double Rmax, double BeamWidth, double RotationSpeed, double P_fd)
+        private double Probability_of_Detection(DataTable table)
         {
-            double c = 3e8;
-            double PRI = 2 * Rmax / c;
-            double t_obs = BeamWidth / (6 * RotationSpeed);
-            int n = Convert.ToInt32(Math.Floor(t_obs/PRI));
-            double A = Math.Log(0.62 / P_fd);
-            double SNRn = -30; // dB
-            double B = Math.Pow(10, ((SNRn + 5 * Math.Log10(n)) / (10 * (6.2 + (4.54 / Math.Sqrt(n + 0.44))))) - A) / (0.12 * A + 1.7);
-            return -Math.Pow(Math.E, B) / (1 - Math.Pow(Math.E, B));
+            string hora0 = table.Rows[0][1].ToString();
+            string[] hora0_V = hora0.Split(':');
+            string horaUlt = table.Rows[table.Rows.Count - 1][1].ToString();
+            string[] horaUlt_V = horaUlt.Split(':');
+            double secs = M.gettimecorrectly(horaUlt_V) - M.gettimecorrectly(hora0_V);
+          
+            return Math.Round(100*(table.Rows.Count/secs), 4);
         }
+        //private double Probability_of_DetectionSMR(double Rmax, double BeamWidth, double RotationSpeed, double P_fd)
+        //{
+        //    double c = 3e8;
+        //    double PRI = 2 * Rmax / c;
+        //    double t_obs = BeamWidth / (6 * RotationSpeed);
+        //    int n = Convert.ToInt32(Math.Floor(t_obs/PRI));
+        //    double A = Math.Log(0.62 / P_fd);
+        //    double SNRn = -30; // dB
+        //    double B = Math.Pow(10, ((SNRn + 5 * Math.Log10(n)) / (10 * (6.2 + (4.54 / Math.Sqrt(n + 0.44))))) - A) / (0.12 * A + 1.7);
+        //    return -Math.Pow(Math.E, B) / (1 - Math.Pow(Math.E, B));
+        //}
+        private double Percentile(int col, double percentile)
+        {
+            int len = ResultsTable.Rows.Count;
+            double[] columna = new double[len];
+            for (int n = 0; n < len; n++)
+            {
+                columna[n] = Math.Abs(Convert.ToDouble(ResultsTable.Rows[n][col]));
+            }
+            Array.Sort(columna);
+            double realIndex = percentile * (columna.Length - 1);
+            int index = (int)realIndex;
+            double frac = realIndex - index;
+            if (index + 1 < columna.Length)
+                return columna[index] * (1 - frac) + columna[index + 1] * frac;
+            else
+                return columna[index];
+        }
+
         // SMR MLAT:
 
         // Position error = sqrt((x-x0)^2 + (y-y0)^2)

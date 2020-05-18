@@ -443,7 +443,7 @@ namespace CLASSES
             tableExtra_MLAT.Columns.Add(new DataColumn("Time"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Latitude"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Longitude"));
-            tableExtra_MLAT.Columns.Add(new DataColumn("Distance\n(km)"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Distance\n(NM)"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Flight Level"));
         }
         public void Create_ExtraTable_ADSB(DataTable tableExtra_ADSB)
@@ -452,7 +452,7 @@ namespace CLASSES
             tableExtra_ADSB.Columns.Add(new DataColumn("Time"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Latitude"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Longitude"));
-            tableExtra_ADSB.Columns.Add(new DataColumn("Distance\n(km)"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Distance\n(NM)"));
             tableExtra_ADSB.Columns.Add(new DataColumn("Flight Level"));
             tableExtra_ADSB.Columns.Add(new DataColumn("NACp"));
             tableExtra_ADSB.Columns.Add(new DataColumn("NIC"));
@@ -473,7 +473,7 @@ namespace CLASSES
             tableExtra_Res.Columns.Add(new DataColumn("Longitude\n(meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Distance\n(meters)"));
             tableExtra_Res.Columns.Add(new DataColumn("Altitude\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Probability\nDetection (10^9)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Probability\nDetection %"));
         }
         public DataTable getSearchTable10()
         {

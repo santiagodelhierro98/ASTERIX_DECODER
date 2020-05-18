@@ -90,12 +90,12 @@ namespace CLASSES
                         listaCAT10.Add(C10);
 
                         // Multiple CAT reduced table for maptrack
-                        multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day) ) , C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                        multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(12 * 3600 + C10.Time_Day) ) , C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
                             Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
                             C10.Target_Add, C10.Track_Num);
 
                         // Complete Multiple CAT table
-                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, M.convert_to_hms(Math.Floor(C10.Time_Day)) ,
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, M.convert_to_hms(Math.Floor(12*3600 + C10.Time_Day)) ,
                                "Click to View Data", "(" + Math.Round(C10.Pos_WGS84[0], 5) + ", " + Math.Round(C10.Pos_WGS84[1], 5) + ")", "Click to View Data", "Click to View Data", C10.FL[2], C10.Height,
                                C10.Target_Add, C10.Amplitude,
 

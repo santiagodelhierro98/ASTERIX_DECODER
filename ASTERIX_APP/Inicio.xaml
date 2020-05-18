@@ -16,8 +16,8 @@
                 <Button x:Name="AboutUs" Content="About Us" Margin="0 0 120 50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Width="70" Padding="5" BorderThickness="1 1 1 1" Click="AboutUs_Click" />
                 <Button x:Name="Intrepids" Content="Radar Info" Margin="0 0 200 50" Height="27.5" Width="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#333" Foreground="#fff" Click="Intrepids_Click"/>
                 <Label Content="In partner with :" Background="#222" FontFamily="Century Gothic" Foreground="Gray" Margin="100,179,395,97" FontSize="10" />
-                <Label Content="All rights reserved ©" Background="#222" FontFamily="Century Gothic" Foreground="Gray" Margin="250,260,250,20" FontSize="9" />
-                <ProgressBar x:Name="progressbar" Height="20" Width="150" Margin="410,179,40,101" IsIndeterminate="True" Visibility="Collapsed" Background="#333"/>
+                <Label Content="All rights reserved ©" Background="#222" FontFamily="Century Gothic" Foreground="Gray" Margin="250,260,250,20" FontSize="9"/>
+                <Label x:Name="loading" Content="Loading..." FontFamily="Century Gothic" Foreground="Gray" Margin="443,160,41,97" FontSize="20" Visibility="Collapsed"/>
             </Grid>
         </StackPanel>
     </Grid>
