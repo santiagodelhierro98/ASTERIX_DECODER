@@ -116,6 +116,8 @@ namespace ASTERIX_APP
         }
         double mean_error_lat;
         double mean_error_lon;
+        double mean_error_lat_NIC;
+        double mean_error_lon_NIC;
         double mean_error_alt;
         double mean_error_R;
         private async void getresults_Click(object sender, RoutedEventArgs e)
@@ -157,18 +159,24 @@ namespace ASTERIX_APP
                 {
                     string callsign = acc_ADSB_Table.Rows[i][0].ToString();
                     string time = acc_ADSB_Table.Rows[i][1].ToString();
-                    // 1º = 60', 1' = 1NM --> precision[º]*(60'/1º)*(1NM/1')*(1852m/1NM) = precision [m]
-                    double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
-                    double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) + 1852 * 60 * (Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
+                    //precision[º] + NACp
+                    // m 1NM/1852m 1'/1NM 1º/60'
+                    double precision_lat = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
+                    double precision_lon = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
                     mean_error_lat += precision_lat;
                     mean_error_lon += precision_lon;
+                    // precision [º] + NIC
+                    double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
+                    double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
+                    mean_error_lat_NIC += precision_lat_NIC;
+                    mean_error_lon_NIC += precision_lon_NIC;
                     // R [m]
-                    double precision_R = 1852*(Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]));
+                    double precision_R = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
                     mean_error_R += precision_R;
                     // FL*100 (feet) --> *0.3048 (to meters)
-                    double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8]) + 30.48 * Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - 30.48 * Convert.ToDouble(acc_MLAT_Table.Rows[i][5]);
+                    double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
                     mean_error_alt += altitude_precision;
-                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(precision_R, 5), Math.Round(altitude_precision, 5));
+                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(precision_R, 5), Math.Round(precision_lat_NIC, 5), Math.Round(precision_lon_NIC, 5), Math.Round(altitude_precision, 5));
                 }
                 // SMR
                 //double Rmax = 2500; // meters
@@ -179,7 +187,7 @@ namespace ASTERIX_APP
                 double lat_percentil = Percentile(2, 0.95);
                 double lon_percentil = Percentile(3, 0.95);
                 double dist_percentil = Percentile(4, 0.95);
-                double alt_percentil = Percentile(5, 0.95);
+                double alt_percentil = Percentile(7, 0.95);
 
                 AverageTable.Rows.Add(Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_lon /acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_R/acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5), Probability_of_Detection(MLAT_Table));
                 AverageTable.Rows.Add(Math.Round(lat_percentil, 4), Math.Round(lon_percentil, 4), Math.Round(dist_percentil, 4), Math.Round(alt_percentil, 4), "");

@@ -26,9 +26,8 @@ namespace CLASSES
         }
         public double checkdistanceADSB(CAT21 C21)
         {
-            double modulo_comparar = Math.Sqrt(Math.Pow(ARP_lat_10mn - ARP_lat, 2) + Math.Pow(ARP_lon_10mn - ARP_lon, 2));
             // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
-            return 60*Math.Sqrt(Math.Pow(C21.Lat_WGS_84 - ARP_lat, 2) + Math.Pow(C21.Lon_WGS_84 - ARP_lon, 2));
+            return Math.Sqrt(Math.Pow(60*(C21.Lat_WGS_84 - ARP_lat), 2) + Math.Pow(60*(C21.Lon_WGS_84 - ARP_lon), 2));
     
         }
     }

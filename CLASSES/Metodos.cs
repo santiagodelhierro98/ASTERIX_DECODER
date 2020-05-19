@@ -462,18 +462,20 @@ namespace CLASSES
         {
             tableExtra_Res.Columns.Add(new DataColumn("Callsign"));
             tableExtra_Res.Columns.Add(new DataColumn("Time"));
-            tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Distance\nAccuracy (meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Vertical\nAccuracy (meters)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy (º)\n +NACp"));            
+            tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy (º)\n +NACp"));
+            tableExtra_Res.Columns.Add(new DataColumn("Distance\nAccuracy (NM)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy (º)\n +NIC"));
+            tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy (º)\n +NIC"));
+            tableExtra_Res.Columns.Add(new DataColumn("Vertical\nAccuracy (ft)\n +GVA"));
         }
         public void Create_AverageTable(DataTable tableExtra_Res)
         {
-            tableExtra_Res.Columns.Add(new DataColumn("Latitude\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Longitude\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Distance\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Altitude\n(meters)"));
-            tableExtra_Res.Columns.Add(new DataColumn("Probability\nDetection %"));
+            tableExtra_Res.Columns.Add(new DataColumn("Latitude\n(º)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Longitude\n(º)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Distance\n(NM)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Altitude\n(ft)"));
+            tableExtra_Res.Columns.Add(new DataColumn("Probability\nDetection %\n(1s gap)"));
         }
         public DataTable getSearchTable10()
         {
