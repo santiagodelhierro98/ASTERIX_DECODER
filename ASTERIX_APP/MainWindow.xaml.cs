@@ -950,7 +950,7 @@ namespace ASTERIX_APP
                 {
                     Width = 15,
                     Height = 15,
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
                 };
             }
             if (targetid == "Not available")
@@ -959,7 +959,7 @@ namespace ASTERIX_APP
                 {
                     Width = 15,
                     Height = 15,
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/purpledot.png"))
                 };
             }
             marker.Offset = new Point(-10, -10);
@@ -1020,15 +1020,14 @@ namespace ASTERIX_APP
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
-
             }
             else { }
             Boolean x = true;
             while (x == true)
             {
                 CAT10 C10 = F.getCAT10(i);
-                start = Math.Floor(F.getCAT10(0).Time_Day) - 12*3600 + s;
-                tiempo =  Math.Floor(C10.Time_Day) - 12*3600;
+                start = Math.Floor(F.getCAT10(0).Time_Day) + s;
+                tiempo =  Math.Floor(C10.Time_Day);
                 if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1215,125 +1214,132 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
+        
         DataTable tabla;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
-
             }
             else { }
             Boolean x = true;
             tabla = F.multiplecattablereducida;
+            
             while (x == true)
-            {
+            {               
                 for (int i = 0; i < tabla.Rows.Count; i++)
-                {
-                   
-                        string tiempomal = Convert.ToString(tabla.Rows[i][2]);
-                        string starttiempo = Convert.ToString(tabla.Rows[0][2]);
-                        string[] tiemposplited = tiempomal.Split(':');
-                        string[] tiemposplitedstart = starttiempo.Split(':');
+                {                   
+                    string tiempomal = Convert.ToString(tabla.Rows[i][2]);
+                    string starttiempo = Convert.ToString(tabla.Rows[0][2]);
+                    string[] tiemposplited = tiempomal.Split(':');
+                    string[] tiemposplitedstart = starttiempo.Split(':');
 
-                        int tiempo = M.gettimecorrectly(tiemposplited);
-                        int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
-                        if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
-                        else
+                    int tiempo = M.gettimecorrectly(tiemposplited);
+                    int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
+                    if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
+                    else
+                    {
+                        string targetid = Convert.ToString(tabla.Rows[i][1]);
+
+                        if (searchedcallsign == null) { searchedcallsign = "Not available"; }
+                        if (targetid == "") { targetid = "Not available"; }
+                        if (idbuttonclicked == true && tiempo == start1)
                         {
-                            string targetid = Convert.ToString(tabla.Rows[i][1]);
-
-                            if (searchedcallsign == null) { searchedcallsign = "Not available"; }
-                            if (targetid == "") { targetid = "Not available"; }
-                            if (idbuttonclicked == true && tiempo == start1)
+                            if (targetid.Contains(searchedcallsign))
                             {
-                                if (targetid.Contains(searchedcallsign))
+                                if (F.CAT_list[i] == 10)
                                 {
-                                    if (F.CAT_list[i] == 10)
+                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                        
+                                    if(tabla.Rows[i][10].ToString() == "PSR")
                                     {
-                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-
                                         AddMarkerSMR(poscartx, poscarty, targetid);
-                                        if (map.Markers.Count >= 200)
-                                        {
-                                            map.Markers[map.Markers.Count - 200].Clear();
-                                        }
-                                        rellenartablaMULTICAT(i);
-                                        clock(tiempo - 1);
                                     }
-                                    if (F.CAT_list[i] == 21.23)
+                                    else
                                     {
-                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                        AddMarkerC21(poscartx, poscarty, targetid);
-                                        if (map.Markers.Count >= 200)
-                                        {
-                                            map.Markers[map.Markers.Count - 200].Clear();
-                                        }
-                                        rellenartablaMULTICAT(i);
-                                        clock(tiempo - 1);
+                                        AddMarkerMLAT(poscartx, poscarty, targetid);
                                     }
-                                    if (F.CAT_list[i] == 21)
+
+                                    if (map.Markers.Count >= 200)
                                     {
-                                        double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                        double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                        AddMarkerC21(poscartx, poscarty, targetid);
-                                        if (map.Markers.Count >= 200)
-                                        {
-                                            map.Markers[map.Markers.Count - 200].Clear();
-                                        }
-                                        rellenartablaMULTICAT(i);
-                                        clock(tiempo - 1);
+                                        map.Markers[map.Markers.Count - 200].Clear();
                                     }
+                                    rellenartablaMULTICAT(i);
+                                    clock(tiempo - 1);
                                 }
-                                else
+                                if (F.CAT_list[i] == 21.23)
                                 {
-                                    i++;
+                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                    AddMarkerC21(poscartx, poscarty, targetid);
+                                    if (map.Markers.Count >= 200)
+                                    {
+                                        map.Markers[map.Markers.Count - 200].Clear();
+                                    }
+                                    rellenartablaMULTICAT(i);
+                                    clock(tiempo - 1);
+                                }
+                                if (F.CAT_list[i] == 21)
+                                {
+                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                    AddMarkerC21(poscartx, poscarty, targetid);
+                                    if (map.Markers.Count >= 200)
+                                    {
+                                        map.Markers[map.Markers.Count - 200].Clear();
+                                    }
+                                    rellenartablaMULTICAT(i);
+                                    clock(tiempo - 1);
                                 }
                             }
                             else
                             {
-                                if (F.CAT_list[i] == 10 && tiempo == start1)
-                                {
-                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerSMR(poscartx, poscarty, targetid);
-                                    if (map.Markers.Count >= 200)
-                                    {
-                                        map.Markers[map.Markers.Count - 200].Clear();
-                                    }
-                                    rellenartablaMULTICAT(i);
-                                    clock(tiempo - 1);
-                                }
-                                if (F.CAT_list[i] == 21.23 && tiempo == start1)
-                                {
-                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerC21(poscartx, poscarty, targetid);
-                                    if (map.Markers.Count >= 200)
-                                    {
-                                        map.Markers[map.Markers.Count - 200].Clear();
-                                    }
-                                    rellenartablaMULTICAT(i);
-                                    clock(tiempo - 1);
-                                }
-                                if (F.CAT_list[i] == 21 && tiempo == start1)
-                                {
-                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                    AddMarkerC21(poscartx, poscarty, targetid);
-                                    if (map.Markers.Count >= 200)
-                                    {
-                                        map.Markers[map.Markers.Count - 200].Clear();
-                                    }
-                                    rellenartablaMULTICAT(i);
-                                    clock(tiempo - 1);
-                                }
-                                else { }
+                                i++;
                             }
                         }
-                       
+                        else
+                        {
+                            if (F.CAT_list[i] == 10 && tiempo == start1)
+                            {
+                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                AddMarkerSMR(poscartx, poscarty, targetid);
+                                if (map.Markers.Count >= 200)
+                                {
+                                    map.Markers[map.Markers.Count - 200].Clear();
+                                }
+                                rellenartablaMULTICAT(i);
+                                clock(tiempo - 1);
+                            }
+                            if (F.CAT_list[i] == 21.23 && tiempo == start1)
+                            {
+                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                AddMarkerC21(poscartx, poscarty, targetid);
+                                if (map.Markers.Count >= 200)
+                                {
+                                    map.Markers[map.Markers.Count - 200].Clear();
+                                }
+                                rellenartablaMULTICAT(i);
+                                clock(tiempo - 1);
+                            }
+                            if (F.CAT_list[i] == 21 && tiempo == start1)
+                            {
+                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                AddMarkerC21(poscartx, poscarty, targetid);
+                                if (map.Markers.Count >= 200)
+                                {
+                                    map.Markers[map.Markers.Count - 200].Clear();
+                                }
+                                rellenartablaMULTICAT(i);
+                                clock(tiempo - 1);
+                            }
+                            else { }
+                        }
+                    }             
                    
                 }
                 x = false;

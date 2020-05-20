@@ -14,8 +14,6 @@ namespace CLASSES
 
         public double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
         public double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-        public double ARP_lat_10mn = 41.0 + (27.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-        public double ARP_lon_10mn = 2.0 + (14.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
 
         public double checkdistanceMLAT(CAT10 C10)
         {
@@ -27,8 +25,9 @@ namespace CLASSES
         public double checkdistanceADSB(CAT21 C21)
         {
             // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
-            return Math.Sqrt(Math.Pow(60*(C21.Lat_WGS_84 - ARP_lat), 2) + Math.Pow(60*(C21.Lon_WGS_84 - ARP_lon), 2));
-    
+            double lat = C21.Lat_WGS_84 - ARP_lat;
+            double lon = C21.Lon_WGS_84 - ARP_lon;
+            return Math.Sqrt(Math.Pow(60*lat, 2) + Math.Pow(60 * lon, 2));
         }
     }
 }

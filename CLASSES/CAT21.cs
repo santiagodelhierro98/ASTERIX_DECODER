@@ -326,7 +326,7 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3;
                     double num1 = 1;
                     double num2 = 128;
-                    TMRP = Math.Round(12*3600 + Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
+                    TMRP = Math.Round(Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
                     contador = contador + 3;
                 }
                 if (FSPEC[12] == "1")
@@ -370,7 +370,7 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3;
                     double num1 = 1;
                     double num2 = 128;
-                    TMRV = Math.Round(12 * 3600 + Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
+                    TMRV = Math.Round(Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
 
                     contador = contador + 3;
                 }
@@ -660,7 +660,7 @@ namespace CLASSES
                             // I021/077 Time of Report Transmission
 
                             string ToARTbits = Met.Octeto_A_Bin(paquete0[contador]) + Met.Octeto_A_Bin(paquete0[contador + 1]) + Met.Octeto_A_Bin(paquete0[contador + 2]);
-                            Time_Rep_Transm = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0) + 43200.0, 3);
+                            Time_Rep_Transm = Math.Round(Met.ComplementoA2(ToARTbits) * (1.0 / 128.0), 3);
                             contador = contador + 3;
                         }
 

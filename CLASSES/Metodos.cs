@@ -254,6 +254,7 @@ namespace CLASSES
             multiplecattablereducida.Columns.Add(new DataColumn("Longitude (º)"));
             multiplecattablereducida.Columns.Add(new DataColumn("Target Address"));
             multiplecattablereducida.Columns.Add(new DataColumn("Track Number"));
+            multiplecattablereducida.Columns.Add(new DataColumn("TRD"));
 
             //CAT10 reduced table
             tablacat10reducida.Columns.Add(new DataColumn("#"));
