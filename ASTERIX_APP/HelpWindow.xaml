@@ -7,17 +7,29 @@
         mc:Ignorable="d"
         Title="Help" Height="700" Width="1100" Background="#222"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="1.2*"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="HelpText1" Grid.Column="0" Background="#222" Foreground="#fff" Height="40" VerticalAlignment="Top" Margin="10" FontSize="14" FontWeight="Bold"/>
-        <Label x:Name="HelpText2" Grid.Column="0" Background="#222" Foreground="#fff" Height="250" VerticalAlignment="Top" Margin="20 80 0 0" FontSize="14"/>
-        <Label x:Name="HelpText3" Grid.Column="0" Background="#222" Foreground="#fff" Height="280" VerticalAlignment="Top" Margin="20 360 0 0" FontSize="14"/>
+        <Label x:Name="HelpText1" Grid.Column="0" Background="Transparent" Foreground="#fff" Height="40" VerticalAlignment="Top" Margin="10" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="HelpText2" Grid.Column="0" Background="Transparent" Foreground="#fff" Height="255" VerticalAlignment="Top" Margin="20 80 0 0" FontSize="14"/>
+        <Label x:Name="HelpText3" Grid.Column="0" Background="Transparent" Foreground="#fff" Height="217" VerticalAlignment="Top" Margin="20,335,10,0" FontSize="14"/>
         <Image x:Name="TrackScreenShot" Source="./Images/CapturaTABLE.png" Grid.Column="1" VerticalAlignment="Top" Height="300" Margin="5 40 0 0"/>
         <Image x:Name="MapScreenShot" Source="./Images/CapturaMAP.png" Grid.Column="1" VerticalAlignment="Top" Height="300" Margin="5 360 0 0"/>
         <Button x:Name="Close" Click="Close_Click" Content="Close" Foreground="#fff" Background="#333" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 10" Height="25" Width="50"/>
+
+        <Image Source="./Images/reddot.png" Height="20" Width="20" Margin="20,572,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="-1.183,-1.215"/>
+        <Label Content="SMR (no callsign)" Foreground="White" Height="30" Margin="45,567,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="134"/>
+
+        <Image Source="./Images/purpledot.png" Height="20" Width="20" Margin="20,0,0,54" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        <Label Content="MLAT (no callsign)" Foreground="White" Height="30" Margin="45,0,0,49" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+
+        <Image Source="./Images/airplane.png" Height="20" Width="20" Margin="250,0,0,89" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="5.175,-10.325"/>
+        <Label Content="ADS-B" Foreground="White" Height="30" Margin="273,0,0,84" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="1.346,1.217"/>
+
+        <Image Source="./Images/airplaneMLAT.png" Height="20" Width="20" Margin="248,0,0,54" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        <Label Content="MLAT" Foreground="White" Height="30" Margin="273,0,0,49" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="2.791,-2.917"/>
     </Grid>
 </Window>

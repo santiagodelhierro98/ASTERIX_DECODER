@@ -91,6 +91,7 @@ namespace ASTERIX_APP
             Search_Table.Visibility = Visibility.Collapsed;
 
             // HIDE AND CLEAN TABLES
+            checktrail.Visibility = Visibility.Collapsed;
             map.Visibility = Visibility.Collapsed;
             StartButton.Visibility = Visibility.Collapsed;
             StopButton.Visibility = Visibility.Collapsed;
@@ -1028,6 +1029,8 @@ namespace ASTERIX_APP
                 CAT10 C10 = F.getCAT10(i);
                 start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 tiempo =  Math.Floor(C10.Time_Day);
+                if (tiempo < start) { tiempo = tiempo + 1; }
+
                 if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1044,6 +1047,7 @@ namespace ASTERIX_APP
                             {
                                 AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                             }
+                            else { }
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -1074,6 +1078,7 @@ namespace ASTERIX_APP
                         {
                             AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
                         }
+                        else { }
                         i++;
                         if (map.Markers.Count >= 200)
                         {
@@ -1274,6 +1279,7 @@ namespace ASTERIX_APP
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                     AddMarkerC21(poscartx, poscarty, targetid);
+
                                     if (map.Markers.Count >= 200)
                                     {
                                         map.Markers[map.Markers.Count - 200].Clear();
@@ -1305,7 +1311,15 @@ namespace ASTERIX_APP
                             {
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerSMR(poscartx, poscarty, targetid);
+                                if (tabla.Rows[i][10].ToString() == "PSR")
+                                {
+                                    AddMarkerSMR(poscartx, poscarty, targetid);
+                                }
+                                else
+                                {
+                                    AddMarkerMLAT(poscartx, poscarty, targetid);
+                                }
+
                                 if (map.Markers.Count >= 200)
                                 {
                                     map.Markers[map.Markers.Count - 200].Clear();
