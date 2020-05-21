@@ -65,8 +65,6 @@ namespace ASTERIX_APP
             {
                 case MessageBoxResult.Yes:
                     this.Close();
-                    var inicio = new Inicio();
-                    inicio.Show();
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -399,54 +397,54 @@ namespace ASTERIX_APP
                                 TRD[9] + "\nIPC: " + TRD[10] + "\nNOGO" + TRD[11] + "\nCPR: " + TRD[12] + "\nLDPJ: " + TRD[13] + "\nRCF: " + TRD[14],
                                 "Target Report");
                     }
-                    if (Col_Num == 12 && pack.Op_Status != null)
+                    if (Col_Num == 13 && pack.Op_Status != null)
                     {
                         string[] OS = pack.Op_Status;
                         MessageBox.Show("RA: " + OS[0] + "\nTC: " + OS[1] + "\nTS: " + OS[2] + "\nARV: " + OS[3] +
                             "\nCDITA: " + OS[4] + "\nNot TCAS: " + OS[5] + "\nSing. Ant.: " + OS[6], "Operational Status");
                     }
-                    if (Col_Num == 18 && pack.MOPS != null)
+                    if (Col_Num == 22 && pack.MOPS != null)
                     {
                         string[] MOPS = pack.MOPS;
                         MessageBox.Show("VNS: " + MOPS[0] + "\nVN: " + MOPS[1] + "\nLTT: " + MOPS[2], "MOPS Version");
                     }
-                    if (Col_Num == 23 && pack.Met_Report != null)
+                    if (Col_Num == 27 && pack.Met_Report != null)
                     {
                         string[] MR = pack.Met_Report;
                         MessageBox.Show("Wind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
                                 "Turbulence: " + MR[3], "Met Report");
                     }
-                    if (Col_Num == 26 && pack.Target_Status != null)
+                    if (Col_Num == 30 && pack.Target_Status != null)
                     {
                         string[] TS = pack.Target_Status;
                         MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],
                             "Target Status");
                     }
-                    if (Col_Num == 29 && pack.Quality_Indicators != null)
+                    if (Col_Num == 33 && pack.Quality_Indicators != null)
                     {
                         string[] QI = pack.Quality_Indicators;
                         MessageBox.Show("" + QI[0] + "\n" + QI[1] + "\n" + QI[2] + "\n" + "\nSIL Supplement: " +
                                QI[3] + "\nSDA: " + QI[4] + "\nGVA: " + QI[5] + "\nPIC: " + QI[6], "Quality Indicators");
                     }
-                    if (Col_Num == 30 && pack.Mode_S != null)
+                    if (Col_Num == 34 && pack.Mode_S != null)
                     {
                         int[] MS = pack.Mode_S;
                         MessageBox.Show("Rep. Mode S MB Data: " + MS[0] + "\nMB Data: " + MS[1] + "\nBDS 1: " + MS[2] +
                                 "\nBDS 2: " + MS[3], "Mode S MB Data");
                     }
-                    if (Col_Num == 37 && pack.TMRP_HP != null)
+                    if (Col_Num == 41 && pack.TMRP_HP != null)
                     {
                         string[] TMRP = pack.TMRP_HP;
                         MessageBox.Show("Full Second Indication: " + TMRP[0] +
                                 "\nTMR Posiotion: " + TMRP[1], "Time of Message Reception for Position\nHigh Precision");
                     }
-                    if (Col_Num == 38 && pack.TMRV_HP != null)
+                    if (Col_Num == 42 && pack.TMRV_HP != null)
                     {
                         string[] TMRV = pack.TMRV_HP;
                         MessageBox.Show("Full Second Indication: " + TMRV[0] +
                                "\nTMR Velocity: " + TMRV[1], "Time of Message Reception for velocity\nHigh Precision");
                     }
-                    if (Col_Num == 40 && pack.Trajectory_Intent != null)
+                    if (Col_Num == 44 && pack.Trajectory_Intent != null)
                     {
                         string[] TI = pack.Trajectory_Intent;
                         MessageBox.Show("" + TI[0] + "\nNVB: " + TI[1] + "\nNAV: " + TI[2] + "\nREP: " + TI[3] + "\nTCA: " + TI[0] +
@@ -454,7 +452,7 @@ namespace ASTERIX_APP
                                 TI[9] + "\nPoint Type: " + TI[10] + "\nTD: " + TI[11] + "\nTRA: " + TI[12] + "\nTOA: " + TI[13] + "\nTTR (NM): " + TI[15],
                                 "Trajectory Intent");
                     }
-                    if (Col_Num == 41 && pack.Data_Ages != null)
+                    if (Col_Num == 45 && pack.Data_Ages != null)
                     {
                         double[] DA = pack.Data_Ages;
                         MessageBox.Show("AOS: " + DA[0] + "\nTRD: " + DA[1] + "\n Mode 3A: " + DA[2] + "\nQI: " + DA[3] + "\nTI: " + DA[4] +
@@ -479,7 +477,7 @@ namespace ASTERIX_APP
                         MessageBox.Show("Wind Speed: " + MR[0] + "\nWind Direction: " + MR[1] + "\nTemperature: " + MR[2] +
                             "Turbulence: " + MR[3], "Met Report");
                     }
-                    if (Col_Num == 29 && pack.Target_Status != null)
+                    if (Col_Num == 30 && pack.Target_Status != null)
                     {
                         string[] TS = pack.Target_Status;
                         MessageBox.Show("ICF: " + TS[0] + "\nLNAV: " + TS[1] + "\nPS: " + TS[2] + "\nSS: " + TS[3],

@@ -200,8 +200,6 @@ namespace ASTERIX_APP
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            var inicio = new Inicio();
-            inicio.Show();
         }
         private double Probability_of_Detection(DataTable table)
         {

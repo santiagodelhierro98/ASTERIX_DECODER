@@ -10,20 +10,17 @@ namespace ASTERIX_APP
             InitializeComponent();
             Window win = new Window();
             win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
         }
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             var mainwind = new MainWindow();
             mainwind.Show();
-            this.Close();
         }
 
         private void AboutUs_Click(object sender, RoutedEventArgs e)
         {
             var Aboutus = new AboutUs();
             Aboutus.Show();
-
         }
         private void Intrepids_Click(object sender, RoutedEventArgs e)
         {
@@ -32,7 +29,6 @@ namespace ASTERIX_APP
             var ExtraWork = new ExtraPoints();              
             ExtraWork.Show();
             loading.Visibility = Visibility.Collapsed;
-            this.Close();
         }
     }
 }

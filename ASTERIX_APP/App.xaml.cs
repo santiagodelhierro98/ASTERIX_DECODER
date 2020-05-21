@@ -7,5 +7,6 @@ namespace ASTERIX_APP
     /// </summary>
     public partial class App : Application
     {
+
     }
 }
