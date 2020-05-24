@@ -70,7 +70,7 @@ namespace ASTERIX_APP
                         double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
                         double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
 
-                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 5), Math.Round(lon, 5), Math.Round(modulo, 5), C10.FL[2]);
+                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 8), Math.Round(lon, 8), Math.Round(modulo, 8), C10.FL[2]);
                     }
                     else { }
                 }
@@ -84,7 +84,7 @@ namespace ASTERIX_APP
                         double EPU = Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
                         double RC = Convert.ToDouble(C21.Quality_Indicators[6]); // Radius of Containments (NIC)
                         double GVA = Compute_GVA(C21); // Altitude Accuracy
-                        ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)), Math.Round(C21.Lat_WGS_84, 5), Math.Round(C21.Lon_WGS_84, 5), Math.Round(modulo21, 5), C21.FL, EPU, RC, GVA);
+                        ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA);
                     }
                     else { }
                 }
@@ -176,7 +176,7 @@ namespace ASTERIX_APP
                     // FL*100 (feet) --> *0.3048 (to meters)
                     double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
                     mean_error_alt += altitude_precision;
-                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 5), Math.Round(precision_lon, 5), Math.Round(precision_R, 5), Math.Round(precision_lat_NIC, 5), Math.Round(precision_lon_NIC, 5), Math.Round(altitude_precision, 5));
+                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(precision_lat_NIC, 8), Math.Round(precision_lon_NIC, 8), Math.Round(altitude_precision, 8));
                 }
                 // SMR
                 //double Rmax = 2500; // meters
@@ -190,7 +190,7 @@ namespace ASTERIX_APP
                 double alt_percentil = Percentile(7, 0.95);
 
                 AverageTable.Rows.Add(Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_lon /acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_R/acc_ADSB_Table.Rows.Count, 5), Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5), Probability_of_Detection(MLAT_Table));
-                AverageTable.Rows.Add(Math.Round(lat_percentil, 4), Math.Round(lon_percentil, 4), Math.Round(dist_percentil, 4), Math.Round(alt_percentil, 4), "");
+                AverageTable.Rows.Add(Math.Round(lat_percentil, 5), Math.Round(lon_percentil, 5), Math.Round(dist_percentil, 6), Math.Round(alt_percentil, 5), "");
             });
             Res_Table.ItemsSource = ResultsTable.DefaultView;
             Av_Table.ItemsSource = AverageTable.DefaultView;
@@ -209,7 +209,7 @@ namespace ASTERIX_APP
             string[] horaUlt_V = horaUlt.Split(':');
             double secs = M.gettimecorrectly(horaUlt_V) - M.gettimecorrectly(hora0_V);
           
-            return Math.Round(100*(table.Rows.Count/secs), 4);
+            return Math.Round(100*(table.Rows.Count/secs), 8);
         }
         //private double Probability_of_DetectionSMR(double Rmax, double BeamWidth, double RotationSpeed, double P_fd)
         //{

@@ -956,12 +956,12 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
-                    Width = 15,
-                    Height = 15,
+                    Width = 10,
+                    Height = 10,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/purpledot.png"))
                 };
             }
-            marker.Offset = new Point(-10, -10);
+            marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
         }
         public void AddMarkerSMR(double latitude, double longitude, string targetid)
@@ -981,12 +981,12 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
-                    Width = 15,
-                    Height = 15,
+                    Width = 10,
+                    Height = 10,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
-            marker.Offset = new Point(-10, -10);
+            marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
         }
         public void AddMarkerC21(double latitude, double longitude, string targetid)
@@ -1006,12 +1006,12 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
-                    Width = 15,
-                    Height = 15,
+                    Width = 10,
+                    Height = 10,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
             }
-            marker.Offset = new Point(-10, -10);
+            marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
         }
         private void dt_Timer_TickC10(object sender, EventArgs e)

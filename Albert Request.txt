@@ -1,0 +1,37 @@
+ALBERT REQUEST: 
+
+    Fitxer MLAT sol
+        DONE: Mode 3/A no està decodificat i és important que ho estigui
+        DONE: S’han de posar més decimals en lat,lon (útils després per fer el càlcul del Radar Info)
+        DONE: Representació gráfica: puntsmolt grans, s’han de fer més petits
+        Possibilitat d’identificar els plots amb el mouse per sobre o posar una petita etiqueta amb call sign o target address
+    Fitxer SMR sol
+        DONE 1/2: El mateix que MLAT amb el tema de la representació gràfica
+    Fitxer ADSB v2.1 sol
+        DONE: Treure de la columna Mode 3/A el text “ Mode 3/A reply in octal representation”i deixar només el valor octal sempre de 4 dígits (no treure cap 0 per l’esquerra)
+        El periode d’actualització és de 4 sg en aquest fitxer. Heu d’aguantar dibuixat el plot anterior fins que no vingui un nou, si no sembla que martxin i tornin. S’ha de tenir en compte que el periode d’actualització pot ser d’1sg també en posteriors fitxers, ja que hem canviat el periode recentment.
+    Fitxer ADSB v0.23
+        La figura de mèrit no està decodificada i faria falta
+        Dibuixeu de dos plots en dos plots. Heu de tenir en compte que el T és de 0,5 sg aquí
+        Hi ha plots que desapareixen si no poses el Airplane Trail
+    Fitxer smr+mlat+adsb v2.1
+        DONE: Decodificació del mode 3/A en la MLAT
+        DONE: Decodificació del mode 3/A en el ADSB. No sempre surt
+        Mode gràfic:
+            El SMR surt només un punt Vermell gran al seu (0,0)
+            La Mlat surt només un punt lila al seu (0,0)
+            És important poder dibuixar els tres sensors a la vegada de manera sincronitzada, segón a segón.
+ 
+
+DONE: Crec que falta més precissió en la posició geodèsica de la MLAT (més decimals).
+
+Com feu la transformació de coordenades de (x,y) a geodésiques? Quines fórmules feu servir?
+Suposo que esteu comparant una mostra de MLAT amb una d’ADSB que tinguin el mateix temps. Però aquest temps difereix en una mitja de 0,6sg si agafeu la mostra superior o de 0,4 sg si agafeu la mostra inferior.
+
+DONE: El temps a tenir en compte per l’ADSB és el Data Field: Time for Rx Position y no el Time for Tx.
+
+Per fer el càlcul més correcte, haurieu d’interpolar la posició donada per l’ADSB per veure on estaría en el temps de recepció de la MLAT. Per aixó, haurieu de prendre la velocitat i el rumb i saber on estaría el plot o ón havia estat, per comparar bé.
+    
+Suposant que la diferencia de temps de mitja és de 0,6 sg, els resultats del valor mitg del error de precissió de la MLAT son massa elevats, així com el valor del percentil 95.
+
+Em podeu explicar cóm calculeu la PD de la MLAT? A vegades, en fitxers d’altres dies, he vist valors del 26%. Un valor de 92-97% seria normal.

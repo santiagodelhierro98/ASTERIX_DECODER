@@ -225,6 +225,7 @@ namespace CLASSES
             double lamda1 = MLAT_lon * (Math.PI / 180);
             var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+            
             return lamda2 * (180.0 / Math.PI);
         }
         public string convert_to_hms(double tod)
@@ -240,6 +241,12 @@ namespace CLASSES
                 string p = "NaN";
                 return p;
             }
+        }
+        public string Convert_Binary_to_Octal(string bin)
+        {
+            int integer = Convert.ToInt32(bin, 2);
+            
+            return Convert.ToString(integer, 8);
         }
         public void CreateReducedTable(DataTable multiplecattablereducida, DataTable tablacat10reducida, DataTable tablacat21reducida)
         {

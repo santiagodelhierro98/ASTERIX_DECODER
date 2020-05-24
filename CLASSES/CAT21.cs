@@ -535,7 +535,7 @@ namespace CLASSES
                             string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
                             string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                             string octeto_total = octeto1[4].ToString() + octeto1[5].ToString() + octeto1[6].ToString() + octeto1[7].ToString() + octeto2.ToString();
-                            M3AC = "Mode-3/A reply in octal representation: " + Convert.ToString(Convert.ToInt32(Convert.ToInt32(octeto_total, 2)), 8);
+                            M3AC = Met.Convert_Binary_to_Octal(octeto_total);
                         }
                         catch
                         {

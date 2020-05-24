@@ -203,8 +203,8 @@ namespace CLASSES
                 string lat_bin = position1 + position2 + position3 + position4;
                 string lon_bin = position5 + position6 + position7 + position8;
 
-                Pos_WGS84[0] = Math.Round(M.ComplementoA2(lat_bin) * (180 / Math.Pow(2, 31)), 3);
-                Pos_WGS84[1] = Math.Round(M.ComplementoA2(lon_bin) * (180 / Math.Pow(2, 31)), 3);
+                Pos_WGS84[0] = Math.Round(M.ComplementoA2(lat_bin) * (180 / Math.Pow(2, 31)), 5);
+                Pos_WGS84[1] = Math.Round(M.ComplementoA2(lon_bin) * (180 / Math.Pow(2, 31)), 5);
 
                 contador += 8;
             }
@@ -220,7 +220,7 @@ namespace CLASSES
                 string PolarT = PolarT1 + PolarT2;
 
                 Pos_PolarCoord[0] = Convert.ToInt32(PolarR, 2);
-                Pos_PolarCoord[1] = Math.Round(Convert.ToInt32(PolarT, 2) * (360.0 / Math.Pow(2, 16)), 3);
+                Pos_PolarCoord[1] = Math.Round(Convert.ToInt32(PolarT, 2) * (360.0 / Math.Pow(2, 16)), 5);
 
                 contador += 4;
             }
@@ -254,8 +254,8 @@ namespace CLASSES
                     string track_gs = polar_vel1 + polar_vel2;
                     string track_ta = polar_vel3 + polar_vel4;
 
-                    Track_Vel_Cartesian[0] = Math.Round(Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14), 3);
-                    Track_Vel_Cartesian[1] = Math.Round(Convert.ToInt32(track_ta, 2) * (360.0 / Math.Pow(2, 16)), 3);
+                    Track_Vel_Cartesian[0] = Math.Round(Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14), 5);
+                    Track_Vel_Cartesian[1] = Math.Round(Convert.ToInt32(track_ta, 2) * (360.0 / Math.Pow(2, 16)), 5);
                     contador += 4;
                 }
                 if (FSPEC[8] == "1")
@@ -269,8 +269,8 @@ namespace CLASSES
                     string track_vx = track_vel1 + track_vel2;
                     string track_vy = track_vel3 + track_vel4;
 
-                    Track_Vel_Cartesian[0] = Math.Round(M.ComplementoA2(track_vx) * 0.25, 3);
-                    Track_Vel_Cartesian[1] = Math.Round(M.ComplementoA2(track_vy) * 0.25, 3);
+                    Track_Vel_Cartesian[0] = Math.Round(M.ComplementoA2(track_vx) * 0.25, 5);
+                    Track_Vel_Cartesian[1] = Math.Round(M.ComplementoA2(track_vy) * 0.25, 5);
                     contador += 4;
                 }
                 if (FSPEC[9] == "1")
@@ -385,7 +385,8 @@ namespace CLASSES
                     string Mode3A = Mode3A_v[4].ToString() + Mode3A_v[5].ToString() + Mode3A_v[6].ToString() + Mode3A_v[7].ToString() +
                         Mode3A_v[8].ToString() + Mode3A_v[9].ToString() + Mode3A_v[10].ToString() + Mode3A_v[11].ToString() + Mode3A_v[12].ToString() +
                         Mode3A_v[13].ToString() + Mode3A_v[14].ToString() + Mode3A_v[15].ToString();
-                    Mode3A_Code[3] = Convert.ToInt32(Mode3A, 2).ToString();
+                    
+                    Mode3A_Code[3] = M.Convert_Binary_to_Octal(Mode3A);
 
                     contador += 2;
                 }
