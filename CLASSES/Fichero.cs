@@ -67,10 +67,20 @@ namespace CLASSES
                         C10.Decode10(arraystring);
                         listaCAT10.Add(C10);
 
-                        // CAT10 reduced table for maptrack
-                        tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        {
+                            // CAT10 reduced table for maptrack SMR
+                            tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                                Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
+                                C10.Target_Add, C10.Track_Num);
+                        }
+                        else
+                        {
+                            // CAT10 reduced table for maptrack MLAT
+                            tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
                                 Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
                                 C10.Target_Add, C10.Track_Num);
+                        }   
 
                         // Complete CAT10 table
                         tablaCAT10.Rows.Add(contadorCAT10, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, "Click to View Data",
@@ -88,11 +98,20 @@ namespace CLASSES
                         contadorCAT10++;
                         C10.Decode10(arraystring);
                         listaCAT10.Add(C10);
-
-                        // Multiple CAT reduced table for maptrack
-                        multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day) ) , C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
-                                C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0]);
+                        if (C10.Target_Rep_Descript[0] == "PSR")
+                        {
+                            // Multiple CAT reduced table for maptrack SMR
+                            multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                                    Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
+                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                        }
+                        else
+                        {
+                            // Multiple CAT reduced table for maptrack MLAT
+                            multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
+                                    Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
+                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                        }                        
 
                         // Complete Multiple CAT table
                         tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, M.convert_to_hms(Math.Floor(C10.Time_Day)) ,
@@ -160,7 +179,7 @@ namespace CLASSES
 
                         // Multiple CAT reduced table for maptrack
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21_v23.Target_ID, M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.FL, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC,
-                                Math.Round(C21_v23.Lat_WGS_84, 5), Math.Round(C21_v23.Lon_WGS_84, 5), C21_v23.Target_Address, "Null", "");
+                                Math.Round(C21_v23.Lat_WGS_84, 5), Math.Round(C21_v23.Lon_WGS_84, 5), C21_v23.Target_Address, "Null", "", C21_v23.ECAT, "", "");
 
                         // Complete Multiple CAT table
                         tablaMultipleCAT.Rows.Add(contadorGeneral, CAT + 0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, "", M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))),
@@ -180,7 +199,7 @@ namespace CLASSES
 
                         // Multiple CAT reduced table for maptrack
                         multiplecattablereducida.Rows.Add(contadorGeneral, C21.Target_ID, M.convert_to_hms(Math.Floor((C21.Time_Rep_Transm))), C21.FL, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC,
-                        Math.Round(C21.Lat_WGS_84, 5), Math.Round(C21.Lon_WGS_84, 5), C21.Target_Address, "Null", "");
+                        Math.Round(C21.Lat_WGS_84, 5), Math.Round(C21.Lon_WGS_84, 5), C21.Target_Address, "Null", "", C21.ECAT, "", "");
 
                         // Complete Multiple CAT table
                         tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C21.Data_Source_ID_SIC, C21.Data_Source_ID_SAC, C21.Target_ID, "", M.convert_to_hms(Math.Floor((C21.Time_Rep_Transm))),

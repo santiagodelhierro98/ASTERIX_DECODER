@@ -228,6 +228,30 @@ namespace CLASSES
             
             return lamda2 * (180.0 / Math.PI);
         }
+        public double cartesiantolatsmr(double X, double Y)
+        {
+            double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 = SMR_lat * (Math.PI / 180);
+            double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            return phi2 * (180.0 / Math.PI);
+        }
+        public double cartesiantolonsmr(double X, double Y)
+        {
+            double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+            double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 = SMR_lat * (Math.PI / 180);
+            double lamda1 = SMR_lon * (Math.PI / 180);
+            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+
+            return lamda2 * (180.0 / Math.PI);
+        }
         public string convert_to_hms(double tod)
         {
             if (tod != 0)
@@ -262,6 +286,9 @@ namespace CLASSES
             multiplecattablereducida.Columns.Add(new DataColumn("Target Address"));
             multiplecattablereducida.Columns.Add(new DataColumn("Track Number"));
             multiplecattablereducida.Columns.Add(new DataColumn("TRD"));
+            multiplecattablereducida.Columns.Add(new DataColumn("Emitter Category"));
+            multiplecattablereducida.Columns.Add(new DataColumn("TOT"));
+            multiplecattablereducida.Columns.Add(new DataColumn("Mode 3/A"));
 
             //CAT10 reduced table
             tablacat10reducida.Columns.Add(new DataColumn("#"));
