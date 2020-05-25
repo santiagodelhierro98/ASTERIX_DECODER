@@ -1077,7 +1077,7 @@ namespace ASTERIX_APP
                         i++;
 
                         // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                        if (DisplayedFlights.Exists(x => x.TargetID.Equals(C10.Target_ID)) && C10.Target_ID != "Not available")
+                        if (DisplayedFlights.Exists(x => x.TargetID.Equals(C10.Target_ID)))
                         {
                             int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
                             DisplayedFlights.RemoveAt(indexx);
@@ -1156,7 +1156,7 @@ namespace ASTERIX_APP
                             rellenartablaCAT21(i);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21_v23.Target_ID)) && C21_v23.Target_ID != "Not available")
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21_v23.Target_ID)))
                             {
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21_v23.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
@@ -1209,7 +1209,7 @@ namespace ASTERIX_APP
                             rellenartablaCAT21(i);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21.Target_ID)) && C21.Target_ID != "Not available")
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21.Target_ID)))
                             {
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
@@ -1325,7 +1325,7 @@ namespace ASTERIX_APP
                             double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)) && targetid != "Not available")
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                             {
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
