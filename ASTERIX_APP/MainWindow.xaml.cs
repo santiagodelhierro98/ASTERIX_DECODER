@@ -4,10 +4,12 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -906,6 +908,9 @@ namespace ASTERIX_APP
         }
 
         // TRACK MAP METHODS
+
+        List<Markers> DisplayedFlights = new List<Markers>();
+
         private void Map_Load(object sender, RoutedEventArgs e)
         {
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
@@ -1016,6 +1021,7 @@ namespace ASTERIX_APP
         }
         private void dt_Timer_TickC10(object sender, EventArgs e)
         {
+            map.Markers.Clear();
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
@@ -1068,20 +1074,15 @@ namespace ASTERIX_APP
                 {
                     if (tiempo == start)
                     {
-                        if (C10.Target_Rep_Descript[0] == "PSR")
-                        {
-                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
-                        }
-                        if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
-                        {
-                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
-                        }
-                        else { }
                         i++;
-                        if (map.Markers.Count >= 200)
+
+                        // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
+                        if (DisplayedFlights.Exists(x => x.TargetID.Equals(C10.Target_ID)) && C10.Target_ID != "Not available")
                         {
-                            map.Markers[map.Markers.Count - 200].Clear();
+                            int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
+                            DisplayedFlights.RemoveAt(indexx);
                         }
+                        DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0] });
                         rellenartablaCAT10(i);
                     }
                     else
@@ -1094,19 +1095,31 @@ namespace ASTERIX_APP
                 gridlista.Visibility = Visibility.Collapsed;
                 updatedlista.Visibility = Visibility.Visible;
             }
+            foreach(Markers m in DisplayedFlights)
+            {
+                if (m.Type == "PSR")
+                {
+                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID);
+                }
+                if (m.Type == "Mode S Multilateration")
+                {
+                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID);
+                }
+            }
         }
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
+            map.Markers.Clear();        
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
-
             }
             else { }
 
             Boolean x = true;
             while (x == true)
             {
+                // version 2.3
                 if (F.SICSAC[0] == 107 && F.SICSAC[1] == 0)
                 {
                     CAT21_v23 C21_v23 = F.getCAT21_v23(i);
@@ -1122,10 +1135,6 @@ namespace ASTERIX_APP
                             {
                                 AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
                                 i++;
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
                                 rellenartablaCAT21(i);
                             }
                             else
@@ -1143,13 +1152,16 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
                             i++;
-                            if (map.Markers.Count >= 200)
-                            {
-                                map.Markers[map.Markers.Count - 200].Clear();
-                            }
                             rellenartablaCAT21(i);
+
+                            // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21_v23.Target_ID)) && C21_v23.Target_ID != "Not available")
+                            {
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21_v23.Target_ID);
+                                DisplayedFlights.RemoveAt(indexx);
+                            }
+                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "" });
                         }
                         else
                         {
@@ -1175,10 +1187,6 @@ namespace ASTERIX_APP
                             {
                                 AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
                                 i++;
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
                                 rellenartablaCAT21(i);
                             }
                             else
@@ -1197,13 +1205,16 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
                             i++;
-                            if (map.Markers.Count >= 200)
-                            {
-                                map.Markers[map.Markers.Count - 200].Clear();
-                            }
                             rellenartablaCAT21(i);
+
+                            // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21.Target_ID)) && C21.Target_ID != "Not available")
+                            {
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
+                                DisplayedFlights.RemoveAt(indexx);
+                            }
+                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "" });
                         }
                         else
                         {
@@ -1216,11 +1227,16 @@ namespace ASTERIX_APP
                 gridlista.Visibility = Visibility.Collapsed;
                 updatedlista.Visibility = Visibility.Visible;
             }
+            foreach(Markers m in DisplayedFlights)
+            {
+                AddMarkerC21(m.Lat, m.Lon, m.TargetID);            
+            }
         }
         
         DataTable tabla;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
+            map.Markers.Clear();
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
@@ -1305,60 +1321,39 @@ namespace ASTERIX_APP
                         }
                         else
                         {
-                            if (F.CAT_list[i] == 10 && tiempo == start1)
-                            {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                if (tabla.Rows[i][10].ToString() == "PSR")
-                                {
-                                    AddMarkerSMR(poscartx, poscarty, targetid);
-                                }
-                                else
-                                {
-                                    AddMarkerMLAT(poscartx, poscarty, targetid);
-                                }
+                            double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
+                            double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
 
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo - 1);
-                            }
-                            if (F.CAT_list[i] == 21.23 && tiempo == start1)
+                            // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)) && targetid != "Not available")
                             {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty, targetid);
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo - 1);
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
+                                DisplayedFlights.RemoveAt(indexx);
                             }
-                            if (F.CAT_list[i] == 21 && tiempo == start1)
-                            {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty, targetid);
-                                if (map.Markers.Count >= 200)
-                                {
-                                    map.Markers[map.Markers.Count - 200].Clear();
-                                }
-                                rellenartablaMULTICAT(i);
-                                clock(tiempo - 1);
-                            }
-                            else { }
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = poscartx, Lon = poscarty, Type = tabla.Rows[i][10].ToString() });
+
+                            rellenartablaMULTICAT(i);
+                            clock(tiempo - 1);
                         }
-                    }             
-                   
+                    }                  
                 }
                 x = false;
                 n++;
             }
             gridlista.Visibility = Visibility.Collapsed;
             updatedlista.Visibility = Visibility.Visible;
+            foreach (Markers m in DisplayedFlights)
+            {
+                if (m.Type == "PSR")
+                {
+                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID);
+                }
+                if (m.Type == "Mode S Multilateration")
+                {
+                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID);
+                }
+                else { AddMarkerC21(m.Lat, m.Lon, m.TargetID); }
+            }
         }
         private void clock(double tiempo)
         {

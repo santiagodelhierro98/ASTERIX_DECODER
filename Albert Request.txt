@@ -9,7 +9,8 @@ ALBERT REQUEST:
         DONE 1/2: El mateix que MLAT amb el tema de la representació gràfica
     Fitxer ADSB v2.1 sol
         DONE: Treure de la columna Mode 3/A el text “ Mode 3/A reply in octal representation”i deixar només el valor octal sempre de 4 dígits (no treure cap 0 per l’esquerra)
-        El periode d’actualització és de 4 sg en aquest fitxer. Heu d’aguantar dibuixat el plot anterior fins que no vingui un nou, si no sembla que martxin i tornin. S’ha de tenir en compte que el periode d’actualització pot ser d’1sg també en posteriors fitxers, ja que hem canviat el periode recentment.
+        El periode d’actualització és de 4 sg en aquest fitxer. Heu d’aguantar dibuixat el plot anterior fins que no vingui un nou, si no sembla que martxin i tornin.
+	S’ha de tenir en compte que el periode d’actualització pot ser d’1sg també en posteriors fitxers, ja que hem canviat el periode recentment.
     Fitxer ADSB v0.23
         La figura de mèrit no està decodificada i faria falta
         Dibuixeu de dos plots en dos plots. Heu de tenir en compte que el T és de 0,5 sg aquí
