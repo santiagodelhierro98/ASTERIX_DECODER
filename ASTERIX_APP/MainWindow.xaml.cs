@@ -1027,9 +1027,14 @@ namespace ASTERIX_APP
                 CAT10 C10 = F.getCAT10(i);
                 start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 tiempo =  Math.Floor(C10.Time_Day);
+                string targetid = C10.Target_ID;
                 if (tiempo < start) { tiempo = tiempo + 1; }
 
-                if (C10.Target_ID == null) { C10.Target_ID = "Not available"; }
+                if (targetid == null) 
+                {                     
+                    targetid = C10.Target_Add;
+                    if (C10.Target_Add == "") { targetid = "Not available"; }
+                }
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
                 {
@@ -1039,11 +1044,11 @@ namespace ASTERIX_APP
                         {
                             if (C10.Target_Rep_Descript[0] == "PSR")
                             {
-                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
+                                AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], targetid);
                             }
                             if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                             {
-                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
+                                AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], targetid);
                             }
                             else { }
                             i++;
@@ -1070,11 +1075,11 @@ namespace ASTERIX_APP
                     {
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
+                            AddMarkerSMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], targetid);
                         }
                         if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                         {
-                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], C10.Target_ID);
+                            AddMarkerMLAT(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], targetid);
                         }
                         else { }
                         i++;
@@ -1112,7 +1117,12 @@ namespace ASTERIX_APP
                     CAT21_v23 C21_v23 = F.getCAT21_v23(i);
                     start = Math.Floor(F.getCAT21_v23(0).Time_of_Day) + s;
                     tiempo = Math.Floor(C21_v23.Time_of_Day);
-                    if (C21_v23.Target_ID == null) { C21_v23.Target_ID = "Not available"; }
+                    string targetid = C21_v23.Target_ID;
+                    if (targetid == null) 
+                    {                         
+                        targetid = C21_v23.Target_Address;
+                        if (C21_v23.Target_Address == "") { targetid = "Not available"; }
+                    }
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
                     {
@@ -1120,7 +1130,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
+                                AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -1143,7 +1153,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, C21_v23.Target_ID);
+                            AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -1164,7 +1174,12 @@ namespace ASTERIX_APP
                     CAT21 C21 = F.getCAT21(i);
                     start = Math.Floor(F.getCAT21(0).Time_Rep_Transm) + s;
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
-                    if (C21.Target_ID == null) { C21.Target_ID = "Not available"; }
+                    string targetid = C21.Target_ID;
+                    if (targetid == null)
+                    {                        
+                        targetid = C21.Target_Address;
+                        if (C21.Target_Address == "") { targetid = "Not available"; }
+                    }
 
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
@@ -1173,7 +1188,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
+                                AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 200)
                                 {
@@ -1197,7 +1212,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, C21.Target_ID);
+                            AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                             i++;
                             if (map.Markers.Count >= 200)
                             {
@@ -1240,13 +1255,18 @@ namespace ASTERIX_APP
 
                     int tiempo = M.gettimecorrectly(tiemposplited);
                     int start1 = M.gettimecorrectly(tiemposplitedstart) + n;
+
                     if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
                     else
                     {
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
-                        if (targetid == "") { targetid = "Not available"; }
+                        if (targetid == "") 
+                        {                           
+                            targetid = Convert.ToString(tabla.Rows[i][8]);
+                            if (Convert.ToString(tabla.Rows[i][8]) == "") { targetid = "Not available"; }
+                        }
                         if (idbuttonclicked == true && tiempo == start1)
                         {
                             if (targetid.Contains(searchedcallsign))
