@@ -278,7 +278,7 @@ namespace CLASSES
                     // Item I010/161: Track Number
                     string TN_1 = M.Octeto_A_Bin(paquete0[contador]);
                     string TN_2 = M.Octeto_A_Bin(paquete0[contador + 1]);
-                    string TN = TN_1 + TN_2;
+                    string TN = TN_1.Remove(0,3) + TN_2;
                     Track_Num = Convert.ToInt32(TN, 2);
 
                     contador += 2;

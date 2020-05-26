@@ -90,6 +90,9 @@ namespace ASTERIX_APP
 
             // HIDE AND CLEAN TABLES
             checktrail.Visibility = Visibility.Collapsed;
+            SMR.Visibility = Visibility.Collapsed;
+            MLAT.Visibility = Visibility.Collapsed;
+            ADSB.Visibility = Visibility.Collapsed;
             map.Visibility = Visibility.Collapsed;
             StartButton.Visibility = Visibility.Collapsed;
             StopButton.Visibility = Visibility.Collapsed;
@@ -239,6 +242,9 @@ namespace ASTERIX_APP
                 NumBox.Visibility = Visibility.Visible;
                 IDBox.Visibility = Visibility.Visible;
                 checktrail.Visibility = Visibility.Hidden;
+                SMR.Visibility = Visibility.Collapsed;
+                MLAT.Visibility = Visibility.Collapsed;
+                ADSB.Visibility = Visibility.Collapsed;
                 gridlista.Visibility = Visibility.Collapsed;
 
 
@@ -302,6 +308,9 @@ namespace ASTERIX_APP
                 NumBox.Visibility = Visibility.Collapsed;
                 IDBox.Visibility = Visibility.Collapsed;
                 checktrail.Visibility = Visibility.Visible;
+                SMR.Visibility = Visibility.Visible;
+                MLAT.Visibility = Visibility.Visible;
+                ADSB.Visibility = Visibility.Visible;
 
                 if (Math.Floor(F.CAT_list[0]) == 10)
                 {
@@ -967,7 +976,10 @@ namespace ASTERIX_APP
             GMapMarker markerID = new GMapMarker(point);
             if (targetid != null && targetid != "Not available")
             {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid));
+                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
+                {
+                    FontSize = 10
+                };
             }
             markerID.Offset = new Point(0, 0);
             map.Markers.Add(markerID);
@@ -1000,7 +1012,11 @@ namespace ASTERIX_APP
             GMapMarker markerID = new GMapMarker(point);
             if (targetid != null && targetid != "Not available")
             {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid));
+                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
+                {
+                    FontSize = 10
+                };
+
             }
             markerID.Offset = new Point(0, 0);
             map.Markers.Add(markerID);
@@ -1033,11 +1049,17 @@ namespace ASTERIX_APP
             GMapMarker markerID = new GMapMarker(point);
             if (targetid != null && targetid != "Not available")
             {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid));
+                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
+                {
+                    FontSize = 10
+                };
+
             }
             markerID.Offset = new Point(0, 0);
             map.Markers.Add(markerID);
         }
+        bool SMRchecked = false;
+        bool MLATchecked = false;
         private void dt_Timer_TickC10(object sender, EventArgs e)
         {
             if (checktrail.IsChecked == true)
@@ -1129,6 +1151,7 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
+        bool ADSBchecked = false;
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
             if (checktrail.IsChecked == true)
@@ -1214,7 +1237,7 @@ namespace ASTERIX_APP
                             {
                                 AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                                 i++;
-                                if (map.Markers.Count >= 200)
+                                if (map.Markers.Count >= 500)
                                 {
                                     map.Markers.Clear();
                                 }
@@ -1238,7 +1261,7 @@ namespace ASTERIX_APP
                         {
                             AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                             i++;
-                            if (map.Markers.Count >= 200)
+                            if (map.Markers.Count >= 500)
                             {
                                 map.Markers.Clear();
                             }
@@ -1263,6 +1286,18 @@ namespace ASTERIX_APP
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
+            }
+            if (SMR.IsChecked == true)
+            {
+                SMRchecked = true;
+            }
+            if (MLAT.IsChecked == true)
+            {
+                MLATchecked = true;
+            }
+            if (ADSB.IsChecked == true)
+            {
+                ADSBchecked = true;
             }
             else { }
             Boolean x = true;
@@ -1355,6 +1390,7 @@ namespace ASTERIX_APP
                             {
                                 double lat = Convert.ToDouble(tabla.Rows[i][6]);
                                 double lon = Convert.ToDouble(tabla.Rows[i][7]);
+                               
                                 if (tabla.Rows[i][10].ToString() == "PSR")
                                 {
                                     AddMarkerSMR(lat, lon, targetid);
@@ -1363,7 +1399,6 @@ namespace ASTERIX_APP
                                 {
                                     AddMarkerMLAT(lat, lon, targetid);
                                 }
-
                                 if (map.Markers.Count >= 300)
                                 {
                                     map.Markers.Clear();
@@ -1376,6 +1411,7 @@ namespace ASTERIX_APP
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                 AddMarkerC21(poscartx, poscarty, targetid);
+
                                 if (map.Markers.Count >= 300)
                                 {
                                     map.Markers.Clear();
