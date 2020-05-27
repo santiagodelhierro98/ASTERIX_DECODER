@@ -7,7 +7,6 @@ namespace CLASSES
 {
     public class Metodos
     {
-        // DECODING METHODS
         private static readonly Dictionary<char, string> hexCharacterToBinary = new Dictionary<char, string>
         {
             { '0', "0000" },
@@ -202,8 +201,6 @@ namespace CLASSES
             }
             return Target_ID;
         }
-
-        // WPF NEEDED METHODS
         public double cartesiantolatmlat(double X, double Y)
         {
             double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;

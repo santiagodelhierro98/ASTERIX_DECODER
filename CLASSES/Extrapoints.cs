@@ -29,5 +29,29 @@ namespace CLASSES
             double lon = C21.Lon_WGS_84 - ARP_lon;
             return Math.Sqrt(Math.Pow(60*lat, 2) + Math.Pow(60 * lon, 2));
         }
+        public double Compute_GVA(CAT21 C21)
+        {
+            string GVA = C21.Quality_Indicators[5];
+            if (GVA == "1") { return 150.0; }
+            if (GVA == "2") { return 45.0; }
+            else { return double.NaN; }
+        }
+        public double Horizontal_Accuracy_Pos(CAT21 list)
+        {
+            string NACp = list.Quality_Indicators[2];
+            if (NACp == "0") { return 18520.0; }
+            if (NACp == "1") { return 18520.0; }
+            if (NACp == "2") { return 7408.0; }
+            if (NACp == "3") { return 3704.0; }
+            if (NACp == "4") { return 1852.0; }
+            if (NACp == "5") { return 926.0; }
+            if (NACp == "6") { return 555.6; }
+            if (NACp == "7") { return 185.2; }
+            if (NACp == "8") { return 92.6; }
+            if (NACp == "9") { return 30.0; }
+            if (NACp == "10") { return 10.0; }
+            if (NACp == "11") { return 3.0; }
+            else { return double.NaN; }
+        }
     }
 }

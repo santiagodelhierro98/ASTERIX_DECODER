@@ -81,39 +81,16 @@ namespace ASTERIX_APP
                     double modulo21 = E.checkdistanceADSB(C21);
                     if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 10)
                     {
-                        double EPU = Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
+                        double EPU = E.Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
                         double RC = Convert.ToDouble(C21.Quality_Indicators[6]); // Radius of Containments (NIC)
-                        double GVA = Compute_GVA(C21); // Altitude Accuracy
+                        double GVA = E.Compute_GVA(C21); // Altitude Accuracy
                         ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA);
                     }
                     else { }
                 }
             }
         }
-        private double Compute_GVA(CAT21 C21)
-        {
-            string GVA = C21.Quality_Indicators[5];
-            if (GVA == "1") { return 150.0; }
-            if (GVA == "2") { return 45.0; }
-            else { return double.NaN; }
-        }
-        private double Horizontal_Accuracy_Pos(CAT21 list)
-        {
-            string NACp = list.Quality_Indicators[2];
-            if (NACp == "0") { return 18520.0; }
-            if (NACp == "1") { return 18520.0; }
-            if (NACp == "2") { return 7408.0; }
-            if (NACp == "3") { return 3704.0; }
-            if (NACp == "4") { return 1852.0; }
-            if (NACp == "5") { return 926.0; }
-            if (NACp == "6") { return 555.6; }
-            if (NACp == "7") { return 185.2; }
-            if (NACp == "8") { return 92.6; }
-            if (NACp == "9") { return 30.0; }
-            if (NACp == "10") { return 10.0; }
-            if (NACp == "11") { return 3.0; }
-            else { return double.NaN; }
-        }
+        
         double mean_error_lat;
         double mean_error_lon;
         double mean_error_lat_NIC;
