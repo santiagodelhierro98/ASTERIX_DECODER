@@ -1335,8 +1335,9 @@ namespace ASTERIX_APP
                     {
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
                         if (targetid == "" && tabla.Rows[i][8].ToString() != "") { targetid = tabla.Rows[i][8].ToString(); GV = false; }
-                        if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][13].ToString() == null || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
-                        if (targetid != "" && ((tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][13].ToString() == null || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction"))) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
+                        if (targetid != "" && ((tabla.Rows[i][12].ToString() == "" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction"))) { targetid = tabla.Rows[i][1].ToString(); GV = false; }
+                        if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
+                        if (targetid != "" && ((tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction"))) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
 

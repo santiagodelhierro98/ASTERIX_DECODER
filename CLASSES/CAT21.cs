@@ -326,7 +326,7 @@ namespace CLASSES
                     string octeto_total = octeto1 + octeto2 + octeto3;
                     double num1 = 1;
                     double num2 = 128;
-                    TMRP = Math.Round(Met.ComplementoA2(octeto_total) * (num1 / num2), 3);
+                    TMRP = Met.ComplementoA2(octeto_total) * (num1 / num2);
                     contador = contador + 3;
                 }
                 if (FSPEC[12] == "1")
@@ -574,7 +574,7 @@ namespace CLASSES
                             string octeto1 = Met.Octeto_A_Bin(paquete0[contador]);
                             string octeto2 = Met.Octeto_A_Bin(paquete0[contador + 1]);
                             string octeto_total = octeto1.ToString() + octeto2.ToString();
-                            MH = Math.Round(Met.ComplementoA2(octeto_total) * (360.0 / Math.Pow(2, 16)), 3);
+                            MH = Met.ComplementoA2(octeto_total) * (360.0 / Math.Pow(2, 16));
 
                             contador = contador + 2;
                         }

@@ -19,6 +19,7 @@ namespace ASTERIX_APP
         public string filename;
 
         DataTable MLAT_Table = new DataTable();
+        DataTable ADSB_Table1 = new DataTable();
         DataTable ADSB_Table = new DataTable();
         DataTable acc_MLAT_Table = new DataTable();
         DataTable acc_ADSB_Table = new DataTable();
@@ -27,9 +28,6 @@ namespace ASTERIX_APP
         DataTable ResultsTable = new DataTable();
         DataTable AverageTable = new DataTable();
 
-        double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-        double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-
         public ExtraPoints()
         {
             InitializeComponent();
@@ -37,12 +35,13 @@ namespace ASTERIX_APP
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
             OpenFile.ShowDialog();
-            string path = OpenFile.FileName;
+            string path = OpenFile.FileName;            
 
             M.Create_ExtraTable_MLAT(MLAT_Table);
-            M.Create_ExtraTable_ADSB(ADSB_Table);
+            M.Create_ExtraTable_ADSB(ADSB_Table1);            
             leerEX(path);
 
+            ADSB_Table = ADSB_Reorganize(ADSB_Table1);
             M.Create_ResultsTable(ResultsTable);
 
             TableMLAT.ItemsSource = MLAT_Table.DefaultView;
@@ -64,13 +63,13 @@ namespace ASTERIX_APP
                 {
                     CAT10 C10 = new CAT10();
                     C10.Decode10(arraystring);
-                    double modulo = E.checkdistanceMLAT(C10);
+                    double modulo = E.checkdistanceMLAT(C10);                    
                     if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && Convert.ToDouble(C10.FL[2]) > 0.0 && Convert.ToDouble(C10.FL[2]) < 500.0 && C10.FL[2] != null && modulo < 10)
                     {
                         double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
                         double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
 
-                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 8), Math.Round(lon, 8), Math.Round(modulo, 8), C10.FL[2]);
+                        MLAT_Table.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 8), Math.Round(lon, 8), Math.Round(modulo, 8), C10.FL[2], C10.Time_Day, C10.Track_Vel_Cartesian[0], C10.Track_Vel_Cartesian[1]);
                     }
                     else { }
                 }
@@ -84,19 +83,45 @@ namespace ASTERIX_APP
                         double EPU = E.Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
                         double RC = Convert.ToDouble(C21.Quality_Indicators[6]); // Radius of Containments (NIC)
                         double GVA = E.Compute_GVA(C21); // Altitude Accuracy
-                        ADSB_Table.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA);
+
+                        ADSB_Table1.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                     }
                     else { }
                 }
             }
         }
-        
+        private DataTable ADSB_Reorganize(DataTable table)
+        {
+            DataTable new_table = new DataTable();
+            M.Create_ExtraTable_ADSB(new_table);
+
+            for (int i = 1; i<table.Rows.Count; i++)
+            {
+                if (table.Rows[i][1].ToString() == table.Rows[i - 1][1].ToString())
+                {
+                    double lat = (Convert.ToDouble(table.Rows[i][2]) + Convert.ToDouble(table.Rows[i - 1][2])) / 2;
+                    double lon = (Convert.ToDouble(table.Rows[i][3]) + Convert.ToDouble(table.Rows[i - 1][3])) / 2;
+                    double dist = (Convert.ToDouble(table.Rows[i][4]) + Convert.ToDouble(table.Rows[i - 1][4])) / 2;
+                    double H = (Convert.ToDouble(table.Rows[i][5]) + Convert.ToDouble(table.Rows[i - 1][5])) / 2;
+                    double sec = (Convert.ToDouble(table.Rows[i][9]) + Convert.ToDouble(table.Rows[i - 1][9])) / 2;
+
+                    new_table.Rows.Add(table.Rows[i][0], table.Rows[i][1], lat, lon, dist, H, table.Rows[i][6], table.Rows[i][7], table.Rows[i][8], sec);
+                }
+                else
+                {
+                    new_table.ImportRow(table.Rows[i - 1]);
+                }
+            }
+            return new_table;
+        }
+
         double mean_error_lat;
         double mean_error_lon;
         double mean_error_lat_NIC;
         double mean_error_lon_NIC;
         double mean_error_alt;
         double mean_error_R;
+
         private async void getresults_Click(object sender, RoutedEventArgs e)
         {
             progressbar.Visibility = Visibility.Visible;
@@ -105,10 +130,10 @@ namespace ASTERIX_APP
                 M.Create_ExtraTable_ADSB(acc_ADSB_Table);
                 M.Create_ExtraTable_MLAT(acc_MLAT_Table);
                 M.Create_AverageTable(AverageTable);
-                
                 //comparar las tablas para tener los mismos vuelos en ambas
                 for (int j = 0; j < ADSB_Table.Rows.Count; j++)
                 {
+                    int n = 0;
                     for (int i = 0; i < MLAT_Table.Rows.Count; i++)
                     {
                         string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);
@@ -130,30 +155,34 @@ namespace ASTERIX_APP
             TableMLAT.ItemsSource = acc_MLAT_Table.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
             await Task.Run(() =>
-            {                
-                //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
-                for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
-                {
-                    string callsign = acc_ADSB_Table.Rows[i][0].ToString();
-                    string time = acc_ADSB_Table.Rows[i][1].ToString();
-                    //precision[º] + NACp
-                    // m 1NM/1852m 1'/1NM 1º/60'
-                    double precision_lat = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
-                    double precision_lon = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
-                    mean_error_lat += precision_lat;
-                    mean_error_lon += precision_lon;
-                    // precision [º] + NIC
-                    double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
-                    double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
-                    mean_error_lat_NIC += precision_lat_NIC;
-                    mean_error_lon_NIC += precision_lon_NIC;
-                    // R [m]
-                    double precision_R = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
-                    mean_error_R += precision_R;
-                    // FL*100 (feet) --> *0.3048 (to meters)
-                    double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
-                    mean_error_alt += altitude_precision;
-                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(precision_lat_NIC, 8), Math.Round(precision_lon_NIC, 8), Math.Round(altitude_precision, 8));
+            {
+            //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
+            for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
+            {
+                double TimeDiff = Convert.ToDouble(acc_ADSB_Table.Rows[i][9]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][6]);
+                string callsign = acc_ADSB_Table.Rows[i][0].ToString();
+                string time = acc_ADSB_Table.Rows[i][1].ToString();
+                //precision[º] + NACp
+                // m 1NM/1852m 1'/1NM 1º/60'
+                double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(acc_MLAT_Table.Rows[i][7]), Convert.ToDouble(acc_MLAT_Table.Rows[i][8]));
+
+                double precision_lat = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][2]) + ext[0]);
+                double precision_lon = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][3]) + ext[1]);
+                mean_error_lat += precision_lat;
+                mean_error_lon += precision_lon;
+                // precision [º] + NIC
+                double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
+                double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
+                mean_error_lat_NIC += precision_lat_NIC;
+                mean_error_lon_NIC += precision_lon_NIC;
+                // R [m]
+                double precision_R = 60 * Math.Sqrt(Math.Pow(precision_lat, 2) + Math.Pow(precision_lon, 2)); ;
+                mean_error_R += precision_R;
+                // FL*100 (feet) --> *0.3048 (to meters)
+                double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
+                mean_error_alt += altitude_precision;                    
+
+                ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(precision_lat_NIC, 8), Math.Round(precision_lon_NIC, 8), Math.Round(altitude_precision, 8), TimeDiff);
                 }
                 // SMR
                 //double Rmax = 2500; // meters
@@ -215,6 +244,18 @@ namespace ASTERIX_APP
                 return columna[index] * (1 - frac) + columna[index + 1] * frac;
             else
                 return columna[index];
+        }
+        private double[] Extrapolation(double dT, double Vx, double Vy)
+        {
+            double[] Extr = new double[2];
+            double Dx = Vx * dT;
+            double Dy = Vy * dT;
+
+            // 1m * (1 NM/ 1852 m) * (1 º / 60 NM)
+            Extr[0] = Dx/(60 * 1852); // LAT [º]
+            Extr[1] = Dy/(60 * 1852); // LON [º]
+
+            return Extr;
         }
 
         // SMR MLAT:

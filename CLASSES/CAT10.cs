@@ -185,7 +185,7 @@ namespace CLASSES
 
                 string ToD = ToD1 + ToD2 + ToD3;
 
-                Time_Day = Math.Round(Convert.ToInt32(ToD, 2) / 128.0, 3);
+                Time_Day = Convert.ToInt32(ToD, 2) / 128.0;
                 contador += 3;
             }
             if (FSPEC[4] == "1")
@@ -254,8 +254,8 @@ namespace CLASSES
                     string track_gs = polar_vel1 + polar_vel2;
                     string track_ta = polar_vel3 + polar_vel4;
 
-                    Track_Vel_Cartesian[0] = Math.Round(Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14), 5);
-                    Track_Vel_Cartesian[1] = Math.Round(Convert.ToInt32(track_ta, 2) * (360.0 / Math.Pow(2, 16)), 5);
+                    Track_Vel_Cartesian[0] = Convert.ToInt32(track_gs, 2) * Math.Pow(2, -14);
+                    Track_Vel_Cartesian[1] = Convert.ToInt32(track_ta, 2) * (360.0 / Math.Pow(2, 16));
                     contador += 4;
                 }
                 if (FSPEC[8] == "1")

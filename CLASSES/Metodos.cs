@@ -477,6 +477,9 @@ namespace CLASSES
             tableExtra_MLAT.Columns.Add(new DataColumn("Longitude"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Distance\n(NM)"));
             tableExtra_MLAT.Columns.Add(new DataColumn("Flight Level"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Absolut Time"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Vx [m/s]"));
+            tableExtra_MLAT.Columns.Add(new DataColumn("Vy [m/s]"));
         }
         public void Create_ExtraTable_ADSB(DataTable tableExtra_ADSB)
         {
@@ -489,6 +492,7 @@ namespace CLASSES
             tableExtra_ADSB.Columns.Add(new DataColumn("NACp"));
             tableExtra_ADSB.Columns.Add(new DataColumn("NIC"));
             tableExtra_ADSB.Columns.Add(new DataColumn("GVA"));
+            tableExtra_ADSB.Columns.Add(new DataColumn("Absolut Time"));
         }
         public void Create_ResultsTable(DataTable tableExtra_Res)
         {
@@ -500,6 +504,7 @@ namespace CLASSES
             tableExtra_Res.Columns.Add(new DataColumn("Latitude Accuracy (º)\n +NIC"));
             tableExtra_Res.Columns.Add(new DataColumn("Longitude Accuracy (º)\n +NIC"));
             tableExtra_Res.Columns.Add(new DataColumn("Vertical\nAccuracy (ft)\n +GVA"));
+            tableExtra_Res.Columns.Add(new DataColumn("Time Difference"));
         }
         public void Create_AverageTable(DataTable tableExtra_Res)
         {
