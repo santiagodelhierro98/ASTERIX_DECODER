@@ -956,6 +956,7 @@ namespace ASTERIX_APP
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
                 };
+                marker.ZIndex = 0;
             }
             if (targetid == "Not available" && GV == true)
             {
@@ -965,8 +966,10 @@ namespace ASTERIX_APP
                     Height = 7.5,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/purpledot.png"))
                 };
+                marker.ZIndex = 1;
             }
             marker.Offset = new Point(-7.5, -7.5);
+            
             map.Markers.Add(marker);
 
             GMapMarker markerID = new GMapMarker(point);
@@ -992,6 +995,7 @@ namespace ASTERIX_APP
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
+                marker.ZIndex = 2;
             }
             if (targetid == "Not available" && GV == true)
             {
@@ -1001,6 +1005,7 @@ namespace ASTERIX_APP
                     Height = 7.5,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
+                marker.ZIndex = 3;
             }
             marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
@@ -1029,6 +1034,7 @@ namespace ASTERIX_APP
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
+                marker.ZIndex = 4;
             }
             if (targetid == "Not available" || GV == true)
             {
@@ -1038,6 +1044,7 @@ namespace ASTERIX_APP
                     Height = 7.5,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
+                marker.ZIndex = 5;
             }
             marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
@@ -1304,15 +1311,45 @@ namespace ASTERIX_APP
             }
             if (SMR.IsChecked == true)
             {
-                SMRchecked = true;
+                for (int i = 0; i < map.Markers.Count; i++)
+                {
+                    if (map.Markers[i].Shape != null)
+                    {
+                        if (map.Markers[i].ZIndex == 2 || map.Markers[i].ZIndex == 3) 
+                        {
+                            map.Markers[i].Shape.Visibility = Visibility.Visible;
+                        }                            
+                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }                            
+                    }
+                }
             }
             if (MLAT.IsChecked == true)
             {
-                MLATchecked = true;
+                for (int i = 0; i < map.Markers.Count; i++)
+                {
+                    if (map.Markers[i].Shape != null)
+                    {
+                        if (map.Markers[i].ZIndex == 0 || map.Markers[i].ZIndex == 1)
+                        {
+                            map.Markers[i].Shape.Visibility = Visibility.Visible;
+                        }
+                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }
+                    }
+                } 
             }
             if (ADSB.IsChecked == true)
             {
-                ADSBchecked = true;
+                for (int i = 0; i < map.Markers.Count; i++)
+                {
+                    if (map.Markers[i].Shape != null)
+                    {
+                        if (map.Markers[i].ZIndex == 4 || map.Markers[i].ZIndex == 5)
+                        {
+                            map.Markers[i].Shape.Visibility = Visibility.Visible;
+                        }
+                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }
+                    }
+                }
             }
             else { }
             Boolean x = true;
@@ -1658,8 +1695,7 @@ namespace ASTERIX_APP
             updatedlista.ScrollIntoView(updatedlista.Items.GetItemAt(updatedlista.Items.Count - 1));
         }       
         private void showonlyoneairplane()
-        {  
-            
+        {            
             for (int i = 0; i < map.Markers.Count; i++)
             {
                 if (map.Markers[i].Shape != null)
