@@ -98,7 +98,7 @@ namespace CLASSES
                             "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", 
                             "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", 
                             "Click to View Data", 
-                            "Click to View Data", 
+                            C10.Mode3A_Code,
                             C10.Target_Add, 
                             "Click to View Data", 
                             C10.Fleet_ID, 
@@ -249,6 +249,18 @@ namespace CLASSES
         public CAT21_v23 getCAT21_v23(int num)
         {
             return listaCAT21_v23[num];
+        }
+        public int getlengthListaCAT10()
+        {
+            return listaCAT10.Count;
+        }
+        public int getlengthListaCAT21()
+        {
+            return listaCAT21.Count;
+        }
+        public int getlengthListaCAT23()
+        {
+            return listaCAT21_v23.Count;
         }
     }
 }

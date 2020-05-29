@@ -14,9 +14,9 @@ namespace ASTERIX_APP
                 "Whith the search tools above you can filter the information\n" +
                 "shown in the table.\n\n" +
                 "You can search by 'Target Identification' (Callsign),\n" +
-                "or simply by the desired row number.\n\n" +
+                "by 'Target Address' or by 'Track Number'.\n\n" +
                 "Try also to double-click the 'Click to View' cells, they have\n" +
-                "a lot of information to show!";
+                "a lot of extra information to show!";
 
             HelpText3.Content = "Tracking Map:\n\n" +
                 "Here you can run a simulation of the loaded file's information.\n\n" +

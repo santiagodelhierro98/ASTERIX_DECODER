@@ -25,7 +25,7 @@ namespace CLASSES
         public double[] Track_Vel_Cartesian = new double[2];    // m/s
         public double[] Acceleration = new double[2]; // m/s^2
         public string Target_Add;
-        public string Target_ID = null;
+        public string Target_ID;
         public string[] Mode_SMB = new string[4];
         public double[] Target_Size_Heading = new double[3];    // m,degrees
         public double[] Presence = new double[3];   // rho,theta

@@ -133,7 +133,6 @@ namespace ASTERIX_APP
                 //comparar las tablas para tener los mismos vuelos en ambas
                 for (int j = 0; j < ADSB_Table.Rows.Count; j++)
                 {
-                    int n = 0;
                     for (int i = 0; i < MLAT_Table.Rows.Count; i++)
                     {
                         string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);

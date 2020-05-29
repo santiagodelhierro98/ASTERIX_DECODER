@@ -329,7 +329,7 @@ namespace CLASSES
             tablaCAT10.Columns.Add(new DataColumn("Track Velocity Polar Coord\n(Ground Speed, Track Angle)"));
             tablaCAT10.Columns.Add(new DataColumn("Track Velocity Cartesian Coords\n(Vx, Vy)"));
             tablaCAT10.Columns.Add(new DataColumn("Track Status")); //array
-            tablaCAT10.Columns.Add(new DataColumn("Mode 3/A Code")); //array
+            tablaCAT10.Columns.Add(new DataColumn("Mode 3/A"));            
             tablaCAT10.Columns.Add(new DataColumn("Target Address"));
             tablaCAT10.Columns.Add(new DataColumn("Mode S MB Data")); //array
             tablaCAT10.Columns.Add(new DataColumn("Vehicle Fleet ID"));

@@ -5,6 +5,7 @@ using GMap.NET.WindowsPresentation;
 using Microsoft.Win32;
 using System;
 using System.Data;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,7 +20,7 @@ namespace ASTERIX_APP
         Fichero F;
         //Extrapoints E = new Extrapoints();
         Metodos M = new Metodos();
-        DispatcherTimer dt_Timer = new DispatcherTimer();
+        DispatcherTimer dt_Timer = new DispatcherTimer();        
 
         bool chivato = false;
         int category;
@@ -513,9 +514,23 @@ namespace ASTERIX_APP
             {
                 DataTable tabla = F.tablaMultipleCAT;
                 double cat = Convert.ToDouble(tabla.Rows[Row_Num][1]);
+                string time = Convert.ToString(tabla.Rows[Row_Num][6]);
+                string ID = Convert.ToString(tabla.Rows[Row_Num][4]);
                 if (cat == 10)
                 {
-                    CAT10 pack10 = F.getCAT10(Row_Num);
+                    int fila = 0;
+
+                    for (int num = 0; num<F.getlengthListaCAT10(); num++)
+                    {
+                        CAT10 pack = F.getCAT10(num);
+                        if (pack.Target_ID == ID && M.convert_to_hms(pack.Time_Day) == time)
+                        {
+                            fila = num;
+                            break;
+                        }
+                    }
+                    CAT10 pack10 = F.getCAT10(fila);
+
                     if (Col_Num == 7 && pack10.Target_Rep_Descript != null)
                     {
                         string[] TRD = pack10.Target_Rep_Descript;
@@ -558,7 +573,18 @@ namespace ASTERIX_APP
                 }
                 if (cat == 21)
                 {
-                    CAT21 pack21 = F.getCAT21(Row_Num);
+                    int fila = 0;
+                    for (int num = 0; num < F.getlengthListaCAT21(); num++)
+                    {
+                        CAT21 pack = F.getCAT21(num);
+                        if (pack.Target_ID == ID && M.convert_to_hms(pack.Time_Rep_Transm) == time)
+                        {
+                            fila = num;
+                            break;
+                        }
+                    }
+                    CAT21 pack21 = F.getCAT21(fila);
+
                     if (Col_Num == 7)
                     {
                         string[] TRD = pack21.Target_Report_Desc;
@@ -630,7 +656,18 @@ namespace ASTERIX_APP
                 }
                 if (cat == 21.23)
                 {
-                    CAT21_v23 pack21 = F.getCAT21_v23(Row_Num);
+                    int fila = 0;
+                    for (int num = 0; num < F.getlengthListaCAT23(); num++)
+                    {
+                        CAT21_v23 pack = F.getCAT21_v23(num);
+                        if (pack.Target_ID == ID && M.convert_to_hms(pack.Time_of_Day) == time)
+                        {
+                            fila = num;
+                            break;
+                        }
+                    }
+                    CAT21_v23 pack21 = F.getCAT21_v23(fila);
+                    
                     if (Col_Num == 7)
                     {
                         string[] TRD = pack21.Target_Report_Desc;
@@ -952,36 +989,26 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
+                    ToolTip = targetid,
                     Width = 15,
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
-                };
+                };                
                 marker.ZIndex = 0;
-            }
+                marker.Offset = new Point(-10, -10);
+            }            
             if (targetid == "Not available" && GV == true)
             {
                 marker.Shape = new Image
-                {
+                {                    
                     Width = 7.5,
                     Height = 7.5,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/purpledot.png"))
                 };
-                marker.ZIndex = 1;
+                marker.ZIndex = 0;
+                marker.Offset = new Point(-3.75, -3.75);
             }
-            marker.Offset = new Point(-7.5, -7.5);
-            
             map.Markers.Add(marker);
-
-            GMapMarker markerID = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available")
-            {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
-                {
-                    FontSize = 7
-                };
-            }
-            markerID.Offset = new Point(0, 0);
-            map.Markers.Add(markerID);
         }
         public void AddMarkerSMR(double latitude, double longitude, string targetid)
         {
@@ -991,11 +1018,13 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
+                    ToolTip = targetid,
                     Width = 15,
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
-                marker.ZIndex = 2;
+                marker.ZIndex = 1;
+                marker.Offset = new Point(-10, -10);
             }
             if (targetid == "Not available" && GV == true)
             {
@@ -1005,22 +1034,10 @@ namespace ASTERIX_APP
                     Height = 7.5,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
                 };
-                marker.ZIndex = 3;
-            }
-            marker.Offset = new Point(-7.5, -7.5);
+                marker.ZIndex = 1;
+                marker.Offset = new Point(-3.75, -3.75);
+            }            
             map.Markers.Add(marker);
-
-            GMapMarker markerID = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available")
-            {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
-                {
-                    FontSize = 7
-                };
-
-            }
-            markerID.Offset = new Point(0, 0);
-            map.Markers.Add(markerID);
         }
         public void AddMarkerC21(double latitude, double longitude, string targetid)
         {
@@ -1030,36 +1047,29 @@ namespace ASTERIX_APP
             {
                 marker.Shape = new Image
                 {
+                    ToolTip = targetid,
                     Width = 15,
                     Height = 15,
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
-                marker.ZIndex = 4;
+                marker.ZIndex = 2;
+                marker.Offset = new Point(-10, -10);
             }
             if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {
+                    ToolTip = targetid,
                     Width = 7.5,
                     Height = 7.5,
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/yellowdot.png"))
                 };
-                marker.ZIndex = 5;
+                marker.ZIndex = 2;
+                marker.Offset = new Point(-3.75, -3.75);
             }
-            marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
-
-            GMapMarker markerID = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available")
-            {
-                markerID.Shape = new TextBlock(new System.Windows.Documents.Run(targetid))
-                {
-                    FontSize = 7
-                };
-            }
-            markerID.Offset = new Point(0, 0);
-            map.Markers.Add(markerID);
         }
+
         bool SMRchecked = false;
         bool MLATchecked = false;
         bool ADSBchecked = false;
@@ -1082,9 +1092,9 @@ namespace ASTERIX_APP
 
                 string targetid = C10.Target_ID;
                 GV = false;
-                if (targetid == "" && C10.Target_Add != "") { targetid = C10.Target_Add; }
-                if (C10.Target_ID == "" && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3].Length == 0)) { targetid = "Not available"; }
-                if (C10.Target_ID != "" && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3].Length == 0)) { targetid = C10.Target_ID; GV = true; }
+                if (C10.Target_ID == null && C10.Target_Add != null) { targetid = C10.Target_Add; GV = false; }
+                if (C10.Target_ID == null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = "Not available"; GV = true; }
+                if (C10.Target_ID != null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = C10.Target_ID; GV = true; }
 
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1107,9 +1117,12 @@ namespace ASTERIX_APP
                             }
                             else { }
                             i++;
-                            if (map.Markers.Count >= 200)
+                            if (map.Markers.Count >= 150)
                             {
-                                map.Markers.Clear();
+                                for (int n = 0; n < 50; n++)
+                                {
+                                    map.Markers.RemoveAt(n);
+                                }
                             }
                             rellenartablaCAT10(i);
                         }
@@ -1142,9 +1155,12 @@ namespace ASTERIX_APP
                         }
                         else { }
                         i++;
-                        if (map.Markers.Count >= 200)
-                        {
-                            map.Markers.Clear();
+                        if(map.Markers.Count >= 150)
+                                {
+                            for (int n = 0; n < 50; n++)
+                            {
+                                map.Markers.RemoveAt(n);
+                            }
                         }
                         rellenartablaCAT10(i);
                     }
@@ -1191,7 +1207,7 @@ namespace ASTERIX_APP
                             {
                                 AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                                 i++;
-                                if (map.Markers.Count >= 400)
+                                if (map.Markers.Count >= 350)
                                 {
                                     for (int n = 0; n < 50; n++)
                                     {
@@ -1217,7 +1233,7 @@ namespace ASTERIX_APP
                         {
                             AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                             i++;
-                            if (map.Markers.Count >= 400)
+                            if (map.Markers.Count >= 350)
                             {
                                 for (int n = 0; n < 50; n++)
                                 {
@@ -1309,48 +1325,6 @@ namespace ASTERIX_APP
             {
                 showonlyoneairplane();
             }
-            if (SMR.IsChecked == true)
-            {
-                for (int i = 0; i < map.Markers.Count; i++)
-                {
-                    if (map.Markers[i].Shape != null)
-                    {
-                        if (map.Markers[i].ZIndex == 2 || map.Markers[i].ZIndex == 3) 
-                        {
-                            map.Markers[i].Shape.Visibility = Visibility.Visible;
-                        }                            
-                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }                            
-                    }
-                }
-            }
-            if (MLAT.IsChecked == true)
-            {
-                for (int i = 0; i < map.Markers.Count; i++)
-                {
-                    if (map.Markers[i].Shape != null)
-                    {
-                        if (map.Markers[i].ZIndex == 0 || map.Markers[i].ZIndex == 1)
-                        {
-                            map.Markers[i].Shape.Visibility = Visibility.Visible;
-                        }
-                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }
-                    }
-                } 
-            }
-            if (ADSB.IsChecked == true)
-            {
-                for (int i = 0; i < map.Markers.Count; i++)
-                {
-                    if (map.Markers[i].Shape != null)
-                    {
-                        if (map.Markers[i].ZIndex == 4 || map.Markers[i].ZIndex == 5)
-                        {
-                            map.Markers[i].Shape.Visibility = Visibility.Visible;
-                        }
-                        else { map.Markers[i].Shape.Visibility = Visibility.Collapsed; }
-                    }
-                }
-            }
             else { }
             Boolean x = true;
             tabla = F.multiplecattablereducida;
@@ -1372,9 +1346,9 @@ namespace ASTERIX_APP
                     {
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
                         if (targetid == "" && tabla.Rows[i][8].ToString() != "") { targetid = tabla.Rows[i][8].ToString(); GV = false; }
-                        if (targetid != "" && ((tabla.Rows[i][12].ToString() == "" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction"))) { targetid = tabla.Rows[i][1].ToString(); GV = false; }
                         if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
-                        if (targetid != "" && ((tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction"))) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
+                        if (targetid != "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
+                        if (targetid == "") { targetid = "Not available"; GV = true; }
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
 
@@ -1501,7 +1475,49 @@ namespace ASTERIX_APP
                             }
                             else { }
                         }
-                    }                  
+                    }
+                    if (SMR.IsChecked == true)
+                    {
+                        for (int r = 0; r < map.Markers.Count; r++)
+                        {
+                            if (map.Markers[r].Shape != null)
+                            {
+                                if (map.Markers[r].ZIndex == 1)
+                                {
+                                    map.Markers[r].Shape.Visibility = Visibility.Visible;
+                                }
+                                else { map.Markers[r].Shape.Visibility = Visibility.Collapsed; }
+                            }
+                        }
+                    }
+                    if (MLAT.IsChecked == true)
+                    {
+                        for (int r = 0; r < map.Markers.Count; r++)
+                        {
+                            if (map.Markers[r].Shape != null)
+                            {
+                                if (map.Markers[r].ZIndex == 0)
+                                {
+                                    map.Markers[r].Shape.Visibility = Visibility.Visible;
+                                }
+                                else { map.Markers[r].Shape.Visibility = Visibility.Collapsed; }
+                            }
+                        }
+                    }
+                    if (ADSB.IsChecked == true)
+                    {
+                        for (int r = 0; r < map.Markers.Count; r++)
+                        {
+                            if (map.Markers[r].Shape != null)
+                            {
+                                if (map.Markers[r].ZIndex == 2)
+                                {
+                                    map.Markers[r].Shape.Visibility = Visibility.Visible;
+                                }
+                                else { map.Markers[r].Shape.Visibility = Visibility.Collapsed; }
+                            }
+                        }
+                    }
                 }
                 x = false;
                 n++;

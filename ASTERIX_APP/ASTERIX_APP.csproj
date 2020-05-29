@@ -28,6 +28,7 @@
     <None Remove="Images\santi.jpg" />
     <None Remove="Images\stopbut.jpg" />
     <None Remove="Images\upc-logo.png" />
+    <None Remove="Images\yellowdot.png" />
     <None Remove="Images\Zoomin.jpg" />
     <None Remove="Images\Zoomout.jpg" />
   </ItemGroup>
@@ -93,6 +94,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\upc-logo.png" />
+    <Content Include="Images\yellowdot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
