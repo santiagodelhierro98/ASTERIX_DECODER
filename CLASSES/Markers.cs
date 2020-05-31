@@ -10,5 +10,6 @@ namespace CLASSES
         public double Lat;
         public double Lon;
         public string Type;
+        public bool GroundVehicle;
     }
 }

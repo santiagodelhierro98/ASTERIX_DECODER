@@ -945,11 +945,11 @@ namespace ASTERIX_APP
             dt_Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dt_Timer.Start();
         }
-        public void AddMarkerMLAT(double latitude, double longitude, string targetid)
+        public void AddMarkerMLAT(double latitude, double longitude, string targetid, bool GV)
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != "Not available" && GV == false)
+            if (targetid != "Not available" || GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -981,11 +981,11 @@ namespace ASTERIX_APP
             }
             map.Markers.Add(ID);
         }
-        public void AddMarkerSMR(double latitude, double longitude, string targetid)
+        public void AddMarkerSMR(double latitude, double longitude, string targetid, bool GV)
         {
             PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != "Not available" && GV == false)
+            if (targetid != "Not available" || GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -1017,11 +1017,11 @@ namespace ASTERIX_APP
             }
             map.Markers.Add(ID);
         }
-        public void AddMarkerC21(double latitude, double longitude, string targetid)
+        public void AddMarkerC21(double latitude, double longitude, string targetid, bool GV)
         {
             PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available" && GV == false)
+            if (targetid != "Not available" || GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -1064,6 +1064,7 @@ namespace ASTERIX_APP
             Boolean x = true;
             while (x == true)
             {
+                GV = false;
                 CAT10 C10 = F.getCAT10(i);
                 start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 tiempo =  Math.Floor(C10.Time_Day);
@@ -1089,7 +1090,7 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0] });
+                            DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
                             rellenartablaCAT10(i);
                         }
                         else
@@ -1115,7 +1116,7 @@ namespace ASTERIX_APP
                             int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
                             DisplayedFlights.RemoveAt(indexx);
                         }
-                        DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0] });
+                        DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
                         rellenartablaCAT10(i);
                     }
                     else
@@ -1132,11 +1133,11 @@ namespace ASTERIX_APP
             {
                 if (m.Type == "PSR")
                 {
-                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID);
+                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
                 if (m.Type == "Mode S Multilateration")
                 {
-                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID);
+                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
             }
         }
@@ -1152,6 +1153,7 @@ namespace ASTERIX_APP
             Boolean x = true;
             while (x == true)
             {
+                GV = false;
                 // version 2.3
                 if (F.SICSAC[0] == 107 && F.SICSAC[1] == 0)
                 {
@@ -1178,7 +1180,7 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21_v23.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "" });
+                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1198,7 +1200,7 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21_v23.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "" });
+                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1207,6 +1209,7 @@ namespace ASTERIX_APP
                         }
                     }
                 }
+                GV = false;
                 // version 2.1
                 if (F.SICSAC[0] != 107 || F.SICSAC[1] != 0)
                 {
@@ -1233,14 +1236,13 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "" });
+                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
                             i++;
                         }
                     }
-
                     else
                     {
                         if (tiempo == start)
@@ -1254,7 +1256,7 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "" });
+                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1269,7 +1271,7 @@ namespace ASTERIX_APP
             }
             foreach(Markers m in DisplayedFlights)
             {
-                AddMarkerC21(m.Lat, m.Lon, m.TargetID);            
+                AddMarkerC21(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);            
             }
         }
         
@@ -1288,7 +1290,8 @@ namespace ASTERIX_APP
             while (x == true)
             {               
                 for (int i = 0; i < tabla.Rows.Count; i++)
-                {                   
+                {
+                    GV = false;
                     string tiempomal = Convert.ToString(tabla.Rows[i][2]);
                     string starttiempo = Convert.ToString(tabla.Rows[0][2]);
                     string[] tiemposplited = tiempomal.Split(':');
@@ -1299,7 +1302,6 @@ namespace ASTERIX_APP
                     if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
                     else
                     {
-                        GV = false;
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
                         if (targetid == "" && tabla.Rows[i][8].ToString() != "") { targetid = tabla.Rows[i][8].ToString(); GV = false; }
                         if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
@@ -1320,7 +1322,7 @@ namespace ASTERIX_APP
                                     int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                     DisplayedFlights.RemoveAt(indexx);
                                 }
-                                DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = poscartx, Lon = poscarty, Type = tabla.Rows[i][10].ToString() });
+                                DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = poscartx, Lon = poscarty, Type = tabla.Rows[i][10].ToString(), GroundVehicle = GV });
 
                                 rellenartablaMULTICAT(i);
                                 clock(tiempo - 1);
@@ -1341,7 +1343,7 @@ namespace ASTERIX_APP
                                 int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = poscartx, Lon = poscarty, Type = tabla.Rows[i][10].ToString() });
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = poscartx, Lon = poscarty, Type = tabla.Rows[i][10].ToString(), GroundVehicle = GV });
 
                             rellenartablaMULTICAT(i);
                             clock(tiempo - 1);
@@ -1357,13 +1359,13 @@ namespace ASTERIX_APP
             {
                 if (m.Type == "PSR")
                 {
-                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID);
+                    AddMarkerSMR(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
                 if (m.Type == "Mode S Multilateration")
                 {
-                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID);
+                    AddMarkerMLAT(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
-                else { AddMarkerC21(m.Lat, m.Lon, m.TargetID); }
+                else { AddMarkerC21(m.Lat, m.Lon, m.TargetID, m.GroundVehicle); }
             }
         }
         private void clock(double tiempo)
