@@ -926,6 +926,7 @@ namespace ASTERIX_APP
         }
         public void addMarker_Click(object sender, RoutedEventArgs e)
         {
+            DisplayedFlights.Clear();
             timer.Visibility = Visibility.Visible;
             if (category == 10)
             {
@@ -949,7 +950,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != "Not available" || GV == false)
+            if (targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -958,7 +959,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
                 };
             }
-            if (targetid == "Not available" && GV == true)
+            if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -985,7 +986,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != "Not available" || GV == false)
+            if (targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -994,7 +995,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
             }
-            if (targetid == "Not available" && GV == true)
+            if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -1021,7 +1022,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != "Not available" || GV == false)
+            if (targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -1030,13 +1031,13 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
             }
-            if (targetid == "Not available" && GV == true)
+            if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {
                     Width = 10,
                     Height = 10,
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/reddot.png"))
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Images/yellowdot.png"))
                 };
             }
             marker.Offset = new Point(-7.5, -7.5);
@@ -1072,8 +1073,8 @@ namespace ASTERIX_APP
 
                 string targetid = C10.Target_ID;
                 if (targetid == null && C10.Target_Add != null) { targetid = C10.Target_Add; GV = false; }
-                if (C10.Target_ID == null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = "Not available"; GV = true; }
-                if (C10.Target_ID != null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = C10.Target_ID; GV = true; }
+                if (targetid == null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = "Not available"; GV = true; }
+                if (targetid != null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { GV = true; }
 
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1085,12 +1086,12 @@ namespace ASTERIX_APP
                             i++;
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C10.Target_ID)))
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                             {
-                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
                             rellenartablaCAT10(i);
                         }
                         else
@@ -1111,12 +1112,12 @@ namespace ASTERIX_APP
                         i++;
 
                         // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                        if (DisplayedFlights.Exists(x => x.TargetID.Equals(C10.Target_ID)))
+                        if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                         {
-                            int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C10.Target_ID);
+                            int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                             DisplayedFlights.RemoveAt(indexx);
                         }
-                        DisplayedFlights.Add(new Markers() { TargetID = C10.Target_ID, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
+                        DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = C10.Pos_Cartesian[0], Lon = C10.Pos_Cartesian[1], Type = C10.Target_Rep_Descript[0], GroundVehicle = GV });
                         rellenartablaCAT10(i);
                     }
                     else
@@ -1140,6 +1141,10 @@ namespace ASTERIX_APP
                     AddMarkerMLAT(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
             }
+            if (DisplayedFlights.Count > 300) 
+            {
+                DisplayedFlights.Clear(); 
+            }
         }
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
@@ -1162,9 +1167,10 @@ namespace ASTERIX_APP
                     tiempo = Math.Floor(C21_v23.Time_of_Day);
 
                     string targetid = C21_v23.Target_ID;
+                    if (targetid == null) { targetid = ""; }
                     if (targetid == "" && C21_v23.Target_Address != "") { targetid = C21_v23.Target_Address; GV = false; }
                     if (targetid == "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { targetid = "Not available"; }
-                    if (targetid != "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { targetid = C21_v23.Target_ID; GV = true; }
+                    if (targetid != "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { GV = true; }
 
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
@@ -1175,12 +1181,12 @@ namespace ASTERIX_APP
                             rellenartablaCAT21(i);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21_v23.Target_ID)))
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                             {
-                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21_v23.Target_ID);
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21_v23.Target_ID, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "", GroundVehicle = GV });
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = C21_v23.Lat_WGS_84, Lon = C21_v23.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1218,9 +1224,10 @@ namespace ASTERIX_APP
                     tiempo = Math.Floor(C21.Time_Rep_Transm);
                     
                     string targetid = C21.Target_ID;
+                    if (targetid == null) { targetid = ""; }
                     if (targetid == "" && C21.Target_Address != "") { targetid = C21.Target_Address; GV = false; }
                     if (targetid == "" && (C21.ECAT == "surface emergency vehicle" || C21.ECAT == "surface service vehicle" || C21.ECAT == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
-                    if (targetid != "" && (C21.ECAT == "surface emergency vehicle" || C21.ECAT == "surface service vehicle" || C21.ECAT == "fixed ground or tethered obstruction")) { targetid = C21.Target_ID; GV = true; }
+                    if (targetid != "" && (C21.ECAT == "surface emergency vehicle" || C21.ECAT == "surface service vehicle" || C21.ECAT == "fixed ground or tethered obstruction")) { GV = true; }
 
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
@@ -1231,12 +1238,12 @@ namespace ASTERIX_APP
                             rellenartablaCAT21(i);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21.Target_ID)))
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                             {
-                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1251,12 +1258,12 @@ namespace ASTERIX_APP
                             rellenartablaCAT21(i);
 
                             // if (DisplayedFlights.Count > 100) { DisplayedFlights.RemoveRange(0, 50); }
-                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(C21.Target_ID)))
+                            if (DisplayedFlights.Exists(x => x.TargetID.Equals(targetid)))
                             {
-                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == C21.Target_ID);
+                                int indexx = DisplayedFlights.FindIndex(x => x.TargetID == targetid);
                                 DisplayedFlights.RemoveAt(indexx);
                             }
-                            DisplayedFlights.Add(new Markers() { TargetID = C21.Target_ID, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
+                            DisplayedFlights.Add(new Markers() { TargetID = targetid, Lat = C21.Lat_WGS_84, Lon = C21.Lon_WGS_84, Type = "", GroundVehicle = GV });
                         }
                         else
                         {
@@ -1272,6 +1279,10 @@ namespace ASTERIX_APP
             foreach(Markers m in DisplayedFlights)
             {
                 AddMarkerC21(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);            
+            }
+            if (DisplayedFlights.Count > 300)
+            {
+                DisplayedFlights.Clear();
             }
         }
         
@@ -1305,7 +1316,7 @@ namespace ASTERIX_APP
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
                         if (targetid == "" && tabla.Rows[i][8].ToString() != "") { targetid = tabla.Rows[i][8].ToString(); GV = false; }
                         if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
-                        if (targetid != "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
+                        if (targetid != "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { GV = true; }
                         if (targetid == "") { targetid = "Not available"; GV = true; }
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
@@ -1366,6 +1377,10 @@ namespace ASTERIX_APP
                     AddMarkerMLAT(m.Lat, m.Lon, m.TargetID, m.GroundVehicle);
                 }
                 else { AddMarkerC21(m.Lat, m.Lon, m.TargetID, m.GroundVehicle); }
+            }
+            if (DisplayedFlights.Count > 300)
+            {
+                DisplayedFlights.Clear();
             }
         }
         private void clock(double tiempo)
