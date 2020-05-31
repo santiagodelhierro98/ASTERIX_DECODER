@@ -910,6 +910,7 @@ namespace ASTERIX_APP
         // TRACK MAP METHODS
 
         List<Markers> DisplayedFlights = new List<Markers>();
+        bool GV;
 
         private void Map_Load(object sender, RoutedEventArgs e)
         {
@@ -948,7 +949,7 @@ namespace ASTERIX_APP
         {
             PointLatLng point = fromXYtoLatLongMLAT(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null && targetid!= "Not available")
+            if (targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -957,7 +958,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
                 };
             }
-            if (targetid == "Not available")
+            if (targetid == "Not available" && GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -968,12 +969,23 @@ namespace ASTERIX_APP
             }
             marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
+
+            GMapMarker ID = new GMapMarker(point);
+            if (targetid != "Not available")
+            {
+                ID.Shape = new TextBlock
+                {
+                    Text = targetid,
+                    FontSize = 7
+                };
+            }
+            map.Markers.Add(ID);
         }
         public void AddMarkerSMR(double latitude, double longitude, string targetid)
         {
             PointLatLng point = fromXYtoLatLongSMR(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available")
+            if (targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -982,7 +994,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
             }
-            if (targetid == "Not available")
+            if (targetid == "Not available" && GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -993,12 +1005,23 @@ namespace ASTERIX_APP
             }
             marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
+
+            GMapMarker ID = new GMapMarker(point);
+            if (targetid != "Not available")
+            {
+                ID.Shape = new TextBlock
+                {
+                    Text = targetid,
+                    FontSize = 7
+                };
+            }
+            map.Markers.Add(ID);
         }
         public void AddMarkerC21(double latitude, double longitude, string targetid)
         {
             PointLatLng point = new PointLatLng(latitude, longitude);
             GMapMarker marker = new GMapMarker(point);
-            if (targetid != null && targetid != "Not available")
+            if (targetid != null && targetid != "Not available" && GV == false)
             {
                 marker.Shape = new Image
                 {
@@ -1007,7 +1030,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
             }
-            if (targetid == "Not available")
+            if (targetid == "Not available" && GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -1018,6 +1041,17 @@ namespace ASTERIX_APP
             }
             marker.Offset = new Point(-7.5, -7.5);
             map.Markers.Add(marker);
+
+            GMapMarker ID = new GMapMarker(point);
+            if (targetid != "Not available")
+            {
+                ID.Shape = new TextBlock
+                {
+                    Text = targetid,
+                    FontSize = 7
+                };
+            }
+            map.Markers.Add(ID);
         }
         private void dt_Timer_TickC10(object sender, EventArgs e)
         {
@@ -1034,12 +1068,11 @@ namespace ASTERIX_APP
                 start = Math.Floor(F.getCAT10(0).Time_Day) + s;
                 tiempo =  Math.Floor(C10.Time_Day);
                 if (tiempo < start) { tiempo = tiempo + 1; }
+
                 string targetid = C10.Target_ID;
-                if (targetid == null)
-                {
-                    targetid = C10.Target_Add;
-                    if (C10.Target_Add == "") { targetid = "Not available"; }
-                }
+                if (targetid == null && C10.Target_Add != null) { targetid = C10.Target_Add; GV = false; }
+                if (targetid == null) { GV = true; }
+
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
                 {
