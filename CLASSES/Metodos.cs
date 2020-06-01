@@ -201,6 +201,20 @@ namespace CLASSES
             }
             return Target_ID;
         }
+        //public double[] WGStoCartesian(double lat, double lon)
+        //{
+        //    double[] cart = new double[2];
+        //    double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+        //    double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+
+        //    int a = 6378137; // [m]
+        //    double x_MLAT = a * Math.Cos((MLAT_lat * Math.PI) / 180) * Math.Cos((MLAT_lon * Math.PI) / 180);
+        //    double y_MLAT = a * Math.Cos((MLAT_lat * Math.PI) / 180) * Math.Sin((MLAT_lon * Math.PI) / 180);
+        //    double x = a * Math.Cos((lat * Math.PI) / 180) * Math.Cos((lon * Math.PI) / 180);
+        //    double y = a * Math.Cos((lat * Math.PI) / 180) * Math.Sin((lon * Math.PI) / 180);
+        //    cart[0] = x - x_MLAT; cart[1] = y - y_MLAT;
+        //    return cart;
+        //}
         public double cartesiantolatmlat(double X, double Y)
         {
             double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;

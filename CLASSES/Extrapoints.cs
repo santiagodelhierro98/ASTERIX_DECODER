@@ -12,22 +12,29 @@ namespace CLASSES
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
         Metodos M = new Metodos();
 
-        public double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-        public double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+        double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+        double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+
+        // double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+        // double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
 
         public double checkdistanceMLAT(CAT10 C10)
         {
             // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN
             double pos_x = C10.Pos_Cartesian[0];
             double pos_y = C10.Pos_Cartesian[1];
-            return Math.Sqrt(Math.Pow(pos_x, 2) + Math.Pow(pos_y, 2))/1852;
+            return Math.Sqrt(Math.Pow(pos_x, 2) + Math.Pow(pos_y, 2)) / 1851.85185185185;
         }
         public double checkdistanceADSB(CAT21 C21)
         {
             // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
             double lat = C21.Lat_WGS_84 - ARP_lat;
             double lon = C21.Lon_WGS_84 - ARP_lon;
-            return Math.Sqrt(Math.Pow(60*lat, 2) + Math.Pow(60 * lon, 2));
+            // conversion de WGS a Cart
+            // double[] cart = M.WGStoCartesian(lat, lon);
+            double x = lat*60;
+            double y = lon*60;
+            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
         }
         public double Compute_GVA(CAT21 C21)
         {

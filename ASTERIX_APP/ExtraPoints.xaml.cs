@@ -165,17 +165,17 @@ namespace ASTERIX_APP
                 // m 1NM/1852m 1'/1NM 1º/60'
                 double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(acc_MLAT_Table.Rows[i][7]), Convert.ToDouble(acc_MLAT_Table.Rows[i][8]));
 
-                double precision_lat = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][2]) + ext[0]);
-                double precision_lon = (Convert.ToDouble(acc_ADSB_Table.Rows[i][6]))/(1852*60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][3]) + ext[1]);
+                double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][2]) + ext[0]);
+                double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][3]) + ext[1]);
                 mean_error_lat += precision_lat;
                 mean_error_lon += precision_lon;
                 // precision [º] + NIC
-                double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
-                double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7])) / (1852 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
+                double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
+                double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
                 mean_error_lat_NIC += precision_lat_NIC;
                 mean_error_lon_NIC += precision_lon_NIC;
-                // R [m]
-                double precision_R = 60 * Math.Sqrt(Math.Pow(precision_lat, 2) + Math.Pow(precision_lon, 2)); ;
+                // R [NM]
+                double precision_R = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
                 mean_error_R += precision_R;
                 // FL*100 (feet) --> *0.3048 (to meters)
                 double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
@@ -249,10 +249,11 @@ namespace ASTERIX_APP
             double[] Extr = new double[2];
             double Dx = Vx * dT;
             double Dy = Vy * dT;
-
+            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+            double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
             // 1m * (1 NM/ 1852 m) * (1 º / 60 NM)
-            Extr[0] = Dx/(60 * 1852); // LAT [º]
-            Extr[1] = Dy/(60 * 1852); // LON [º]
+            Extr[0] = M.cartesiantolatmlat(Dx, Dy) - MLAT_lat; // LAT [º]
+            Extr[1] = M.cartesiantolonmlat(Dx, Dy) - MLAT_lon; // LON [º]
 
             return Extr;
         }

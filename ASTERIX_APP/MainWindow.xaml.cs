@@ -997,7 +997,7 @@ namespace ASTERIX_APP
                 marker.ZIndex = 0;
                 marker.Offset = new Point(-10, -10);
             }            
-            if (targetid == "Not available" && GV == true)
+            if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {                    
@@ -1026,7 +1026,7 @@ namespace ASTERIX_APP
                 marker.ZIndex = 1;
                 marker.Offset = new Point(-10, -10);
             }
-            if (targetid == "Not available" && GV == true)
+            if (targetid == "Not available" || GV == true)
             {
                 marker.Shape = new Image
                 {
@@ -1094,7 +1094,7 @@ namespace ASTERIX_APP
                 GV = false;
                 if (C10.Target_ID == null && C10.Target_Add != null) { targetid = C10.Target_Add; GV = false; }
                 if (C10.Target_ID == null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = "Not available"; GV = true; }
-                if (C10.Target_ID != null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { targetid = C10.Target_ID; GV = true; }
+                if (C10.Target_ID != null && (C10.Target_Rep_Descript[9] == "Ground Vehicle" || C10.Mode3A_Code[3] == null)) { GV = true; }
 
                 if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                 if (idbuttonclicked == true)
@@ -1196,7 +1196,7 @@ namespace ASTERIX_APP
                     GV = false;
                     if (targetid == "" && C21_v23.Target_Address != "") { targetid = C21_v23.Target_Address; }
                     if (C21_v23.Target_ID == "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { targetid = "Not available"; }
-                    if (C21_v23.Target_ID != "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { targetid = C21_v23.Target_ID; GV = true; }
+                    if (C21_v23.Target_ID != "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { GV = true; }
 
                     if (searchedcallsign == null) { searchedcallsign = "Not available"; }
                     if (idbuttonclicked == true)
@@ -1344,10 +1344,11 @@ namespace ASTERIX_APP
                     if (tiempo == start1 + 2) { i = tabla.Rows.Count; }
                     else
                     {
+                        GV = false;
                         string targetid = Convert.ToString(tabla.Rows[i][1]);
                         if (targetid == "" && tabla.Rows[i][8].ToString() != "") { targetid = tabla.Rows[i][8].ToString(); GV = false; }
-                        if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = "Not available"; GV = true; }
-                        if (targetid != "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction")) { targetid = tabla.Rows[i][1].ToString(); GV = true; }
+                        if (targetid == "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction" || tabla.Rows[i][13].ToString() == null)) { targetid = "Not available"; GV = true; }
+                        if (targetid != "" && (tabla.Rows[i][12].ToString() == "Ground Vehicle" || tabla.Rows[i][11].ToString() == "surface emergency vehicle" || tabla.Rows[i][11].ToString() == "surface service vehicle" || tabla.Rows[i][11].ToString() == "fixed ground or tethered obstruction" || tabla.Rows[i][13].ToString() == null)) { GV = true; }
                         if (targetid == "") { targetid = "Not available"; GV = true; }
 
                         if (searchedcallsign == null) { searchedcallsign = "Not available"; }
