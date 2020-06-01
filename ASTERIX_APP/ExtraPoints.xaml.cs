@@ -97,7 +97,7 @@ namespace ASTERIX_APP
 
             for (int i = 1; i<table.Rows.Count; i++)
             {
-                if (table.Rows[i][1].ToString() == table.Rows[i - 1][1].ToString())
+                if (table.Rows[i][0] == table.Rows[i -1][0] && table.Rows[i][1].ToString() == table.Rows[i - 1][1].ToString())
                 {
                     double lat = (Convert.ToDouble(table.Rows[i][2]) + Convert.ToDouble(table.Rows[i - 1][2])) / 2;
                     double lon = (Convert.ToDouble(table.Rows[i][3]) + Convert.ToDouble(table.Rows[i - 1][3])) / 2;
@@ -141,11 +141,21 @@ namespace ASTERIX_APP
                         string timebadadsb = Convert.ToString(ADSB_Table.Rows[j][1]);
                         string[] tiemposplitedadsb = timebadadsb.Split(':');
                         int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        double TimeDiff = Convert.ToDouble(ADSB_Table.Rows[j][9]) - Convert.ToDouble(MLAT_Table.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table.Rows[i][7]), Convert.ToDouble(MLAT_Table.Rows[i][8]));
+
                         //si callsign y hora son iguales
                         if (MLAT_Table.Rows[i][0].ToString() == ADSB_Table.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
                         {
-                            acc_ADSB_Table.ImportRow(ADSB_Table.Rows[j]);
-                            acc_MLAT_Table.ImportRow(MLAT_Table.Rows[i]);                            
+                            acc_ADSB_Table.Rows.Add(ADSB_Table.Rows[j][0], ADSB_Table.Rows[j][1], ADSB_Table.Rows[j][2], ADSB_Table.Rows[j][3],
+                                ADSB_Table.Rows[j][4], ADSB_Table.Rows[j][5], ADSB_Table.Rows[j][6], ADSB_Table.Rows[j][7], ADSB_Table.Rows[j][8],
+                                ADSB_Table.Rows[j][9]);
+
+                            acc_MLAT_Table.Rows.Add(MLAT_Table.Rows[i][0], MLAT_Table.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1]), 8), MLAT_Table.Rows[i][5], MLAT_Table.Rows[i][6], MLAT_Table.Rows[i][7], 
+                                MLAT_Table.Rows[i][8]);                            
                         }
                         else { }
                     }
@@ -155,33 +165,32 @@ namespace ASTERIX_APP
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
             await Task.Run(() =>
             {
-            //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
-            for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
-            {
-                double TimeDiff = Convert.ToDouble(acc_ADSB_Table.Rows[i][9]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][6]);
-                string callsign = acc_ADSB_Table.Rows[i][0].ToString();
-                string time = acc_ADSB_Table.Rows[i][1].ToString();
-                //precision[º] + NACp
-                // m 1NM/1852m 1'/1NM 1º/60'
-                double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(acc_MLAT_Table.Rows[i][7]), Convert.ToDouble(acc_MLAT_Table.Rows[i][8]));
+                //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
+                for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
+                {
+                    double TimeDiff = Convert.ToDouble(acc_ADSB_Table.Rows[i][9]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][6]);
+                    string callsign = acc_ADSB_Table.Rows[i][0].ToString();
+                    string time = acc_ADSB_Table.Rows[i][1].ToString();
+                    // precision[º] + NACp
+                    // m 1NM/1852m 1'/1NM 1º/60'
 
-                double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][2]) + ext[0]);
-                double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][3]) + ext[1]);
-                mean_error_lat += precision_lat;
-                mean_error_lon += precision_lon;
-                // precision [º] + NIC
-                double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
-                double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
-                mean_error_lat_NIC += precision_lat_NIC;
-                mean_error_lon_NIC += precision_lon_NIC;
-                // R [NM]
-                double precision_R = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
-                mean_error_R += precision_R;
-                // FL*100 (feet) --> *0.3048 (to meters)
-                double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8])/0.3048 + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
-                mean_error_alt += altitude_precision;                    
+                    double precision_lat = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][2]));
+                    double precision_lon = Convert.ToDouble(acc_ADSB_Table.Rows[i][6]) / (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - (Convert.ToDouble(acc_MLAT_Table.Rows[i][3]));
+                    mean_error_lat += precision_lat;
+                    mean_error_lon += precision_lon;
+                    // precision [º] + NIC
+                    double precision_lat_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][2]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][2]);
+                    double precision_lon_NIC = (Convert.ToDouble(acc_ADSB_Table.Rows[i][7]))/ (1851.85185185185 * 60) + Convert.ToDouble(acc_ADSB_Table.Rows[i][3]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][3]);
+                    mean_error_lat_NIC += precision_lat_NIC;
+                    mean_error_lon_NIC += precision_lon_NIC;
+                    // R [NM]
+                    double precision_R = Convert.ToDouble(acc_ADSB_Table.Rows[i][4]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][4]);
+                    mean_error_R += precision_R;
+                    // FL*100 (feet) --> *0.3048 (to meters)
+                    double altitude_precision = Convert.ToDouble(acc_ADSB_Table.Rows[i][8]) + 100*(Convert.ToDouble(acc_ADSB_Table.Rows[i][5]) - Convert.ToDouble(acc_MLAT_Table.Rows[i][5]));
+                    mean_error_alt += altitude_precision;                    
 
-                ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(precision_lat_NIC, 8), Math.Round(precision_lon_NIC, 8), Math.Round(altitude_precision, 8), TimeDiff);
+                    ResultsTable.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(precision_lat_NIC, 8), Math.Round(precision_lon_NIC, 8), Math.Round(altitude_precision, 8), TimeDiff);
                 }
                 // SMR
                 //double Rmax = 2500; // meters
@@ -246,7 +255,7 @@ namespace ASTERIX_APP
         }
         private double[] Extrapolation(double dT, double Vx, double Vy)
         {
-            double[] Extr = new double[2];
+            double[] Extr = new double[4];
             double Dx = Vx * dT;
             double Dy = Vy * dT;
             double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);

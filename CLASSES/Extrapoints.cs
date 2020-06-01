@@ -17,7 +17,11 @@ namespace CLASSES
 
         // double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
         // double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
-
+        public double checkdistanceMLAT_Acc(double lat, double lon)
+        {
+            double[] cart = M.WGStoCartesian(lat, lon);
+            return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
+        }
         public double checkdistanceMLAT(CAT10 C10)
         {
             // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN
@@ -28,13 +32,14 @@ namespace CLASSES
         public double checkdistanceADSB(CAT21 C21)
         {
             // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
-            double lat = C21.Lat_WGS_84 - ARP_lat;
-            double lon = C21.Lon_WGS_84 - ARP_lon;
+            double lat = C21.Lat_WGS_84;
+            double lon = C21.Lon_WGS_84;
             // conversion de WGS a Cart
-            // double[] cart = M.WGStoCartesian(lat, lon);
-            double x = lat*60;
-            double y = lon*60;
-            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+            double[] cart = M.WGStoCartesian(lat, lon);
+            //double x = lat * 60;
+            //double y = lon * 60;
+
+            return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
         }
         public double Compute_GVA(CAT21 C21)
         {

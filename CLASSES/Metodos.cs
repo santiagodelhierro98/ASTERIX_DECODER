@@ -201,20 +201,28 @@ namespace CLASSES
             }
             return Target_ID;
         }
-        //public double[] WGStoCartesian(double lat, double lon)
-        //{
-        //    double[] cart = new double[2];
-        //    double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-        //    double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+        public double[] WGStoCartesian(double lat, double lon)
+        {
+            double[] cart = new double[2];
+            double MLAT_lat = Math.PI * (41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0)) / 180;
+            double MLAT_lon = Math.PI * (2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0)) / 180;
 
-        //    int a = 6378137; // [m]
-        //    double x_MLAT = a * Math.Cos((MLAT_lat * Math.PI) / 180) * Math.Cos((MLAT_lon * Math.PI) / 180);
-        //    double y_MLAT = a * Math.Cos((MLAT_lat * Math.PI) / 180) * Math.Sin((MLAT_lon * Math.PI) / 180);
-        //    double x = a * Math.Cos((lat * Math.PI) / 180) * Math.Cos((lon * Math.PI) / 180);
-        //    double y = a * Math.Cos((lat * Math.PI) / 180) * Math.Sin((lon * Math.PI) / 180);
-        //    cart[0] = x - x_MLAT; cart[1] = y - y_MLAT;
-        //    return cart;
-        //}
+            lat = (lat * Math.PI) / 180;
+            lon = (lon * Math.PI) / 180;
+
+            int a = 6378137; // [m]
+            double b = 6356752.3142; // [m]
+            double e = Math.Sqrt(1 - (Math.Pow(b, 2) / Math.Pow(a, 2)));
+            // Target
+            double x = (a * Math.Cos(lat) * Math.Cos(lon)) / Math.Sqrt(1 - Math.Pow(e, 2)*Math.Pow(Math.Sin(lat), 2));
+            double y = (a * Math.Cos(lat) * Math.Sin(lon)) / Math.Sqrt(1 - Math.Pow(e, 2) * Math.Pow(Math.Sin(lat), 2));
+            // Sensor
+            double x_MLAT = (a * Math.Cos(MLAT_lat) * Math.Cos(MLAT_lon)) / Math.Sqrt(1 - Math.Pow(e, 2) * Math.Pow(Math.Sin(MLAT_lat), 2));
+            double y_MLAT = (a * Math.Cos(MLAT_lat) * Math.Sin(MLAT_lon)) / Math.Sqrt(1 - Math.Pow(e, 2) * Math.Pow(Math.Sin(MLAT_lat), 2));
+            
+            cart[0] = x - x_MLAT; cart[1] = y - y_MLAT;
+            return cart;
+        }
         public double cartesiantolatmlat(double X, double Y)
         {
             double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;
@@ -223,6 +231,7 @@ namespace CLASSES
             double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
             double phi1 = MLAT_lat * (Math.PI / 180);
             double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            
             return phi2 * (180.0 / Math.PI);
         }
         public double cartesiantolonmlat(double X, double Y)
@@ -247,6 +256,7 @@ namespace CLASSES
             double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
             double phi1 = SMR_lat * (Math.PI / 180);
             double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            
             return phi2 * (180.0 / Math.PI);
         }
         public double cartesiantolonsmr(double X, double Y)
