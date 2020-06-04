@@ -4,11 +4,13 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -125,13 +127,8 @@ namespace ASTERIX_APP
 
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
-            //var progress = new Progress<int>(value => progressbar.Value = value);
 
-
-            //Instructions_Label.Visibility = Visibility.Visible;
-            //Instructions_Label.Content = "Loading...";
             OpenFile.ShowDialog();
-            //Children.Add(progressbar);
 
             // When you click Cancel
             if (OpenFile.FileName == "")
@@ -155,14 +152,8 @@ namespace ASTERIX_APP
                 {
                     chivato = true;
                     F = new Fichero(OpenFile.FileName);
-                    //((IProgress<int>)progress).Report(20);
                     F.leer();
-                    //computelistMLAT(F);
-                    //computelistADSB(F);
-
-                    //((IProgress<int>)progress).Report(100);
                 });
-
 
                 asterixPerf.Visibility = Visibility.Visible;
                 progressbar.Visibility = Visibility.Collapsed;
@@ -176,6 +167,7 @@ namespace ASTERIX_APP
                 circle.Visibility = Visibility.Visible;
                 circle2.Visibility = Visibility.Visible;
                 Help.Visibility = Visibility.Visible;
+                
                 CheckCAT();
             }
         }
@@ -308,19 +300,6 @@ namespace ASTERIX_APP
                 SMR.Visibility = Visibility.Visible;
                 MLAT.Visibility = Visibility.Visible;
                 ADSB.Visibility = Visibility.Visible;
-
-                if (Math.Floor(F.CAT_list[0]) == 10)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(21);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
-                    else { gridlista.ItemsSource = F.tablacat10reducida.DefaultView; }
-                }
-                if (Math.Floor(F.CAT_list[0]) == 21)
-                {
-                    bool IsMultipleCAT = F.CAT_list.Contains(10);
-                    if (IsMultipleCAT == true) { gridlista.ItemsSource = F.multiplecattablereducida.DefaultView; }
-                    else { gridlista.ItemsSource = F.tablacat21reducida.DefaultView; }
-                }
             }
         }
         private void Help_Click(object sender, RoutedEventArgs e)
@@ -1723,17 +1702,20 @@ namespace ASTERIX_APP
         }
         public void CheckCAT()
         {
-            if (Math.Floor(F.CAT_list[0]) == 10)
+            if (Math.Floor(F.CAT_list[0]) == 10)                
             {
-                bool IsMultipleCAT = F.CAT_list.Contains(21);
+                bool IsMultipleCAT = false;
+                for(int i = 0; i<F.CAT_list.Count; i++) { if (Math.Floor(F.CAT_list[i]) == 21) { IsMultipleCAT = true; break; } }
                 if (IsMultipleCAT == true)
                 {
                     Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
+                    gridlista.ItemsSource = F.multiplecattablereducida.DefaultView;
                     category = 1021;
                 }
                 else
                 {
                     Track_Table.ItemsSource = F.tablaCAT10.DefaultView;
+                    gridlista.ItemsSource = F.tablacat10reducida.DefaultView;
                     category = 10;
                 }
             }
@@ -1743,11 +1725,13 @@ namespace ASTERIX_APP
                 if (IsMultipleCAT == true)
                 {
                     Track_Table.ItemsSource = F.tablaMultipleCAT.DefaultView;
+                    gridlista.ItemsSource = F.multiplecattablereducida.DefaultView;
                     category = 1021;
                 }
                 else
                 {
                     Track_Table.ItemsSource = F.tablaCAT21.DefaultView;
+                    gridlista.ItemsSource = F.tablacat21reducida.DefaultView;
                     category = 21;
                 }
             }

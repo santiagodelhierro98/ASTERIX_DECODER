@@ -38,8 +38,6 @@ namespace CLASSES
         }
         public void leer()
         {
-            //StreamReader fichero = new StreamReader(path);
-            //string linea = fichero.ReadLine();
             byte[] fileBytes = File.ReadAllBytes(path);
             filename = path;
 
