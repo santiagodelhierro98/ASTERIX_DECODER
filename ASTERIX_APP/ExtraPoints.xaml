@@ -17,14 +17,26 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="getresults" Click ="getresults_Click" Content="GET RESULTS" Margin="20 120 480 70" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="Close" Click="Close_Click" Content="Close" Grid.Column="0" Grid.Row="1" Margin="20 175 500 20" Background="#333" Foreground="#fff"/>
-        <Label Content="Sort and Compare:" Grid.Row="1" Grid.Column="0" Margin="10,91,496,102" FontSize="10" Foreground="#bbb"/>
-        <Label Content="MLAT Table:" Foreground="#bbb" Grid.Column="0" Grid.Row="0" Padding="6"/>
-        <Label Content="ADS/B Table:" Foreground="#bbb" Grid.Row="0" Padding="6" Margin="505,0,95,0" Grid.ColumnSpan="2"/>
+        <Button x:Name="Close" Click="Close_Click" Content="Close" Grid.Column="0" Grid.Row="1" Margin="11,185,523,10" Background="#333" Foreground="#fff"/>
+
+        <Button x:Name="getresults" Click ="getresults_Click" Content="0-10 NM" FontSize="10" Margin="11,143,523,50" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="getresults_510" Click ="getresults510_Click" Content="5-10 NM" FontSize="10" Margin="11,109,523,85" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="getresults_255" Click ="getresults255_Click" Content="2.5-5 NM" FontSize="10" Margin="11,75,523,119" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.515,0.276"/>
+        <Button x:Name="getresults_025" Click ="getresults025_Click" Content="0-2.5 NM" FontSize="10" Margin="11,41,523,153" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="getresults_0" Click ="getresults0_Click" Content="Ground" FontSize="10" Margin="11,7,523,187" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
+
+        <Label Content="MLAT Reports:" Foreground="#bbb" Grid.Column="0" Grid.Row="0" Padding="6"/>
+        <Label Content="ADS/B Reports:" Foreground="#bbb" Grid.Row="0" Padding="6" Margin="505,0,95,0" Grid.ColumnSpan="2"/>
         <ProgressBar x:Name="progressbar" Grid.Column="1" Grid.Row="1" Height="25" RenderTransformOrigin="-0.497,3.674" Margin="380,183,20,20" Visibility="Collapsed" IsIndeterminate="True" Background="#333"/>
-        <Label Content="Results:" Foreground="#fff" Margin="70,6,480,191" Grid.Row="1" Padding="2"/>
-        <Label Content="Mean Accuracy Errors / Percentil 95:" Foreground="#fff" Grid.Row="1" Grid.Column="1" Margin="137,8,263,193" Padding="2"/>
+
+        <Label Content="Average Precisions / Percentile 95" Foreground="LightSteelBlue" Background="Transparent" Grid.Column="1" Margin="10,5,390,190" Grid.Row="1"/>
+        <Label x:Name="Lat_Av" Foreground="#fff" Background="Transparent" Grid.Column="1" Grid.Row="1" Margin="10,43,360,150"/>
+        <Label x:Name="Lon_Av" Foreground="#fff" Background="Transparent" Grid.Column="1" Grid.Row="1" Margin="10,83,360,110" RenderTransformOrigin="0.5,1.45"/>
+        <Label x:Name="Dist_Av" Foreground="#fff" Background="Transparent" Grid.Column="1" Grid.Row="1" Margin="10,123,360,70"/>
+        <Label x:Name="Alt_Av" Foreground="#fff" Background="Transparent" Grid.Column="1" Grid.Row="1" Margin="10,163,360,30"/>
+
+        <Label Content="Probability of Detection" Foreground="LightSteelBlue" Background="Transparent" Grid.Column="1" Margin="435,5,10,190" Grid.Row="1"/>
+        <Label x:Name="Pd_10NM" Foreground="#fff" Background="Transparent" Grid.Column="1" Grid.Row="1" Margin="455,43,30,150"/>
 
         <!-- MLAT Table -->
         <DataGrid x:Name="TableMLAT" Padding="5"
@@ -82,10 +94,10 @@
         </DataGrid>
         <!-- Comparison Table -->
         <DataGrid x:Name="Res_Table" Padding="5"
-                  Margin="125,5,468,5" Background="#222" 
+                  Margin="82,5,0,10" Background="#222" 
                   Visibility="Visible" IsReadOnly="True" 
                   BorderThickness="1" ItemsSource="{Binding}"
-                  Grid.Row="1" Grid.ColumnSpan="2">
+                  Grid.Row="1">
 
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -96,33 +108,6 @@
                     <Setter Property="BorderThickness" Value="0 0 1 1"/>
                     <Setter Property="BorderBrush" Value="#000"/>
                     <Setter Property="MinWidth" Value="60"/>
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Height" Value="20"/>
-                    <Setter Property="Background" Value="#222"/>
-                    <Setter Property="Foreground" Value="#fff"/>
-                    <Setter Property="BorderBrush" Value="#000"/>
-                </Style>
-            </DataGrid.RowStyle>
-        </DataGrid>
-        <!-- Average Table -->
-        <DataGrid x:Name="Av_Table" Padding="5"
-                  Margin="137,42,5,50" Background="#222" 
-                  Visibility="Visible" IsReadOnly="True" 
-                  BorderThickness="1" ItemsSource="{Binding}"
-                  Grid.Row="1" Grid.Column="1" >
-
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#004778"/>
-                    <Setter Property="Foreground" Value="#fff"/>
-                    <Setter Property="Margin" Value="0 0 1 1"/>
-                    <Setter Property="Padding" Value="5"/>
-                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
-                    <Setter Property="BorderBrush" Value="#000"/>
-                    <Setter Property="MinWidth" Value="80"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.RowStyle>

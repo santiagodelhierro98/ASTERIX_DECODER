@@ -12,10 +12,4 @@ Hay una casilla de Absolute time en sg que debería ser interna vuestra
 
 Ajustáis la posición de la mlat a la que debería tenir en el tiempo del ADSB, entendí en la presentación. Pero cómo lo hacéis? Con Vx, Vy y el track angle? Con el Ground Speed? Cómo interpoláis? 
 
-Estaría bien que calculaseis la media y percentil 95 para cuatro tramos
-(Tráfico on ground, 
-trafico en vuelo de 0 a 2,5 MN, 
-trafico en vuelo de 2,5 a 5 MN, 
-trafico en vuelo de 5 a 10 MN)
-
 No habéis calculado la PD en ventana de 2sg, entendí en la presentación. Para el computo de la PD tomáis en consideración de 0 a 10MN para tráficos en vuelo, entiendo. Y contáis como no detectado si no existe pista MLAT y sí de ADSB desde el momento que la pista MLAT desparece, no?
