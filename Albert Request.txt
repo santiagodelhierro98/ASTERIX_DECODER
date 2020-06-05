@@ -1,15 +1,15 @@
-Aparecen dos plots adsb 0.23 porque van cada 0,5sg, junto con un plot de smr y otro de mlat.
+Aparecen dos plots adsb 0.23 porque van cada 0,5sg, junto con un plot de smr y
+otro de mlat.
 
-Al darle a quit airplane trail, desaparecen los historiales, pero no se queda marcado el tick en la casilla, así que no sabes si le has dado o no.
+Al darle a quit airplane trail, desaparecen los historiales, pero no se queda
+marcado el tick en la casilla, así que no sabes si le has dado o no.
 
-Si en este momento marco la casilla de smr, me aparece el segundo gráfico, desapareciendo el adsb y el mlat y con el airplane trail del smr.
+Si en este momento marco la casilla de smr, me aparece el segundo gráfico, 
+desapareciendo el adsb y el mlat y con el airplane trail del smr.
 
-Debeis acabar de mejorar esta funcionalidad que es importante para seguir bien la evolución gráfica de los tráficos.
-
-La latitud y longitud mostrades en el Radar Info en qué sistema están (Haversine?). Cómo haceis el paso de cartesianes de la mlat a haversine y cómo el paso de wgs84 a Haversine?
+Debeis acabar de mejorar esta funcionalidad que es importante para seguir bien 
+la evolución gráfica de los tráficos.
 
 Hay una casilla de Absolute time en sg que debería ser interna vuestra
 
 Ajustáis la posición de la mlat a la que debería tenir en el tiempo del ADSB, entendí en la presentación. Pero cómo lo hacéis? Con Vx, Vy y el track angle? Con el Ground Speed? Cómo interpoláis? 
-
-No habéis calculado la PD en ventana de 2sg, entendí en la presentación. Para el computo de la PD tomáis en consideración de 0 a 10MN para tráficos en vuelo, entiendo. Y contáis como no detectado si no existe pista MLAT y sí de ADSB desde el momento que la pista MLAT desparece, no?
