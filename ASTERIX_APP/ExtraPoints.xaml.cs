@@ -219,7 +219,6 @@ namespace ASTERIX_APP
             MessageBox.Show("From 0 to 10NM: DONE\n" +
                 "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
 
-
             // 0 to 2.5
             M.Create_ExtraTable_ADSB(acc_ADSB_Table_025);
             M.Create_ExtraTable_MLAT(acc_MLAT_Table_025);
@@ -270,7 +269,7 @@ namespace ASTERIX_APP
                 bool x = false;
                 for (int i = fila; i < MLAT_Table_G.Rows.Count; i++)
                 {
-                    if (ADSB_Table_G.Rows[j][1].ToString() == "NaN") { break; }
+                    if (ADSB_Table_G.Rows[j][1].ToString() == "NaN" || MLAT_Table_G.Rows[j][1].ToString() == "NaN") { break; }
 
                     string timebadmlat = Convert.ToString(MLAT_Table_G.Rows[i][1]);
                     string[] tiemposplitedmlat = timebadmlat.Split(':');
@@ -522,7 +521,7 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_510.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table_510);
+            Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_510);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_510);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_510);
@@ -567,7 +566,7 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_255.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_255, MLAT_Table_255);
+            Pd = Probability_of_Detection(ADSB_Table_255, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_255);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_255);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_255);
@@ -612,7 +611,7 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_025.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table_025);
+            Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_025);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_025);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_025);
@@ -655,7 +654,6 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_G.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_G, MLAT_Table_G);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_G);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_G);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_G);
@@ -665,7 +663,7 @@ namespace ASTERIX_APP
             Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_G.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
             Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_G.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
             Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_G.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            Pd_10NM.Content = "Pd: " + "-" + " %";
 
             progressbar.Visibility = Visibility.Hidden;
         }
@@ -676,13 +674,12 @@ namespace ASTERIX_APP
         private double Probability_of_Detection(DataTable tableADSB, DataTable tableMLAT)
         {
             int count = 0;
-            string time = tableMLAT.Rows[0][1].ToString();
+            string time = tableADSB.Rows[0][1].ToString();
             string[] time_0_v = time.Split(':');
             int time_0_s = M.gettimecorrectly(time_0_v);
 
-            string horaUlt = tableMLAT.Rows[tableADSB.Rows.Count - 1][1].ToString();
+            string horaUlt = tableADSB.Rows[tableADSB.Rows.Count - 1][1].ToString();
             string[] horaUlt_V = horaUlt.Split(':');
-            int secs = M.gettimecorrectly(horaUlt_V) - time_0_s;
 
             List<string> reportsADSB = new List<string>();
             List<string> reportsMLAT = new List<string>();
@@ -694,17 +691,20 @@ namespace ASTERIX_APP
             {
                 reportsMLAT.Add(tableMLAT.Rows[i][1].ToString());
             }
-            while (time_0_s <= M.gettimecorrectly(horaUlt_V))
+            for(int i = 0; i<reportsADSB.Count; i++)
             {
-                string clock = M.convert_to_hms(time_0_s);
-                string clock_1 = M.convert_to_hms(time_0_s + 1);
-                if ((reportsADSB.Contains(clock) && reportsMLAT.Contains(clock)) || (reportsADSB.Contains(clock_1) && reportsMLAT.Contains(clock_1)))
+                string[] time_v = reportsADSB[i].Split(':');
+                int time_s = M.gettimecorrectly(time_v);
+                time_s++;
+                string time_1 = M.convert_to_hms(time_s);
+
+                if (reportsMLAT.Contains(reportsADSB[i]) || reportsMLAT.Contains(time_1))
                 {
                     count++;
                 }
-                time_0_s++;
+                time_0_s = time_0_s + 4;
             }
-            return 100*Convert.ToDouble(count) / secs;
+            return 100*Convert.ToDouble(count) / reportsADSB.Count;
         }
 
         //private double Probability_of_Detection(DataTable tableMLAT, DataTable tableADSB)
