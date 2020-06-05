@@ -14,9 +14,6 @@ namespace CLASSES
 
         double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
         double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-
-        // double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
-        // double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
         public double checkdistanceMLAT_Acc(double lat, double lon)
         {
             double[] cart = M.WGStoCartesian(lat, lon);
@@ -36,8 +33,6 @@ namespace CLASSES
             double lon = C21.Lon_WGS_84;
             // conversion de WGS a Cart
             double[] cart = M.WGStoCartesian(lat, lon);
-            //double x = lat * 60;
-            //double y = lon * 60;
 
             return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
         }

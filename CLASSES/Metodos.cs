@@ -225,7 +225,7 @@ namespace CLASSES
         }
         public double cartesiantolatmlat(double X, double Y)
         {
-            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;
+            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
             double R = 6371 * 1000;
             double d = Math.Sqrt((X * X) + (Y * Y));
             double brng = Math.Atan2(Y, -X) - (Math.PI / 2);

@@ -23,7 +23,7 @@
         <Button x:Name="getresults_510" Click ="getresults510_Click" Content="5-10 NM" FontSize="10" Margin="11,109,523,85" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="getresults_255" Click ="getresults255_Click" Content="2.5-5 NM" FontSize="10" Margin="11,75,523,119" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.515,0.276"/>
         <Button x:Name="getresults_025" Click ="getresults025_Click" Content="0-2.5 NM" FontSize="10" Margin="11,41,523,153" Grid.Column="0" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="getresults_0" Click ="getresults0_Click" Content="Ground" FontSize="10" Margin="11,7,523,187" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5" IsEnabled="False"/>
+        <Button x:Name="getresults_0" Click ="getresults0_Click" Content="Ground" FontSize="10" Margin="11,7,523,187" Grid.Row="1" Background="#333" Foreground="#fff" Padding="5" BorderThickness="1 1 1 1" RenderTransformOrigin="0.5,0.5"/>
 
         <Label Content="MLAT Reports:" Foreground="#bbb" Grid.Column="0" Grid.Row="0" Padding="6"/>
         <Label Content="ADS/B Reports:" Foreground="#bbb" Grid.Row="0" Padding="6" Margin="505,0,95,0" Grid.ColumnSpan="2"/>

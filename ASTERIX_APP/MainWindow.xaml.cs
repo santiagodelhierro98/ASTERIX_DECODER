@@ -4,13 +4,10 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -32,9 +29,6 @@ namespace ASTERIX_APP
         //lat lon of MLAT system of reference (at LEBL airport)
         double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
         double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-        //lat lon of SMR system of reference (at LEBL airport)
-        double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
-        double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
 
         string searchedcallsign;
         bool idbuttonclicked = false;
