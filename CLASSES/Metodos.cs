@@ -421,6 +421,62 @@ namespace CLASSES
 
             return listaCoordenadas;
         }
+        public double DistanceBetweenCoordinates(double lat_0, double lon_0, double lat_1, double lon_1)
+        {
+            double φ1 = lat_0 * Math.PI / 180; //lat inicial
+            double φ2 = lon_0 * Math.PI / 180; // lon inicial
+            double λ1 = lat_1 * Math.PI / 180; // lat final
+            double λ2 = lon_1 * Math.PI / 180; // lon final
+
+            double lat1 = φ1;
+            double lon1 = λ1;
+            double lat2 = φ2;
+            double lon2 = λ2;
+
+            double a = 6378137.0;
+            double b = 6356752.314245;
+            double f = 1 / 298.257223563;
+
+            double L = (lon2 - lon1);
+            double U1 = Math.Atan((1 - f) * Math.Tan(lat1));
+            double U2 = Math.Atan((1 - f) * Math.Tan(lat2));
+            double sinU1 = Math.Sin(U1),
+            cosU1 = Math.Cos(U1);
+            double sinU2 = Math.Sin(U2),
+            cosU2 = Math.Cos(U2);
+
+            double lambda = L, lambdaP, iterLimit = 100;
+
+            double cosSqAlpha;
+            double sinSigma;
+            double cos2SigmaM;
+            double cosSigma;
+            double sigma;
+
+            do
+            {
+                double sinLambda = Math.Sin(lambda),
+                cosLambda = Math.Cos(lambda);
+                sinSigma = Math.Sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
+                if (sinSigma == 0) return 0; // co-incident points
+                cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
+                sigma = Math.Atan2(sinSigma, cosSigma);
+                double sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
+                cosSqAlpha = 1 - sinAlpha * sinAlpha;
+                cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
+                double C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
+                lambdaP = lambda;
+                lambda = L + (1 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+            } while (Math.Abs(lambda - lambdaP) > 1e-12 && --iterLimit > 0);
+
+            var uSq = cosSqAlpha * (a * a - b * b) / (b * b);
+            var A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+            var B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+            var deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+            var s = b * A * (sigma - deltaSigma);
+
+            return s / 1000;
+        }
         public string convert_to_hms(double tod)
         {
             if (tod != 0)

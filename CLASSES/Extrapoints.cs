@@ -14,25 +14,29 @@ namespace CLASSES
 
         public double checkdistanceMLAT_Acc(double lat, double lon)
         {
-            double[] cart = M.WGStoCartesian(lat, lon);
-            return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
+            double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+            double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+            double D = M.DistanceBetweenCoordinates(ARP_lat, ARP_lon, lat, lon);
+            return D / 1851.85185185185;
         }
         public double checkdistanceMLAT(CAT10 C10)
         {
-            // el módulo del segmento que une la posición del ARP con la posición del avión debe ser inferior a 10 MN
-            double pos_x = C10.Pos_Cartesian[0];
-            double pos_y = C10.Pos_Cartesian[1];
-            return Math.Sqrt(Math.Pow(pos_x, 2) + Math.Pow(pos_y, 2)) / 1851.85185185185;
+            double ARP_lat = (41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0));
+            double ARP_lon = (2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0));
+
+            double H = Math.Atan(C10.Track_Vel_Cartesian[1] / C10.Track_Vel_Cartesian[0]);
+            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], H);
+            double D = M.DistanceBetweenCoordinates(ARP_lat, ARP_lon, WGS[0], WGS[1]);
+            return D / 1851.85185185185;
         }
         public double checkdistanceADSB(CAT21 C21)
         {
+            double ARP_lat = (41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0));
+            double ARP_lon = (2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0));
             // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
-            double lat = C21.Lat_WGS_84;
-            double lon = C21.Lon_WGS_84;
-            // conversion de WGS a Cart
-            double[] cart = M.WGStoCartesian(lat, lon);
+            double D = M.DistanceBetweenCoordinates(ARP_lat, ARP_lon, C21.Lat_WGS_84, C21.Lon_WGS_84);
 
-            return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
+            return D / 1851.85185185185;
         }
         public double Compute_GVA(CAT21 C21)
         {
