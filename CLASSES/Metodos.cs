@@ -232,6 +232,7 @@ namespace CLASSES
         //    double phi1 = MLAT_lat * (Math.PI / 180);
         //    double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             
+<<<<<<< HEAD
         //    return phi2 * (180.0 / Math.PI);
         //}
         //public double cartesiantolonmlat(double X, double Y)
@@ -245,6 +246,21 @@ namespace CLASSES
         //    double lamda1 = MLAT_lon * (Math.PI / 180);
         //    var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
         //    double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+=======
+            return phi2 * (180.0 / Math.PI);
+        }
+        public double cartesiantolonmlat(double X, double Y)
+        {
+            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0); ;
+            double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+            double R = 6371 * 1000;
+            double d = Math.Sqrt((X * X) + (Y * Y));
+            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+            double phi1 = MLAT_lat * (Math.PI / 180);
+            double lamda1 = MLAT_lon * (Math.PI / 180);
+            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+            double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+>>>>>>> parent of 508c0f2... tramos bien, Pd bien, CART-WGS84 declarado solo
             
         //    return lamda2 * (180.0 / Math.PI);
         //}
@@ -347,6 +363,7 @@ namespace CLASSES
 
             return listaCoordenadas;
         }
+<<<<<<< HEAD
         public double[] Cartesian_to_WGS84_SMR(double X, double Y, double initialBearing)
         {
             double[] listaCoordenadas = new double[2];
@@ -477,6 +494,8 @@ namespace CLASSES
 
             return s / 1000;
         }
+=======
+>>>>>>> parent of 508c0f2... tramos bien, Pd bien, CART-WGS84 declarado solo
         public string convert_to_hms(double tod)
         {
             if (tod != 0)
