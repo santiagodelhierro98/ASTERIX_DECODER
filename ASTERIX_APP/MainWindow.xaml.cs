@@ -968,7 +968,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplaneMLAT.png"))
                 };                
                 marker.ZIndex = 0;
-                marker.Offset = new Point(-10, -10);
+                marker.Offset = new Point(-7.5, -7.5);
             }            
             if (targetid == "Not available" || GV == true)
             {
@@ -997,7 +997,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
                 marker.ZIndex = 1;
-                marker.Offset = new Point(-10, -10);
+                marker.Offset = new Point(-7.5, -7.5);
             }
             if (targetid == "Not available" || GV == true)
             {
@@ -1026,7 +1026,7 @@ namespace ASTERIX_APP
                     Source = new BitmapImage(new Uri("pack://application:,,,/Images/airplane.png"))
                 };
                 marker.ZIndex = 2;
-                marker.Offset = new Point(-10, -10);
+                marker.Offset = new Point(-7.5, -7.5);
             }
             if (targetid == "Not available" || GV == true)
             {
@@ -1043,9 +1043,6 @@ namespace ASTERIX_APP
             map.Markers.Add(marker);
         }
 
-        bool SMRchecked = false;
-        bool MLATchecked = false;
-        bool ADSBchecked = false;
         bool GV = false;
         DataTable tabla;
         private void dt_Timer_TickC10(object sender, EventArgs e)
@@ -1078,15 +1075,15 @@ namespace ASTERIX_APP
                         {
                             if (C10.Target_Rep_Descript[0] == "PSR")
                             {
-                                double lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                                double lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                                AddMarkerSMR(lat, lon, targetid);
+                                double H = Math.Atan(C10.Track_Vel_Cartesian[1]/C10.Track_Vel_Cartesian[0]);
+                                double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], H);
+                                AddMarkerSMR(WGS[0], WGS[1], targetid);
                             }
                             if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                             {
-                                double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                                double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                                AddMarkerMLAT(lat, lon, targetid);
+                                double H = Math.Atan(C10.Track_Vel_Cartesian[1] / C10.Track_Vel_Cartesian[0]);
+                                double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], H);
+                                AddMarkerMLAT(WGS[0], WGS[1], targetid);
                             }
                             else { }
                             i++;
@@ -1116,15 +1113,15 @@ namespace ASTERIX_APP
                     {
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            double lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            double lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            AddMarkerSMR(lat, lon, targetid);
+                            double H = Math.Atan(C10.Track_Vel_Cartesian[1] / C10.Track_Vel_Cartesian[0]);
+                            double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], H);
+                            AddMarkerSMR(WGS[0], WGS[1], targetid);
                         }
                         if (C10.Target_Rep_Descript[0] == "Mode S Multilateration")
                         {
-                            double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            AddMarkerMLAT(lat, lon, targetid);
+                            double H = Math.Atan(C10.Track_Vel_Cartesian[1] / C10.Track_Vel_Cartesian[0]);
+                            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], H);
+                            AddMarkerMLAT(WGS[0], WGS[1], targetid);
                         }
                         else { }
                         i++;
@@ -1148,6 +1145,7 @@ namespace ASTERIX_APP
                 updatedlista.Visibility = Visibility.Visible;
             }
         }
+        int num_vuelos;
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
             if (checktrail.IsChecked == true)
@@ -1155,7 +1153,7 @@ namespace ASTERIX_APP
                 showonlyoneairplane();
             }
             else { }
-
+            num_vuelos = 0;
             Boolean x = true;
             while (x == true)
             {
@@ -1171,7 +1169,8 @@ namespace ASTERIX_APP
                     if (C21_v23.Target_ID == "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { targetid = "Not available"; }
                     if (C21_v23.Target_ID != "" && (C21_v23.ECAT == "surface emergency vehicle" || C21_v23.ECAT == "surface service vehicle" || C21_v23.ECAT == "fixed ground or tethered obstruction")) { GV = true; }
 
-                    if (searchedcallsign == null) { searchedcallsign = "Not available"; }
+                    if (searchedcallsign == null) { searchedcallsign = "Not available"; }                    
+
                     if (idbuttonclicked == true)
                     {
                         if (C21_v23.Target_ID.Contains(searchedcallsign))
@@ -1264,7 +1263,6 @@ namespace ASTERIX_APP
                             i++;
                         }
                     }
-
                     else
                     {
                         if (tiempo == start)
@@ -1285,11 +1283,11 @@ namespace ASTERIX_APP
                             x = false;
                             s++;
                         }
-                    }
+                    }                    
                 }
                 clock(tiempo - 1);
                 gridlista.Visibility = Visibility.Collapsed;
-                updatedlista.Visibility = Visibility.Visible;
+                updatedlista.Visibility = Visibility.Visible;            
             }
         }
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
@@ -1332,16 +1330,16 @@ namespace ASTERIX_APP
                             {
                                 if (F.CAT_list[i] == 10)
                                 {
-                                    double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                    double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
+                                    double lat = Convert.ToDouble(tabla.Rows[i][6]);
+                                    double lon = Convert.ToDouble(tabla.Rows[i][7]);
                                         
                                     if(tabla.Rows[i][10].ToString() == "PSR")
                                     {
-                                        AddMarkerSMR(poscartx, poscarty, targetid);
+                                        AddMarkerSMR(lat, lon, targetid);
                                     }
                                     else
                                     {
-                                        AddMarkerMLAT(poscartx, poscarty, targetid);
+                                        AddMarkerMLAT(lat, lon, targetid);
                                     }
 
                                     if (map.Markers.Count >= 200)
@@ -1434,9 +1432,9 @@ namespace ASTERIX_APP
                             }
                             if (F.CAT_list[i] == 21 && tiempo == start1)
                             {
-                                double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
-                                double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
-                                AddMarkerC21(poscartx, poscarty, targetid);
+                                double lat = Convert.ToDouble(tabla.Rows[i][6]);
+                                double lon = Convert.ToDouble(tabla.Rows[i][7]);
+                                AddMarkerC21(lat, lon, targetid);
                                 if (map.Markers.Count >= 400)
                                 {
                                     for (int n = 0; n < 50; n++)

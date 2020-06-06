@@ -67,17 +67,25 @@ namespace CLASSES
 
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
+                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
+                            double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
+                            // lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            // lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+
                             // CAT10 reduced table for maptrack SMR
                             tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
-                                C10.Target_Add, C10.Track_Num);
+                                Math.Round(WGS[0], 2), Math.Round(WGS[1], 2), C10.Target_Add, C10.Track_Num);
                         }
                         else
                         {
+                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
+                            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
+                            // lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            // lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+
                             // CAT10 reduced table for maptrack MLAT
                             tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
-                                C10.Target_Add, C10.Track_Num);
+                                Math.Round(WGS[0], 2), Math.Round(WGS[1], 2), C10.Target_Add, C10.Track_Num);
                         }
 
                         // Complete CAT10 table
@@ -121,17 +129,25 @@ namespace CLASSES
                         listaCAT10.Add(C10);
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
+                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
+                            double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
+                            // lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            // lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+
                             // Multiple CAT reduced table for maptrack SMR
                             multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                    Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
-                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                                    Math.Round(WGS[0], 5), Math.Round(WGS[1], 5), C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
                         }
                         else
                         {
+                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
+                            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
+                            // lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                            // lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+
                             // Multiple CAT reduced table for maptrack MLAT
                             multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                    Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
-                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                                    Math.Round(WGS[0], 5), Math.Round(WGS[1], 5), C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
                         }                        
 
                         // Complete Multiple CAT table

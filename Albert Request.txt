@@ -7,9 +7,6 @@ marcado el tick en la casilla, así que no sabes si le has dado o no.
 Si en este momento marco la casilla de smr, me aparece el segundo gráfico, 
 desapareciendo el adsb y el mlat y con el airplane trail del smr.
 
-Debeis acabar de mejorar esta funcionalidad que es importante para seguir bien 
-la evolución gráfica de los tráficos.
-
 Hay una casilla de Absolute time en sg que debería ser interna vuestra
 
 Ajustáis la posición de la mlat a la que debería tenir en el tiempo del ADSB, entendí en la presentación. Pero cómo lo hacéis? Con Vx, Vy y el track angle? Con el Ground Speed? Cómo interpoláis? 

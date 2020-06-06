@@ -12,8 +12,6 @@ namespace CLASSES
         //primer: filtrar per MLAT Cat 10 (Target_Rep_Descript[0] == "Mode S Multilateration")
         Metodos M = new Metodos();
 
-        double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-        double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
         public double checkdistanceMLAT_Acc(double lat, double lon)
         {
             double[] cart = M.WGStoCartesian(lat, lon);

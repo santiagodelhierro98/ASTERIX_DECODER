@@ -10,8 +10,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASTERIX_APP", "ASTERIX_APP.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLASSES", "..\CLASSES\CLASSES.csproj", "{67951596-0A15-4A57-A55E-5410F2A2E138}"
 EndProject
-Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Asterix Decoder Setup", "..\Asterix Decoder Setup\Asterix Decoder Setup.aiproj", "{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -36,14 +34,6 @@ Global
 		{67951596-0A15-4A57-A55E-5410F2A2E138}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{67951596-0A15-4A57-A55E-5410F2A2E138}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67951596-0A15-4A57-A55E-5410F2A2E138}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.All|Any CPU.ActiveCfg = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.All|Any CPU.Build.0 = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.Debug|Any CPU.ActiveCfg = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.Debug|Any CPU.Build.0 = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.Release|Any CPU.ActiveCfg = DefaultBuild
-		{93C8F8FD-C0B3-4F1B-88AB-B62B41CB8D3A}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

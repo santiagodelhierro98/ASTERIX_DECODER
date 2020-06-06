@@ -223,66 +223,140 @@ namespace CLASSES
             cart[0] = x - x_MLAT; cart[1] = y - y_MLAT;
             return cart;
         }
-        public double cartesiantolatmlat(double X, double Y)
-        {
-            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-            double R = 6371 * 1000;
-            double d = Math.Sqrt((X * X) + (Y * Y));
-            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
-            double phi1 = MLAT_lat * (Math.PI / 180);
-            double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+        //public double cartesiantolatmlat(double X, double Y)
+        //{
+        //    double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+        //    double R = 6371 * 1000;
+        //    double d = Math.Sqrt((X * X) + (Y * Y));
+        //    double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+        //    double phi1 = MLAT_lat * (Math.PI / 180);
+        //    double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             
-            return phi2 * (180.0 / Math.PI);
-        }
-        public double cartesiantolonmlat(double X, double Y)
-        {
-            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-            double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-            double R = 6371 * 1000;
-            double d = Math.Sqrt((X * X) + (Y * Y));
-            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
-            double phi1 = MLAT_lat * (Math.PI / 180);
-            double lamda1 = MLAT_lon * (Math.PI / 180);
-            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
-            double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+        //    return phi2 * (180.0 / Math.PI);
+        //}
+        //public double cartesiantolonmlat(double X, double Y)
+        //{
+        //    double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+        //    double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+        //    double R = 6371 * 1000;
+        //    double d = Math.Sqrt((X * X) + (Y * Y));
+        //    double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+        //    double phi1 = MLAT_lat * (Math.PI / 180);
+        //    double lamda1 = MLAT_lon * (Math.PI / 180);
+        //    var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+        //    double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
             
-            return lamda2 * (180.0 / Math.PI);
-        }
-        public double cartesiantolatsmr(double X, double Y)
-        {
-            double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
-            double R = 6371 * 1000;
-            double d = Math.Sqrt((X * X) + (Y * Y));
-            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
-            double phi1 = SMR_lat * (Math.PI / 180);
-            double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+        //    return lamda2 * (180.0 / Math.PI);
+        //}
+        //public double cartesiantolatsmr(double X, double Y)
+        //{
+        //    double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+        //    double R = 6371 * 1000;
+        //    double d = Math.Sqrt((X * X) + (Y * Y));
+        //    double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+        //    double phi1 = SMR_lat * (Math.PI / 180);
+        //    double phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
             
-            return phi2 * (180.0 / Math.PI);
-        }
-        public double cartesiantolonsmr(double X, double Y)
-        {
-            double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
-            double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
-            double R = 6371 * 1000;
-            double d = Math.Sqrt((X * X) + (Y * Y));
-            double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
-            double phi1 = SMR_lat * (Math.PI / 180);
-            double lamda1 = SMR_lon * (Math.PI / 180);
-            var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
-            double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
+        //    return phi2 * (180.0 / Math.PI);
+        //}
+        //public double cartesiantolonsmr(double X, double Y)
+        //{
+        //    double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+        //    double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
+        //    double R = 6371 * 1000;
+        //    double d = Math.Sqrt((X * X) + (Y * Y));
+        //    double brng = Math.Atan2(Y, -X) - (Math.PI / 2);
+        //    double phi1 = SMR_lat * (Math.PI / 180);
+        //    double lamda1 = SMR_lon * (Math.PI / 180);
+        //    var phi2 = Math.Asin(Math.Sin(phi1) * Math.Cos(d / R) + Math.Cos(phi1) * Math.Sin(d / R) * Math.Cos(brng));
+        //    double lamda2 = lamda1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d / R) * Math.Cos(phi1), Math.Cos(d / R) - Math.Sin(phi1) * Math.Sin(phi2));
 
-            return lamda2 * (180.0 / Math.PI);
-        }
-        public double[] Cartesian_to_WGS84_MLAT(double X, double Y, double initialBearing)
+        //    return lamda2 * (180.0 / Math.PI);
+        //}
+        public double[] Cartesian_to_WGS84_ARP(double X, double Y, double initialBearing)
         {
             double[] listaCoordenadas = new double[2];
 
-            double MLAT_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
-            double MLAT_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
-            double φ1 = MLAT_lat * Math.PI/180;
-            double λ1 = MLAT_lon * Math.PI / 180;
-            double α1 = initialBearing * Math.PI / 180;
+            double ARP_lat = 41.0 + (17.0 / 60.0) + (49.0 / 3600.0) + (426.0 / 3600000.0);
+            double ARP_lon = 2.0 + (4.0 / 60.0) + (42.0 / 3600.0) + (410.0 / 3600000.0);
+            double φ1 = ARP_lat * Math.PI / 180;
+            double λ1 = ARP_lon * Math.PI / 180;
+            double α1 = initialBearing; // radians
             double s = Math.Sqrt(Math.Pow(X,2) + Math.Pow(Y, 2));
+
+            // allow alternative ellipsoid to be specified
+            double a = 6378137.0;
+            double b = 6356752.314245;
+            double f = 1 / 298.257223563;
+
+            double sinα1 = Math.Sin(α1);
+            double cosα1 = Math.Cos(α1);
+
+            double tanU1 = (1 - f) * Math.Tan(φ1), cosU1 = 1 / Math.Sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
+            double σ1 = Math.Atan2(tanU1, cosα1); // σ1 = angular distance on the sphere from the equator to P1
+            double sinα = cosU1 * sinα1;          // α = azimuth of the geodesic at the equator
+            double cosSqα = 1 - sinα * sinα;
+            double uSq = cosSqα * (a * a - b * b) / (b * b);
+            double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+            double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+
+            double σ = s / (b * A);
+            double sinσ;
+            double cosσ;
+            double Δσ; // σ = angular distance P₁ P₂ on the sphere
+            double cos2σₘ; // σₘ = angular distance on the sphere from the equator to the midpoint of the line
+
+            double σ_prima; int iterations = 0;
+            do
+            {
+                cos2σₘ = Math.Cos(2 * σ1 + σ);
+                sinσ = Math.Sin(σ);
+                cosσ = Math.Cos(σ);
+                Δσ = B * sinσ * (cos2σₘ + B / 4 * (cosσ * (-1 + 2 * cos2σₘ * cos2σₘ) -
+                    B / 6 * cos2σₘ * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σₘ * cos2σₘ)));
+                σ_prima = σ;
+                σ = s / (b * A) + Δσ;
+            } while (Math.Abs(σ - σ_prima) > 1e-12 && ++iterations < 100);
+            //if (iterations >= 100) throw new EvalError('Vincenty formula failed to converge'); // not possible?
+
+            double x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
+            double φ2 = Math.Atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - f) * Math.Sqrt(sinα * sinα + x * x));
+            double λ = Math.Atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
+            double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
+            double L = λ - (1 - C) * f * sinα * (σ + C * sinσ * (cos2σₘ + C * cosσ * (-1 + 2 * cos2σₘ * cos2σₘ)));
+            double λ2 = λ1 + L;
+
+            // double α2 = Math.Atan2(sinα, -x);
+
+            listaCoordenadas[0] = φ2 * 180 / Math.PI;
+            listaCoordenadas[1] = λ2 * 180 / Math.PI;
+
+            double coord1 = φ2;
+            int sec1 = (int)Math.Round(coord1 * 3600);
+            int deg1 = sec1 / 3600;
+            sec1 = Math.Abs(sec1 % 3600);
+            int min1 = sec1 / 60;
+            // sec1 %= 60;
+
+            double coord2 = λ2;
+            int sec2 = (int)Math.Round(coord2 * 3600);
+            // int deg2 = sec2 / 3600;
+            sec2 = Math.Abs(sec2 % 3600);
+            int min2 = sec2 / 60;
+            // sec2 %= 60;
+
+            return listaCoordenadas;
+        }
+        public double[] Cartesian_to_WGS84_SMR(double X, double Y, double initialBearing)
+        {
+            double[] listaCoordenadas = new double[2];
+
+            double SMR_lat = 41.0 + (17.0 / 60.0) + (44.0 / 3600.0) + (226.0 / 3600000.0);
+            double SMR_lon = 2.0 + (5.0 / 60.0) + (42.0 / 3600.0) + (411.0 / 3600000.0);
+            double φ1 = SMR_lat * Math.PI / 180;
+            double λ1 = SMR_lon * Math.PI / 180;
+            double α1 = initialBearing; // radians
+            double s = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
 
             // allow alternative ellipsoid to be specified
             double a = 6378137.0;
