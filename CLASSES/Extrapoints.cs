@@ -60,5 +60,16 @@ namespace CLASSES
             if (NACp == "11") { return 3.0; }
             else { return double.NaN; }
         }
+        public double checkdistanceADSBv23(CAT21_v23 C21)
+        {
+            // comparamos los módulos de dos segmentos : el que une el ARP con 10 MN y el que une el ARP con el avión
+            double lat = C21.Lat_WGS_84;
+            double lon = C21.Lon_WGS_84;
+            // conversion de WGS a Cart
+            double[] cart = M.WGStoCartesian(lat, lon);
+
+            return Math.Sqrt(Math.Pow(cart[0], 2) + Math.Pow(cart[1], 2)) / 1851.85185185185;
+        }
+       
     }
 }
