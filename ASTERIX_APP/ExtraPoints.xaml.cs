@@ -268,21 +268,16 @@ namespace ASTERIX_APP
             MessageBox.Show("From 0 to 10NM: DONE\n" +
                 "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM: DONE\nGround:\n", "PROCESS");
 
-
             // Ground
             M.Create_ExtraTable_ADSB(acc_ADSB_Table_G);
             M.Create_ExtraTable_MLAT(acc_MLAT_Table_G);
-            fila = 0;
-            
+            fila = 0;            
             //comparar las tablas para tener los mismos vuelos en ambas         
             for (int j = 0; j < ADSB_Table_G.Rows.Count; j++)
             {
                 bool x = false;
-
-               
                 for (int i = fila; i < MLAT_Table_G.Rows.Count; i++)
                 {
-                    
                     if (ADSB_Table_G.Rows[j][1].ToString() == "NaN" || MLAT_Table_G.Rows[i][1].ToString() == "NaN") { break; }
 
                     string timebadmlat = Convert.ToString(MLAT_Table_G.Rows[i][1]);
@@ -311,8 +306,7 @@ namespace ASTERIX_APP
                             MLAT_Table_G.Rows[i][8]);
                     }
                     if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }
-                   
+                    else { }                   
                 }
             }
             MessageBox.Show("From 0 to 10NM: DONE\n" +
@@ -369,7 +363,6 @@ namespace ASTERIX_APP
                         MLAT_Table_G.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 8), Math.Round(lon, 8), Math.Round(modulo, 8), FL, C10.Time_Day, C10.Track_Vel_Cartesian[0], C10.Track_Vel_Cartesian[1]);
                         
                     }
-                  
                     else { }
                 }
                 if (CAT == 21)
@@ -378,7 +371,6 @@ namespace ASTERIX_APP
                     // Check if its version 23
                     if (SICSAC[0] == 107 && SICSAC[1] == 0)
                     {
-
                         CAT21_v23 C21 = new CAT21_v23();
                         C21.Decode21_23(arraystring);
                         double modulo21 = E.checkdistanceADSBv23(C21);
@@ -387,7 +379,6 @@ namespace ASTERIX_APP
                         // 0 to 10NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0  && modulo21 < 10)
                         {
-                      
                             ADSB_Table1.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_of_Day)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, "N/A", "N/A", "N/A", C21.Time_of_Day);
                         }
                         // 5 to 10NM
@@ -403,13 +394,11 @@ namespace ASTERIX_APP
                         // 0 to 2.5NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0  && modulo21 < 2.5 && modulo21 > 0)
                         {
-
                             ADSB_Table1_025.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_of_Day)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, "N/A", "N/A", "N/A", C21.Time_of_Day);
                         }
                         // Ground
                         if (C21.Target_ID != null && C21.FL <= 5 )
                         {
-                            
                             ADSB_Table1_G.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_of_Day)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, "N/A", "N/A", "N/A", C21.Time_of_Day);
                         }
                         else { }
@@ -426,29 +415,22 @@ namespace ASTERIX_APP
                         double GVA = E.Compute_GVA(C21); // Altitude Accuracy
                         // 0 to 10NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 10)
-                        {
-                          
-
+                        {  
                             ADSB_Table1.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                         }
                         // 5 to 10NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 10 && modulo21 > 5)
                         {
-                         
-
                             ADSB_Table1_510.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                         }
                         // 2.5 to 5NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 5 && modulo21 > 2.5)
                         {
-                  
-
                             ADSB_Table1_255.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                         }
                         // 0 to 2.5NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]" && modulo21 < 2.5 && modulo21 > 0)
                         {
-                        
                             ADSB_Table1_025.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                         }
                         // Ground
@@ -492,6 +474,9 @@ namespace ASTERIX_APP
         }
         private void getresults_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uploaded file has " + acc_MLAT_Table.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            progressbar.Visibility = Visibility.Visible;
+
             ResultsTable.Clear();
             double mean_error_lat = new double();
             double mean_error_lon = new double();
@@ -537,6 +522,9 @@ namespace ASTERIX_APP
         }
         private void getresults510_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_510.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            progressbar.Visibility = Visibility.Visible;
+
             ResultsTable_510.Clear();
             double mean_error_lat = new double();
             double mean_error_lon = new double();
@@ -579,10 +567,12 @@ namespace ASTERIX_APP
             Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_510.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
             Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
 
-        //    progressbar.Visibility = Visibility.Hidden;
+        progressbar.Visibility = Visibility.Hidden;
         }
         private void getresults255_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_255.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            progressbar.Visibility = Visibility.Visible;
             ResultsTable_255.Clear();
             double mean_error_lat = new double();
             double mean_error_lon = new double();
@@ -616,9 +606,7 @@ namespace ASTERIX_APP
             double lat_percentil = Percentile(2, 0.95, ResultsTable_255);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_255);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_255);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable_255);
-
-            
+            double alt_percentil = Percentile(5, 0.95, ResultsTable_255);            
 
             Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
             Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
@@ -626,9 +614,13 @@ namespace ASTERIX_APP
             Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_255.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
             Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
 
+            progressbar.Visibility = Visibility.Hidden;
         }
         private void getresults025_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_025.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            progressbar.Visibility = Visibility.Visible;
+
             ResultsTable_025.Clear();
             double mean_error_lat = new double();
             double mean_error_lon = new double();
@@ -669,9 +661,14 @@ namespace ASTERIX_APP
             Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_025.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
             Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_025.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
             Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+
+            progressbar.Visibility = Visibility.Collapsed;
         }
         private void getresults0_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_G.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            progressbar.Visibility = Visibility.Visible;
+
             ResultsTable_G.Clear();
             double mean_error_lat = new double();
             double mean_error_lon = new double();
@@ -713,12 +710,12 @@ namespace ASTERIX_APP
             Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_G.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
             Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
 
+            progressbar.Visibility = Visibility.Collapsed;
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-      
+        }      
         private double Probability_of_Detection(DataTable tableADSB, DataTable tableMLAT)
         {
             int count = 0;
@@ -754,9 +751,6 @@ namespace ASTERIX_APP
             }
             return 100 * Convert.ToDouble(count) / reportsADSB.Count;
         }
-
-
-
         private double Percentile(int col, double percentile, DataTable results)
         {
             int len = results.Rows.Count;

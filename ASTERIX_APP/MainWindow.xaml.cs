@@ -1147,6 +1147,7 @@ namespace ASTERIX_APP
         }
         private void dt_Timer_TickC21(object sender, EventArgs e)
         {
+            int newcat21 = 0;
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
@@ -1180,7 +1181,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                newcat21 = true;
+                                newcat21++;
                                 AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 350)
@@ -1245,7 +1246,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
-                                newcat21 = true;
+                                newcat21++;
                                 AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 400)
@@ -1272,7 +1273,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
-                            newcat21 = true;
+                            newcat21++;
                             AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                             i++;
                             if (map.Markers.Count >= 400)
@@ -1298,19 +1299,14 @@ namespace ASTERIX_APP
           
         }
         int fila = 0;
-        bool newcat21 = false;
         private void dt_Timer_TickMULTICAT(object sender, EventArgs e)
         {
+            int newcat21 = 0;
             if (checktrail.IsChecked == true)
             {
                 showonlyoneairplane();
             }
             else { }
-            //if (checktrail.IsChecked == true)
-            //{
-            //    showonlyoneairplane21(newcat21);
-            //}
-            //else { }
             Boolean x = true;
             tabla = F.multiplecattablereducida;
             
@@ -1370,7 +1366,6 @@ namespace ASTERIX_APP
                                 }
                                 if (F.CAT_list[i] == 21.23)
                                 {
-                                    newcat21 = true;
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                     AddMarkerC21(poscartx, poscarty, targetid);
@@ -1387,7 +1382,6 @@ namespace ASTERIX_APP
                                 }
                                 if (F.CAT_list[i] == 21)
                                 {
-                                    newcat21 = true;
                                     double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                     double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                     AddMarkerC21(poscartx, poscarty, targetid);
@@ -1433,9 +1427,7 @@ namespace ASTERIX_APP
                                 clock(tiempo - 1);
                             }
                             if (F.CAT_list[i] == 21.23 && tiempo == start1)
-                            {
-                                newcat21 = true;
-                                
+                            {                              
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                 AddMarkerC21(poscartx, poscarty, targetid);
@@ -1451,8 +1443,7 @@ namespace ASTERIX_APP
                                 clock(tiempo - 1);
                             }
                             if (F.CAT_list[i] == 21 && tiempo == start1)
-                            {
-                                newcat21 = true;
+                            {                               
                                 double lat = Convert.ToDouble(tabla.Rows[i][6]);
                                 double lon = Convert.ToDouble(tabla.Rows[i][7]);
                                 AddMarkerC21(lat, lon, targetid);
@@ -1510,8 +1501,7 @@ namespace ASTERIX_APP
                                 else { map.Markers[r].Shape.Visibility = Visibility.Collapsed; }
                             }
                         }
-                    }
-                 
+                    }             
                 }
                 x = false;
                 n++;
@@ -1712,34 +1702,9 @@ namespace ASTERIX_APP
                 {
                     map.Markers[i].Shape.Visibility = Visibility.Collapsed;
                 }
-                else
-                {
-
-                }
-
+                else { }
             }
         }
-        private void showonlyoneairplane21(bool newcat21)
-        {
-            for (int i = 0; i < map.Markers.Count; i++)
-            {
-                if (map.Markers[i].Shape != null && map.Markers[i].ZIndex != 2 && newcat21==false )
-                {
-                    map.Markers[i].Shape.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    if (newcat21 == true)
-                    {
-                        map.Markers[i].Shape.Visibility = Visibility.Collapsed;
-                    }
-                    else { }
-
-                }
-
-            }
-        }
-
         public void CheckCAT()
         {
             if (Math.Floor(F.CAT_list[0]) == 10)                
