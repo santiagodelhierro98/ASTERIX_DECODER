@@ -460,21 +460,27 @@ namespace ASTERIX_APP
             DataTable new_table = new DataTable();
             M.Create_ExtraTable_ADSB(new_table);
 
-            for (int i = 1; i<table.Rows.Count; i++)
+            for (int i = 0; i<table.Rows.Count; i++)
             {
-                if (table.Rows[i][0] == table.Rows[i -1][0] && table.Rows[i][1].ToString() == table.Rows[i - 1][1].ToString())
+                string callsign = table.Rows[i][0].ToString();
+                string hora = table.Rows[i][1].ToString();        
+                
+                int n = i + 1;
+                // SI NO ESTAN DUPLICAOS NO LE DECIMOS Q LO AÑADA GGGGGGGILIPOLLAS
+                while (n < table.Rows.Count && table.Rows[n][1].ToString() == hora)
                 {
-                    double lat = (Convert.ToDouble(table.Rows[i][2]) + Convert.ToDouble(table.Rows[i - 1][2])) / 2;
-                    double lon = (Convert.ToDouble(table.Rows[i][3]) + Convert.ToDouble(table.Rows[i - 1][3])) / 2;
-                    double dist = (Convert.ToDouble(table.Rows[i][4]) + Convert.ToDouble(table.Rows[i - 1][4])) / 2;
-                    double H = (Convert.ToDouble(table.Rows[i][5]) + Convert.ToDouble(table.Rows[i - 1][5])) / 2;
-                    double sec = (Convert.ToDouble(table.Rows[i][9]) + Convert.ToDouble(table.Rows[i - 1][9])) / 2;
+                    if (table.Rows[n][0].ToString() == callsign)
+                    {
+                        double lat = Math.Round((Convert.ToDouble(table.Rows[i][2]) + Convert.ToDouble(table.Rows[n][2])) / 2, 8);
+                        double lon = Math.Round((Convert.ToDouble(table.Rows[i][3]) + Convert.ToDouble(table.Rows[n][3])) / 2, 8);
+                        double dist = Math.Round((Convert.ToDouble(table.Rows[i][4]) + Convert.ToDouble(table.Rows[n][4])) / 2, 8);
+                        double H = Math.Round((Convert.ToDouble(table.Rows[i][5]) + Convert.ToDouble(table.Rows[n][5])) / 2, 8);
+                        double sec = Math.Round((Convert.ToDouble(table.Rows[i][9]) + Convert.ToDouble(table.Rows[n][9])) / 2, 8);
 
-                    new_table.Rows.Add(table.Rows[i][0], table.Rows[i][1], lat, lon, dist, H, table.Rows[i][6], table.Rows[i][7], table.Rows[i][8], sec);
-                }
-                else
-                {
-                    new_table.ImportRow(table.Rows[i - 1]);
+                        new_table.Rows.Add(table.Rows[i][0], table.Rows[i][1], lat, lon, dist, H, table.Rows[i][6], table.Rows[i][7], table.Rows[i][8], sec);
+                        break;
+                    }
+                    else { n++; }
                 }
             }
             return new_table;
