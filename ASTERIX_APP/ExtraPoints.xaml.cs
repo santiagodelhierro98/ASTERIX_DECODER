@@ -62,255 +62,262 @@ namespace ASTERIX_APP
         public ExtraPoints()
         {
             InitializeComponent();
-
+            
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Filter = "AST |*.ast";
             OpenFile.ShowDialog();
-            string path = OpenFile.FileName;
-
-            // 0 to 10
-            M.Create_ExtraTable_MLAT(MLAT_Table);
-            M.Create_ExtraTable_ADSB(ADSB_Table1);
-            M.Create_ResultsTable(ResultsTable);
-            // 5 to 10
-            M.Create_ExtraTable_MLAT(MLAT_Table_510);
-            M.Create_ExtraTable_ADSB(ADSB_Table1_510);
-            M.Create_ResultsTable(ResultsTable_510);
-            // 2.5 to 5
-            M.Create_ExtraTable_MLAT(MLAT_Table_255);
-            M.Create_ExtraTable_ADSB(ADSB_Table1_255);
-            M.Create_ResultsTable(ResultsTable_255);
-            // 0 to 2.5
-            M.Create_ExtraTable_MLAT(MLAT_Table_025);
-            M.Create_ExtraTable_ADSB(ADSB_Table1_025);
-            M.Create_ResultsTable(ResultsTable_025);
-            // ground
-            M.Create_ExtraTable_MLAT(MLAT_Table_G);
-            M.Create_ExtraTable_ADSB(ADSB_Table1_G);
-            M.Create_ResultsTable(ResultsTable_G);
-
-            leerEX(path);
-
-            ADSB_Table = ADSB_Reorganize(ADSB_Table1);
-            ADSB_Table_510 = ADSB_Reorganize(ADSB_Table1_510);
-            ADSB_Table_255 = ADSB_Reorganize(ADSB_Table1_255);
-            ADSB_Table_025 = ADSB_Reorganize(ADSB_Table1_025);
-            ADSB_Table_G = ADSB_Reorganize(ADSB_Table1_G);
-
-            MessageBox.Show("Computing radar performances.\nPlease be patient, this will take a few seconds.", "WARNING");
-
-            // 0 to 10
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table);
-            int fila = 0;
-            //comparar las tablas para tener los mismos vuelos en ambas
-            for (int j = 0; j < ADSB_Table.Rows.Count; j++)
+            // When you click Cancel
+            if (OpenFile.FileName == "")
             {
-                bool x = false;
-                for (int i = fila; i < MLAT_Table.Rows.Count; i++)
-                {
-                    if (ADSB_Table.Rows[j][1].ToString() == "NaN" || MLAT_Table.Rows[i][1].ToString() == "NaN") { break; }
-
-                    string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-
-                    if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
-                    double TimeDiff = Convert.ToDouble(ADSB_Table.Rows[j][9]) - Convert.ToDouble(MLAT_Table.Rows[i][6]);
-                    double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table.Rows[i][7]), Convert.ToDouble(MLAT_Table.Rows[i][8]));
-
-                    //si callsign y hora son iguales
-                    if (MLAT_Table.Rows[i][0].ToString() == ADSB_Table.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
-                    {
-                        acc_ADSB_Table.Rows.Add(ADSB_Table.Rows[j][0], ADSB_Table.Rows[j][1], ADSB_Table.Rows[j][2], ADSB_Table.Rows[j][3],
-                            ADSB_Table.Rows[j][4], ADSB_Table.Rows[j][5], ADSB_Table.Rows[j][6], ADSB_Table.Rows[j][7], ADSB_Table.Rows[j][8],
-                            ADSB_Table.Rows[j][9]);
-
-                        acc_MLAT_Table.Rows.Add(MLAT_Table.Rows[i][0], MLAT_Table.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0], 8),
-                            Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0],
-                            Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1]), 8), MLAT_Table.Rows[i][5], MLAT_Table.Rows[i][6], MLAT_Table.Rows[i][7],
-                            MLAT_Table.Rows[i][8]);
-                    }
-                    if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }
-                }
+                this.Close();
             }
-            MessageBox.Show("From 0 to 10NM: DONE\n" +
-                "From 5 to 10NM:\nFrom 2.5 to 5NM:\nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
+            else
+            { 
+                string path = OpenFile.FileName;
+                // 0 to 10
+                M.Create_ExtraTable_MLAT(MLAT_Table);
+                M.Create_ExtraTable_ADSB(ADSB_Table1);
+                M.Create_ResultsTable(ResultsTable);
+                // 5 to 10
+                M.Create_ExtraTable_MLAT(MLAT_Table_510);
+                M.Create_ExtraTable_ADSB(ADSB_Table1_510);
+                M.Create_ResultsTable(ResultsTable_510);
+                // 2.5 to 5
+                M.Create_ExtraTable_MLAT(MLAT_Table_255);
+                M.Create_ExtraTable_ADSB(ADSB_Table1_255);
+                M.Create_ResultsTable(ResultsTable_255);
+                // 0 to 2.5
+                M.Create_ExtraTable_MLAT(MLAT_Table_025);
+                M.Create_ExtraTable_ADSB(ADSB_Table1_025);
+                M.Create_ResultsTable(ResultsTable_025);
+                // ground
+                M.Create_ExtraTable_MLAT(MLAT_Table_G);
+                M.Create_ExtraTable_ADSB(ADSB_Table1_G);
+                M.Create_ResultsTable(ResultsTable_G);
 
-            // 5 to 10
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table_510);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table_510);
-            fila = 0;
-            //comparar las tablas para tener los mismos vuelos en ambas
-            for (int j = 0; j < ADSB_Table_510.Rows.Count; j++)
-            {
-                bool x = false;
-                for (int i = fila; i < MLAT_Table_510.Rows.Count; i++)
+                leerEX(path);
+
+                ADSB_Table = ADSB_Reorganize(ADSB_Table1);
+                ADSB_Table_510 = ADSB_Reorganize(ADSB_Table1_510);
+                ADSB_Table_255 = ADSB_Reorganize(ADSB_Table1_255);
+                ADSB_Table_025 = ADSB_Reorganize(ADSB_Table1_025);
+                ADSB_Table_G = ADSB_Reorganize(ADSB_Table1_G);
+
+                MessageBox.Show("Computing radar performances.\nPlease be patient, this will take a few seconds.", "WARNING");
+
+                // 0 to 10
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table);
+                int fila = 0;
+                //comparar las tablas para tener los mismos vuelos en ambas
+                for (int j = 0; j < ADSB_Table.Rows.Count; j++)
                 {
-                    if (ADSB_Table_510.Rows[j][1].ToString() == "NaN" || MLAT_Table_510.Rows[i][1].ToString() == "NaN") { break; }
-
-                    string timebadmlat = Convert.ToString(MLAT_Table_510.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table_510.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-
-                    if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
-                    double TimeDiff = Convert.ToDouble(ADSB_Table_510.Rows[j][9]) - Convert.ToDouble(MLAT_Table_510.Rows[i][6]);
-                    double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_510.Rows[i][7]), Convert.ToDouble(MLAT_Table_510.Rows[i][8]));
-
-                    //si callsign y hora son iguales
-                    if (MLAT_Table_510.Rows[i][0].ToString() == ADSB_Table_510.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                    bool x = false;
+                    for (int i = fila; i < MLAT_Table.Rows.Count; i++)
                     {
-                        acc_ADSB_Table_510.Rows.Add(ADSB_Table_510.Rows[j][0], ADSB_Table_510.Rows[j][1], ADSB_Table_510.Rows[j][2], ADSB_Table_510.Rows[j][3],
-                            ADSB_Table_510.Rows[j][4], ADSB_Table_510.Rows[j][5], ADSB_Table_510.Rows[j][6], ADSB_Table_510.Rows[j][7], ADSB_Table_510.Rows[j][8],
-                            ADSB_Table_510.Rows[j][9]);
+                        if (ADSB_Table.Rows[j][1].ToString() == "NaN" || MLAT_Table.Rows[i][1].ToString() == "NaN") { break; }
 
-                        acc_MLAT_Table_510.Rows.Add(MLAT_Table_510.Rows[i][0], MLAT_Table_510.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_510.Rows[i][2]) + ext[0], 8),
-                            Math.Round(Convert.ToDouble(MLAT_Table_510.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_510.Rows[i][2]) + ext[0],
-                            Convert.ToDouble(MLAT_Table_510.Rows[i][3]) + ext[1]), 8), MLAT_Table_510.Rows[i][5], MLAT_Table_510.Rows[i][6], MLAT_Table_510.Rows[i][7],
-                            MLAT_Table_510.Rows[i][8]);
+                        string timebadmlat = Convert.ToString(MLAT_Table.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
+                        double TimeDiff = Convert.ToDouble(ADSB_Table.Rows[j][9]) - Convert.ToDouble(MLAT_Table.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table.Rows[i][7]), Convert.ToDouble(MLAT_Table.Rows[i][8]));
+
+                        //si callsign y hora son iguales
+                        if (MLAT_Table.Rows[i][0].ToString() == ADSB_Table.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table.Rows.Add(ADSB_Table.Rows[j][0], ADSB_Table.Rows[j][1], ADSB_Table.Rows[j][2], ADSB_Table.Rows[j][3],
+                                ADSB_Table.Rows[j][4], ADSB_Table.Rows[j][5], ADSB_Table.Rows[j][6], ADSB_Table.Rows[j][7], ADSB_Table.Rows[j][8],
+                                ADSB_Table.Rows[j][9]);
+
+                            acc_MLAT_Table.Rows.Add(MLAT_Table.Rows[i][0], MLAT_Table.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table.Rows[i][3]) + ext[1]), 8), MLAT_Table.Rows[i][5], MLAT_Table.Rows[i][6], MLAT_Table.Rows[i][7],
+                                MLAT_Table.Rows[i][8]);
+                        }
+                        if (tiempoadsb + 2 == tiempomlat) { break; }
+                        else { }
                     }
-                    if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }
                 }
-            }
-            MessageBox.Show("From 0 to 10NM: DONE\n" +
-                "From 5 to 10NM: DONE\nFrom 2.5 to 5NM:\nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
+                MessageBox.Show("From 0 to 10NM: DONE\n" +
+                    "From 5 to 10NM:\nFrom 2.5 to 5NM:\nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
 
-            // 2.5 to 5
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table_255);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table_255);
-            fila = 0;
-            //comparar las tablas para tener los mismos vuelos en ambas
-            for (int j = 0; j < ADSB_Table_255.Rows.Count; j++)
-            {
-                bool x = false;
-                for (int i = fila; i < MLAT_Table_255.Rows.Count; i++)
+                // 5 to 10
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table_510);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table_510);
+                fila = 0;
+                //comparar las tablas para tener los mismos vuelos en ambas
+                for (int j = 0; j < ADSB_Table_510.Rows.Count; j++)
                 {
-                    if (ADSB_Table_255.Rows[j][1].ToString() == "NaN" || MLAT_Table_255.Rows[i][1].ToString() == "NaN") { break; }
-
-                    string timebadmlat = Convert.ToString(MLAT_Table_255.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table_255.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-
-                    if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
-                    double TimeDiff = Convert.ToDouble(ADSB_Table_255.Rows[j][9]) - Convert.ToDouble(MLAT_Table_255.Rows[i][6]);
-                    double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_255.Rows[i][7]), Convert.ToDouble(MLAT_Table_255.Rows[i][8]));
-
-                    //si callsign y hora son iguales
-                    if (MLAT_Table_255.Rows[i][0].ToString() == ADSB_Table_255.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                    bool x = false;
+                    for (int i = fila; i < MLAT_Table_510.Rows.Count; i++)
                     {
-                        acc_ADSB_Table_255.Rows.Add(ADSB_Table_255.Rows[j][0], ADSB_Table_255.Rows[j][1], ADSB_Table_255.Rows[j][2], ADSB_Table_255.Rows[j][3],
-                            ADSB_Table_255.Rows[j][4], ADSB_Table_255.Rows[j][5], ADSB_Table_255.Rows[j][6], ADSB_Table_255.Rows[j][7], ADSB_Table_255.Rows[j][8],
-                            ADSB_Table_255.Rows[j][9]);
+                        if (ADSB_Table_510.Rows[j][1].ToString() == "NaN" || MLAT_Table_510.Rows[i][1].ToString() == "NaN") { break; }
 
-                        acc_MLAT_Table_255.Rows.Add(MLAT_Table_255.Rows[i][0], MLAT_Table_255.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_255.Rows[i][2]) + ext[0], 8),
-                            Math.Round(Convert.ToDouble(MLAT_Table_255.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_255.Rows[i][2]) + ext[0],
-                            Convert.ToDouble(MLAT_Table_255.Rows[i][3]) + ext[1]), 8), MLAT_Table_255.Rows[i][5], MLAT_Table_255.Rows[i][6], MLAT_Table_255.Rows[i][7],
-                            MLAT_Table_255.Rows[i][8]);
+                        string timebadmlat = Convert.ToString(MLAT_Table_510.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table_510.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
+                        double TimeDiff = Convert.ToDouble(ADSB_Table_510.Rows[j][9]) - Convert.ToDouble(MLAT_Table_510.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_510.Rows[i][7]), Convert.ToDouble(MLAT_Table_510.Rows[i][8]));
+
+                        //si callsign y hora son iguales
+                        if (MLAT_Table_510.Rows[i][0].ToString() == ADSB_Table_510.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table_510.Rows.Add(ADSB_Table_510.Rows[j][0], ADSB_Table_510.Rows[j][1], ADSB_Table_510.Rows[j][2], ADSB_Table_510.Rows[j][3],
+                                ADSB_Table_510.Rows[j][4], ADSB_Table_510.Rows[j][5], ADSB_Table_510.Rows[j][6], ADSB_Table_510.Rows[j][7], ADSB_Table_510.Rows[j][8],
+                                ADSB_Table_510.Rows[j][9]);
+
+                            acc_MLAT_Table_510.Rows.Add(MLAT_Table_510.Rows[i][0], MLAT_Table_510.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_510.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table_510.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_510.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table_510.Rows[i][3]) + ext[1]), 8), MLAT_Table_510.Rows[i][5], MLAT_Table_510.Rows[i][6], MLAT_Table_510.Rows[i][7],
+                                MLAT_Table_510.Rows[i][8]);
+                        }
+                        if (tiempoadsb + 2 == tiempomlat) { break; }
+                        else { }
                     }
-                    if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }
                 }
-            }
-            MessageBox.Show("From 0 to 10NM: DONE\n" +
-                "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
+                MessageBox.Show("From 0 to 10NM: DONE\n" +
+                    "From 5 to 10NM: DONE\nFrom 2.5 to 5NM:\nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
 
-
-            // 0 to 2.5
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table_025);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table_025);
-            fila = 0;
-            //comparar las tablas para tener los mismos vuelos en ambas
-            for (int j = 0; j < ADSB_Table_025.Rows.Count; j++)
-            {
-                bool x = false;
-                for (int i = fila; i < MLAT_Table_025.Rows.Count; i++)
+                // 2.5 to 5
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table_255);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table_255);
+                fila = 0;
+                //comparar las tablas para tener los mismos vuelos en ambas
+                for (int j = 0; j < ADSB_Table_255.Rows.Count; j++)
                 {
-                    if (ADSB_Table_025.Rows[j][1].ToString() == "NaN" || MLAT_Table_025.Rows[i][1].ToString() == "NaN") { break; }
-
-                    string timebadmlat = Convert.ToString(MLAT_Table_025.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table_025.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-
-                    if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
-                    double TimeDiff = Convert.ToDouble(ADSB_Table_025.Rows[j][9]) - Convert.ToDouble(MLAT_Table_025.Rows[i][6]);
-                    double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_025.Rows[i][7]), Convert.ToDouble(MLAT_Table_025.Rows[i][8]));
-
-                    //si callsign y hora son iguales
-                    if (MLAT_Table_025.Rows[i][0].ToString() == ADSB_Table_025.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                    bool x = false;
+                    for (int i = fila; i < MLAT_Table_255.Rows.Count; i++)
                     {
-                        acc_ADSB_Table_025.Rows.Add(ADSB_Table_025.Rows[j][0], ADSB_Table_025.Rows[j][1], ADSB_Table_025.Rows[j][2], ADSB_Table_025.Rows[j][3],
-                            ADSB_Table_025.Rows[j][4], ADSB_Table_025.Rows[j][5], ADSB_Table_025.Rows[j][6], ADSB_Table_025.Rows[j][7], ADSB_Table_025.Rows[j][8],
-                            ADSB_Table_025.Rows[j][9]);
+                        if (ADSB_Table_255.Rows[j][1].ToString() == "NaN" || MLAT_Table_255.Rows[i][1].ToString() == "NaN") { break; }
 
-                        acc_MLAT_Table_025.Rows.Add(MLAT_Table_025.Rows[i][0], MLAT_Table_025.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_025.Rows[i][2]) + ext[0], 8),
-                            Math.Round(Convert.ToDouble(MLAT_Table_025.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_025.Rows[i][2]) + ext[0],
-                            Convert.ToDouble(MLAT_Table_025.Rows[i][3]) + ext[1]), 8), MLAT_Table_025.Rows[i][5], MLAT_Table_025.Rows[i][6], MLAT_Table_025.Rows[i][7],
-                            MLAT_Table_025.Rows[i][8]);
+                        string timebadmlat = Convert.ToString(MLAT_Table_255.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table_255.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
+                        double TimeDiff = Convert.ToDouble(ADSB_Table_255.Rows[j][9]) - Convert.ToDouble(MLAT_Table_255.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_255.Rows[i][7]), Convert.ToDouble(MLAT_Table_255.Rows[i][8]));
+
+                        //si callsign y hora son iguales
+                        if (MLAT_Table_255.Rows[i][0].ToString() == ADSB_Table_255.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table_255.Rows.Add(ADSB_Table_255.Rows[j][0], ADSB_Table_255.Rows[j][1], ADSB_Table_255.Rows[j][2], ADSB_Table_255.Rows[j][3],
+                                ADSB_Table_255.Rows[j][4], ADSB_Table_255.Rows[j][5], ADSB_Table_255.Rows[j][6], ADSB_Table_255.Rows[j][7], ADSB_Table_255.Rows[j][8],
+                                ADSB_Table_255.Rows[j][9]);
+
+                            acc_MLAT_Table_255.Rows.Add(MLAT_Table_255.Rows[i][0], MLAT_Table_255.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_255.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table_255.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_255.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table_255.Rows[i][3]) + ext[1]), 8), MLAT_Table_255.Rows[i][5], MLAT_Table_255.Rows[i][6], MLAT_Table_255.Rows[i][7],
+                                MLAT_Table_255.Rows[i][8]);
+                        }
+                        if (tiempoadsb + 2 == tiempomlat) { break; }
+                        else { }
                     }
-                    if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }
                 }
-            }
-            MessageBox.Show("From 0 to 10NM: DONE\n" +
-                "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM: DONE\nGround:\n", "PROCESS");
+                MessageBox.Show("From 0 to 10NM: DONE\n" +
+                    "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM:\nGround:\n", "PROCESS");
 
-            // Ground
-            M.Create_ExtraTable_ADSB(acc_ADSB_Table_G);
-            M.Create_ExtraTable_MLAT(acc_MLAT_Table_G);
-            fila = 0;            
-            //comparar las tablas para tener los mismos vuelos en ambas         
-            for (int j = 0; j < ADSB_Table_G.Rows.Count; j++)
-            {
-                bool x = false;
-                for (int i = fila; i < MLAT_Table_G.Rows.Count; i++)
+
+                // 0 to 2.5
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table_025);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table_025);
+                fila = 0;
+                //comparar las tablas para tener los mismos vuelos en ambas
+                for (int j = 0; j < ADSB_Table_025.Rows.Count; j++)
                 {
-                    if (ADSB_Table_G.Rows[j][1].ToString() == "NaN" || MLAT_Table_G.Rows[i][1].ToString() == "NaN") { break; }
-
-                    string timebadmlat = Convert.ToString(MLAT_Table_G.Rows[i][1]);
-                    string[] tiemposplitedmlat = timebadmlat.Split(':');
-                    int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
-                    string timebadadsb = Convert.ToString(ADSB_Table_G.Rows[j][1]);
-                    string[] tiemposplitedadsb = timebadadsb.Split(':');
-                    int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
-
-                    if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
-                    double TimeDiff = Convert.ToDouble(ADSB_Table_G.Rows[j][9]) - Convert.ToDouble(MLAT_Table_G.Rows[i][6]);
-                    double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_G.Rows[i][7]), Convert.ToDouble(MLAT_Table_G.Rows[i][8]));
-
-                    string MLATid = MLAT_Table_G.Rows[i][0].ToString();
-                    string ADSBid = ADSB_Table_G.Rows[j][0].ToString();
-                    //si callsign y hora son iguales
-                    if (MLATid == ADSBid && tiempoadsb == tiempomlat)
+                    bool x = false;
+                    for (int i = fila; i < MLAT_Table_025.Rows.Count; i++)
                     {
-                        acc_ADSB_Table_G.Rows.Add(ADSB_Table_G.Rows[j][0], ADSB_Table_G.Rows[j][1], ADSB_Table_G.Rows[j][2], ADSB_Table_G.Rows[j][3],
-                            ADSB_Table_G.Rows[j][4], ADSB_Table_G.Rows[j][5], ADSB_Table_G.Rows[j][6], ADSB_Table_G.Rows[j][7], ADSB_Table_G.Rows[j][8],
-                            ADSB_Table_G.Rows[j][9]);
+                        if (ADSB_Table_025.Rows[j][1].ToString() == "NaN" || MLAT_Table_025.Rows[i][1].ToString() == "NaN") { break; }
 
-                        acc_MLAT_Table_G.Rows.Add(MLAT_Table_G.Rows[i][0], MLAT_Table_G.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_G.Rows[i][2]) + ext[0], 8),
-                            Math.Round(Convert.ToDouble(MLAT_Table_G.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_G.Rows[i][2]) + ext[0],
-                            Convert.ToDouble(MLAT_Table_G.Rows[i][3]) + ext[1]), 8), MLAT_Table_G.Rows[i][5], MLAT_Table_G.Rows[i][6], MLAT_Table_G.Rows[i][7],
-                            MLAT_Table_G.Rows[i][8]);
+                        string timebadmlat = Convert.ToString(MLAT_Table_025.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table_025.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
+                        double TimeDiff = Convert.ToDouble(ADSB_Table_025.Rows[j][9]) - Convert.ToDouble(MLAT_Table_025.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_025.Rows[i][7]), Convert.ToDouble(MLAT_Table_025.Rows[i][8]));
+
+                        //si callsign y hora son iguales
+                        if (MLAT_Table_025.Rows[i][0].ToString() == ADSB_Table_025.Rows[j][0].ToString() && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table_025.Rows.Add(ADSB_Table_025.Rows[j][0], ADSB_Table_025.Rows[j][1], ADSB_Table_025.Rows[j][2], ADSB_Table_025.Rows[j][3],
+                                ADSB_Table_025.Rows[j][4], ADSB_Table_025.Rows[j][5], ADSB_Table_025.Rows[j][6], ADSB_Table_025.Rows[j][7], ADSB_Table_025.Rows[j][8],
+                                ADSB_Table_025.Rows[j][9]);
+
+                            acc_MLAT_Table_025.Rows.Add(MLAT_Table_025.Rows[i][0], MLAT_Table_025.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_025.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table_025.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_025.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table_025.Rows[i][3]) + ext[1]), 8), MLAT_Table_025.Rows[i][5], MLAT_Table_025.Rows[i][6], MLAT_Table_025.Rows[i][7],
+                                MLAT_Table_025.Rows[i][8]);
+                        }
+                        if (tiempoadsb + 2 == tiempomlat) { break; }
+                        else { }
                     }
-                    if (tiempoadsb + 2 == tiempomlat) { break; }
-                    else { }                   
                 }
+                MessageBox.Show("From 0 to 10NM: DONE\n" +
+                    "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM: DONE\nGround:\n", "PROCESS");
+
+                // Ground
+                M.Create_ExtraTable_ADSB(acc_ADSB_Table_G);
+                M.Create_ExtraTable_MLAT(acc_MLAT_Table_G);
+                fila = 0;
+                //comparar las tablas para tener los mismos vuelos en ambas         
+                for (int j = 0; j < ADSB_Table_G.Rows.Count; j++)
+                {
+                    bool x = false;
+                    for (int i = fila; i < MLAT_Table_G.Rows.Count; i++)
+                    {
+                        if (ADSB_Table_G.Rows[j][1].ToString() == "NaN" || MLAT_Table_G.Rows[i][1].ToString() == "NaN") { break; }
+
+                        string timebadmlat = Convert.ToString(MLAT_Table_G.Rows[i][1]);
+                        string[] tiemposplitedmlat = timebadmlat.Split(':');
+                        int tiempomlat = M.gettimecorrectly(tiemposplitedmlat);
+                        string timebadadsb = Convert.ToString(ADSB_Table_G.Rows[j][1]);
+                        string[] tiemposplitedadsb = timebadadsb.Split(':');
+                        int tiempoadsb = M.gettimecorrectly(tiemposplitedadsb);
+
+                        if (x == false && tiempoadsb == tiempomlat) { fila = i; x = true; }
+                        double TimeDiff = Convert.ToDouble(ADSB_Table_G.Rows[j][9]) - Convert.ToDouble(MLAT_Table_G.Rows[i][6]);
+                        double[] ext = Extrapolation(TimeDiff, Convert.ToDouble(MLAT_Table_G.Rows[i][7]), Convert.ToDouble(MLAT_Table_G.Rows[i][8]));
+
+                        string MLATid = MLAT_Table_G.Rows[i][0].ToString();
+                        string ADSBid = ADSB_Table_G.Rows[j][0].ToString();
+                        //si callsign y hora son iguales
+                        if (MLATid == ADSBid && tiempoadsb == tiempomlat)
+                        {
+                            acc_ADSB_Table_G.Rows.Add(ADSB_Table_G.Rows[j][0], ADSB_Table_G.Rows[j][1], ADSB_Table_G.Rows[j][2], ADSB_Table_G.Rows[j][3],
+                                ADSB_Table_G.Rows[j][4], ADSB_Table_G.Rows[j][5], ADSB_Table_G.Rows[j][6], ADSB_Table_G.Rows[j][7], ADSB_Table_G.Rows[j][8],
+                                ADSB_Table_G.Rows[j][9]);
+
+                            acc_MLAT_Table_G.Rows.Add(MLAT_Table_G.Rows[i][0], MLAT_Table_G.Rows[i][1], Math.Round(Convert.ToDouble(MLAT_Table_G.Rows[i][2]) + ext[0], 8),
+                                Math.Round(Convert.ToDouble(MLAT_Table_G.Rows[i][3]) + ext[1], 8), Math.Round(E.checkdistanceMLAT_Acc(Convert.ToDouble(MLAT_Table_G.Rows[i][2]) + ext[0],
+                                Convert.ToDouble(MLAT_Table_G.Rows[i][3]) + ext[1]), 8), MLAT_Table_G.Rows[i][5], MLAT_Table_G.Rows[i][6], MLAT_Table_G.Rows[i][7],
+                                MLAT_Table_G.Rows[i][8]);
+                        }
+                        if (tiempoadsb + 2 == tiempomlat) { break; }
+                        else { }
+                    }
+                }
+                MessageBox.Show("From 0 to 10NM: DONE\n" +
+                    "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM: DONE\nGround: DONE\n", "PROCESS");
             }
-            MessageBox.Show("From 0 to 10NM: DONE\n" +
-                "From 5 to 10NM: DONE\nFrom 2.5 to 5NM: DONE \nFrom 0 to 2.5NM: DONE\nGround: DONE\n", "PROCESS");
         }
         public void leerEX(string path)
         {
@@ -506,17 +513,21 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table, MLAT_Table);
-            double lat_percentil = Percentile(2, 0.95, ResultsTable);
-            double lon_percentil = Percentile(3, 0.95, ResultsTable);
-            double dist_percentil = Percentile(4, 0.95, ResultsTable);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable);
+            if (ADSB_Table.Rows.Count == 0 || MLAT_Table.Rows.Count == 0) { MessageBox.Show("Any flight within this range interval.","WARNING"); }
+            else
+            {
+                Pd = Probability_of_Detection(ADSB_Table, MLAT_Table);
+                double lat_percentil = Percentile(2, 0.95, ResultsTable);
+                double lon_percentil = Percentile(3, 0.95, ResultsTable);
+                double dist_percentil = Percentile(4, 0.95, ResultsTable);
+                double alt_percentil = Percentile(5, 0.95, ResultsTable);
 
-            Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) +" º";
-            Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
-            Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
-            Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+                Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
+                Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
+                Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
+                Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
+                Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            }            
 
             progressbar.Visibility = Visibility.Hidden;
         }
@@ -555,19 +566,22 @@ namespace ASTERIX_APP
                   
             Res_Table.ItemsSource = ResultsTable_510.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table);
-            double lat_percentil = Percentile(2, 0.95, ResultsTable_510);
-            double lon_percentil = Percentile(3, 0.95, ResultsTable_510);
-            double dist_percentil = Percentile(4, 0.95, ResultsTable_510);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable_510);
+            if (ADSB_Table_510.Rows.Count == 0 || MLAT_Table.Rows.Count == 0) { MessageBox.Show("Any flight within this range interval.", "WARNING"); }
+            else
+            {
+                Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table);
+                double lat_percentil = Percentile(2, 0.95, ResultsTable_510);
+                double lon_percentil = Percentile(3, 0.95, ResultsTable_510);
+                double dist_percentil = Percentile(4, 0.95, ResultsTable_510);
+                double alt_percentil = Percentile(5, 0.95, ResultsTable_510);
 
-            Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_510.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
-            Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_510.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
-            Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_510.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
-            Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_510.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
-
-        progressbar.Visibility = Visibility.Hidden;
+                Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_510.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
+                Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_510.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
+                Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_510.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
+                Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_510.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
+                Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            }
+            progressbar.Visibility = Visibility.Hidden;
         }
         private void getresults255_Click(object sender, RoutedEventArgs e)
         {
@@ -602,18 +616,21 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_255.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_255, MLAT_Table);
-            double lat_percentil = Percentile(2, 0.95, ResultsTable_255);
-            double lon_percentil = Percentile(3, 0.95, ResultsTable_255);
-            double dist_percentil = Percentile(4, 0.95, ResultsTable_255);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable_255);            
+            if (ADSB_Table_255.Rows.Count == 0 || MLAT_Table.Rows.Count == 0) { MessageBox.Show("Any flight within this range interval.", "WARNING"); }
+            else
+            {
+                Pd = Probability_of_Detection(ADSB_Table_255, MLAT_Table);
+                double lat_percentil = Percentile(2, 0.95, ResultsTable_255);
+                double lon_percentil = Percentile(3, 0.95, ResultsTable_255);
+                double dist_percentil = Percentile(4, 0.95, ResultsTable_255);
+                double alt_percentil = Percentile(5, 0.95, ResultsTable_255);
 
-            Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
-            Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
-            Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_255.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
-            Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_255.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
-
+                Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
+                Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_255.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
+                Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_255.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
+                Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_255.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
+                Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            }
             progressbar.Visibility = Visibility.Hidden;
         }
         private void getresults025_Click(object sender, RoutedEventArgs e)
@@ -650,17 +667,21 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_025.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table);
-            double lat_percentil = Percentile(2, 0.95, ResultsTable_025);
-            double lon_percentil = Percentile(3, 0.95, ResultsTable_025);
-            double dist_percentil = Percentile(4, 0.95, ResultsTable_025);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable_025);
+            if (ADSB_Table_025.Rows.Count == 0 || MLAT_Table.Rows.Count == 0) { MessageBox.Show("Any flight within this range interval.", "WARNING"); }
+            else
+            {
+                Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table);
+                double lat_percentil = Percentile(2, 0.95, ResultsTable_025);
+                double lon_percentil = Percentile(3, 0.95, ResultsTable_025);
+                double dist_percentil = Percentile(4, 0.95, ResultsTable_025);
+                double alt_percentil = Percentile(5, 0.95, ResultsTable_025);
 
-            Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_025.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
-            Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_025.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
-            Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_025.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
-            Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_025.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+                Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_025.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
+                Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_025.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
+                Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_025.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
+                Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_025.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
+                Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            }            
 
             progressbar.Visibility = Visibility.Collapsed;
         }
@@ -697,19 +718,21 @@ namespace ASTERIX_APP
                 ResultsTable_G.Rows.Add(callsign, time, Math.Round(precision_lat, 8), Math.Round(precision_lon, 8), Math.Round(precision_R, 8), Math.Round(altitude_precision, 8));
             }
             Res_Table.ItemsSource = ResultsTable_G.DefaultView;
+            if (ADSB_Table_G.Rows.Count == 0 || MLAT_Table.Rows.Count == 0) { MessageBox.Show("Any flight within this range interval.", "WARNING"); }
+            else
+            {
+                Pd = Probability_of_Detection(ADSB_Table_G, MLAT_Table);
+                double lat_percentil = Percentile(2, 0.95, ResultsTable_G);
+                double lon_percentil = Percentile(3, 0.95, ResultsTable_G);
+                double dist_percentil = Percentile(4, 0.95, ResultsTable_G);
+                double alt_percentil = Percentile(5, 0.95, ResultsTable_G);
 
-            Pd = Probability_of_Detection(ADSB_Table_G, MLAT_Table);
-            double lat_percentil = Percentile(2, 0.95, ResultsTable_G);
-            double lon_percentil = Percentile(3, 0.95, ResultsTable_G);
-            double dist_percentil = Percentile(4, 0.95, ResultsTable_G);
-            double alt_percentil = Percentile(5, 0.95, ResultsTable_G);
-
-            Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_G.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
-            Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_G.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
-            Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_G.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
-            Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_G.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
-            Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
-
+                Lat_Av.Content = "Latitude: " + Math.Round(mean_error_lat / acc_ADSB_Table_G.Rows.Count, 5) + " º / " + Math.Round(lat_percentil, 5) + " º";
+                Lon_Av.Content = "Longitude: " + Math.Round(mean_error_lon / acc_ADSB_Table_G.Rows.Count, 5) + " º / " + Math.Round(lon_percentil, 5) + " º";
+                Dist_Av.Content = "Distance: " + Math.Round(mean_error_R / acc_ADSB_Table_G.Rows.Count, 5) + " m / " + Math.Round(dist_percentil, 6) + " m";
+                Alt_Av.Content = "Altitude: " + Math.Round(mean_error_alt / acc_ADSB_Table_G.Rows.Count, 5) + " ft / " + Math.Round(alt_percentil, 5) + " ft";
+                Pd_10NM.Content = "Pd: " + Math.Round(Pd, 5) + " %";
+            }
             progressbar.Visibility = Visibility.Collapsed;
         }
         private void Close_Click(object sender, RoutedEventArgs e)
