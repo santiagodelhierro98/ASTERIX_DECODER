@@ -24,7 +24,7 @@ namespace ASTERIX_APP
         }
         private void Intrepids_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Only multi-category (SMR/MLAT and ADS-B version 2.1) supported.", "WARNING");
+            MessageBox.Show("Only multi-category (SMR/MLAT and ADS-B version 2.1/0.23) supported.", "WARNING");
             loading.Visibility = Visibility.Visible;
             var ExtraWork = new ExtraPoints();              
             ExtraWork.Show();

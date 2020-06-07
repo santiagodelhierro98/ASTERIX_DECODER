@@ -48,7 +48,6 @@ namespace CLASSES
             int contadorCAT21 = 0;
 
             bool multicat = M.IsAMulticatFile(listahex);
-
             for (int q = 0; q < listahex.Count; q++)
             {
                 string[] arraystring = listahex[q];
@@ -67,57 +66,49 @@ namespace CLASSES
 
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
-                            double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
-                            // lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            // lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-
                             // CAT10 reduced table for maptrack SMR
                             tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                Math.Round(WGS[0], 2), Math.Round(WGS[1], 2), C10.Target_Add, C10.Track_Num);
+                                Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
+                                C10.Target_Add, C10.Track_Num);
                         }
                         else
                         {
-                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
-                            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
-                            // lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            // lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-
                             // CAT10 reduced table for maptrack MLAT
                             tablacat10reducida.Rows.Add(contadorCAT10, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                Math.Round(WGS[0], 2), Math.Round(WGS[1], 2), C10.Target_Add, C10.Track_Num);
+                                Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 2),
+                                C10.Target_Add, C10.Track_Num);
                         }
 
                         // Complete CAT10 table
                         tablaCAT10.Rows.Add(contadorCAT10,
-                            CAT, 
-                            C10.Data_Source_ID[0], 
-                            C10.Data_Source_ID[1], 
-                            C10.Target_ID, 
-                            C10.Track_Num, 
+                            CAT,
+                            C10.Data_Source_ID[0],
+                            C10.Data_Source_ID[1],
+                            C10.Target_ID,
+                            C10.Track_Num,
                             "Click to View Data",
-                            C10.Message_Type, 
-                            M.convert_to_hms(Math.Floor(C10.Time_Day)), 
-                            "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")", 
+                            C10.Message_Type,
+                            M.convert_to_hms(Math.Floor(C10.Time_Day)),
+                            "(" + C10.Pos_WGS84[0] + ", " + C10.Pos_WGS84[1] + ")",
                             "(" + C10.Pos_PolarCoord[0] + ", " + C10.Pos_PolarCoord[1] + ")",
-                            "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")", 
-                            "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")", 
-                            "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")", 
-                            "Click to View Data", 
-                            C10.Mode3A_Code,
-                            C10.Target_Add, 
-                            "Click to View Data", 
-                            C10.Fleet_ID, 
-                            C10.FL[2], 
-                            C10.Height,
-                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")", 
-                            C10.Target_Size_Heading[1], 
-                            "Click to View Data", 
+                            "(" + C10.Pos_Cartesian[0] + ", " + C10.Pos_Cartesian[1] + ")",
+                            "(" + C10.Track_Vel_Polar[0] + ", " + C10.Track_Vel_Polar[1] + ")",
+                            "(" + C10.Track_Vel_Cartesian[0] + ", " + C10.Track_Vel_Cartesian[1] + ")",
                             "Click to View Data",
-                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")", 
-                            C10.StndrdDev_Position[2], 
-                            "Click to View Data", 
-                            C10.Amplitude, 
+                            C10.Mode3A_Code,
+                            C10.Target_Add,
+                            "Click to View Data",
+                            C10.Fleet_ID,
+                            C10.FL[2],
+                            C10.Height,
+                            "(" + C10.Target_Size_Heading[0] + ", " + C10.Target_Size_Heading[2] + ")",
+                            C10.Target_Size_Heading[1],
+                            "Click to View Data",
+                            "Click to View Data",
+                            "(" + C10.StndrdDev_Position[0] + ", " + C10.StndrdDev_Position[1] + ")",
+                            C10.StndrdDev_Position[2],
+                            "Click to View Data",
+                            C10.Amplitude,
                             "(" + C10.Acceleration[0] + ", " + C10.Acceleration[1] + ")");
                     }
                     if (multicat == true)
@@ -129,29 +120,21 @@ namespace CLASSES
                         listaCAT10.Add(C10);
                         if (C10.Target_Rep_Descript[0] == "PSR")
                         {
-                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
-                            double[] WGS = M.Cartesian_to_WGS84_SMR(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
-                            // lat = M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            // lon = M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-
                             // Multiple CAT reduced table for maptrack SMR
                             multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                    Math.Round(WGS[0], 5), Math.Round(WGS[1], 5), C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                                    Math.Round(M.cartesiantolatsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonsmr(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
+                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
                         }
                         else
                         {
-                            double bearing = Math.Atan(Convert.ToDouble(C10.Track_Vel_Cartesian[1]) / Convert.ToDouble(C10.Track_Vel_Cartesian[0]));
-                            double[] WGS = M.Cartesian_to_WGS84_ARP(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1], bearing);
-                            // lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-                            // lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
-
                             // Multiple CAT reduced table for maptrack MLAT
                             multiplecattablereducida.Rows.Add(contadorGeneral, C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), C10.FL[2], C10.Data_Source_ID[0], C10.Data_Source_ID[1],
-                                    Math.Round(WGS[0], 5), Math.Round(WGS[1], 5), C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
-                        }                        
+                                    Math.Round(M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5), Math.Round(M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]), 5),
+                                    C10.Target_Add, C10.Track_Num, C10.Target_Rep_Descript[0], "", C10.Target_Rep_Descript[9], C10.Mode3A_Code[3]);
+                        }
 
                         // Complete Multiple CAT table
-                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, M.convert_to_hms(Math.Floor(C10.Time_Day)) ,
+                        tablaMultipleCAT.Rows.Add(contadorGeneral, CAT, C10.Data_Source_ID[0], C10.Data_Source_ID[1], C10.Target_ID, C10.Track_Num, M.convert_to_hms(Math.Floor(C10.Time_Day)),
                                "Click to View Data", "(" + Math.Round(C10.Pos_WGS84[0], 5) + ", " + Math.Round(C10.Pos_WGS84[1], 5) + ")", "Click to View Data", "Click to View Data", C10.FL[2], C10.Height,
                                C10.Target_Add, C10.Amplitude,
 
@@ -181,10 +164,10 @@ namespace CLASSES
                         // Complete CAT21 table
                         tablaCAT21.Rows.Add(contadorCAT21, CAT + 0.23, C21_v23.Data_Source_ID_SIC, C21_v23.Data_Source_ID_SAC, C21_v23.Target_ID, " ", "Click to View Data",
                             M.convert_to_hms(Math.Floor((C21_v23.Time_of_Day))), C21_v23.ToD_Acc, "(" + Math.Round(C21_v23.Lat_WGS_84, 4) + ", " + Math.Round(C21_v23.Lon_WGS_84, 4) + ")",
-                            "(" + Math.Round(C21_v23.Lat_WGS_84, 8) + ", " + Math.Round(C21_v23.Lon_WGS_84, 8) + ")", C21_v23.FL, C21_v23.GA, "", 
+                            "(" + Math.Round(C21_v23.Lat_WGS_84, 8) + ", " + Math.Round(C21_v23.Lon_WGS_84, 8) + ")", C21_v23.FL, C21_v23.GA, "",
                             "(" + C21_v23.Air_Speed[0] + ", " + C21_v23.Air_Speed[1] + ")", C21_v23.True_Airspeed, "(" + C21_v23.GS + ", " + C21_v23.TA + ")", "",
                             "(" + C21_v23.Rate_of_Turn[0] + ", " + C21_v23.Rate_of_Turn[1] + ")", C21_v23.Interm_Selec_Alt, C21_v23.FSSA, "", "", C21_v23.MH, C21_v23.BVR,
-                            C21_v23.GVR, "", "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "", "", "", "", "", "", "", "", "", 
+                            C21_v23.GVR, "", "Click to View Data", C21_v23.ECAT, C21_v23.Target_Address, "Click to View Data", C21_v23.Roll, "", "", "", "", "", "", "", "", "",
                             "", "", "", "Click To View Data", "", "", "Click To View Data", "Click To View Data");
                     }
                     // Check if its version 21
@@ -251,6 +234,7 @@ namespace CLASSES
                     }
                 }
             }
+
         }
         public CAT10 getCAT10(int num)
         {
