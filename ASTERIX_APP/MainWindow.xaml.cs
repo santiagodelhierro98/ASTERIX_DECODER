@@ -1180,6 +1180,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
+                                newcat21 = true;
                                 AddMarkerC21(C21_v23.Lat_WGS_84, C21_v23.Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 350)
@@ -1244,6 +1245,7 @@ namespace ASTERIX_APP
                         {
                             if (tiempo == start)
                             {
+                                newcat21 = true;
                                 AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                                 i++;
                                 if (map.Markers.Count >= 400)
@@ -1270,6 +1272,7 @@ namespace ASTERIX_APP
                     {
                         if (tiempo == start)
                         {
+                            newcat21 = true;
                             AddMarkerC21(C21.High_Res_Lat_WGS_84, C21.High_Res_Lon_WGS_84, targetid);
                             i++;
                             if (map.Markers.Count >= 400)
@@ -1292,6 +1295,7 @@ namespace ASTERIX_APP
                 gridlista.Visibility = Visibility.Collapsed;
                 updatedlista.Visibility = Visibility.Visible;            
             }
+          
         }
         int fila = 0;
         bool newcat21 = false;
@@ -1431,6 +1435,7 @@ namespace ASTERIX_APP
                             if (F.CAT_list[i] == 21.23 && tiempo == start1)
                             {
                                 newcat21 = true;
+                                
                                 double poscartx = Convert.ToDouble(tabla.Rows[i][6]);
                                 double poscarty = Convert.ToDouble(tabla.Rows[i][7]);
                                 AddMarkerC21(poscartx, poscarty, targetid);
@@ -1506,11 +1511,7 @@ namespace ASTERIX_APP
                             }
                         }
                     }
-                    //if (checktrail.IsChecked == true)
-                    //{
-                    //    showonlyoneairplane21(newcat21);
-                    //}
-                    //else { }
+                 
                 }
                 x = false;
                 n++;
@@ -1722,7 +1723,7 @@ namespace ASTERIX_APP
         {
             for (int i = 0; i < map.Markers.Count; i++)
             {
-                if (map.Markers[i].Shape != null && map.Markers[i].ZIndex != 2 )
+                if (map.Markers[i].Shape != null && map.Markers[i].ZIndex != 2 && newcat21==false )
                 {
                     map.Markers[i].Shape.Visibility = Visibility.Collapsed;
                 }

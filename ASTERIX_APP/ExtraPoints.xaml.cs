@@ -273,13 +273,16 @@ namespace ASTERIX_APP
             M.Create_ExtraTable_ADSB(acc_ADSB_Table_G);
             M.Create_ExtraTable_MLAT(acc_MLAT_Table_G);
             fila = 0;
+            
             //comparar las tablas para tener los mismos vuelos en ambas         
             for (int j = 0; j < ADSB_Table_G.Rows.Count; j++)
             {
                 bool x = false;
+
+               
                 for (int i = fila; i < MLAT_Table_G.Rows.Count; i++)
                 {
-
+                    
                     if (ADSB_Table_G.Rows[j][1].ToString() == "NaN" || MLAT_Table_G.Rows[i][1].ToString() == "NaN") { break; }
 
                     string timebadmlat = Convert.ToString(MLAT_Table_G.Rows[i][1]);
@@ -309,6 +312,7 @@ namespace ASTERIX_APP
                     }
                     if (tiempoadsb + 2 == tiempomlat) { break; }
                     else { }
+                   
                 }
             }
             MessageBox.Show("From 0 to 10NM: DONE\n" +
@@ -334,6 +338,7 @@ namespace ASTERIX_APP
                     double FL;
                     double lat = M.cartesiantolatmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
                     double lon = M.cartesiantolonmlat(C10.Pos_Cartesian[0], C10.Pos_Cartesian[1]);
+                    if ( C10.Time_Day.ToString() == "NaN") { C10.Time_Day = 0.0; }
 
                     // 0 to 10NM
                     if (C10.Target_Rep_Descript[0] == "Mode S Multilateration" && C10.Target_ID != null && Convert.ToDouble(C10.FL[2]) > 0.0 && Convert.ToDouble(C10.FL[2]) < 500.0 && C10.FL[2] != null && modulo < 10)
@@ -360,7 +365,9 @@ namespace ASTERIX_APP
                     {
                         if (C10.FL[2] == null) { C10.FL[2] = Convert.ToString(0.0); }
                         FL = Convert.ToDouble(C10.FL[2]);
+                      
                         MLAT_Table_G.Rows.Add(C10.Target_ID, M.convert_to_hms(Math.Floor(C10.Time_Day)), Math.Round(lat, 8), Math.Round(lon, 8), Math.Round(modulo, 8), FL, C10.Time_Day, C10.Track_Vel_Cartesian[0], C10.Track_Vel_Cartesian[1]);
+                        
                     }
                   
                     else { }
@@ -371,9 +378,11 @@ namespace ASTERIX_APP
                     // Check if its version 23
                     if (SICSAC[0] == 107 && SICSAC[1] == 0)
                     {
+
                         CAT21_v23 C21 = new CAT21_v23();
                         C21.Decode21_23(arraystring);
                         double modulo21 = E.checkdistanceADSBv23(C21);
+                        if (C21.Time_of_Day.ToString() == "NaN") { C21.Time_of_Day = 0.0; }
 
                         // 0 to 10NM
                         if (C21.Target_ID != null && C21.FL != 0 && C21.FL <= 150.0  && modulo21 < 10)
@@ -400,7 +409,7 @@ namespace ASTERIX_APP
                         // Ground
                         if (C21.Target_ID != null && C21.FL <= 5 )
                         {
-
+                            
                             ADSB_Table1_G.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.Time_of_Day)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, "N/A", "N/A", "N/A", C21.Time_of_Day);
                         }
                         else { }
@@ -409,6 +418,8 @@ namespace ASTERIX_APP
                     {
                         CAT21 C21 = new CAT21();
                         C21.Decode21(arraystring);
+                        if (C21.TMRP.ToString() == "NaN") { C21.TMRP = 0.0; }
+
                         double modulo21 = E.checkdistanceADSB(C21);
                         double EPU = E.Horizontal_Accuracy_Pos(C21); // Horizonatl Accuracy (NACp)
                         double RC = Convert.ToDouble(C21.Quality_Indicators[6]); // Radius of Containments (NIC)
@@ -443,9 +454,11 @@ namespace ASTERIX_APP
                         // Ground
                         if (C21.Target_ID != null && C21.FL <= 5 && C21.MOPS[1] == "ED102A/DO-260B [Ref. 11]")
                         {
-                            
+                            string hora = M.convert_to_hms(Math.Floor(C21.TMRP));
+                            if (hora == "NaN")
+                            { hora = M.convert_to_hms(Math.Floor(C21.Time_Rep_Transm)); }
 
-                            ADSB_Table1_G.Rows.Add(C21.Target_ID, M.convert_to_hms(Math.Floor(C21.TMRP)), Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
+                            ADSB_Table1_G.Rows.Add(C21.Target_ID, hora, Math.Round(C21.Lat_WGS_84, 8), Math.Round(C21.Lon_WGS_84, 8), Math.Round(modulo21, 8), C21.FL, EPU, RC, GVA, C21.TMRP);
                         }
                         else { }
                     }
@@ -554,7 +567,7 @@ namespace ASTERIX_APP
                   
             Res_Table.ItemsSource = ResultsTable_510.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table_510);
+            Pd = Probability_of_Detection(ADSB_Table_510, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_510);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_510);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_510);
@@ -645,7 +658,7 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_025.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table_025);
+            Pd = Probability_of_Detection(ADSB_Table_025, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_025);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_025);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_025);
@@ -688,7 +701,7 @@ namespace ASTERIX_APP
             }
             Res_Table.ItemsSource = ResultsTable_G.DefaultView;
 
-            Pd = Probability_of_Detection(ADSB_Table_G, MLAT_Table_G);
+            Pd = Probability_of_Detection(ADSB_Table_G, MLAT_Table);
             double lat_percentil = Percentile(2, 0.95, ResultsTable_G);
             double lon_percentil = Percentile(3, 0.95, ResultsTable_G);
             double dist_percentil = Percentile(4, 0.95, ResultsTable_G);
