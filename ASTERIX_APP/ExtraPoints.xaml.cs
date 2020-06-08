@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ASTERIX_APP
@@ -462,11 +461,11 @@ namespace ASTERIX_APP
 
             for (int i = 0; i<table.Rows.Count; i++)
             {
+                bool repetido = false;
                 string callsign = table.Rows[i][0].ToString();
                 string hora = table.Rows[i][1].ToString();        
                 
                 int n = i + 1;
-                // SI NO ESTAN DUPLICAOS NO LE DECIMOS Q LO AÑADA GGGGGGGILIPOLLAS
                 while (n < table.Rows.Count && table.Rows[n][1].ToString() == hora)
                 {
                     if (table.Rows[n][0].ToString() == callsign)
@@ -478,16 +477,23 @@ namespace ASTERIX_APP
                         double sec = Math.Round((Convert.ToDouble(table.Rows[i][9]) + Convert.ToDouble(table.Rows[n][9])) / 2, 8);
 
                         new_table.Rows.Add(table.Rows[i][0], table.Rows[i][1], lat, lon, dist, H, table.Rows[i][6], table.Rows[i][7], table.Rows[i][8], sec);
-                        break;
+                        if (repetido == true && new_table.Rows[i][0].ToString() == callsign && new_table.Rows[i][1].ToString() == hora) { new_table.Rows.RemoveAt(i); }
+                        table.Rows[n].Delete();
+                        repetido = true;
+                        // break;
                     }
                     else { n++; }
                 }
+                if (repetido == false) { new_table.ImportRow(table.Rows[i]); }
             }
             return new_table;
         }
         private void getresults_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Uploaded file has " + acc_MLAT_Table.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            if (acc_MLAT_Table.Rows.Count > 5000)
+            {
+                MessageBox.Show("Uploaded file has " + acc_MLAT_Table.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            }            
             progressbar.Visibility = Visibility.Visible;
 
             ResultsTable.Clear();
@@ -498,6 +504,11 @@ namespace ASTERIX_APP
 
             TableMLAT.ItemsSource = acc_MLAT_Table.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table.DefaultView;
+            TableMLAT.Columns[6].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[7].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[8].Visibility = Visibility.Hidden;
+            TableADSB.Columns[9].Visibility = Visibility.Hidden;
+
             //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
             for (int i = 0; i < acc_ADSB_Table.Rows.Count; i++)
             {
@@ -539,7 +550,10 @@ namespace ASTERIX_APP
         }
         private void getresults510_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_510.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            if (acc_MLAT_Table_510.Rows.Count > 5000)
+            {
+                MessageBox.Show("Uploaded file has " + acc_MLAT_Table_510.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            }
             progressbar.Visibility = Visibility.Visible;
 
             ResultsTable_510.Clear();
@@ -550,6 +564,11 @@ namespace ASTERIX_APP
 
             TableMLAT.ItemsSource = acc_MLAT_Table_510.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table_510.DefaultView;
+            TableMLAT.Columns[6].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[7].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[8].Visibility = Visibility.Hidden;
+            TableADSB.Columns[9].Visibility = Visibility.Hidden;
+
             //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
             for (int i = 0; i < acc_ADSB_Table_510.Rows.Count; i++)
             {
@@ -591,7 +610,11 @@ namespace ASTERIX_APP
         }
         private void getresults255_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_255.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            if (acc_MLAT_Table_255.Rows.Count > 5000)
+            {
+                MessageBox.Show("Uploaded file has " + acc_MLAT_Table_255.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            }
+               
             progressbar.Visibility = Visibility.Visible;
             ResultsTable_255.Clear();
             double mean_error_lat = new double();
@@ -601,6 +624,11 @@ namespace ASTERIX_APP
 
             TableMLAT.ItemsSource = acc_MLAT_Table_255.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table_255.DefaultView;
+            TableMLAT.Columns[6].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[7].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[8].Visibility = Visibility.Hidden;
+            TableADSB.Columns[9].Visibility = Visibility.Hidden;
+
             //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
             for (int i = 0; i < acc_ADSB_Table_255.Rows.Count; i++)
             {
@@ -641,7 +669,10 @@ namespace ASTERIX_APP
         }
         private void getresults025_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_025.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            if (acc_MLAT_Table_025.Rows.Count > 5000)
+            {
+                MessageBox.Show("Uploaded file has " + acc_MLAT_Table_025.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            }
             progressbar.Visibility = Visibility.Visible;
 
             ResultsTable_025.Clear();
@@ -652,6 +683,11 @@ namespace ASTERIX_APP
 
             TableMLAT.ItemsSource = acc_MLAT_Table_025.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table_025.DefaultView;
+            TableMLAT.Columns[6].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[7].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[8].Visibility = Visibility.Hidden;
+            TableADSB.Columns[9].Visibility = Visibility.Hidden;
+
             //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
             for (int i = 0; i < acc_ADSB_Table_025.Rows.Count; i++)
             {
@@ -693,7 +729,10 @@ namespace ASTERIX_APP
         }
         private void getresults0_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Uploaded file has " + acc_MLAT_Table_G.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            if (acc_MLAT_Table_G.Rows.Count > 5000)
+            {
+                MessageBox.Show("Uploaded file has " + acc_MLAT_Table_G.Rows.Count + " packages within this range.\nPlease be patient, this may take several seconds.", "WARNING");
+            }
             progressbar.Visibility = Visibility.Visible;
 
             ResultsTable_G.Clear();
@@ -704,6 +743,11 @@ namespace ASTERIX_APP
 
             TableMLAT.ItemsSource = acc_MLAT_Table_G.DefaultView;
             TableADSB.ItemsSource = acc_ADSB_Table_G.DefaultView;
+            TableMLAT.Columns[6].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[7].Visibility = Visibility.Hidden;
+            TableMLAT.Columns[8].Visibility = Visibility.Hidden;
+            TableADSB.Columns[9].Visibility = Visibility.Hidden;
+
             //rellenamos la tabla de resultados con la resta de posiciones entre adsb y mlat más el quality indicator
             for (int i = 0; i < acc_ADSB_Table_G.Rows.Count; i++)
             {
